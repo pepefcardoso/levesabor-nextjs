@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   },
   output: "export",
   reactStrictMode: true,
+  basePath: "/levesabor-nextjs",
 };
 
 export default nextConfig;
