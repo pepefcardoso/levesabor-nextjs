@@ -4,13 +4,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import IconButton from "./IconButton";
-import { NAV_LINKS } from "../constants";
+import { NAV_LINKS } from "../Constants";
+import useAuthStore from "../store/authStore";
+import { AuthService } from "../services/authService";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useAuthStore();
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await AuthService.logout();
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   return (
@@ -32,6 +46,32 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          {user ? (
+            <>
+              <span className="regular-18 text-white">Olá, {user.name}</span>
+              <button
+                onClick={handleLogout}
+                className="regular-18 text-white cursor-pointer transition-all hover:font-bold"
+              >
+                Sair
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="regular-18 text-white cursor-pointer transition-all hover:font-bold"
+              >
+                Login
+              </Link>
+              <Link
+                href="/registrar"
+                className="regular-18 text-white cursor-pointer transition-all hover:font-bold"
+              >
+                Registrar
+              </Link>
+            </>
+          )}
         </ul>
 
         {/* Social Icons - visible on large screens */}
@@ -44,7 +84,7 @@ const Navbar = () => {
         {/* Menu Button for smaller screens */}
         <div className="lg:hidden">
           <Image
-            src={isMenuOpen ? "/close.svg" : "/menu.svg"} // Change icon based on menu state
+            src={isMenuOpen ? "/close.svg" : "/menu.svg"}
             alt="menu"
             width={32}
             height={32}
@@ -71,8 +111,39 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          {user ? (
+            <>
+              <span className="regular-18">Olá, {user.name}</span>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMenuOpen(false);
+                }}
+                className="regular-18 cursor-pointer transition-all hover:font-bold"
+              >
+                Sair
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="regular-18 cursor-pointer transition-all hover:font-bold"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                href="/registrar"
+                className="regular-18 cursor-pointer transition-all hover:font-bold"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Registrar
+              </Link>
+            </>
+          )}
         </ul>
-        <div className="flex gap-4 mt-2 justify-center"> {/* Reduced margin */}
+        <div className="flex gap-4 mt-2 justify-center">
           <IconButton icon="/facebook-icon.svg" />
           <IconButton icon="/instagram-icon.svg" />
           <IconButton icon="/whatsapp-icon.svg" />

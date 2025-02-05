@@ -8,7 +8,7 @@ import {
   DUMMY_RECIPE_CATEGORIES,
   DUMMY_RECIPE_DIETS,
   DUMMY_RECIPES,
-} from "../../constants";
+} from "../../Constants";
 
 const Page = () => {
   return (

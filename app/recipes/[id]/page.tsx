@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { DUMMY_RECIPES } from "../../../constants";
+import { DUMMY_RECIPES } from "../../../Constants";
 
 // StepNumber Component
 interface StepNumberProps {

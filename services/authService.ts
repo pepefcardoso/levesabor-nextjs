@@ -1,26 +1,45 @@
+// services/authService.ts
 import useAuthStore from "../store/authStore";
 import apiClient from "./apiClient";
+import { UsersService } from "./userService";
 
 export const AuthService = {
   async login(email: string, password: string) {
     try {
       const response = await apiClient.post("/login", { email, password });
-      const token = response.data; // Assuming the backend returns only the token
+      
+      // Handle token from response
+      const token = response.data?.token || response.data;
+      if (!token) throw new Error("No authentication token received");
 
+      // Store token immediately
       localStorage.setItem("authToken", token);
+      
+      // Set auth header for subsequent requests
+      apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const userResponse = await apiClient.get("/user");
-      const user = userResponse.data;
-
+      // Get user details using UsersService
+      const user = await UsersService.getCurrentUser();
+      
+      // Update auth store
       useAuthStore.getState().login(token, user);
-
       return true;
+
     } catch (error: any) {
       console.error("Login error:", error);
+      
+      // Clear invalid token on error
+      localStorage.removeItem("authToken");
+      delete apiClient.defaults.headers.common["Authorization"];
 
-      const errorMessage =
-        error.response?.data?.errors ||
+      // Extract error message
+      const errorData = error.response?.data || {};
+      const errorMessage = 
+        errorData.errors?.join(", ") ||
+        errorData.message ||
+        error.message ||
         "Login failed. Please check your credentials.";
+
       throw new Error(errorMessage);
     }
   },
@@ -28,13 +47,9 @@ export const AuthService = {
   async logout() {
     try {
       await apiClient.post("/logout");
-
-      // Remove token from localStorage
       localStorage.removeItem("authToken");
-
-      // Update auth store
+      delete apiClient.defaults.headers.common["Authorization"];
       useAuthStore.getState().logout();
-
       return true;
     } catch (error) {
       console.error("Logout error:", error);

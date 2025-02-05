@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { DUMMY_POSTS } from "../../../constants";
+import { DUMMY_POSTS } from "../../../Constants";
 
 const PostDetails = () => {
   const { id } = useParams();
