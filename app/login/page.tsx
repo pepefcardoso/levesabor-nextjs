@@ -1,22 +1,33 @@
-'use client';
+"use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../services/authService";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const success = await AuthService.login(email, password);
-    setLoading(false);
+    setError(""); // Clear previous errors
 
-    if (success) {
-      router.push("/");
+    try {
+      const success = await AuthService.login(email, password);
+      if (success) {
+        router.push("/");
+      }
+    } catch (err: any) {
+      setError(
+        err.message ||
+          "Falha no login. Verifique suas credenciais e tente novamente."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,7 +35,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-lg w-full p-8 space-y-8 bg-white rounded-lg shadow-lg mt-12 sm:mt-16">
         <div className="text-left">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Bem vindo!</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Bem-vindo!</h1>
           <p className="text-gray-400 text-lg">
             Ainda não possui conta?{" "}
             <a href="/register" className="text-black hover:underline">
@@ -32,6 +43,10 @@ export default function LoginPage() {
             </a>
           </p>
         </div>
+
+        {error && (
+          <div className="p-4 text-red-700 bg-red-100 rounded-md">{error}</div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="space-y-6">
@@ -77,7 +92,8 @@ export default function LoginPage() {
           </div>
 
           <button
-            type="submit"
+            type="button"
+            onClick={handleSubmit}
             disabled={loading}
             className="w-full px-6 py-3 text-black bg-yellow-500 rounded-md hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
