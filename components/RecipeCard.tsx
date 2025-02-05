@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 type RecipeCardProps = {
-  id: string;
+  id: number;
   title: string;
   description: string;
   imageSrc: string;

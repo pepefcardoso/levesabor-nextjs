@@ -1,13 +1,71 @@
-import RecipeCard from "../components/RecipeCard";
+"use client";
+
 import Link from "next/link";
-import { DUMMY_POSTS, DUMMY_RECIPES } from "../Constants";
-import PostCard from "../components/PostCard";
+import { useEffect, useState } from "react";
+import { getRecipes } from "../services/recipeService";
+import RecipeCard from "../components/RecipeCard";
+
+type Recipe = {
+  id: number;
+  title: string;
+  description: string;
+  time: number;
+  portion: number;
+  difficulty: number;
+  category: { name: string };
+  diets: { name: string }[];
+  image: { url: string } | null;
+};
+
+interface RecipePaginationResponse {
+  data: Recipe[];
+  current_page: number;
+  last_page: number;
+}
 
 export default function Home() {
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [filters, setFilters] = useState({
+    title: "",
+    category_id: "",
+    diets: [],
+  });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
+  const fetchRecipes = async () => {
+    try {
+      const response: RecipePaginationResponse = await getRecipes({
+        filters,
+        page: 1,
+        perPage: 4,
+      });
+      setRecipes(response.data);
+      setPagination({
+        currentPage: response.current_page,
+        totalPages: response.last_page,
+      });
+    } catch (err) {
+      setError("Failed to fetch recipes");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecipes();
+  }, [filters, pagination.currentPage]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <section className="max-container padding-container flex flex-col gap-10 py-12 pb-12 lg:py-16">
-      {/* Title and description */}
-      <div className="text-center mb-6 px-4">
+      <div className="text-center mb-6">
         <h1 className="text-4xl font-bold">
           Cozinha inclusiva para todas as dietas.
         </h1>
@@ -16,52 +74,27 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Recipes Section */}
       <div className="px-4">
         <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl sm:text-3xl font-bold text-left">
-            Receitas
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-left">Receitas</h2>
           <Link href="/recipes" className="text-blue-500 hover:underline">
             Ver Todas
           </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {DUMMY_RECIPES.slice(0, 4).map((recipe, index) => (
+          {recipes.map((recipe) => (
             <RecipeCard
-              key={index}
+              key={recipe.id}
+              id={recipe.id}
               title={recipe.title}
               description={recipe.description}
-              id={recipe.id.toString()}
-              imageSrc={recipe.imageSrc}
-              category={recipe.category}
-              diets={recipe.diets}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Articles Section */}
-      <div className="px-4">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-left mt-3">
-            Notícias e Artigos
-          </h2>
-          <Link href="/posts" className="text-blue-500 hover:underline">
-            Ver Todas
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {DUMMY_POSTS.slice(0, 4).map((post, index) => (
-            <PostCard
-              key={index}
-              id={post.id.toString()}
-              title={post.title}
-              description={post.description}
-              imageSrc={post.imageSrc}
-              category={post.category}
+              imageSrc={
+                recipe.image?.url ||
+                "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              }
+              diets={recipe.diets.map((diet) => diet.name)}
+              category={recipe.category.name}
             />
           ))}
         </div>

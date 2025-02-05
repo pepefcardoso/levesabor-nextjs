@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import RecipeCard from "../../../../components/RecipeCard";
-import { DUMMY_RECIPE_CATEGORIES, DUMMY_RECIPES } from "../../../../Constants";
+import { DUMMY_RECIPE_CATEGORIES, DUMMY_RECIPES } from "../../../../constants";
 import { useParams } from "next/navigation";
 
 const Page = () => {

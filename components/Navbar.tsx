@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import IconButton from "./IconButton";
-import { NAV_LINKS } from "../Constants";
+import { NAV_LINKS } from "../constants";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
