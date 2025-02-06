@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getRecipes } from "../services/recipeService";
 import RecipeCard from "../components/RecipeCard";
+import CardSkeleton from "../components/CardSkeleton";
 
 type Recipe = {
   id: number;
@@ -60,11 +61,9 @@ export default function Home() {
     fetchRecipes();
   }, [filters, pagination.currentPage]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-
   return (
     <section className="max-container padding-container flex flex-col gap-10 py-12 pb-12 lg:py-16">
+      {/* Header section remains visible */}
       <div className="text-center mb-6">
         <h1 className="text-4xl font-bold">
           Cozinha inclusiva para todas as dietas.
@@ -82,21 +81,28 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* Display error if present */}
+        {error && <div className="text-red-500 mb-4">{error}</div>}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {recipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.id}
-              id={recipe.id}
-              title={recipe.title}
-              description={recipe.description}
-              imageSrc={
-                recipe.image?.url ||
-                "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
-              diets={recipe.diets.map((diet) => diet.name)}
-              category={recipe.category.name}
-            />
-          ))}
+          {loading
+            ? [1, 2, 3, 4].map((skeletonId) => (
+                <CardSkeleton key={skeletonId} />
+              ))
+            : recipes.map((recipe) => (
+                <RecipeCard
+                  key={recipe.id}
+                  id={recipe.id}
+                  title={recipe.title}
+                  description={recipe.description}
+                  imageSrc={
+                    recipe.image?.url ||
+                    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  }
+                  diets={recipe.diets.map((diet) => diet.name)}
+                  category={recipe.category.name}
+                />
+              ))}
         </div>
       </div>
     </section>

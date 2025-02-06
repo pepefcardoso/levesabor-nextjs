@@ -4,7 +4,7 @@ import React from "react";
 import PostCard from "../../components/PostCard";
 import PostCategoryCard from "../../components/PostCategoryCard";
 import NewsletterForm from "../../components/NewsletterForm";
-import { DUMMY_POST_CATEGORIES, DUMMY_POSTS } from "../../Constants";
+import { DUMMY_POST_CATEGORIES, DUMMY_POSTS } from "../../constants";
 
 export default function PostsHome() {
   return (
