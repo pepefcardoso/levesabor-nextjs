@@ -1,12 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { User } from "../typings/api";
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  image?: string;
-}
+
 
 interface AuthState {
   token: string | null;

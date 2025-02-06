@@ -82,7 +82,7 @@ const Navbar = () => {
                   <span className="text-white">Bem vindo, {user.name}</span>
                   {user.image ? (
                     <Image
-                      src={user.image}
+                      src={user.image?.url}
                       alt="User profile"
                       width={40}
                       height={40}

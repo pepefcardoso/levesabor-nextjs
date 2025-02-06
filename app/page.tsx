@@ -5,18 +5,10 @@ import { useEffect, useState } from "react";
 import { getRecipes } from "../services/recipeService";
 import RecipeCard from "../components/RecipeCard";
 import CardSkeleton from "../components/CardSkeleton";
-
-type Recipe = {
-  id: number;
-  title: string;
-  description: string;
-  time: number;
-  portion: number;
-  difficulty: number;
-  category: { name: string };
-  diets: { name: string }[];
-  image: { url: string } | null;
-};
+import { Post, Recipe } from "../typings/api";
+import PostCard from "../components/PostCard";
+import { getPosts } from "../services/postService";
+import NewsletterForm from "../components/NewsletterForm";
 
 interface RecipePaginationResponse {
   data: Recipe[];
@@ -24,34 +16,41 @@ interface RecipePaginationResponse {
   last_page: number;
 }
 
+interface PostPaginationResponse {
+  data: Post[];
+  current_page: number;
+  last_page: number;
+}
+
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filters, setFilters] = useState({
-    title: "",
-    category_id: "",
-    diets: [],
-  });
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
-    totalPages: 1,
-  });
 
   const fetchRecipes = async () => {
     try {
       const response: RecipePaginationResponse = await getRecipes({
-        filters,
         page: 1,
         perPage: 4,
       });
       setRecipes(response.data);
-      setPagination({
-        currentPage: response.current_page,
-        totalPages: response.last_page,
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const response: PostPaginationResponse = await getPosts({
+        page: 1,
+        perPage: 4,
       });
-    } catch (err) {
-      setError("Failed to fetch recipes");
+      setPosts(response.data);
+    } catch (err: any) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -59,11 +58,11 @@ export default function Home() {
 
   useEffect(() => {
     fetchRecipes();
-  }, [filters, pagination.currentPage]);
+    fetchPosts();
+  });
 
   return (
     <section className="max-container padding-container flex flex-col gap-10 py-12 pb-12 lg:py-16">
-      {/* Header section remains visible */}
       <div className="text-center mb-6">
         <h1 className="text-4xl font-bold">
           Cozinha inclusiva para todas as dietas.
@@ -81,7 +80,6 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Display error if present */}
         {error && <div className="text-red-500 mb-4">{error}</div>}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -90,21 +88,31 @@ export default function Home() {
                 <CardSkeleton key={skeletonId} />
               ))
             : recipes.map((recipe) => (
-                <RecipeCard
-                  key={recipe.id}
-                  id={recipe.id}
-                  title={recipe.title}
-                  description={recipe.description}
-                  imageSrc={
-                    recipe.image?.url ||
-                    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  }
-                  diets={recipe.diets.map((diet) => diet.name)}
-                  category={recipe.category.name}
-                />
+                <RecipeCard key={recipe.id} recipe={recipe} />
               ))}
         </div>
       </div>
+
+      <div className="px-4">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-left">Posts</h2>
+          <Link href="/posts" className="text-blue-500 hover:underline">
+            Ver Todos
+          </Link>
+        </div>
+
+        {error && <div className="text-red-500 mb-4">{error}</div>}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {loading
+            ? [1, 2, 3, 4].map((skeletonId) => (
+                <CardSkeleton key={skeletonId} />
+              ))
+            : posts.map((post) => <PostCard key={post.id} post={post} />)}
+        </div>
+      </div>
+
+      <NewsletterForm />
     </section>
   );
 }
