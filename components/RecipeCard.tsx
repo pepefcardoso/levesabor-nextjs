@@ -12,7 +12,6 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                       hover:scale-105 hover:shadow-2xl flex flex-col 
                       h-[420px] sm:h-[400px] w-full sm:w-auto"
       >
-        {/* Image Section */}
         <div className="relative">
           <Image
             src={recipe.image?.url ?? "/placeholder.jpg"}
@@ -28,19 +27,16 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           )}
         </div>
 
-        {/* Content Section */}
         <div className="p-4 flex flex-col flex-grow">
-          {/* Title */}
+
           <h2 className="text-lg sm:text-xl font-bold mb-1 line-clamp-2">
             {recipe.title}
           </h2>
 
-          {/* Description (Flexible height to push diets list down) */}
           <p className="text-gray-600 text-sm sm:text-base line-clamp-4 flex-grow">
             {recipe.description}
           </p>
 
-          {/* Diets List (Always at the bottom) */}
           {Array.isArray(recipe.diets) && recipe.diets.length > 0 && (
             <div className="mt-4 flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
               {recipe.diets.map((diet, index) => (

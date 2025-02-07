@@ -20,7 +20,7 @@ export const getRecipes = async ({
         params: {
           ...filters,
           page: pagination.page,
-          per_page: pagination.perPage,
+          per_page: pagination.per_page,
         },
       }
     );

@@ -9,17 +9,15 @@ const IconBox = ({ icon }: { icon: string }) => (
 const Advertisement = () => {
   return (
     <div
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-4xl" // Larger width
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-4xl"
       style={{ minHeight: "85vh" }}
     >
-      {/* Title */}
       <h1 className="text-3xl sm:text-4xl font-bold mb-8 sm:mb-12 text-left">
         Anuncie Conosco
       </h1>
 
-      {/* Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-16 md:gap-x-28"> {/* Larger gaps */}
-        {/* Advertising Information */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-16 md:gap-x-28">
+
         <div>
           <div className="space-y-4 sm:space-y-6">
             <div className="flex items-center space-x-3">
@@ -53,7 +51,6 @@ const Advertisement = () => {
           </div>
         </div>
 
-        {/* Form */}
         <div>
           <h2 className="text-base sm:text-lg font-semibold mb-2">
             Nossa equipe entrará em contato

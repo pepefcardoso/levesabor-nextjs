@@ -20,7 +20,7 @@ export const getUsers = async ({
     const response = await apiClient.get<PaginationResponse<User>>("/users", {
       params: {
         page: pagination.page,
-        per_page: pagination.perPage,
+        per_page: pagination.per_page,
       },
     });
 

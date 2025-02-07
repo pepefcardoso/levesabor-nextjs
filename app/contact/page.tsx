@@ -8,11 +8,12 @@ const IconBox = ({ icon }: { icon: string }) => (
 
 const ContactUs = () => {
   return (
-    <div className="container mx-auto px-6 py-8 max-w-4xl" style={{ minHeight: "85vh" }}>
-      {/* Title */}
-      <h1 className="text-4xl font-bold mb-12">Entre em contato conosco</h1> {/* Increased vertical gap here */}
+    <div
+      className="container mx-auto px-6 py-8 max-w-4xl"
+      style={{ minHeight: "85vh" }}
+    >
+      <h1 className="text-4xl font-bold mb-12">Entre em contato conosco</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Contact Information */}
         <div>
           <h2 className="text-lg font-semibold mb-2">Nossas informações</h2>
           <p className="text-gray-600 mb-6">Esperamos seu contato!</p>
@@ -35,7 +36,6 @@ const ContactUs = () => {
             </div>
           </div>
         </div>
-        {/* Form */}
         <div>
           <h2 className="text-lg font-semibold mb-2">Mande sua mensagem</h2>
           <p className="text-gray-500 mb-4">Estamos sempre disponíveis!</p>

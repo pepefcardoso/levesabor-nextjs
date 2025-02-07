@@ -101,7 +101,6 @@ export default function PostsHome() {
           Pesquise nossos posts
         </h1>
 
-        {/* Search Bar */}
         <form onSubmit={handleSubmit} className="mb-6">
           <input
             type="text"
@@ -112,7 +111,6 @@ export default function PostsHome() {
           />
         </form>
 
-        {/* Filters */}
         <div className="mb-6 flex gap-4">
           <select
             name="category_id"
@@ -128,10 +126,8 @@ export default function PostsHome() {
           </select>
         </div>
 
-        {/* Error Message */}
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
 
-        {/* Posts Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {loading
             ? Array.from({ length: 10 }).map((_, index) => (
@@ -140,7 +136,6 @@ export default function PostsHome() {
             : posts.map((post) => <PostCard key={post.id} post={post} />)}
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex justify-center mt-8 flex-wrap gap-2">
             <button

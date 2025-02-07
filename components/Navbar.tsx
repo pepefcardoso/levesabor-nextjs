@@ -17,14 +17,16 @@ const Navbar = () => {
   const [authLoading, setAuthLoading] = useState<boolean>(true);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
+  const [dropdownPosition, setDropdownPosition] = useState<{
+    top: number;
+    right: number;
+  }>({ top: 0, right: 0 });
   const [hasMounted, setHasMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
-  // Handle click outside dropdown with proper type for the event parameter.
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -42,7 +44,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Update dropdown position using buttonRef with a proper type.
   const updateDropdownPosition = () => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
@@ -65,7 +66,6 @@ const Navbar = () => {
     };
   }, [isDropdownOpen]);
 
-  // Check authentication status
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token && !user) {
@@ -92,12 +92,10 @@ const Navbar = () => {
   return (
     <div className="bg-green-800 drop-shadow-lg z-50">
       <nav className="flex items-center justify-between max-container padding-container relative z-30 py-4">
-        {/* Logo */}
         <Link href="/" className="bold-32 text-white cursor-pointer">
           LeveSabor
         </Link>
 
-        {/* Desktop Nav Links */}
         <ul className="hidden lg:flex gap-8">
           {NAV_LINKS.map((link) => (
             <Link
@@ -110,7 +108,6 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Right Section - Auth Status */}
         <div className="hidden lg:flex items-center gap-6">
           {authLoading ? (
             <Image
@@ -172,7 +169,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="lg:hidden">
           <Image
             src={isMenuOpen ? "/close.svg" : "/menu.svg"}
@@ -185,7 +181,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       <div
         className={`${
           isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
@@ -275,7 +270,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Dropdown Portal - Render only on client */}
       {hasMounted &&
         ReactDOM.createPortal(
           <div

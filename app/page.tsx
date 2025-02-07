@@ -22,7 +22,7 @@ export default function Home() {
         filters: undefined,
         pagination: {
           page: 1,
-          perPage: 4
+          per_page: 4
       }
       });
       setRecipes(response.data);
@@ -37,7 +37,7 @@ export default function Home() {
         filters: undefined,
         pagination: {
           page: 1,
-          perPage: 4
+          per_page: 4
       }
       });
       setPosts(response.data);

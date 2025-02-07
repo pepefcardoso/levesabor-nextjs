@@ -16,7 +16,7 @@ export const getPostCategories = async ({
       {
         params: {
           page: pagination.page,
-          per_page: pagination.perPage,
+          per_page: pagination.per_page,
         },
       }
     );

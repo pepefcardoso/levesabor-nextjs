@@ -15,7 +15,6 @@ const Footer = () => {
               LeveSabor
             </Link>
 
-            {/* Gap between title and mobile menu options */}
             <div className="lg:hidden mb-5" />
 
             <ul className="hidden lg:flex h-full gap-12">
@@ -30,7 +29,6 @@ const Footer = () => {
               ))}
             </ul>
 
-            {/* Mobile footer links */}
             <ul className="lg:hidden flex flex-col gap-2 w-full text-center">
               {FOOTER_LINKS.map((link) => (
                 <Link
@@ -45,7 +43,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright Information */}
         <div className="bg-white text-gray-800 pt-2">
           <p className="regular-14 w-full text-center">
             2024 LeveSabor® | Todos os direitos reservados | Desenvolvido por{" "}

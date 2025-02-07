@@ -21,7 +21,6 @@ export default function LoginPage() {
     try {
       const success = await AuthService.login(email, password);
       if (success) {
-        // Use Next.js router for smooth client-side navigation
         router.push("/");
       }
     } catch (err: any) {
@@ -110,7 +109,6 @@ export default function LoginPage() {
           <p className="text-lg">Ou continue com</p>
           <div className="mt-4 flex justify-center space-x-4">
             <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
-              {/* Add social login icons here */}
               <span className="sr-only">Google</span>
             </button>
             <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">

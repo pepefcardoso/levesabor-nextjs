@@ -40,7 +40,7 @@ export default function RecipesHome() {
         },
         pagination: {
           page,
-          perPage: 10,
+          per_page: 10,
         },
       });
       setRecipes(response.data);
@@ -58,7 +58,7 @@ export default function RecipesHome() {
     try {
       const response: PaginationResponse<RecipeCategory> =
         await getRecipeCategories({
-          pagination: { page: 1, perPage: 100 },
+          pagination: { page: 1, per_page: 100 },
         });
       setCategories(response.data);
     } catch (err: unknown) {
@@ -73,7 +73,7 @@ export default function RecipesHome() {
   const fetchDiets = async () => {
     try {
       const response: PaginationResponse<RecipeDiet> = await getRecipeDiets({
-        pagination: { page: 1, perPage: 100 },
+        pagination: { page: 1, per_page: 100 },
       });
       setDiets(response.data);
     } catch (err: unknown) {
@@ -127,7 +127,6 @@ export default function RecipesHome() {
     setCurrentPage(1);
   };
 
-  // Added the missing handlePageChange function for pagination.
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -139,7 +138,6 @@ export default function RecipesHome() {
           Pesquisar Receitas
         </h1>
 
-        {/* Search Bar */}
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
           <input
             type="text"
@@ -156,9 +154,7 @@ export default function RecipesHome() {
           </button>
         </form>
 
-        {/* Filters and Recipes Grid */}
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Filters */}
           <div className="w-full md:w-1/4">
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -202,9 +198,7 @@ export default function RecipesHome() {
             </div>
           </div>
 
-          {/* Recipes Grid */}
           <div className="w-full md:w-3/4">
-            {/* Error Message */}
             {error && (
               <div className="text-red-500 mb-4 text-center">{error}</div>
             )}
@@ -219,7 +213,6 @@ export default function RecipesHome() {
                   ))}
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex justify-center mt-8 flex-wrap gap-2">
                 <button
