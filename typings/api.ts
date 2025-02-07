@@ -9,9 +9,9 @@ export interface Image {
   name: string;
   path: string;
   url: string;
-  userId: string;
-  imageableid: string;
-  imageableType: string;
+  user_id: string;
+  imageable_id: string;
+  imageable_type: string;
 }
 
 export interface User {
@@ -22,8 +22,8 @@ export interface User {
   phone: string;
   role: RolesEnum;
   image?: Image;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Post {
@@ -31,26 +31,26 @@ export interface Post {
   title: string;
   summary: string;
   content: string;
-  categoryId: string;
+  category_id: string;
   category?: PostCategory;
-  userId: string;
+  user_id: string;
   user?: User;
   topics?: PostTopic[];
   image?: Image;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface PostCategory {
   id: string;
   name: string;
-  normalizedName: string;
+  normalized_name: string;
 }
 
 export interface PostTopic {
   id: string;
   name: string;
-  normalizedName: string;
+  normalized_name: string;
 }
 
 export interface Recipe {
@@ -60,55 +60,55 @@ export interface Recipe {
   time: number;
   portion: number;
   difficulty: number;
-  categoryid: string;
+  category_id: string;
   category?: RecipeCategory;
-  userid: string;
+  user_id: string;
   user?: User;
   ingredients?: RecipeIngredient[];
   steps?: RecipeStep[];
   diets?: RecipeDiet[];
   image?: Image;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface RecipeCategory {
   id: string;
   name: string;
-  normalizedName: string;
+  normalized_name: string;
 }
 
 export interface RecipeDiet {
   id: string;
   name: string;
-  normalizedName: string;
+  normalized_name: string;
 }
 
 export interface RecipeIngredient {
   id: string;
   quantity: number;
   name: string;
-  unitid: string;
+  unit_id: string;
   unit?: RecipeUnit;
-  recipeid: string;
+  recipe_id: string;
 }
 
 export interface RecipeStep {
   id: string;
   order: number;
   description: string;
-  recipeid: string;
+  recipe_id: string;
 }
 
 export interface RecipeUnit {
   id: string;
   name: string;
-  normalizedName: string;
+  normalized_name: string;
 }
 
 export interface PaginationParams {
   page: number;
-  perPage: number;
+  per_page: number;
 }
 
 export interface PaginationResponse<T> {
@@ -120,13 +120,12 @@ export interface PaginationResponse<T> {
 export interface RecipeFilters {
   title?: string;
   category_id?: string;
-  diets?: string[]; //Diets Id's
+  diets?: string[];
 }
 
 export interface PostFilters {
-  title?: string;
+  search?: string;
   category_id?: string;
-  topics?: string[];
 }
 
 export type ApiResponse<T> = {

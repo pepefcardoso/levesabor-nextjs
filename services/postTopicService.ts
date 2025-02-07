@@ -1,5 +1,4 @@
 import {
-  ApiResponse,
   PaginationParams,
   PaginationResponse,
   PostTopic,
@@ -35,9 +34,9 @@ export const getPostTopics = async ({
 
 export const getPostTopic = async (
   id: string
-): Promise<ApiResponse<PostTopic>> => {
+): Promise<PostTopic> => {
   try {
-    const response = await apiClient.get<ApiResponse<PostTopic>>(
+    const response = await apiClient.get<PostTopic>(
       `/post-topics/${id}`
     );
     return response.data;
@@ -49,9 +48,9 @@ export const getPostTopic = async (
 
 export const createPostTopic = async (
   data: FormData
-): Promise<ApiResponse<PostTopic>> => {
+): Promise<PostTopic> => {
   try {
-    const response = await apiClient.post<ApiResponse<PostTopic>>(
+    const response = await apiClient.post<PostTopic>(
       "/post-topics",
       data
     );
@@ -65,9 +64,9 @@ export const createPostTopic = async (
 export const updatePostTopic = async (
   id: string,
   data: FormData
-): Promise<ApiResponse<PostTopic>> => {
+): Promise<PostTopic> => {
   try {
-    const response = await apiClient.put<ApiResponse<PostTopic>>(
+    const response = await apiClient.put<PostTopic>(
       `/post-topics/${id}`,
       data
     );
@@ -80,9 +79,9 @@ export const updatePostTopic = async (
 
 export const deletePostTopic = async (
   id: string
-): Promise<ApiResponse<void>> => {
+): Promise<void> => {
   try {
-    const response = await apiClient.delete<ApiResponse<void>>(
+    const response = await apiClient.delete<void>(
       `/post-topics/${id}`
     );
     return response.data;

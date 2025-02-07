@@ -1,5 +1,4 @@
 import {
-  ApiResponse,
   PaginationParams,
   PaginationResponse,
   PostCategory,
@@ -35,9 +34,9 @@ export const getPostCategories = async ({
 
 export const getPostCategory = async (
   id: string
-): Promise<ApiResponse<PostCategory>> => {
+): Promise<PostCategory> => {
   try {
-    const response = await apiClient.get<ApiResponse<PostCategory>>(
+    const response = await apiClient.get<PostCategory>(
       `/post-categories/${id}`
     );
     return response.data;
@@ -49,9 +48,9 @@ export const getPostCategory = async (
 
 export const createPostCategory = async (
   data: FormData
-): Promise<ApiResponse<PostCategory>> => {
+): Promise<PostCategory> => {
   try {
-    const response = await apiClient.post<ApiResponse<PostCategory>>(
+    const response = await apiClient.post<PostCategory>(
       "/post-categories",
       data
     );
@@ -65,9 +64,9 @@ export const createPostCategory = async (
 export const updatePostCategory = async (
   id: string,
   data: FormData
-): Promise<ApiResponse<PostCategory>> => {
+): Promise<PostCategory> => {
   try {
-    const response = await apiClient.put<ApiResponse<PostCategory>>(
+    const response = await apiClient.put<PostCategory>(
       `/post-categories/${id}`,
       data
     );
@@ -80,9 +79,9 @@ export const updatePostCategory = async (
 
 export const deletePostCategory = async (
   id: string
-): Promise<ApiResponse<void>> => {
+): Promise<void> => {
   try {
-    const response = await apiClient.delete<ApiResponse<void>>(
+    const response = await apiClient.delete<void>(
       `/post-categories/${id}`
     );
     return response.data;

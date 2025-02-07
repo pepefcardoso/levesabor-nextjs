@@ -1,5 +1,4 @@
 import {
-  ApiResponse,
   PaginationParams,
   PaginationResponse,
   RecipeCategory,
@@ -35,9 +34,9 @@ export const getRecipeCategories = async ({
 
 export const getRecipeCategory = async (
   id: string
-): Promise<ApiResponse<RecipeCategory>> => {
+): Promise<RecipeCategory> => {
   try {
-    const response = await apiClient.get<ApiResponse<RecipeCategory>>(
+    const response = await apiClient.get<RecipeCategory>(
       `/recipe-categories/${id}`
     );
     return response.data;
@@ -49,9 +48,9 @@ export const getRecipeCategory = async (
 
 export const createRecipeCategory = async (
   data: FormData
-): Promise<ApiResponse<RecipeCategory>> => {
+): Promise<RecipeCategory> => {
   try {
-    const response = await apiClient.post<ApiResponse<RecipeCategory>>(
+    const response = await apiClient.post<RecipeCategory>(
       "/recipe-categories",
       data
     );
@@ -65,9 +64,9 @@ export const createRecipeCategory = async (
 export const updateRecipeCategory = async (
   id: string,
   data: FormData
-): Promise<ApiResponse<RecipeCategory>> => {
+): Promise<RecipeCategory> => {
   try {
-    const response = await apiClient.put<ApiResponse<RecipeCategory>>(
+    const response = await apiClient.put<RecipeCategory>(
       `/recipe-categories/${id}`,
       data
     );
@@ -80,9 +79,9 @@ export const updateRecipeCategory = async (
 
 export const deleteRecipeCategory = async (
   id: string
-): Promise<ApiResponse<void>> => {
+): Promise<void> => {
   try {
-    const response = await apiClient.delete<ApiResponse<void>>(
+    const response = await apiClient.delete<void>(
       `/recipe-categories/${id}`
     );
     return response.data;

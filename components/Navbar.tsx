@@ -2,18 +2,70 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import ReactDOM from "react-dom";
 import { NAV_LINKS } from "../constants";
 import useAuthStore from "../store/authStore";
 import { AuthService } from "../services/authService";
-import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const { user } = useAuthStore();
   const router = useRouter();
-  const [authLoading, setAuthLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState<boolean>(true);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
+  const [hasMounted, setHasMounted] = useState<boolean>(false);
 
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  // Handle click outside dropdown with proper type for the event parameter.
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        !(buttonRef.current && buttonRef.current.contains(event.target as Node))
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Update dropdown position using buttonRef with a proper type.
+  const updateDropdownPosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 8,
+        right: window.innerWidth - rect.right + window.scrollX,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      updateDropdownPosition();
+      window.addEventListener("resize", updateDropdownPosition);
+      window.addEventListener("scroll", updateDropdownPosition, true);
+    }
+    return () => {
+      window.removeEventListener("resize", updateDropdownPosition);
+      window.removeEventListener("scroll", updateDropdownPosition, true);
+    };
+  }, [isDropdownOpen]);
+
+  // Check authentication status
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token && !user) {
@@ -26,6 +78,7 @@ const Navbar = () => {
   }, [user]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const handleLogout = async () => {
     try {
@@ -37,7 +90,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-green-800 drop-shadow-lg">
+    <div className="bg-green-800 drop-shadow-lg z-50">
       <nav className="flex items-center justify-between max-container padding-container relative z-30 py-4">
         {/* Logo */}
         <Link href="/" className="bold-32 text-white cursor-pointer">
@@ -74,34 +127,32 @@ const Navbar = () => {
                   href="/userprofile"
                   className="flex items-center gap-2 hover:underline"
                 >
-                  <span className="text-white">Bem-vindo, {user.name}</span>
-                  {user.image ? (
-                    <Image
-                      src={user.image?.url}
-                      alt="User profile"
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                      <span className="text-green-800 font-bold">
-                        {user.name.charAt(0)}
-                      </span>
-                    </div>
-                  )}
+                  <span className="text-white">{user.name}</span>
                 </Link>
+                <div className="relative">
+                  <button
+                    ref={buttonRef}
+                    onClick={toggleDropdown}
+                    className="focus:outline-none focus:ring-2 focus:ring-white relative z-50"
+                  >
+                    {user.image ? (
+                      <Image
+                        src={user.image?.url}
+                        alt="User profile"
+                        width={40}
+                        height={40}
+                        className="rounded-full cursor-pointer hover:ring-2 hover:ring-white"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-white">
+                        <span className="text-green-800 font-bold">
+                          {user.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                  </button>
+                </div>
               </div>
-              {/* Logout Button */}
-              <button onClick={handleLogout} className="hover:font-bold">
-                <Image
-                  src="/logout.svg"
-                  alt="Logout"
-                  width={24}
-                  height={24}
-                  className="invert"
-                />
-              </button>
             </>
           ) : (
             <div className="flex gap-4 items-center">
@@ -170,6 +221,20 @@ const Navbar = () => {
               >
                 Perfil
               </Link>
+              <Link
+                href="/myrecipes"
+                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Minhas Receitas
+              </Link>
+              <Link
+                href="/myposts"
+                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Meus Posts
+              </Link>
               <button
                 onClick={() => {
                   handleLogout();
@@ -209,6 +274,52 @@ const Navbar = () => {
           )}
         </ul>
       </div>
+
+      {/* Dropdown Portal - Render only on client */}
+      {hasMounted &&
+        ReactDOM.createPortal(
+          <div
+            ref={dropdownRef}
+            className={`fixed w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-[1000] ${
+              isDropdownOpen ? "block" : "hidden"
+            }`}
+            style={{ top: dropdownPosition.top, right: dropdownPosition.right }}
+          >
+            <div className="py-1">
+              <Link
+                href="/userprofile"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Meu perfil
+              </Link>
+              <Link
+                href="/myrecipes"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Minhas Receitas
+              </Link>
+              <Link
+                href="/myposts"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Meus Posts
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsDropdownOpen(false);
+                }}
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import {
-  ApiResponse,
   PaginationParams,
   PaginationResponse,
   RecipeDiet,
@@ -35,9 +34,9 @@ export const getRecipeDiets = async ({
 
 export const getRecipeDiet = async (
   id: string
-): Promise<ApiResponse<RecipeDiet>> => {
+): Promise<RecipeDiet> => {
   try {
-    const response = await apiClient.get<ApiResponse<RecipeDiet>>(
+    const response = await apiClient.get<RecipeDiet>(
       `/recipe-diets/${id}`
     );
     return response.data;
@@ -49,9 +48,9 @@ export const getRecipeDiet = async (
 
 export const createRecipeDiet = async (
   data: FormData
-): Promise<ApiResponse<RecipeDiet>> => {
+): Promise<RecipeDiet> => {
   try {
-    const response = await apiClient.post<ApiResponse<RecipeDiet>>(
+    const response = await apiClient.post<RecipeDiet>(
       "/recipe-diets",
       data
     );
@@ -65,9 +64,9 @@ export const createRecipeDiet = async (
 export const updateRecipeDiet = async (
   id: string,
   data: FormData
-): Promise<ApiResponse<RecipeDiet>> => {
+): Promise<RecipeDiet> => {
   try {
-    const response = await apiClient.put<ApiResponse<RecipeDiet>>(
+    const response = await apiClient.put<RecipeDiet>(
       `/recipe-diets/${id}`,
       data
     );
@@ -80,9 +79,9 @@ export const updateRecipeDiet = async (
 
 export const deleteRecipeDiet = async (
   id: string
-): Promise<ApiResponse<void>> => {
+): Promise<void> => {
   try {
-    const response = await apiClient.delete<ApiResponse<void>>(
+    const response = await apiClient.delete<void>(
       `/recipe-diets/${id}`
     );
     return response.data;

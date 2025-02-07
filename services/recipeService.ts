@@ -1,5 +1,4 @@
 import {
-  ApiResponse,
   PaginationParams,
   PaginationResponse,
   Recipe,
@@ -37,9 +36,9 @@ export const getRecipes = async ({
   }
 };
 
-export const getRecipe = async (id: string): Promise<ApiResponse<Recipe>> => {
+export const getRecipe = async (id: string): Promise<Recipe> => {
   try {
-    const response = await apiClient.get<ApiResponse<Recipe>>(`/recipes/${id}`);
+    const response = await apiClient.get<Recipe>(`/recipes/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching recipe with ID ${id}:`, error);
@@ -47,14 +46,9 @@ export const getRecipe = async (id: string): Promise<ApiResponse<Recipe>> => {
   }
 };
 
-export const createRecipe = async (
-  data: FormData
-): Promise<ApiResponse<Recipe>> => {
+export const createRecipe = async (data: FormData): Promise<Recipe> => {
   try {
-    const response = await apiClient.post<ApiResponse<Recipe>>(
-      "/recipes",
-      data
-    );
+    const response = await apiClient.post<Recipe>("/recipes", data);
     return response.data;
   } catch (error) {
     console.error("Error creating recipe:", error);
@@ -65,12 +59,9 @@ export const createRecipe = async (
 export const updateRecipe = async (
   id: string,
   data: FormData
-): Promise<ApiResponse<Recipe>> => {
+): Promise<Recipe> => {
   try {
-    const response = await apiClient.put<ApiResponse<Recipe>>(
-      `/recipes/${id}`,
-      data
-    );
+    const response = await apiClient.put<Recipe>(`/recipes/${id}`, data);
     return response.data;
   } catch (error) {
     console.error(`Error updating recipe with ID ${id}:`, error);
@@ -78,11 +69,9 @@ export const updateRecipe = async (
   }
 };
 
-export const deleteRecipe = async (id: string): Promise<ApiResponse<void>> => {
+export const deleteRecipe = async (id: string): Promise<void> => {
   try {
-    const response = await apiClient.delete<ApiResponse<void>>(
-      `/recipes/${id}`
-    );
+    const response = await apiClient.delete<void>(`/recipes/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error deleting recipe with ID ${id}:`, error);

@@ -1,5 +1,4 @@
 import {
-  ApiResponse,
   PaginationParams,
   PaginationResponse,
   Post,
@@ -34,9 +33,9 @@ export const getPosts = async ({
   }
 };
 
-export const getPost = async (id: string): Promise<ApiResponse<Post>> => {
+export const getPost = async (id: string): Promise<Post> => {
   try {
-    const response = await apiClient.get<ApiResponse<Post>>(`/posts/${id}`);
+    const response = await apiClient.get<Post>(`/posts/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching post with ID ${id}:`, error);
@@ -44,9 +43,9 @@ export const getPost = async (id: string): Promise<ApiResponse<Post>> => {
   }
 };
 
-export const createPost = async (data: FormData): Promise<ApiResponse<Post>> => {
+export const createPost = async (data: FormData): Promise<Post> => {
   try {
-    const response = await apiClient.post<ApiResponse<Post>>("/posts", data);
+    const response = await apiClient.post<Post>("/posts", data);
     return response.data;
   } catch (error) {
     console.error("Error creating post:", error);
@@ -54,12 +53,9 @@ export const createPost = async (data: FormData): Promise<ApiResponse<Post>> => 
   }
 };
 
-export const updatePost = async (
-  id: string,
-  data: FormData
-): Promise<ApiResponse<Post>> => {
+export const updatePost = async (id: string, data: FormData): Promise<Post> => {
   try {
-    const response = await apiClient.put<ApiResponse<Post>>(`/posts/${id}`, data);
+    const response = await apiClient.put<Post>(`/posts/${id}`, data);
     return response.data;
   } catch (error) {
     console.error(`Error updating post with ID ${id}:`, error);
@@ -67,9 +63,9 @@ export const updatePost = async (
   }
 };
 
-export const deletePost = async (id: string): Promise<ApiResponse<void>> => {
+export const deletePost = async (id: string): Promise<void> => {
   try {
-    const response = await apiClient.delete<ApiResponse<void>>(`/posts/${id}`);
+    const response = await apiClient.delete<void>(`/posts/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error deleting post with ID ${id}:`, error);

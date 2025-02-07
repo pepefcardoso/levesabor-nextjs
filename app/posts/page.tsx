@@ -33,11 +33,11 @@ export default function PostsHome() {
       const response: PaginationResponse<Post> = await getPosts({
         filters: {
           ...filters,
-          title: search,
+          search: search,
         },
         pagination: {
           page,
-          perPage: 10,
+          per_page: 10,
         },
       });
       setPosts(response.data);
@@ -53,7 +53,7 @@ export default function PostsHome() {
         await getPostCategories({
           pagination: {
             page: 1,
-            perPage: 100,
+            per_page: 100,
           },
         });
       setCategories(response.data);

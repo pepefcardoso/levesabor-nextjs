@@ -1,7 +1,7 @@
 // services/authService.ts
 import useAuthStore from "../store/authStore";
 import apiClient from "./apiClient";
-import { UsersService } from "./userService";
+import { getCurrentUser } from "./userService";
 
 export const AuthService = {
   async login(email: string, password: string) {
@@ -19,7 +19,7 @@ export const AuthService = {
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       // Get user details using UsersService
-      const user = await UsersService.getCurrentUser();
+      const user = await getCurrentUser();
       
       // Update auth store
       useAuthStore.getState().login(token, user);
