@@ -12,19 +12,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuthStore();
   const router = useRouter();
-
-  // Determine if we're still checking for the authenticated user.
-  // For example, if there's an auth token in localStorage but no user in state,
-  // assume we're still loading.
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    // If there's a token but no user info, simulate a loading period.
     if (token && !user) {
       setTimeout(() => {
         setAuthLoading(false);
-      }, 500); // Adjust delay as needed
+      }, 500);
     } else {
       setAuthLoading(false);
     }
@@ -79,7 +74,7 @@ const Navbar = () => {
                   href="/userprofile"
                   className="flex items-center gap-2 hover:underline"
                 >
-                  <span className="text-white">Bem vindo, {user.name}</span>
+                  <span className="text-white">Bem-vindo, {user.name}</span>
                   {user.image ? (
                     <Image
                       src={user.image?.url}
@@ -97,7 +92,7 @@ const Navbar = () => {
                   )}
                 </Link>
               </div>
-              {/* Logout icon button */}
+              {/* Logout Button */}
               <button onClick={handleLogout} className="hover:font-bold">
                 <Image
                   src="/logout.svg"
@@ -109,12 +104,20 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <Link
-              href="/login"
-              className="text-white hover:font-bold whitespace-nowrap"
-            >
-              Entrar ou cadastrar-se
-            </Link>
+            <div className="flex gap-4 items-center">
+              <Link
+                href="/login"
+                className="text-white hover:font-bold flex items-center justify-center"
+              >
+                Entrar
+              </Link>
+              <Link
+                href="/register"
+                className="bg-white text-green-800 font-semibold px-4 py-2 rounded-md hover:opacity-80 transition mx-auto max-w-max"
+              >
+                Cadastrar
+              </Link>
+            </div>
           )}
         </div>
 
@@ -196,11 +199,11 @@ const Navbar = () => {
                 Entrar
               </Link>
               <Link
-                href="/registrar"
-                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
+                href="/register"
+                className="bg-white text-green-800 font-semibold px-4 py-2 rounded-full hover:opacity-80 transition mx-auto w-1/2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Cadastrar-se
+                Cadastrar
               </Link>
             </>
           )}
