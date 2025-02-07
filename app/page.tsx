@@ -5,22 +5,10 @@ import { useEffect, useState } from "react";
 import { getRecipes } from "../services/recipeService";
 import RecipeCard from "../components/RecipeCard";
 import CardSkeleton from "../components/CardSkeleton";
-import { Post, Recipe } from "../typings/api";
+import { PaginationResponse, Post, Recipe } from "../typings/api";
 import PostCard from "../components/PostCard";
 import { getPosts } from "../services/postService";
 import NewsletterForm from "../components/NewsletterForm";
-
-interface RecipePaginationResponse {
-  data: Recipe[];
-  current_page: number;
-  last_page: number;
-}
-
-interface PostPaginationResponse {
-  data: Post[];
-  current_page: number;
-  last_page: number;
-}
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -30,36 +18,40 @@ export default function Home() {
 
   const fetchRecipes = async () => {
     try {
-      const response: RecipePaginationResponse = await getRecipes({
-        page: 1,
-        perPage: 4,
+      const response: PaginationResponse<Recipe> = await getRecipes({
+        filters: undefined,
+        pagination: {
+          page: 1,
+          perPage: 4
+      }
       });
       setRecipes(response.data);
     } catch (err: any) {
       setError(err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
   const fetchPosts = async () => {
     try {
-      const response: PostPaginationResponse = await getPosts({
-        page: 1,
-        perPage: 4,
+      const response: PaginationResponse<Post> = await getPosts({
+        filters: undefined,
+        pagination: {
+          page: 1,
+          perPage: 4
+      }
       });
       setPosts(response.data);
     } catch (err: any) {
       setError(err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchRecipes();
-    fetchPosts();
-  });
+    setLoading(true);
+    Promise.all([fetchRecipes(), fetchPosts()])
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <section className="max-container padding-container flex flex-col gap-10 py-12 pb-12 lg:py-16">

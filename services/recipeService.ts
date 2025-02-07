@@ -1,35 +1,91 @@
-import { Recipe } from '../typings/api';
-import apiClient from './apiClient';
+import {
+  ApiResponse,
+  PaginationParams,
+  PaginationResponse,
+  Recipe,
+  RecipeFilters,
+} from "../typings/api";
+import apiClient from "./apiClient";
 
-interface RecipePaginationResponse {
-  data: Recipe[];
-  current_page: number;
-  last_page: number;
-}
+export const getRecipes = async ({
+  filters,
+  pagination,
+}: {
+  filters?: RecipeFilters;
+  pagination: PaginationParams;
+}): Promise<PaginationResponse<Recipe>> => {
+  try {
+    const response = await apiClient.get<PaginationResponse<Recipe>>(
+      "/recipes",
+      {
+        params: {
+          ...filters,
+          page: pagination.page,
+          per_page: pagination.perPage,
+        },
+      }
+    );
 
-interface Filters {
-  title: string;
-  category_id: string;
-  diets: string[];
-}
+    if (!response.data || !Array.isArray(response.data.data)) {
+      throw new Error("Invalid response structure");
+    }
 
-export const getRecipes = async ({ filters, page, perPage }: { filters?: Filters; page: number; perPage: number }): Promise<RecipePaginationResponse> => {
-  const response = await apiClient.get('/recipes', {
-    params: {
-      title: filters?.title,
-      category_id: filters?.category_id,
-      diets: filters?.diets.join(','),
-      page: page,
-      per_page: perPage,
-    },
-  });
-  return response.data;
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    throw new Error("Failed to fetch recipes");
+  }
 };
 
-export const getRecipe = async (id: string) => {
-  return apiClient.get(`/recipes/${id}`);
+export const getRecipe = async (id: string): Promise<ApiResponse<Recipe>> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Recipe>>(`/recipes/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching recipe with ID ${id}:`, error);
+    throw new Error("Failed to fetch recipe");
+  }
 };
 
-export const createRecipe = async (data: FormData) => {
-  return apiClient.post('/recipes', data);
+export const createRecipe = async (
+  data: FormData
+): Promise<ApiResponse<Recipe>> => {
+  try {
+    const response = await apiClient.post<ApiResponse<Recipe>>(
+      "/recipes",
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error creating recipe:", error);
+    throw new Error("Failed to create recipe");
+  }
+};
+
+export const updateRecipe = async (
+  id: string,
+  data: FormData
+): Promise<ApiResponse<Recipe>> => {
+  try {
+    const response = await apiClient.put<ApiResponse<Recipe>>(
+      `/recipes/${id}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating recipe with ID ${id}:`, error);
+    throw new Error("Failed to update recipe");
+  }
+};
+
+export const deleteRecipe = async (id: string): Promise<ApiResponse<void>> => {
+  try {
+    const response = await apiClient.delete<ApiResponse<void>>(
+      `/recipes/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting recipe with ID ${id}:`, error);
+    throw new Error("Failed to delete recipe");
+  }
 };

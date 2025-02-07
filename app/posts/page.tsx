@@ -2,59 +2,34 @@
 
 import React, { useEffect, useState } from "react";
 import PostCard from "../../components/PostCard";
-import PostCategoryCard from "../../components/PostCategoryCard";
 import NewsletterForm from "../../components/NewsletterForm";
-import { Post, PostCategory, PostTopic } from "../../typings/api";
+import { PaginationResponse, Post, PostFilters } from "../../typings/api";
 import { getPosts } from "../../services/postService";
 import CardSkeleton from "../../components/CardSkeleton";
-import PostTopicCard from "../../components/PostTopicCard";
-import { getPostCategories } from "../../services/postCategoryService";
-import { getPostTopics } from "../../services/postTopicService";
-
-interface PaginationResponse<T> {
-  data: T[];
-  current_page: number;
-  last_page: number;
-}
 
 export default function PostsHome() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [categories, setCategories] = useState<PostCategory[]>([]);
-  const [topics, setTopics] = useState<PostTopic[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<PostFilters>({});
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (page: number, search: string, filters: PostFilters) => {
     try {
       const response: PaginationResponse<Post> = await getPosts({
-        page: 1,
-        perPage: 4,
+        filters: {
+          ...filters,
+          title: search, // Add search query to filters
+        },
+        pagination: {
+          page,
+          perPage: 10, // Show 10 items per page
+        },
       });
       setPosts(response.data);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const response: PostCategory[] =
-        await getPostCategories();
-      setCategories(response);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchTopics = async () => {
-    try {
-      const response: PostTopic[] =
-        await getPostTopics();
-      setTopics(response);
+      setTotalPages(response.last_page);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -63,64 +38,93 @@ export default function PostsHome() {
   };
 
   useEffect(() => {
-    fetchPosts();
-    fetchCategories();
-    fetchTopics();
-  });
+    setLoading(true);
+    fetchPosts(currentPage, searchQuery, filters);
+  }, [currentPage, searchQuery, filters]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when searching
+  };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+    setCurrentPage(1); // Reset to the first page when applying filters
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl w-full">
       <div className="px-4">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-left">
-            Últimos Posts
-          </h2>
+        {/* Search Bar */}
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search posts..."
+            value={searchQuery}
+            onChange={handleSearch}
+            className="w-full p-2 border border-gray-300 rounded-md"
+          />
         </div>
 
+        {/* Filters */}
+        <div className="mb-6 flex gap-4">
+          <select
+            name="category_id"
+            onChange={handleFilterChange}
+            className="p-2 border border-gray-300 rounded-md"
+          >
+            <option value="">All Categories</option>
+            {/* Populate with actual categories */}
+            <option value="1">Category 1</option>
+            <option value="2">Category 2</option>
+          </select>
+          <select
+            name="topics"
+            onChange={handleFilterChange}
+            className="p-2 border border-gray-300 rounded-md"
+          >
+            <option value="">All Topics</option>
+            {/* Populate with actual topics */}
+            <option value="1">Topic 1</option>
+            <option value="2">Topic 2</option>
+          </select>
+        </div>
+
+        {/* Error Message */}
         {error && <div className="text-red-500 mb-4">{error}</div>}
 
+        {/* Posts Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {loading
-            ? [1, 2, 3, 4].map((skeletonId) => (
+            ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((skeletonId) => (
                 <CardSkeleton key={skeletonId} />
               ))
             : posts.map((post) => <PostCard key={post.id} post={post} />)}
         </div>
-      </div>
 
-      <div className="px-4">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-left">
-            Categorias
-          </h2>
-        </div>
-
-        {error && <div className="text-red-500 mb-4">{error}</div>}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {loading
-            ? [1, 2, 3, 4].map((skeletonId) => (
-                <CardSkeleton key={skeletonId} />
-              ))
-            : categories.map((category) => <PostCategoryCard key={category.id} category={category} />)}
-        </div>
-      </div>
-
-      <div className="px-4">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-left">
-            Tópicos
-          </h2>
-        </div>
-
-        {error && <div className="text-red-500 mb-4">{error}</div>}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {loading
-            ? [1, 2, 3, 4].map((skeletonId) => (
-                <CardSkeleton key={skeletonId} />
-              ))
-            : topics.map((topic) => <PostTopicCard key={topic.id} topic={topic} />)}
+        {/* Pagination */}
+        <div className="flex justify-center mt-8">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`mx-1 px-3 py-1 border ${
+                currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-gray-700"
+              } rounded-md`}
+            >
+              {index + 1}
+            </button>
+          ))}
         </div>
       </div>
 

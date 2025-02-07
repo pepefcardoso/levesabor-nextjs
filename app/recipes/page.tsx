@@ -1,73 +1,60 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RecipeCard from "../../components/RecipeCard";
-import RecipeCategoryCard from "../../components/RecipeCategoryCard";
-import RecipeDietCard from "../../components/RecipeDietCard";
-import {
-  DUMMY_RECIPE_CATEGORIES,
-  DUMMY_RECIPE_DIETS,
-  DUMMY_RECIPES,
-} from "../../constants";
+import NewsletterForm from "../../components/NewsletterForm";
+import { PaginationResponse, Recipe } from "../../typings/api";
+import { getRecipes } from "../../services/recipeService";
+import CardSkeleton from "../../components/CardSkeleton";
 
-const Page = () => {
+export default function RecipesHome() {
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchRecipes = async () => {
+    try {
+      const response: PaginationResponse<Recipe> = await getRecipes({
+        filters: undefined,
+        pagination: {
+          page: 1,
+          perPage: 4,
+        },
+      });
+      setRecipes(response.data);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    Promise.all([fetchRecipes()])
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
-    <div className="container mx-auto px-6 py-10 max-w-6xl w-full">
-      {/* Title for Recipes */}
-      <h1 className="text-3xl sm:text-4xl font-bold text-left mb-8">
-        Nossas principais escolhas
-      </h1>
+    <div className="container mx-auto px-4 py-8 max-w-5xl w-full">
+      <div className="px-4">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-left">
+            Últimos Recipes
+          </h2>
+        </div>
 
-      {/* Recipe Cards Grid (first 4 recipes) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-        {DUMMY_RECIPES.slice(0, 4).map((recipe, index) => (
-          <RecipeCard
-            key={index}
-            id={recipe.id.toString()}
-            title={recipe.title}
-            description={recipe.description}
-            imageSrc={recipe.imageSrc}
-            diets={recipe.diets}
-            category={recipe.category}
-          />
-        ))}
+        {error && <div className="text-red-500 mb-4">{error}</div>}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {loading
+            ? [1, 2, 3, 4].map((skeletonId) => (
+                <CardSkeleton key={skeletonId} />
+              ))
+            : recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)}
+        </div>
       </div>
 
-      {/* Title for Categories */}
-      <h2 className="text-2xl sm:text-3xl font-bold text-left mb-8">
-        Por categorias
-      </h2>
-
-      {/* Category Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mb-12">
-        {DUMMY_RECIPE_CATEGORIES.map((category, index) => (
-          <RecipeCategoryCard
-            key={index}
-            title={category.title}
-            imageSrc={category.imageSrc}
-            id={category.id}
-          />
-        ))}
-      </div>
-
-      {/* Title for Diets */}
-      <h2 className="text-2xl sm:text-3xl font-bold text-left mb-8">
-        Por dietas
-      </h2>
-
-      {/* Diet Cards Grid */}
-      <div className="grid auto-rows-[180px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-12">
-        {DUMMY_RECIPE_DIETS.map((diet, index) => (
-          <RecipeDietCard
-            key={index}
-            diet={diet.title}
-            imageSrc={diet.imageSrc}
-            link={`/diets/${diet.id}`}
-          />
-        ))}
-      </div>
+      <NewsletterForm />
     </div>
   );
-};
-
-export default Page;
+}

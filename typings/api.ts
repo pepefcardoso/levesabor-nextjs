@@ -111,12 +111,31 @@ export interface RecipeUnit {
   normalizedName: string;
 }
 
-// export interface RecipeFilterParams {
-//   title?: string;
-//   categoryId?: number;
-//   diets?: number[];
-//   orderBy?: 'title' | 'created_at' | 'time' | 'difficulty';
-//   orderDirection?: 'asc' | 'desc';
-//   userId?: number;
-//   perPage?: number;
-// }
+
+export interface PaginationParams {
+  page: number;
+  perPage: number;
+}
+
+export interface PaginationResponse<T> {
+  data: T[];
+  current_page: number;
+  last_page: number;
+}
+
+export interface RecipeFilters {
+  title?: string;
+  category_id?: string;
+  diets?: string[];
+}
+
+export interface PostFilters {
+  title?: string;
+  category_id?: string;
+  topics?: string[];
+}
+
+export type ApiResponse<T> = {
+  data: T;
+  message?: string;
+};
