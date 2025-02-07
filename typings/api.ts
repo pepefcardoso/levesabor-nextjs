@@ -45,14 +45,12 @@ export interface PostCategory {
   id: string;
   name: string;
   normalizedName: string;
-  image?: Image;
 }
 
 export interface PostTopic {
   id: string;
   name: string;
   normalizedName: string;
-  image?: Image;
 }
 
 export interface Recipe {
@@ -61,7 +59,6 @@ export interface Recipe {
   description: string;
   time: number;
   portion: number;
-  //enum
   difficulty: number;
   categoryid: string;
   category?: RecipeCategory;
@@ -79,14 +76,12 @@ export interface RecipeCategory {
   id: string;
   name: string;
   normalizedName: string;
-  image?: Image;
 }
 
 export interface RecipeDiet {
   id: string;
   name: string;
   normalizedName: string;
-  image?: Image;
 }
 
 export interface RecipeIngredient {
@@ -111,7 +106,6 @@ export interface RecipeUnit {
   normalizedName: string;
 }
 
-
 export interface PaginationParams {
   page: number;
   perPage: number;
@@ -126,7 +120,7 @@ export interface PaginationResponse<T> {
 export interface RecipeFilters {
   title?: string;
   category_id?: string;
-  diets?: string[];
+  diets?: string[]; //Diets Id's
 }
 
 export interface PostFilters {
