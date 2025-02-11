@@ -14,6 +14,7 @@ import { getRecipes } from "../../services/recipeService";
 import CardSkeleton from "../../components/CardSkeleton";
 import { getRecipeCategories } from "../../services/recipeCategoryService";
 import { getRecipeDiets } from "../../services/recipeDietService";
+import EmptyList from "../../components/EmptyList";
 
 export default function RecipesHome() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -198,21 +199,31 @@ export default function RecipesHome() {
             </div>
           </div>
 
-          <div className="w-full md:w-3/4">
+          <div className="w-full md:w-3/4 flex flex-col">
+            {" "}
             {error && (
               <div className="text-red-500 mb-4 text-center">{error}</div>
             )}
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {loading
-                ? Array.from({ length: 10 }).map((_, index) => (
+            <div className="flex-grow">
+              {" "}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
+                {" "}
+                {loading ? (
+                  Array.from({ length: 10 }).map((_, index) => (
                     <CardSkeleton key={`skeleton-${index}`} />
                   ))
-                : recipes.map((recipe) => (
+                ) : recipes.length > 0 ? (
+                  recipes.map((recipe) => (
                     <RecipeCard key={recipe.id} recipe={recipe} />
-                  ))}
+                  ))
+                ) : (
+                  <div className="col-span-full h-full flex items-center justify-center">
+                    {" "}
+                    <EmptyList message="Nenhuma receita encontrada." />
+                  </div>
+                )}
+              </div>
             </div>
-
             {totalPages > 1 && (
               <div className="flex justify-center mt-8 flex-wrap gap-2">
                 <button

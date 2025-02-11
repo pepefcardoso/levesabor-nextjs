@@ -19,6 +19,7 @@ const PostDetails = () => {
       const fetchPost = async () => {
         try {
           const post: Post = await getPost(id as string);
+          console.log("Post:", post);
           setPost(post);
         } catch (err: any) {
           setError(err.message);

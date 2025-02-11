@@ -12,6 +12,7 @@ import {
 import { getPosts } from "../../services/postService";
 import CardSkeleton from "../../components/CardSkeleton";
 import { getPostCategories } from "../../services/postCategoryService";
+import EmptyList from "../../components/EmptyList";
 
 export default function PostsHome() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -42,8 +43,12 @@ export default function PostsHome() {
       });
       setPosts(response.data);
       setTotalPages(response.last_page);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     }
   };
 
@@ -57,8 +62,12 @@ export default function PostsHome() {
           },
         });
       setCategories(response.data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     }
   };
 
@@ -128,12 +137,18 @@ export default function PostsHome() {
 
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {loading
-            ? Array.from({ length: 10 }).map((_, index) => (
-                <CardSkeleton key={`skeleton-${index}`} />
-              ))
-            : posts.map((post) => <PostCard key={post.id} post={post} />)}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
+          {loading ? (
+            Array.from({ length: 10 }).map((_, index) => (
+              <CardSkeleton key={`skeleton-${index}`} />
+            ))
+          ) : posts.length > 0 ? (
+            posts.map((post) => <PostCard key={post.id} post={post} />)
+          ) : (
+            <div className="col-span-full h-full flex items-center justify-center">
+              <EmptyList message="Nenhum post encontrado." />
+            </div>
+          )}
         </div>
 
         {totalPages > 1 && (
