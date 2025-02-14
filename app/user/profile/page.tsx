@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getCurrentUser, updateUser, deleteUser } from "../../services/userService";
-import EmptyList from "../../components/EmptyList";
-import { User } from "../../typings/api";
-import { sanitizeImageUrl } from "../../tools/helper";
+import { getCurrentUser, updateUser, deleteUser } from "../../../services/userService";
+import EmptyList from "../../../components/EmptyList";
+import { User } from "../../../typings/api";
+import { sanitizeImageUrl } from "../../../tools/helper";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { UserProfileSkeleton } from "../../components/UserProfileSkeleton";
+import { UserProfileSkeleton } from "../../../components/UserProfileSkeleton";
 
 export default function UserProfile() {
   const router = useRouter();

@@ -121,7 +121,7 @@ const Navbar = () => {
             <>
               <div className="flex items-center gap-3">
                 <Link
-                  href="/profile"
+                  href="/user/profile"
                   className="flex items-center gap-2 hover:underline"
                 >
                   <span className="text-white">{user.name}</span>
@@ -210,7 +210,7 @@ const Navbar = () => {
           ) : user ? (
             <>
               <Link
-                href="/profile"
+                href="/user/profile"
                 className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -281,7 +281,7 @@ const Navbar = () => {
           >
             <div className="py-1">
               <Link
-                href="/profile"
+                href="/user/profile"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => setIsDropdownOpen(false)}
               >
