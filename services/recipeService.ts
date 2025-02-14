@@ -78,3 +78,33 @@ export const deleteRecipe = async (id: string): Promise<void> => {
     throw new Error("Failed to delete recipe");
   }
 };
+
+export const getMyRecipes = async ({
+  filters,
+  pagination,
+}: {
+  filters?: RecipeFilters;
+  pagination: PaginationParams;
+}): Promise<PaginationResponse<Recipe>> => {
+  try {
+    const response = await apiClient.get<PaginationResponse<Recipe>>(
+      "/recipes/my",
+      {
+        params: {
+          ...filters,
+          page: pagination.page,
+          per_page: pagination.per_page,
+        },
+      }
+    );
+
+    if (!response.data || !Array.isArray(response.data.data)) {
+      throw new Error("Invalid response structure");
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching my recipes:", error);
+    throw new Error("Failed to fetch my recipes");
+  }
+};
