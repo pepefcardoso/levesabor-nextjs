@@ -9,9 +9,9 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("authToken");
+  const { token } = useAuthStore.getState();
 
-  if (!(config.data instanceof FormData) && !config.headers?.["Content-Type"]) {
+  if (!(config.data instanceof FormData)) {
     config.headers["Content-Type"] = "application/json";
   }
 
@@ -31,8 +31,9 @@ apiClient.interceptors.response.use(
 
     if (isUnauthorized && !isLoginRequest && !originalRequest._retry) {
       originalRequest._retry = true;
-      localStorage.removeItem("authToken");
+
       useAuthStore.getState().logout();
+
       window.location.href = "/login";
     }
 

@@ -160,7 +160,7 @@ const Navbar = () => {
                 Entrar
               </Link>
               <Link
-                href="/register"
+                href="/login/register"
                 className="bg-white text-green-800 font-semibold px-4 py-2 rounded-md hover:opacity-80 transition mx-auto max-w-max"
               >
                 Cadastrar
@@ -259,7 +259,7 @@ const Navbar = () => {
                 Entrar
               </Link>
               <Link
-                href="/register"
+                href="/login/register"
                 className="bg-white text-green-800 font-semibold px-4 py-2 rounded-full hover:opacity-80 transition mx-auto w-1/2"
                 onClick={() => setIsMenuOpen(false)}
               >

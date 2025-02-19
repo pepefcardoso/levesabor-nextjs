@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getRecipes } from "../services/recipeService";
 import RecipeCard from "../components/RecipeCard";
 import CardSkeleton from "../components/CardSkeleton";
@@ -9,49 +9,62 @@ import { PaginationResponse, Post, Recipe } from "../typings/api";
 import PostCard from "../components/PostCard";
 import { getPosts } from "../services/postService";
 import NewsletterForm from "../components/NewsletterForm";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [recipesLoaded, setRecipesLoaded] = useState(false);
+  const [postsLoaded, setPostsLoaded] = useState(false);
 
-  const fetchRecipes = async () => {
+  const fetchRecipes = useCallback(async () => {
     try {
       const response: PaginationResponse<Recipe> = await getRecipes({
         filters: undefined,
-        pagination: {
-          page: 1,
-          per_page: 4
-      }
+        pagination: { page: 1, per_page: 4 },
       });
       setRecipes(response.data);
-    } catch (err: any) {
-      setError(err.message);
+      setRecipesLoaded(true);
+    } catch {
+      toast.error("Por favor, recarregue a página", {
+        position: "bottom-left",
+      });
+      setRecipesLoaded(false);
     }
-  };
+  }, []);
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       const response: PaginationResponse<Post> = await getPosts({
         filters: undefined,
-        pagination: {
-          page: 1,
-          per_page: 4
-      }
+        pagination: { page: 1, per_page: 4 },
       });
       setPosts(response.data);
-    } catch (err: any) {
-      setError(err.message);
+      setPostsLoaded(true);
+    } catch {
+      toast.error("Por favor, recarregue a página", {
+        position: "bottom-left",
+      });
+      setPostsLoaded(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    setLoading(true);
-    Promise.all([fetchRecipes(), fetchPosts()])
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+    let isMounted = true;
+
+    const initFetch = () => {
+      if (isMounted) {
+        fetchRecipes();
+        fetchPosts();
+      }
+    };
+
+    initFetch();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [fetchRecipes, fetchPosts]);
 
   return (
     <section className="max-container padding-container flex flex-col gap-10 py-12 pb-12 lg:py-16">
@@ -72,10 +85,8 @@ export default function Home() {
           </Link>
         </div>
 
-        {error && <div className="text-red-500 mb-4">{error}</div>}
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {loading
+          {!recipesLoaded
             ? [1, 2, 3, 4].map((skeletonId) => (
                 <CardSkeleton key={skeletonId} />
               ))
@@ -93,10 +104,8 @@ export default function Home() {
           </Link>
         </div>
 
-        {error && <div className="text-red-500 mb-4">{error}</div>}
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {loading
+          {!postsLoaded
             ? [1, 2, 3, 4].map((skeletonId) => (
                 <CardSkeleton key={skeletonId} />
               ))

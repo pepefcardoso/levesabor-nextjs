@@ -2,8 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { User } from "../typings/api";
 
-
-
 interface AuthState {
   token: string | null;
   user: User | null;

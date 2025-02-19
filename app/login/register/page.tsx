@@ -1,7 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createUser } from "../../services/userService";
+import { createUser } from "../../../services/userService";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -27,24 +29,31 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      setError("As senhas não coincidem");
       return;
     }
 
     setLoading(true);
     setError("");
 
+    // Convert the formData object into FormData
+    const form = new FormData();
+    Object.keys(formData).forEach((key) => {
+      form.append(key, formData[key as keyof typeof formData]);
+    });
+
     try {
-      const success = await createUser(formData);
+      const success = await createUser(form); // Pass the FormData instead of the object
 
       if (success) {
-        router.push("/login");
+        toast.success("Cadastro realizado com sucesso!");
+        setTimeout(() => router.push("/login"), 3000);
       } else {
-        setError("Registration failed. Please try again.");
+        setError("Falha no cadastro. Tente novamente.");
       }
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "An unexpected error occurred"
+        err instanceof Error ? err.message : "Ocorreu um erro inesperado"
       );
     } finally {
       setLoading(false);
@@ -52,7 +61,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <Toaster position="bottom-left" />
       <div className="max-w-lg w-full p-8 space-y-6 bg-white rounded-lg shadow-lg">
         <div className="text-left">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
@@ -60,10 +70,7 @@ export default function RegisterPage() {
           </h1>
           <p className="text-gray-500 text-base sm:text-lg">
             Já possui conta?{" "}
-            <a
-              href="/login"
-              className="text-blue-600 hover:underline font-medium"
-            >
+            <a href="/login" className="text-black hover:underline font-medium">
               Faça seu login
             </a>
           </p>
@@ -111,7 +118,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full px-6 py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-medium disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
+            className="w-full px-6 py-3 text-black bg-yellow-500 rounded-md hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 font-medium disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
           >
             {loading ? (
               <span className="flex items-center justify-center">

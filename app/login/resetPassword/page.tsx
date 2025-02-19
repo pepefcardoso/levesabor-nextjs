@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { AuthService } from "../../services/authService";
+import { AuthService } from "../../../services/authService";
 
-export default function LoginPage() {
+export default function ResetPasswordPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -17,17 +16,19 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const success = await AuthService.login(email, password);
-      if (success) {
-        router.push("/");
-      }
-    } catch (err: any) {
+      await AuthService.resetPassword(email);
+      toast.success(
+        "Um e-mail foi enviado com instruções para redefinir sua senha!",
+        {
+          position: "bottom-left",
+        }
+      );
+      setTimeout(() => router.push("/login"), 3000);
+    } catch (err: unknown) {
       const errorMessage =
-        err.response && err.response.data && err.response.data.message
-          ? err.response.data.message
-          : err.request
-          ? "Network error. Please check your internet connection."
-          : err.message || "Login failed. Please check your credentials.";
+        err instanceof Error
+          ? err.message
+          : "Falha ao enviar o link de redefinição. Tente novamente.";
       toast.error(errorMessage, {
         position: "bottom-left",
       });
@@ -40,12 +41,12 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-lg w-full p-8 space-y-8 bg-white rounded-lg shadow-lg">
         <div className="text-left">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Bem-vindo!</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Redefinir Senha
+          </h1>
           <p className="text-gray-400 text-lg">
-            Ainda não possui conta?{" "}
-            <a href="/login/register" className="text-black hover:underline">
-              Cadastre-se aqui
-            </a>
+            Digite seu endereço de e-mail e enviaremos um link para redefinir
+            sua senha.
           </p>
         </div>
 
@@ -56,7 +57,7 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="block text-lg font-medium text-gray-700"
               >
-                Email
+                E-mail
               </label>
               <input
                 type="email"
@@ -67,35 +68,8 @@ export default function LoginPage() {
                 required
                 disabled={loading}
                 autoComplete="email"
+                placeholder="Digite seu e-mail"
               />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-lg font-medium text-gray-700"
-              >
-                Senha
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
-                required
-                disabled={loading}
-                autoComplete="current-password"
-              />
-            </div>
-
-            <div className="text-lg text-right">
-              <a
-                href="/login/resetPassword"
-                className="text-black hover:underline"
-              >
-                Esqueceu sua senha?
-              </a>
             </div>
           </div>
 
@@ -104,9 +78,18 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full px-6 py-3 text-black bg-yellow-500 rounded-md hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
           >
-            {loading ? "Carregando..." : "Entrar"}
+            {loading ? "Enviando..." : "Enviar link de redefinição"}
           </button>
         </form>
+
+        <div className="text-lg text-center">
+          <p className="text-gray-400">
+            Lembrou sua senha?{" "}
+            <a href="/login" className="text-black hover:underline">
+              Faça login aqui
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
