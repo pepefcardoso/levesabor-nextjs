@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { createRecipe } from "../../../../services/recipeService";
 import {
   RecipeCategory,
@@ -14,12 +15,12 @@ import { getRecipeCategories } from "../../../../services/recipeCategoryService"
 import { getRecipeDiets } from "../../../../services/recipeDietService";
 import { IngredientForm } from "../../../../components/IngredientForm";
 import { StepForm } from "../../../../components/StepForm";
+import { FormSkeleton } from "../../../../components/FormSkeleton";
 
 export default function CreateRecipe() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState<RecipeCategory[]>([]);
   const [diets, setDiets] = useState<RecipeDiet[]>([]);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -38,6 +39,7 @@ export default function CreateRecipe() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoadingData(true);
       try {
         const [categoriesRes, dietsRes] = await Promise.all([
           getRecipeCategories({ pagination: { page: 1, per_page: 50 } }),
@@ -47,7 +49,11 @@ export default function CreateRecipe() {
         setDiets(dietsRes.data);
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
-        setError("Erro ao carregar categorias ou dietas. Tente novamente.");
+        toast.error("Erro ao carregar categorias ou dietas. Tente novamente.", {
+          position: "bottom-left",
+        });
+      } finally {
+        setIsLoadingData(false);
       }
     };
     fetchData();
@@ -62,57 +68,50 @@ export default function CreateRecipe() {
   };
 
   const handleDietChange = (dietId: string, checked: boolean) => {
-    setFormData((prev) => {
-      const updatedDiets = checked
+    setFormData((prev) => ({
+      ...prev,
+      diets: checked
         ? [...prev.diets, dietId]
-        : prev.diets.filter((id) => id !== dietId);
-      return { ...prev, diets: updatedDiets };
-    });
+        : prev.diets.filter((id) => id !== dietId),
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
+    setIsSubmitting(true);
     try {
       const data = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        if (key === "ingredients" || key === "steps" || key === "diets") {
+        if (["ingredients", "steps", "diets"].includes(key)) {
           data.append(key, JSON.stringify(value));
         } else {
           data.append(key, String(value));
         }
       });
       if (selectedImage) data.append("image", selectedImage);
-      const newRecipe = await createRecipe(data);
-      setSuccess("Receita criada com sucesso!");
-      setTimeout(() => {
-        router.push(`/recipes/${newRecipe.id}`);
-      }, 2000);
+
+      await createRecipe(data);
+      toast.success("Receita criada com sucesso!", { position: "bottom-left" });
+      setTimeout(() => router.push("/user/recipes"), 2000);
     } catch (err) {
-      setError("Falha ao criar a receita. Tente novamente.");
       console.error(err);
+      toast.error("Falha ao criar a receita. Tente novamente.", {
+        position: "bottom-left",
+      });
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
+
+  if (isLoadingData || isSubmitting) {
+    return <FormSkeleton />;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <h1 className="text-4xl font-bold text-gray-900 mb-8">
         Criar Nova Receita
       </h1>
-      {error && (
-        <div className="mb-6 p-4 text-red-700 bg-red-100 rounded-md">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="mb-6 p-4 text-green-700 bg-green-100 rounded-md">
-          {success}
-        </div>
-      )}
       <form onSubmit={handleSubmit} className="space-y-8">
         <div>
           <label className="block text-lg font-medium text-gray-700 mb-2">
@@ -270,10 +269,10 @@ export default function CreateRecipe() {
         <div className="flex justify-end">
           <button
             type="submit"
-            disabled={loading}
-            className="px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-lg transition-colors disabled:bg-gray-400"
+            disabled={isSubmitting}
+            className="px-8 py-3 bg-yellow-400 text-black rounded-md hover:bg-yellow-500 text-lg transition-colors disabled:bg-gray-400"
           >
-            {loading ? "Criando..." : "Criar Receita"}
+            {isSubmitting ? "Criando..." : "Criar Receita"}
           </button>
         </div>
       </form>
