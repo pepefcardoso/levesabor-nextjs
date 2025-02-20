@@ -72,3 +72,33 @@ export const deletePost = async (id: string): Promise<void> => {
     throw new Error("Failed to delete post");
   }
 };
+
+export const getMyPosts = async ({
+  filters,
+  pagination,
+}: {
+  filters?: PostFilters;
+  pagination: PaginationParams;
+}): Promise<PaginationResponse<Post>> => {
+  try {
+    const response = await apiClient.get<PaginationResponse<Post>>(
+      "/posts/my",
+      {
+        params: {
+          ...filters,
+          page: pagination.page,
+          per_page: pagination.per_page,
+        },
+      }
+    );
+
+    if (!response.data || !Array.isArray(response.data.data)) {
+      throw new Error("Invalid response structure");
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching my posts:", error);
+    throw new Error("Failed to fetch my posts");
+  }
+};

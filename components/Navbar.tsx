@@ -217,14 +217,14 @@ const Navbar = () => {
                 Perfil
               </Link>
               <Link
-                href="/myrecipes"
+                href="/user/recipes"
                 className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Minhas Receitas
               </Link>
               <Link
-                href="/myposts"
+                href="/user/posts"
                 className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -288,14 +288,14 @@ const Navbar = () => {
                 Meu perfil
               </Link>
               <Link
-                href="/myrecipes"
+                href="/user/recipes"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => setIsDropdownOpen(false)}
               >
                 Minhas Receitas
               </Link>
               <Link
-                href="/myposts"
+                href="/user/posts"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => setIsDropdownOpen(false)}
               >
