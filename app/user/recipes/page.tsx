@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,7 +13,7 @@ import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
 import CardSkeleton from "../../../components/CardSkeleton";
 import EmptyList from "../../../components/EmptyList";
 
-export default function UserRecipes() {
+export default function ListUserRecipes() {
   const { user } = useAuthStore();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,11 +26,7 @@ export default function UserRecipes() {
       if (!user) throw new Error("Usuário não autenticado");
 
       const response: PaginationResponse<Recipe> = await getMyRecipes({
-        filters: {},
-        pagination: {
-          page: currentPage,
-          per_page: 10,
-        },
+        pagination: { page: currentPage, per_page: 10 },
       });
       setRecipes(response.data);
       setTotalPages(response.last_page);
