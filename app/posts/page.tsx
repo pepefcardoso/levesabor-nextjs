@@ -13,12 +13,12 @@ import { getPosts } from "../../services/postService";
 import CardSkeleton from "../../components/CardSkeleton";
 import { getPostCategories } from "../../services/postCategoryService";
 import EmptyList from "../../components/EmptyList";
+import toast from "react-hot-toast";
 
 export default function PostsHome() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<PostCategory[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,12 +43,11 @@ export default function PostsHome() {
       });
       setPosts(response.data);
       setTotalPages(response.last_page);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
+    } catch (err) {
+      toast.error("Failed to load posts. Please refresh the page", {
+        position: "bottom-left",
+      });
+      throw err;
     }
   };
 
@@ -62,12 +61,10 @@ export default function PostsHome() {
           },
         });
       setCategories(response.data);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
+    } catch {
+      toast.error("Failed to load categories. Please refresh the page", {
+        position: "bottom-left",
+      });
     }
   };
 
@@ -77,11 +74,12 @@ export default function PostsHome() {
 
   useEffect(() => {
     const loadPosts = async () => {
-      setLoading(true);
+      setIsLoaded(false);
       try {
         await fetchPosts(currentPage, searchQuery, filters);
-      } finally {
-        setLoading(false);
+        setIsLoaded(true);
+      } catch {
+        setIsLoaded(false);
       }
     };
     loadPosts();
@@ -135,10 +133,8 @@ export default function PostsHome() {
           </select>
         </div>
 
-        {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
-          {loading ? (
+          {!isLoaded ? (
             Array.from({ length: 10 }).map((_, index) => (
               <CardSkeleton key={`skeleton-${index}`} />
             ))

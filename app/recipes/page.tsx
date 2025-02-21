@@ -15,13 +15,13 @@ import CardSkeleton from "../../components/CardSkeleton";
 import { getRecipeCategories } from "../../services/recipeCategoryService";
 import { getRecipeDiets } from "../../services/recipeDietService";
 import EmptyList from "../../components/EmptyList";
+import toast from "react-hot-toast";
 
 export default function RecipesHome() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [categories, setCategories] = useState<RecipeCategory[]>([]);
   const [diets, setDiets] = useState<RecipeDiet[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,12 +46,11 @@ export default function RecipesHome() {
       });
       setRecipes(response.data);
       setTotalPages(response.last_page);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
+    } catch (err) {
+      toast.error("Failed to load recipes. Please refresh the page", {
+        position: "bottom-left",
+      });
+      throw err;
     }
   };
 
@@ -62,12 +61,10 @@ export default function RecipesHome() {
           pagination: { page: 1, per_page: 100 },
         });
       setCategories(response.data);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
+    } catch {
+      toast.error("Failed to load categories. Please refresh the page", {
+        position: "bottom-left",
+      });
     }
   };
 
@@ -77,12 +74,10 @@ export default function RecipesHome() {
         pagination: { page: 1, per_page: 100 },
       });
       setDiets(response.data);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
+    } catch {
+      toast.error("Failed to load diets. Please refresh the page", {
+        position: "bottom-left",
+      });
     }
   };
 
@@ -93,11 +88,12 @@ export default function RecipesHome() {
 
   useEffect(() => {
     const loadRecipes = async () => {
-      setLoading(true);
+      setIsLoaded(false);
       try {
         await fetchRecipes(currentPage, searchQuery, filters);
-      } finally {
-        setLoading(false);
+        setIsLoaded(true);
+      } catch {
+        setIsLoaded(false);
       }
     };
     loadRecipes();
@@ -200,15 +196,9 @@ export default function RecipesHome() {
           </div>
 
           <div className="w-full md:w-3/4 flex flex-col">
-            {" "}
-            {error && (
-              <div className="text-red-500 mb-4 text-center">{error}</div>
-            )}
             <div className="flex-grow">
-              {" "}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
-                {" "}
-                {loading ? (
+                {!isLoaded ? (
                   Array.from({ length: 10 }).map((_, index) => (
                     <CardSkeleton key={`skeleton-${index}`} />
                   ))
@@ -218,7 +208,6 @@ export default function RecipesHome() {
                   ))
                 ) : (
                   <div className="col-span-full h-full flex items-center justify-center">
-                    {" "}
                     <EmptyList message="Nenhuma receita encontrada." />
                   </div>
                 )}

@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getCurrentUser, updateUser, deleteUser } from "../../../services/userService";
-import EmptyList from "../../../components/EmptyList";
+import {
+  getCurrentUser,
+  updateUser,
+  deleteUser,
+} from "../../../services/userService";
 import { User } from "../../../typings/api";
 import { sanitizeImageUrl } from "../../../tools/helper";
 import Image from "next/image";
@@ -13,6 +16,7 @@ export default function UserProfile() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -36,6 +40,7 @@ export default function UserProfile() {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setIsSubmitting(true);
 
     if (!user) return;
 
@@ -47,6 +52,8 @@ export default function UserProfile() {
     } catch (err) {
       setError("Falha ao atualizar perfil");
       console.error(err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -63,7 +70,8 @@ export default function UserProfile() {
   };
 
   if (loading) return <UserProfileSkeleton />;
-  if (!user) return <EmptyList message="Usuário não encontrado" />;
+  if (!user)
+    return <div className="text-center py-20">Usuário não encontrado</div>;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -118,7 +126,8 @@ export default function UserProfile() {
               type="file"
               name="image"
               accept="image/*"
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -131,7 +140,8 @@ export default function UserProfile() {
                 <input
                   name="name"
                   defaultValue={user.name}
-                  className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+                  className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -152,7 +162,8 @@ export default function UserProfile() {
                   type="date"
                   name="birthday"
                   defaultValue={user.birthday?.split("T")[0] || ""}
-                  className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+                  className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -163,7 +174,8 @@ export default function UserProfile() {
                 <input
                   name="phone"
                   defaultValue={user.phone || ""}
-                  className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+                  className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isSubmitting}
                 />
               </div>
             </div>
@@ -171,9 +183,10 @@ export default function UserProfile() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-lg transition-colors"
+                className="px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
               >
-                Salvar Alterações
+                {isSubmitting ? "Salvando..." : "Salvar Alterações"}
               </button>
             </div>
           </form>

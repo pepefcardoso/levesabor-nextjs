@@ -21,13 +21,27 @@ export default function LoginPage() {
       if (success) {
         router.push("/");
       }
-    } catch (err: any) {
-      const errorMessage =
-        err.response && err.response.data && err.response.data.message
-          ? err.response.data.message
-          : err.request
-          ? "Network error. Please check your internet connection."
-          : err.message || "Login failed. Please check your credentials.";
+    } catch (err: unknown) {
+      let errorMessage = "Login failed. Please check your credentials.";
+
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        typeof err.response === "object" &&
+        err.response !== null &&
+        "data" in err.response &&
+        typeof err.response.data === "object" &&
+        err.response.data !== null &&
+        "message" in err.response.data
+      ) {
+        errorMessage = err.response.data.message as string;
+      } else if (typeof err === "object" && err !== null && "request" in err) {
+        errorMessage = "Network error. Please check your internet connection.";
+      }
+
       toast.error(errorMessage, {
         position: "bottom-left",
       });
@@ -63,7 +77,7 @@ export default function LoginPage() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 required
                 disabled={loading}
                 autoComplete="email"
@@ -82,7 +96,7 @@ export default function LoginPage() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 required
                 disabled={loading}
                 autoComplete="current-password"

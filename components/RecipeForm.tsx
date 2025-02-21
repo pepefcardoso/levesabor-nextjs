@@ -88,8 +88,9 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
           type="text"
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         />
       </div>
       <div>
@@ -101,8 +102,9 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         />
       </div>
       <div>
@@ -113,8 +115,9 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
           type="number"
           value={formData.time}
           onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         />
       </div>
       <div>
@@ -127,8 +130,9 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
           onChange={(e) =>
             setFormData({ ...formData, portion: e.target.value })
           }
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         />
       </div>
       <div>
@@ -143,7 +147,8 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
               difficulty: Number(e.target.value) as RecipeDifficultyEnum,
             })
           }
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isSubmitting}
         >
           {Object.values(RecipeDifficultyEnum)
             .filter((v): v is number => typeof v === "number")
@@ -163,8 +168,9 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
           onChange={(e) =>
             setFormData({ ...formData, category_id: e.target.value })
           }
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         >
           <option value="">Selecione uma categoria</option>
           {categories.map((category) => (
@@ -186,7 +192,8 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
                 value={diet.id}
                 checked={formData.diets.includes(diet.id)}
                 onChange={(e) => handleDietChange(diet.id, e.target.checked)}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
               />
               <span className="text-gray-700">{diet.name}</span>
             </label>
@@ -228,7 +235,8 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
           type="file"
           accept="image/*"
           onChange={handleImageChange}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isSubmitting}
         />
       </div>
       <div className="flex justify-end">

@@ -1,3 +1,4 @@
+// app/recipes/[id]/page.tsx
 "use client";
 
 import Image from "next/image";
@@ -7,24 +8,26 @@ import { Recipe } from "../../../typings/api";
 import { getRecipe } from "../../../services/recipeService";
 import { sanitizeImageUrl } from "../../../tools/helper";
 import PageLoadingSkeleton from "../../../components/PageLoadingSkeleton";
+import toast from "react-hot-toast";
 
 const RecipeDetails = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (id) {
       const fetchRecipe = async () => {
+        setIsLoaded(false);
         try {
-          const recipe: Recipe = await getRecipe(id as string);
-          setRecipe(recipe);
-        } catch (err: any) {
-          setError(err.message);
+          const data = await getRecipe(id as string);
+          setRecipe(data);
+          setIsLoaded(true);
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : "Failed to load recipe";
+          toast.error(message, { position: "bottom-left" });
           console.error("API Error:", err);
-        } finally {
-          setLoading(false);
         }
       };
 
@@ -32,12 +35,8 @@ const RecipeDetails = () => {
     }
   }, [id]);
 
-  if (loading) {
+  if (!isLoaded) {
     return <PageLoadingSkeleton />;
-  }
-
-  if (error) {
-    return <div className="text-center py-20 text-red-500">{error}</div>;
   }
 
   if (!recipe) {
@@ -72,6 +71,7 @@ const RecipeDetails = () => {
           width={600}
           height={340}
           className="rounded-lg object-cover w-full"
+          priority
         />
       </div>
 
@@ -105,7 +105,6 @@ const RecipeDetails = () => {
             <div className="flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded-full">
               {index + 1}
             </div>
-
             <p className="text-gray-800">{step.description}</p>
           </div>
         ))}
@@ -113,9 +112,9 @@ const RecipeDetails = () => {
 
       <h2 className="text-2xl font-semibold mb-4">Dietas</h2>
       <div className="flex flex-wrap gap-3 mb-8 text-left">
-        {recipe.diets?.map((diet, index) => (
+        {recipe.diets?.map((diet) => (
           <span
-            key={index}
+            key={diet.id}
             className="bg-yellow-200 text-yellow-800 text-sm font-semibold px-3 py-1 rounded"
           >
             {diet.name}

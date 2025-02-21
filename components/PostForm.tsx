@@ -72,60 +72,64 @@ export const PostForm: React.FC<PostFormProps> = ({
     <form onSubmit={handleSubmit} className="space-y-8">
       <div>
         <label className="block text-lg font-medium text-gray-700 mb-2">
-          Title
+          Título
         </label>
         <input
           type="text"
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
           maxLength={100}
+          disabled={isSubmitting}
         />
       </div>
 
       <div>
         <label className="block text-lg font-medium text-gray-700 mb-2">
-          Summary
+          Resumo
         </label>
         <textarea
           value={formData.summary}
           onChange={(e) =>
             setFormData({ ...formData, summary: e.target.value })
           }
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
           maxLength={255}
+          disabled={isSubmitting}
         />
       </div>
 
       <div>
         <label className="block text-lg font-medium text-gray-700 mb-2">
-          Content
+          Conteúdo
         </label>
         <textarea
           value={formData.content}
           onChange={(e) =>
             setFormData({ ...formData, content: e.target.value })
           }
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg h-64"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg h-64 disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         />
       </div>
 
       <div>
         <label className="block text-lg font-medium text-gray-700 mb-2">
-          Category
+          Categoria
         </label>
         <select
           value={formData.category_id}
           onChange={(e) =>
             setFormData({ ...formData, category_id: e.target.value })
           }
-          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+          className="w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         >
-          <option value="">Select a category</option>
+          <option value="">Selecione uma categoria</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -136,7 +140,7 @@ export const PostForm: React.FC<PostFormProps> = ({
 
       <div>
         <label className="block text-lg font-medium text-gray-700 mb-2">
-          Topics
+          Tópicos
         </label>
         <div className="flex flex-wrap gap-4">
           {topics.map((topic) => (
@@ -146,7 +150,8 @@ export const PostForm: React.FC<PostFormProps> = ({
                 value={topic.id}
                 checked={formData.topics.includes(topic.id)}
                 onChange={(e) => handleTopicChange(topic.id, e.target.checked)}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
               />
               <span className="text-gray-700">{topic.name}</span>
             </label>
@@ -156,7 +161,7 @@ export const PostForm: React.FC<PostFormProps> = ({
 
       <div>
         <label className="block text-lg font-medium text-gray-700 mb-2">
-          Featured Image
+          Imagem de Destaque
         </label>
         {previewImage && (
           <Image
@@ -171,8 +176,9 @@ export const PostForm: React.FC<PostFormProps> = ({
           type="file"
           accept="image/*"
           onChange={handleImageChange}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed"
           required
+          disabled={isSubmitting}
         />
       </div>
 
@@ -182,7 +188,7 @@ export const PostForm: React.FC<PostFormProps> = ({
           disabled={isSubmitting}
           className="px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-lg transition-colors disabled:bg-gray-400"
         >
-          {isSubmitting ? "Submitting..." : "Submit"}
+          {isSubmitting ? "Salvando..." : "Salvar"}
         </button>
       </div>
     </form>

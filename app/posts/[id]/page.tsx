@@ -7,25 +7,26 @@ import { Post } from "../../../typings/api";
 import { getPost } from "../../../services/postService";
 import { formatDate, sanitizeImageUrl } from "../../../tools/helper";
 import PageLoadingSkeleton from "../../../components/PageLoadingSkeleton";
+import toast from "react-hot-toast";
 
 const PostDetails = () => {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (id) {
       const fetchPost = async () => {
+        setIsLoaded(false);
         try {
-          const post: Post = await getPost(id as string);
-          console.log("Post:", post);
-          setPost(post);
-        } catch (err: any) {
-          setError(err.message);
+          const data = await getPost(id as string);
+          setPost(data);
+          setIsLoaded(true);
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : "Failed to load post";
+          toast.error(message, { position: "bottom-left" });
           console.error("API Error:", err);
-        } finally {
-          setLoading(false);
         }
       };
 
@@ -33,12 +34,8 @@ const PostDetails = () => {
     }
   }, [id]);
 
-  if (loading) {
+  if (!isLoaded) {
     return <PageLoadingSkeleton />;
-  }
-
-  if (error) {
-    return <div className="text-center py-20 text-red-500">{error}</div>;
   }
 
   if (!post) {
@@ -47,7 +44,6 @@ const PostDetails = () => {
 
   return (
     <div className="container mx-auto px-6 max-w-4xl py-6">
-
       <div className="mb-4">
         <span className="bg-pink-200 text-pink-700 text-xs font-semibold px-3 py-1 rounded">
           {post.category?.name}
@@ -65,6 +61,7 @@ const PostDetails = () => {
           width={800}
           height={450}
           className="rounded-md object-cover w-full"
+          priority
         />
       </div>
 
@@ -74,6 +71,7 @@ const PostDetails = () => {
         ))}
       </div>
 
+      {/* Fixed: Check if post.topics exists and has items */}
       {post.topics && post.topics.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           {post.topics.map((topic) => (
@@ -88,7 +86,6 @@ const PostDetails = () => {
       )}
 
       <div className="flex items-center space-x-4 border-t pt-4">
-
         <Image
           src={sanitizeImageUrl(post.user?.image?.url)}
           alt={post.user?.name || "Autor"}
@@ -96,7 +93,6 @@ const PostDetails = () => {
           height={50}
           className="rounded-full object-cover"
         />
-
         <div>
           <p className="text-gray-900 font-semibold">{post.user?.name}</p>
           <p className="text-gray-500 text-sm">

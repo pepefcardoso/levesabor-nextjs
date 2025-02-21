@@ -36,14 +36,13 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
 
-    // Convert the formData object into FormData
     const form = new FormData();
     Object.keys(formData).forEach((key) => {
       form.append(key, formData[key as keyof typeof formData]);
     });
 
     try {
-      const success = await createUser(form); // Pass the FormData instead of the object
+      const success = await createUser(form);
 
       if (success) {
         toast.success("Cadastro realizado com sucesso!");
@@ -106,10 +105,11 @@ export default function RegisterPage() {
                   type={field.type}
                   value={formData[field.id as keyof typeof formData]}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base transition-all"
+                  className="mt-1 block w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   required
                   minLength={field.type === "password" ? 6 : undefined}
                   maxLength={field.id === "phone" ? 15 : undefined}
+                  disabled={loading}
                 />
               </div>
             ))}
