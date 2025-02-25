@@ -3,10 +3,14 @@ import { RecipeStep } from "../typings/api";
 
 interface StepFormProps {
   onStepsChange: (steps: RecipeStep[]) => void;
+  initialSteps?: RecipeStep[];
 }
 
-export const StepForm = ({ onStepsChange }: StepFormProps) => {
-  const [steps, setSteps] = useState<RecipeStep[]>([]);
+export const StepForm = ({ 
+  onStepsChange,
+  initialSteps = []
+}: StepFormProps) => {
+  const [steps, setSteps] = useState<RecipeStep[]>(initialSteps);
 
   const addStep = () => {
     setSteps([

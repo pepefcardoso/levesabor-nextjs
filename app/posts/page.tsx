@@ -3,12 +3,7 @@
 import React, { useEffect, useState } from "react";
 import PostCard from "../../components/PostCard";
 import NewsletterForm from "../../components/NewsletterForm";
-import {
-  PaginationResponse,
-  Post,
-  PostCategory,
-  PostFilters,
-} from "../../typings/api";
+import { PaginationResponse, Post, PostCategory, PostFilters } from "../../typings/api";
 import { getPosts } from "../../services/postService";
 import CardSkeleton from "../../components/CardSkeleton";
 import { getPostCategories } from "../../services/postCategoryService";
@@ -25,26 +20,16 @@ export default function PostsHome() {
   const [tempSearch, setTempSearch] = useState("");
   const [filters, setFilters] = useState<PostFilters>({});
 
-  const fetchPosts = async (
-    page: number,
-    search: string,
-    filters: PostFilters
-  ) => {
+  const fetchPosts = async (page: number, search: string, filters: PostFilters) => {
     try {
       const response: PaginationResponse<Post> = await getPosts({
-        filters: {
-          ...filters,
-          search: search,
-        },
-        pagination: {
-          page,
-          per_page: 10,
-        },
+        filters: { ...filters, search },
+        pagination: { page, per_page: 10 },
       });
       setPosts(response.data);
       setTotalPages(response.last_page);
     } catch (err) {
-      toast.error("Failed to load posts. Please refresh the page", {
+      toast.error("Falha ao carregar os posts. Por favor, atualize a página.", {
         position: "bottom-left",
       });
       throw err;
@@ -53,16 +38,12 @@ export default function PostsHome() {
 
   const fetchCategories = async () => {
     try {
-      const response: PaginationResponse<PostCategory> =
-        await getPostCategories({
-          pagination: {
-            page: 1,
-            per_page: 100,
-          },
-        });
+      const response: PaginationResponse<PostCategory> = await getPostCategories({
+        pagination: { page: 1, per_page: 100 },
+      });
       setCategories(response.data);
     } catch {
-      toast.error("Failed to load categories. Please refresh the page", {
+      toast.error("Falha ao carregar as categorias. Por favor, atualize a página.", {
         position: "bottom-left",
       });
     }
@@ -104,10 +85,7 @@ export default function PostsHome() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl w-full">
       <div className="px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          Pesquise nossos posts
-        </h1>
-
+        <h1 className="text-3xl font-bold mb-8 text-left text-gray-800">Pesquise nossos posts</h1>
         <form onSubmit={handleSubmit} className="mb-6">
           <input
             type="text"
@@ -117,7 +95,6 @@ export default function PostsHome() {
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </form>
-
         <div className="mb-6 flex gap-4">
           <select
             name="category_id"
@@ -132,21 +109,17 @@ export default function PostsHome() {
             ))}
           </select>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
-          {!isLoaded ? (
-            Array.from({ length: 10 }).map((_, index) => (
-              <CardSkeleton key={`skeleton-${index}`} />
-            ))
-          ) : posts.length > 0 ? (
-            posts.map((post) => <PostCard key={post.id} post={post} />)
-          ) : (
-            <div className="col-span-full h-full flex items-center justify-center">
-              <EmptyList message="Nenhum post encontrado." />
-            </div>
-          )}
+          {!isLoaded
+            ? Array.from({ length: 10 }).map((_, index) => <CardSkeleton key={`skeleton-${index}`} />)
+            : posts.length > 0
+              ? posts.map((post) => <PostCard key={post.id} post={post} />)
+              : (
+                <div className="col-span-full h-full flex items-center justify-center">
+                  <EmptyList message="Nenhum post encontrado." />
+                </div>
+              )}
         </div>
-
         {totalPages > 1 && (
           <div className="flex justify-center mt-8 flex-wrap gap-2">
             <button
@@ -160,11 +133,10 @@ export default function PostsHome() {
               <button
                 key={index + 1}
                 onClick={() => handlePageChange(index + 1)}
-                className={`px-4 py-2 border ${
-                  currentPage === index + 1
+                className={`px-4 py-2 border ${currentPage === index + 1
                     ? "bg-blue-500 text-white border-blue-500"
                     : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                } rounded-md transition-colors`}
+                  } rounded-md transition-colors`}
               >
                 {index + 1}
               </button>
@@ -179,7 +151,6 @@ export default function PostsHome() {
           </div>
         )}
       </div>
-
       <NewsletterForm />
     </div>
   );

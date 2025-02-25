@@ -66,13 +66,29 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (["ingredients", "steps", "diets"].includes(key)) {
-        data.append(key, JSON.stringify(value));
-      } else {
-        data.append(key, String(value));
-      }
+
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("time", formData.time);
+    data.append("portion", formData.portion);
+    data.append("difficulty", String(formData.difficulty));
+    data.append("category_id", formData.category_id);
+
+    formData.diets.forEach(dietId => {
+      data.append("diets[]", dietId);
     });
+
+    formData.ingredients.forEach((ingredient, index) => {
+      data.append(`ingredients[${index}][name]`, ingredient.name);
+      data.append(`ingredients[${index}][quantity]`, String(ingredient.quantity));
+      data.append(`ingredients[${index}][unit_id]`, ingredient.unit_id);
+    });
+
+    formData.steps.forEach((step, index) => {
+      data.append(`steps[${index}][description]`, step.description);
+      data.append(`steps[${index}][order]`, String(index + 1));
+    });
+
     if (selectedImage) data.append("image", selectedImage);
 
     await onSubmit(data);
@@ -208,6 +224,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
           onIngredientsChange={(ingredients) =>
             setFormData({ ...formData, ingredients })
           }
+          initialIngredients={formData.ingredients}
         />
       </div>
       <div>
@@ -216,6 +233,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
         </label>
         <StepForm
           onStepsChange={(steps) => setFormData({ ...formData, steps })}
+          initialSteps={formData.steps}
         />
       </div>
       <div>

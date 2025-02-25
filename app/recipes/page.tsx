@@ -47,9 +47,10 @@ export default function RecipesHome() {
       setRecipes(response.data);
       setTotalPages(response.last_page);
     } catch (err) {
-      toast.error("Failed to load recipes. Please refresh the page", {
-        position: "bottom-left",
-      });
+      toast.error(
+        "Falha ao carregar receitas. Por favor, atualize a página.",
+        { position: "bottom-left" }
+      );
       throw err;
     }
   };
@@ -62,9 +63,10 @@ export default function RecipesHome() {
         });
       setCategories(response.data);
     } catch {
-      toast.error("Failed to load categories. Please refresh the page", {
-        position: "bottom-left",
-      });
+      toast.error(
+        "Falha ao carregar categorias. Por favor, atualize a página.",
+        { position: "bottom-left" }
+      );
     }
   };
 
@@ -75,9 +77,10 @@ export default function RecipesHome() {
       });
       setDiets(response.data);
     } catch {
-      toast.error("Failed to load diets. Please refresh the page", {
-        position: "bottom-left",
-      });
+      toast.error(
+        "Falha ao carregar dietas. Por favor, atualize a página.",
+        { position: "bottom-left" }
+      );
     }
   };
 
@@ -134,7 +137,6 @@ export default function RecipesHome() {
         <h1 className="text-3xl font-bold mb-8 text-left text-gray-800">
           Pesquisar Receitas
         </h1>
-
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
           <input
             type="text"
@@ -145,12 +147,11 @@ export default function RecipesHome() {
           />
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
           >
             Pesquisar
           </button>
         </form>
-
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full md:w-1/4">
             <div className="mb-6">
@@ -171,7 +172,6 @@ export default function RecipesHome() {
                 ))}
               </select>
             </div>
-
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Dietas
@@ -182,9 +182,7 @@ export default function RecipesHome() {
                     <input
                       type="checkbox"
                       value={diet.id.toString()}
-                      checked={
-                        filters.diets?.includes(diet.id.toString()) || false
-                      }
+                      checked={filters.diets?.includes(diet.id.toString()) || false}
                       onChange={handleDietChange}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
@@ -194,23 +192,22 @@ export default function RecipesHome() {
               </div>
             </div>
           </div>
-
           <div className="w-full md:w-3/4 flex flex-col">
             <div className="flex-grow">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
-                {!isLoaded ? (
-                  Array.from({ length: 10 }).map((_, index) => (
+                {!isLoaded
+                  ? Array.from({ length: 10 }).map((_, index) => (
                     <CardSkeleton key={`skeleton-${index}`} />
                   ))
-                ) : recipes.length > 0 ? (
-                  recipes.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipe={recipe} />
-                  ))
-                ) : (
-                  <div className="col-span-full h-full flex items-center justify-center">
-                    <EmptyList message="Nenhuma receita encontrada." />
-                  </div>
-                )}
+                  : recipes.length > 0
+                    ? recipes.map((recipe) => (
+                      <RecipeCard key={recipe.id} recipe={recipe} />
+                    ))
+                    : (
+                      <div className="col-span-full h-full flex items-center justify-center">
+                        <EmptyList message="Nenhuma receita encontrada." />
+                      </div>
+                    )}
               </div>
             </div>
             {totalPages > 1 && (
@@ -226,11 +223,10 @@ export default function RecipesHome() {
                   <button
                     key={index + 1}
                     onClick={() => handlePageChange(index + 1)}
-                    className={`px-4 py-2 border ${
-                      currentPage === index + 1
+                    className={`px-4 py-2 border ${currentPage === index + 1
                         ? "bg-blue-500 text-white border-blue-500"
                         : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                    } rounded-md transition-colors`}
+                      } rounded-md transition-colors`}
                   >
                     {index + 1}
                   </button>
@@ -247,7 +243,6 @@ export default function RecipesHome() {
           </div>
         </div>
       </div>
-
       <NewsletterForm />
     </div>
   );

@@ -115,7 +115,7 @@ export default function ListUserRecipes() {
                       Ver
                     </Link>
                     <Link
-                      href={`/recipes/${recipe.id}/edit`}
+                      href={`/user/recipes/update/${recipe.id}`}
                       className="px-3 py-1 text-green-600 hover:bg-green-50 rounded"
                     >
                       Editar

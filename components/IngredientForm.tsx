@@ -4,13 +4,15 @@ import { getRecipeUnits } from "../services/recipeUnitService";
 
 interface IngredientFormProps {
   onIngredientsChange: (ingredients: RecipeIngredient[]) => void;
+  initialIngredients?: RecipeIngredient[];
 }
 
 export const IngredientForm = ({
   onIngredientsChange,
+  initialIngredients = [],
 }: IngredientFormProps) => {
   const [units, setUnits] = useState<RecipeUnit[]>([]);
-  const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
+  const [ingredients, setIngredients] = useState<RecipeIngredient[]>(initialIngredients);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
