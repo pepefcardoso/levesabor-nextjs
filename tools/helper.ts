@@ -13,3 +13,7 @@ export const formatDate = (dateString: string): string => {
   const formattedDate = dateString.split(".")[0] + "Z";
   return new Date(formattedDate).toLocaleDateString();
 };
+
+export const sanitizePhone = (phone: string): string => {
+  return phone.replace(/\D/g, "");
+};

@@ -57,7 +57,8 @@ export const createUser = async (data: FormData): Promise<User> => {
 
 export const updateUser = async (id: string, data: FormData): Promise<User> => {
   try {
-    const response = await apiClient.put<User>(`/users/${id}`, data);
+    data.append("_method", "PUT");
+    const response = await apiClient.post<User>(`/users/${id}`, data);
     return response.data;
   } catch (error) {
     console.error(`Error updating user with ID ${id}:`, error);
