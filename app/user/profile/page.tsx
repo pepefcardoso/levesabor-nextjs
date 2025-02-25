@@ -45,12 +45,41 @@ export default function UserProfile() {
     if (!user) return;
 
     try {
-      const formData = new FormData(e.currentTarget);
+      const form = e.currentTarget;
+      const formData = new FormData();
+
+      // Manually append required fields
+      formData.append(
+        "name",
+        (form.elements.namedItem("name") as HTMLInputElement).value
+      );
+      formData.append(
+        "birthday",
+        (form.elements.namedItem("birthday") as HTMLInputElement).value
+      );
+
+      // Format phone
+      const rawPhone = (form.elements.namedItem("phone") as HTMLInputElement)
+        .value;
+      const formattedPhone = `(${rawPhone.slice(0, 2)}) ${rawPhone.slice(
+        2,
+        7
+      )}-${rawPhone.slice(7)}`;
+      formData.append("phone", formattedPhone);
+
+      // Safely handle image input
+      const imageInput = form.elements.namedItem(
+        "image"
+      ) as HTMLInputElement | null;
+      if (imageInput?.files?.[0]) {
+        formData.append("image", imageInput.files[0]);
+      }
+
       const updatedUser = await updateUser(user.id, formData);
       setUser(updatedUser);
       setSuccess("Perfil atualizado com sucesso!");
-    } catch (err) {
-      setError("Falha ao atualizar perfil");
+    } catch (err: any) {
+      setError(err.message || "Falha ao atualizar perfil");
       console.error(err);
     } finally {
       setIsSubmitting(false);

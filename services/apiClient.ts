@@ -11,7 +11,9 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use((config) => {
   const { token } = useAuthStore.getState();
 
-  if (!(config.data instanceof FormData)) {
+  if (config.data instanceof FormData) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  } else {
     config.headers["Content-Type"] = "application/json";
   }
 
