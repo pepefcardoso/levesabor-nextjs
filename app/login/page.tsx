@@ -105,7 +105,7 @@ export default function LoginPage() {
 
             <div className="text-lg text-right">
               <a
-                href="/login/resetPassword"
+                href="/login/forgot-password"
                 className="text-black hover:underline"
               >
                 Esqueceu sua senha?

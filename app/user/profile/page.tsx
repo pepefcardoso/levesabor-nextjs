@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { getCurrentUser, updateUser, deleteUser } from "../../../services/userService";
 import { User } from "../../../typings/api";
 import { useRouter } from "next/navigation";
-import { UserProfileSkeleton } from "../../../components/UserProfileSkeleton";
+import { UserProfileSkeleton } from "../../../components/Skeletons/UserProfileSkeleton";
 import { UserForm } from "../../../components/UserForm";
 import toast from "react-hot-toast";
 

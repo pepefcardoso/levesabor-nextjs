@@ -11,7 +11,7 @@ import {
   RecipeFilters,
 } from "../../typings/api";
 import { getRecipes } from "../../services/recipeService";
-import CardSkeleton from "../../components/CardSkeleton";
+import CardSkeleton from "../../components/Skeletons/CardSkeleton";
 import { getRecipeCategories } from "../../services/recipeCategoryService";
 import { getRecipeDiets } from "../../services/recipeDietService";
 import EmptyList from "../../components/EmptyList";

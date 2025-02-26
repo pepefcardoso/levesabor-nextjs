@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import useAuthStore from "../../../store/authStore";
 import { PaginationResponse, Post } from "../../../typings/api";
 import { deletePost, getMyPosts } from "../../../services/postService";
-import CardSkeleton from "../../../components/CardSkeleton";
+import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/EmptyList";
 
 export default function UserPosts() {

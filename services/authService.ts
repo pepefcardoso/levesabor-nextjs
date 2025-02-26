@@ -45,28 +45,35 @@ export const AuthService = {
     }
   },
 
-  async logout(): Promise<boolean> {
+  async forgotPassword(email: string): Promise<boolean> {
     try {
-      await apiClient.post("/logout");
-      localStorage.removeItem("authToken");
-      delete apiClient.defaults.headers.common["Authorization"];
-      useAuthStore.getState().logout();
+      await apiClient.post("/password/forgot", { email });
       return true;
     } catch (error) {
-      console.error("Logout error:", error);
-      throw new Error("Logout failed. Please try again.");
-    }
-  },
-
-  async resetPassword(email: string): Promise<boolean> {
-    try {
-      await apiClient.post("/reset-password", { email });
-      return true;
-    } catch (error) {
-      console.error("Reset password error:", error);
+      console.error("Forgot password error:", error);
       throw new Error(
         "Failed to send reset password request. Please try again."
       );
+    }
+  },
+
+  async resetPassword(
+    token: string,
+    email: string,
+    password: string,
+    passwordConfirmation: string
+  ): Promise<boolean> {
+    try {
+      await apiClient.post("/password/reset", {
+        token,
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
+      });
+      return true;
+    } catch (error) {
+      console.error("Reset password error:", error);
+      throw new Error("Failed to reset password. Please try again.");
     }
   },
 };

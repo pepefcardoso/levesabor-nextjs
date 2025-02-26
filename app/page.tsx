@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
 import { getRecipes } from "../services/recipeService";
 import RecipeCard from "../components/RecipeCard";
-import CardSkeleton from "../components/CardSkeleton";
+import CardSkeleton from "../components/Skeletons/CardSkeleton";
 import { PaginationResponse, Post, Recipe } from "../typings/api";
 import PostCard from "../components/PostCard";
 import { getPosts } from "../services/postService";

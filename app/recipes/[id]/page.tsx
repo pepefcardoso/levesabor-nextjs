@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Recipe } from "../../../typings/api";
 import { getRecipe } from "../../../services/recipeService";
 import { sanitizeImageUrl } from "../../../tools/helper";
-import PageLoadingSkeleton from "../../../components/PageLoadingSkeleton";
+import PageLoadingSkeleton from "../../../components/Skeletons/PageLoadingSkeleton";
 import toast from "react-hot-toast";
 
 const RecipeDetails = () => {

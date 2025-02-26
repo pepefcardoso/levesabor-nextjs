@@ -10,7 +10,7 @@ import {
   RecipeDifficultyEnum,
 } from "../../../typings/api";
 import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
-import CardSkeleton from "../../../components/CardSkeleton";
+import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/EmptyList";
 
 export default function ListUserRecipes() {

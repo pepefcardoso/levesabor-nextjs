@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Post } from "../../../typings/api";
 import { getPost } from "../../../services/postService";
 import { formatDate, sanitizeImageUrl } from "../../../tools/helper";
-import PageLoadingSkeleton from "../../../components/PageLoadingSkeleton";
+import PageLoadingSkeleton from "../../../components/Skeletons/PageLoadingSkeleton";
 import toast from "react-hot-toast";
 
 const PostDetails = () => {

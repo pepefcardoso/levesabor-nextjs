@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { RecipeCategory, RecipeDiet } from "../../../../typings/api";
 import { getRecipeCategories } from "../../../../services/recipeCategoryService";
 import { getRecipeDiets } from "../../../../services/recipeDietService";
-import { FormSkeleton } from "../../../../components/FormSkeleton";
+import { FormSkeleton } from "../../../../components/Skeletons/FormSkeleton";
 import { RecipeForm } from "../../../../components/RecipeForm";
 import { createRecipe } from "../../../../services/recipeService";
 

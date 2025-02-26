@@ -7,7 +7,7 @@ import { getPostCategories } from "../../../../../services/postCategoryService";
 import { getPostTopics } from "../../../../../services/postTopicService";
 import { updatePost } from "../../../../../services/postService";
 import { getPost } from "../../../../../services/postService";
-import { FormSkeleton } from "../../../../../components/FormSkeleton";
+import { FormSkeleton } from "../../../../../components/Skeletons/FormSkeleton";
 import { PostForm } from "../../../../../components/PostForm";
 
 export default function UpdatePostPage() {

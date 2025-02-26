@@ -12,7 +12,7 @@ import {
 import { getRecipeCategories } from "../../../../../services/recipeCategoryService";
 import { getRecipeDiets } from "../../../../../services/recipeDietService";
 import { getRecipe, updateRecipe } from "../../../../../services/recipeService";
-import { FormSkeleton } from "../../../../../components/FormSkeleton";
+import { FormSkeleton } from "../../../../../components/Skeletons/FormSkeleton";
 import { RecipeForm } from "../../../../../components/RecipeForm";
 
 export default function UpdateUserRecipePage() {

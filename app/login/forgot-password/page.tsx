@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../../services/authService";
 
-export default function ResetPasswordPage() {
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
 
     try {
-      await AuthService.resetPassword(email);
+      await AuthService.forgotPassword(email);
       toast.success(
         "Um e-mail foi enviado com instruções para redefinir sua senha!",
         {

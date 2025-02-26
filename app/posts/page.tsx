@@ -5,7 +5,7 @@ import PostCard from "../../components/PostCard";
 import NewsletterForm from "../../components/NewsletterForm";
 import { PaginationResponse, Post, PostCategory, PostFilters } from "../../typings/api";
 import { getPosts } from "../../services/postService";
-import CardSkeleton from "../../components/CardSkeleton";
+import CardSkeleton from "../../components/Skeletons/CardSkeleton";
 import { getPostCategories } from "../../services/postCategoryService";
 import EmptyList from "../../components/EmptyList";
 import toast from "react-hot-toast";
