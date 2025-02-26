@@ -223,7 +223,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
         {/* Modernized Diets Section */}
         <div>
           <label className="block text-lg font-medium text-gray-700 mb-4">
-            Compatível com
+            Dietas
           </label>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {diets.map((diet) => (

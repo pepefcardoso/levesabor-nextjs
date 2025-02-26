@@ -1,17 +1,16 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import toast from "react-hot-toast";
 import useAuthStore from "../../../store/authStore";
 import {
   PaginationResponse,
   Recipe,
-  RecipeDifficultyEnum,
 } from "../../../typings/api";
 import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/EmptyList";
+import UserRecipeListCard from "../../../components/Cards/UserRecipeListCard";
 
 export default function ListUserRecipes() {
   const { user } = useAuthStore();
@@ -83,52 +82,11 @@ export default function ListUserRecipes() {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recipes.map((recipe) => (
-              <div
+              <UserRecipeListCard
                 key={recipe.id}
-                className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-              >
-                {recipe.image?.url && (
-                  <div className="relative w-full h-48">
-                    <Image
-                      src={recipe.image.url}
-                      alt={recipe.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-                <div className="p-4">
-                  <h2 className="text-xl font-semibold mb-2">{recipe.title}</h2>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="px-2 py-1 bg-gray-100 rounded-full text-sm">
-                      {recipe.category?.name}
-                    </span>
-                    <span className="px-2 py-1 bg-gray-100 rounded-full text-sm">
-                      {RecipeDifficultyEnum[recipe.difficulty]}
-                    </span>
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <Link
-                      href={`/recipes/${recipe.id}`}
-                      className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded"
-                    >
-                      Ver
-                    </Link>
-                    <Link
-                      href={`/user/recipes/update/${recipe.id}`}
-                      className="px-3 py-1 text-green-600 hover:bg-green-50 rounded"
-                    >
-                      Editar
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(recipe.id)}
-                      className="px-3 py-1 text-red-600 hover:bg-red-50 rounded"
-                    >
-                      Excluir
-                    </button>
-                  </div>
-                </div>
-              </div>
+                recipe={recipe}
+                handleDelete={handleDelete}
+              />
             ))}
           </div>
           {totalPages > 1 && (
@@ -145,11 +103,10 @@ export default function ListUserRecipes() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 border rounded-md ${
-                      currentPage === page
+                    className={`px-4 py-2 border rounded-md ${currentPage === page
                         ? "bg-blue-600 text-white border-blue-600"
                         : "hover:bg-gray-50"
-                    }`}
+                      }`}
                   >
                     {page}
                   </button>

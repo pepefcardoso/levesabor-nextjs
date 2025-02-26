@@ -66,7 +66,8 @@ export const updateRecipeDiet = async (
   data: FormData
 ): Promise<RecipeDiet> => {
   try {
-    const response = await apiClient.put<RecipeDiet>(
+    data.append("_method", "PUT");
+    const response = await apiClient.post<RecipeDiet>(
       `/recipe-diets/${id}`,
       data
     );
