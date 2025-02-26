@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { FOOTER_LINKS } from "../../constants";
+import routes from "../../routes/routes";
 
 const Footer = () => {
   return (
@@ -9,7 +10,7 @@ const Footer = () => {
         <div className="shadow-[0_-4px_8px_-2px_rgba(0,0,0,0.2)]">
           <div className="flex flex-col lg:flex-row items-center justify-between max-container padding-container relative z-30 py-4">
             <Link
-              href="/"
+              href={routes.home}
               className="bold-32 text-white flexCenter cursor-pointer"
             >
               LeveSabor
@@ -47,7 +48,7 @@ const Footer = () => {
           <p className="regular-14 w-full text-center">
             2024 LeveSabor® | Todos os direitos reservados | Desenvolvido por{" "}
             <Link
-              href="https://example.com"
+              href="https://instagram.com/julialfelisb"
               className="font-bold hover:underline"
             >
               Pedro Paulo

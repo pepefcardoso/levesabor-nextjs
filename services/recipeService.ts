@@ -1,9 +1,6 @@
-import {
-  PaginationParams,
-  PaginationResponse,
-  Recipe,
-  RecipeFilters,
-} from "../typings/api";
+
+import { PaginationParams, PaginationResponse } from "../typings/pagination";
+import { Recipe, RecipeFilters } from "../typings/recipe";
 import apiClient from "./apiClient";
 
 export const getRecipes = async ({

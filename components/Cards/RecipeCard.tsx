@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Recipe } from "../../typings/api";
+import { Recipe } from "../../typings/recipe";
+import routes from "../../routes/routes";
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
-    <Link href={`/recipes/${recipe.id}`} className="block">
+    <Link href={routes.recipes.details(recipe.id)} className="block">
       <div
         className="rounded-lg overflow-hidden shadow-lg bg-white cursor-pointer 
                       transform transition-transform duration-300 
@@ -28,7 +29,6 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
         </div>
 
         <div className="p-4 flex flex-col flex-grow">
-
           <h2 className="text-lg sm:text-xl font-bold mb-1 line-clamp-2">
             {recipe.title}
           </h2>

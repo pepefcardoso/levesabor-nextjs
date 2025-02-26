@@ -1,8 +1,6 @@
-import {
-  PaginationParams,
-  PaginationResponse,
-  NewsletterCustomer,
-} from "../typings/api";
+
+import { NewsletterCustomer } from "../typings/newsletter";
+import { PaginationParams, PaginationResponse } from "../typings/pagination";
 import apiClient from "./apiClient";
 
 export const getNewsletterCustomers = async ({

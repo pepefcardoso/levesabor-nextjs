@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import routes from "../routes/routes";
 
 export default function NotFound() {
   return (
@@ -19,7 +20,7 @@ export default function NotFound() {
       <p style={{ fontSize: "1.5rem", marginBottom: "40px" }}>
         A página que você está procurando não existe.
       </p>
-      <Link href="/">
+      <Link href={routes.home}>
         <button
           style={{
             padding: "15px 30px",

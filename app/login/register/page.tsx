@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createUser } from "../../../services/userService";
 import toast, { Toaster } from "react-hot-toast";
+import routes from "../../../routes/routes";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -69,7 +70,7 @@ export default function RegisterPage() {
           </h1>
           <p className="text-gray-500 text-base sm:text-lg">
             Já possui conta?{" "}
-            <a href="/login" className="text-black hover:underline font-medium">
+            <a href={routes.auth.login} className="text-black hover:underline font-medium">
               Faça seu login
             </a>
           </p>

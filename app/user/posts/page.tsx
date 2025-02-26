@@ -4,11 +4,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import useAuthStore from "../../../store/authStore";
-import { PaginationResponse, Post } from "../../../typings/api";
 import { deletePost, getMyPosts } from "../../../services/postService";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/Others/EmptyList";
 import UserPostListCard from "../../../components/Cards/UserPostListCard";
+import routes from "../../../routes/routes";
+import { PaginationResponse } from "../../../typings/pagination";
+import { Post } from "../../../typings/post";
 
 export default function UserPosts() {
   const { user } = useAuthStore();
@@ -30,7 +32,9 @@ export default function UserPosts() {
       setTotalPages(response.last_page);
       setIsLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página", { position: "bottom-left" });
+      toast.error("Por favor, recarregue a página", {
+        position: "bottom-left",
+      });
       setIsLoaded(false);
     }
   }, [user, currentPage]);
@@ -49,7 +53,9 @@ export default function UserPosts() {
         fetchUserPosts();
       }
     } catch {
-      toast.error("Por favor, recarregue a página", { position: "bottom-left" });
+      toast.error("Por favor, recarregue a página", {
+        position: "bottom-left",
+      });
     }
   };
 
@@ -58,7 +64,7 @@ export default function UserPosts() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Meus Posts</h1>
         <Link
-          href="/user/posts/add"
+          href={routes.user.posts.create}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           Adicionar Novo Post
@@ -77,7 +83,11 @@ export default function UserPosts() {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post) => (
-              <UserPostListCard key={post.id} post={post} handleDelete={handleDelete} />
+              <UserPostListCard
+                key={post.id}
+                post={post}
+                handleDelete={handleDelete}
+              />
             ))}
           </div>
           {totalPages > 1 && (
@@ -89,19 +99,21 @@ export default function UserPosts() {
               >
                 Anterior
               </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className={`px-4 py-2 border rounded-md ${
-                    currentPage === page
-                      ? "bg-blue-600 text-white border-blue-600"
-                      : "hover:bg-gray-50"
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-4 py-2 border rounded-md ${
+                      currentPage === page
+                        ? "bg-blue-600 text-white border-blue-600"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage === totalPages}

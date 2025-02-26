@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import routes from "../../routes/routes";
 
 interface UserPostListCardProps {
     post: {
@@ -19,7 +20,7 @@ interface UserPostListCardProps {
 const UserPostListCard: React.FC<UserPostListCardProps> = ({ post, handleDelete }) => {
     return (
         <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <Link href={`/posts/${post.id}`}>
+            <Link href={routes.posts.details(post.id)}>
                 <div>
                     {post.image?.url && (
                         <div className="relative w-full h-48">
@@ -52,7 +53,7 @@ const UserPostListCard: React.FC<UserPostListCardProps> = ({ post, handleDelete 
             </Link>
             <div className="flex justify-end gap-2 p-4">
                 <Link
-                    href={`/user/posts/update/${post.id}`}
+                    href={routes.user.posts.update(post.id)}
                     onClick={(e) => e.stopPropagation()}
                     className="p-2 text-green-600 hover:bg-green-50 rounded"
                 >

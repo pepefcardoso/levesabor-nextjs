@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Post } from "../../typings/api";
+import { Post } from "../../typings/post";
+import routes from "../../routes/routes";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
-    <Link href={`/posts/${post.id}`} className="block">
+    <Link href={routes.posts.details(post.id)} className="block">
       <div
         className="border border-gray-300 rounded-lg shadow-md cursor-pointer 
                       transition-transform duration-300 ease-in-out 

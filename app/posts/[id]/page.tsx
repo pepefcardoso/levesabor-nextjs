@@ -3,11 +3,11 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Post } from "../../../typings/api";
 import { getPost } from "../../../services/postService";
 import { formatDate, sanitizeImageUrl } from "../../../tools/helper";
 import PageLoadingSkeleton from "../../../components/Skeletons/PageLoadingSkeleton";
 import toast from "react-hot-toast";
+import { Post } from "../../../typings/post";
 
 const PostDetails = () => {
   const { id } = useParams();

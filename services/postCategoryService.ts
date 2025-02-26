@@ -1,8 +1,6 @@
-import {
-  PaginationParams,
-  PaginationResponse,
-  PostCategory,
-} from "../typings/api";
+
+import { PaginationParams, PaginationResponse } from "../typings/pagination";
+import { PostCategory } from "../typings/post";
 import apiClient from "./apiClient";
 
 export const getPostCategories = async ({

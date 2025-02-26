@@ -1,12 +1,14 @@
+import routes from "../routes/routes";
+
 export const NAV_LINKS = [
-  { href: "/recipes", key: "recipes", label: "Receitas" },
-  { href: "/posts", key: "blog", label: "Blog" },
-  { href: "/about", key: "about", label: "Sobre nós" },
-  { href: "/contact", key: "contact", label: "Contato" },
+  { href: routes.recipes.index, key: "recipes", label: "Receitas" },
+  { href: routes.posts.index, key: "blog", label: "Blog" },
+  { href: routes.about, key: "about", label: "Sobre nós" },
+  { href: routes.contact, key: "contact", label: "Contato" },
 ];
 
 export const FOOTER_LINKS = [
-  { href: "/", key: "privacy", label: "Política de Privacidade" },
-  { href: "/", key: "terms", label: "Termos de Uso" },
-  { href: "/advertisement", key: "ads", label: "Anuncie Conosco" },
+  { href: routes.privacy, key: "privacy", label: "Política de Privacidade" },
+  { href: routes.terms, key: "terms", label: "Termos de Uso" },
+  { href: routes.advertisement, key: "ads", label: "Anuncie Conosco" },
 ];

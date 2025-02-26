@@ -3,11 +3,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import useAuthStore from "../../../store/authStore";
-import {
-  PaginationResponse,
-  Recipe,
-} from "../../../typings/api";
+import { Recipe } from "../../../typings/recipe";
+import { PaginationResponse } from "../../../typings/pagination";
 import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
+import routes from "../../../routes/routes";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/Others/EmptyList";
 import UserRecipeListCard from "../../../components/Cards/UserRecipeListCard";
@@ -63,7 +62,7 @@ export default function ListUserRecipes() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Minhas Receitas</h1>
         <Link
-          href="/user/recipes/add"
+          href={routes.user.recipes.create}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           Adicionar Nova Receita
@@ -103,10 +102,11 @@ export default function ListUserRecipes() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 border rounded-md ${currentPage === page
+                    className={`px-4 py-2 border rounded-md ${
+                      currentPage === page
                         ? "bg-blue-600 text-white border-blue-600"
                         : "hover:bg-gray-50"
-                      }`}
+                    }`}
                   >
                     {page}
                   </button>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/authService";
+import routes from "../../routes/routes";
 
 export function LoginSkeleton() {
   return (
@@ -87,7 +88,7 @@ export default function LoginPage() {
             </h1>
             <p className="text-gray-400 text-lg">
               Ainda não possui conta?{" "}
-              <a href="/login/register" className="text-black hover:underline">
+              <a href={routes.auth.register} className="text-black hover:underline">
                 Cadastre-se aqui
               </a>
             </p>
@@ -132,7 +133,7 @@ export default function LoginPage() {
               </div>
               <div className="text-lg text-right">
                 <a
-                  href="/login/forgot-password"
+                  href={routes.auth.forgotPassword}
                   className="text-black hover:underline"
                 >
                   Esqueceu sua senha?

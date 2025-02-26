@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../../services/authService";
+import routes from "../../../routes/routes";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -85,7 +86,7 @@ export default function ForgotPasswordPage() {
         <div className="text-lg text-center">
           <p className="text-gray-400">
             Lembrou sua senha?{" "}
-            <a href="/login" className="text-black hover:underline">
+            <a href={routes.auth.login} className="text-black hover:underline">
               Faça login aqui
             </a>
           </p>

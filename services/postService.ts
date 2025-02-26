@@ -1,9 +1,6 @@
-import {
-  PaginationParams,
-  PaginationResponse,
-  Post,
-  PostFilters,
-} from "../typings/api";
+
+import { PaginationParams, PaginationResponse } from "../typings/pagination";
+import { Post, PostFilters } from "../typings/post";
 import apiClient from "./apiClient";
 
 export const getPosts = async ({

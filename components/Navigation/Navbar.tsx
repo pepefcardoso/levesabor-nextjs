@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 import { NAV_LINKS } from "../../constants";
 import useAuthStore from "../../store/authStore";
 import { AuthService } from "../../services/authService";
+import routes from "../../routes/routes";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -92,7 +93,7 @@ const Navbar = () => {
   return (
     <div className="bg-green-800 drop-shadow-lg z-50">
       <nav className="flex items-center justify-between max-container padding-container relative z-30 py-4">
-        <Link href="/" className="bold-32 text-white cursor-pointer">
+        <Link href={routes.home} className="bold-32 text-white cursor-pointer">
           LeveSabor
         </Link>
 
@@ -121,7 +122,7 @@ const Navbar = () => {
             <>
               <div className="flex items-center gap-3">
                 <Link
-                  href="/user/profile"
+                  href={routes.user.profile}
                   className="flex items-center gap-2 hover:underline"
                 >
                   <span className="text-white">{user.name}</span>
@@ -154,13 +155,13 @@ const Navbar = () => {
           ) : (
             <div className="flex gap-4 items-center">
               <Link
-                href="/login"
+                href={routes.auth.login}
                 className="text-white hover:font-bold flex items-center justify-center"
               >
                 Entrar
               </Link>
               <Link
-                href="/login/register"
+                href={routes.auth.register}
                 className="bg-white text-green-800 font-semibold px-4 py-2 rounded-md hover:opacity-80 transition mx-auto max-w-max"
               >
                 Cadastrar
@@ -210,21 +211,21 @@ const Navbar = () => {
           ) : user ? (
             <>
               <Link
-                href="/user/profile"
+                href={routes.user.profile}
                 className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Perfil
               </Link>
               <Link
-                href="/user/recipes"
+                href={routes.user.recipes.index}
                 className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Minhas Receitas
               </Link>
               <Link
-                href="/user/posts"
+                href={routes.user.posts.index}
                 className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -252,14 +253,14 @@ const Navbar = () => {
           ) : (
             <>
               <Link
-                href="/login"
+                href={routes.auth.login}
                 className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Entrar
               </Link>
               <Link
-                href="/login/register"
+                href={routes.auth.register}
                 className="bg-white text-green-800 font-semibold px-4 py-2 rounded-full hover:opacity-80 transition mx-auto w-1/2"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -281,21 +282,21 @@ const Navbar = () => {
           >
             <div className="py-1">
               <Link
-                href="/user/profile"
+                href={routes.user.profile}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => setIsDropdownOpen(false)}
               >
                 Meu perfil
               </Link>
               <Link
-                href="/user/recipes"
+                href={routes.user.recipes.index}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => setIsDropdownOpen(false)}
               >
                 Minhas Receitas
               </Link>
               <Link
-                href="/user/posts"
+                href={routes.user.posts.index}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => setIsDropdownOpen(false)}
               >

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/authService";
+import routes from "../../routes/routes";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -127,7 +128,7 @@ export default function ResetPasswordPage() {
         <div className="text-lg text-center">
           <p className="text-gray-400">
             Não solicitou redefinição?{" "}
-            <a href="/login" className="text-black hover:underline">
+            <a href={routes.auth.login} className="text-black hover:underline">
               Entre em contato
             </a>
           </p>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import routes from "../../routes/routes";
 
 const AboutPage = () => {
   return (
@@ -47,7 +48,7 @@ const AboutPage = () => {
 
           <div className="mt-8">
             <Link
-              href="/contact"
+              href={routes.contact}
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg shadow-md"
             >
               Converse Conosco

@@ -1,8 +1,6 @@
-import {
-  PaginationParams,
-  PaginationResponse,
-  RecipeCategory,
-} from "../typings/api";
+
+import { PaginationParams, PaginationResponse } from "../typings/pagination";
+import { RecipeCategory } from "../typings/recipe";
 import apiClient from "./apiClient";
 
 export const getRecipeCategories = async ({

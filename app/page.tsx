@@ -12,6 +12,7 @@ import NewsletterForm from "../components/Forms/NewsletterForm";
 import { PaginationResponse } from "../typings/pagination";
 import { Post } from "../typings/post";
 import { Recipe } from "../typings/recipe";
+import routes from "../routes/routes";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -82,7 +83,7 @@ export default function Home() {
       <div className="px-4">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-left">Receitas</h2>
-          <Link href="/recipes" className="text-blue-500 hover:underline">
+          <Link href={routes.recipes.index} className="text-blue-500 hover:underline">
             Ver Todas
           </Link>
         </div>
@@ -101,7 +102,7 @@ export default function Home() {
       <div className="px-4">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-left">Posts</h2>
-          <Link href="/posts" className="text-blue-500 hover:underline">
+          <Link href={routes.posts.index} className="text-blue-500 hover:underline">
             Ver Todos
           </Link>
         </div>
