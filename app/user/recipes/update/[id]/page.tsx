@@ -27,8 +27,8 @@ export default function UpdateUserRecipePage() {
   const [initialData, setInitialData] = useState({
     title: "",
     description: "",
-    time: "", // Changed to string
-    portion: "", // Changed to string
+    time: "",
+    portion: "",
     difficulty: RecipeDifficultyEnum.Normal,
     category_id: "",
     diets: [] as string[],
@@ -56,8 +56,8 @@ export default function UpdateUserRecipePage() {
         setInitialData({
           title: recipeRes.title,
           description: recipeRes.description,
-          time: recipeRes.time.toString(), // Convert number to string
-          portion: recipeRes.portion.toString(), // Convert number to string
+          time: recipeRes.time.toString(),
+          portion: recipeRes.portion.toString(),
           difficulty: recipeRes.difficulty,
           category_id: recipeRes.category_id,
           diets: recipeRes.diets
@@ -102,17 +102,21 @@ export default function UpdateUserRecipePage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">
-        Atualizar Receita
-      </h1>
-      <RecipeForm
-        initialData={initialData}
-        categories={categories}
-        diets={diets}
-        isSubmitting={isSubmitting}
-        onSubmit={handleUpdateRecipe}
-      />
+    <div className="min-h-screen bg-gray-200 py-12">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">
+            Atualizar Receita #{recipeId}
+          </h1>
+          <RecipeForm
+            initialData={initialData}
+            categories={categories}
+            diets={diets}
+            isSubmitting={isSubmitting}
+            onSubmit={handleUpdateRecipe}
+          />
+        </div>
+      </div>
     </div>
   );
 }

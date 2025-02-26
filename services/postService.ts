@@ -55,7 +55,8 @@ export const createPost = async (data: FormData): Promise<Post> => {
 
 export const updatePost = async (id: string, data: FormData): Promise<Post> => {
   try {
-    const response = await apiClient.put<Post>(`/posts/${id}`, data);
+    data.append("_method", "PUT");
+    const response = await apiClient.post<Post>(`/posts/${id}`, data);
     return response.data;
   } catch (error) {
     console.error(`Error updating post with ID ${id}:`, error);

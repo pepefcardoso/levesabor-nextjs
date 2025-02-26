@@ -114,6 +114,11 @@ export interface RecipeUnit {
   normalized_name: string;
 }
 
+export interface NewsletterCustomer {
+  id: string;
+  email: string;
+}
+
 export interface PaginationParams {
   page: number;
   per_page: number;

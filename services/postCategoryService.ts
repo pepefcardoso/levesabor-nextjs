@@ -66,7 +66,8 @@ export const updatePostCategory = async (
   data: FormData
 ): Promise<PostCategory> => {
   try {
-    const response = await apiClient.put<PostCategory>(
+    data.append("_method", "PUT");
+    const response = await apiClient.post<PostCategory>(
       `/post-categories/${id}`,
       data
     );

@@ -66,7 +66,8 @@ export const updateRecipeCategory = async (
   data: FormData
 ): Promise<RecipeCategory> => {
   try {
-    const response = await apiClient.put<RecipeCategory>(
+    data.append("_method", "PUT");
+    const response = await apiClient.post<RecipeCategory>(
       `/recipe-categories/${id}`,
       data
     );

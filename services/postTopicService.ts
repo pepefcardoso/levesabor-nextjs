@@ -66,7 +66,8 @@ export const updatePostTopic = async (
   data: FormData
 ): Promise<PostTopic> => {
   try {
-    const response = await apiClient.put<PostTopic>(
+    data.append("_method", "PUT");
+    const response = await apiClient.post<PostTopic>(
       `/post-topics/${id}`,
       data
     );

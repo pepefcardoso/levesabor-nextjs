@@ -27,8 +27,8 @@ export default function CreatePostPage() {
         setCategories(categoriesRes.data);
         setTopics(topicsRes.data);
       } catch (err) {
-        console.error("Error loading data:", err);
-        toast.error("Failed to load data. Please try again.", {
+        console.error("Erro ao carregar dados:", err);
+        toast.error("Falha ao carregar dados. Tente novamente.", {
           position: "bottom-left",
         });
       } finally {
@@ -42,11 +42,11 @@ export default function CreatePostPage() {
     setIsSubmitting(true);
     try {
       await createPost(data);
-      toast.success("Post created successfully!", { position: "bottom-left" });
+      toast.success("Post criado com sucesso!", { position: "bottom-left" });
       setTimeout(() => router.push("/user/posts"), 2000);
     } catch (err) {
-      console.error("Error creating post:", err);
-      toast.error("Failed to create post. Please try again.", {
+      console.error("Erro ao criar post:", err);
+      toast.error("Falha ao criar post. Tente novamente.", {
         position: "bottom-left",
       });
     } finally {
@@ -59,14 +59,20 @@ export default function CreatePostPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">Create New Post</h1>
-      <PostForm
-        categories={categories}
-        topics={topics}
-        isSubmitting={isSubmitting}
-        onSubmit={handleCreatePost}
-      />
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+            Criar Novo Post
+          </h1>
+          <PostForm
+            categories={categories}
+            topics={topics}
+            isSubmitting={isSubmitting}
+            onSubmit={handleCreatePost}
+          />
+        </div>
+      </div>
     </div>
   );
 }

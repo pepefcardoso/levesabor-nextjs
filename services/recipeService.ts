@@ -61,7 +61,8 @@ export const updateRecipe = async (
   data: FormData
 ): Promise<Recipe> => {
   try {
-    const response = await apiClient.put<Recipe>(`/recipes/${id}`, data);
+    data.append("_method", "PUT");
+    const response = await apiClient.post<Recipe>(`/recipes/${id}`, data);
     return response.data;
   } catch (error) {
     console.error(`Error updating recipe with ID ${id}:`, error);
