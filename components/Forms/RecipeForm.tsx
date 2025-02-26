@@ -1,15 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import {
-  RecipeCategory,
-  RecipeDiet,
-  RecipeDifficultyEnum,
-  RecipeIngredient,
-  RecipeStep,
-} from "../typings/api";
 import { IngredientForm } from "./IngredientForm";
 import { StepForm } from "./StepForm";
+import { RecipeDifficultyEnum } from "../../typings/enums";
+import { RecipeCategory, RecipeDiet, RecipeIngredient, RecipeStep } from "../../typings/recipe";
 
 interface FormDataValues {
   title: string;

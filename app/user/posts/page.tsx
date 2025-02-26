@@ -7,7 +7,7 @@ import useAuthStore from "../../../store/authStore";
 import { PaginationResponse, Post } from "../../../typings/api";
 import { deletePost, getMyPosts } from "../../../services/postService";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
-import EmptyList from "../../../components/EmptyList";
+import EmptyList from "../../../components/Others/EmptyList";
 import UserPostListCard from "../../../components/Cards/UserPostListCard";
 
 export default function UserPosts() {

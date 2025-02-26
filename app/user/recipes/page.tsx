@@ -9,7 +9,7 @@ import {
 } from "../../../typings/api";
 import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
-import EmptyList from "../../../components/EmptyList";
+import EmptyList from "../../../components/Others/EmptyList";
 import UserRecipeListCard from "../../../components/Cards/UserRecipeListCard";
 
 export default function ListUserRecipes() {

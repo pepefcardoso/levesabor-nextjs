@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { RecipeStep } from "../typings/api";
+import { RecipeStep } from "../../typings/recipe";
 
 interface StepFormProps {
   onStepsChange: (steps: RecipeStep[]) => void;

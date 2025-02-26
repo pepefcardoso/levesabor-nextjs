@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
-import { sanitizeImageUrl } from "../tools/helper";
+import { sanitizeImageUrl } from "../../tools/helper";
 
 type UserFormProps = {
   initialData: {

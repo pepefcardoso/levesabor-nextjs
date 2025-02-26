@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { PostCategory, PostTopic } from "../../../../../typings/api";
 import { getPostCategories } from "../../../../../services/postCategoryService";
 import { getPostTopics } from "../../../../../services/postTopicService";
 import { updatePost } from "../../../../../services/postService";
 import { getPost } from "../../../../../services/postService";
 import { FormSkeleton } from "../../../../../components/Skeletons/FormSkeleton";
-import { PostForm } from "../../../../../components/PostForm";
+import { PostForm } from "../../../../../components/Forms/PostForm";
+import { PostCategory, PostTopic } from "../../../../../typings/post";
 
 export default function UpdatePostPage() {
   const router = useRouter();

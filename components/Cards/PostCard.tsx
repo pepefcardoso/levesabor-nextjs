@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Post } from "../typings/api";
+import { Post } from "../../typings/api";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (

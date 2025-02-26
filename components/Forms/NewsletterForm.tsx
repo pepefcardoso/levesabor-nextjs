@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { createNewsletterCustomer } from '../services/NewsletterCustomerService';
+import { createNewsletterCustomer } from '../../services/NewsletterCustomerService';
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState('');

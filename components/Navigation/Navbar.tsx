@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import ReactDOM from "react-dom";
-import { NAV_LINKS } from "../constants";
-import useAuthStore from "../store/authStore";
-import { AuthService } from "../services/authService";
+import { NAV_LINKS } from "../../constants";
+import useAuthStore from "../../store/authStore";
+import { AuthService } from "../../services/authService";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);

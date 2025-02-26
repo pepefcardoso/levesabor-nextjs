@@ -45,6 +45,19 @@ export const AuthService = {
     }
   },
 
+  async logout(): Promise<boolean> {
+    try {
+      await apiClient.post("/logout");
+      localStorage.removeItem("authToken");
+      delete apiClient.defaults.headers.common["Authorization"];
+      useAuthStore.getState().logout();
+      return true;
+    } catch (error) {
+      console.error("Logout error:", error);
+      throw new Error("Logout failed. Please try again.");
+    }
+  },
+
   async forgotPassword(email: string): Promise<boolean> {
     try {
       await apiClient.post("/password/forgot", { email });

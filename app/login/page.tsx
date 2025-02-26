@@ -82,7 +82,9 @@ export default function LoginPage() {
       ) : (
         <div className="max-w-lg w-full p-8 space-y-8 bg-white rounded-lg shadow-lg">
           <div className="text-left">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Bem-vindo!</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Bem-vindo!
+            </h1>
             <p className="text-gray-400 text-lg">
               Ainda não possui conta?{" "}
               <a href="/login/register" className="text-black hover:underline">
@@ -130,7 +132,7 @@ export default function LoginPage() {
               </div>
               <div className="text-lg text-right">
                 <a
-                  href="/login/resetPassword"
+                  href="/login/forgot-password"
                   className="text-black hover:underline"
                 >
                   Esqueceu sua senha?

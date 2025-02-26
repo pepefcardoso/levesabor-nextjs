@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { RecipeCategory, RecipeDiet } from "../../../../typings/api";
 import { getRecipeCategories } from "../../../../services/recipeCategoryService";
 import { getRecipeDiets } from "../../../../services/recipeDietService";
 import { FormSkeleton } from "../../../../components/Skeletons/FormSkeleton";
-import { RecipeForm } from "../../../../components/RecipeForm";
 import { createRecipe } from "../../../../services/recipeService";
+import { RecipeForm } from "../../../../components/Forms/RecipeForm";
+import { RecipeCategory, RecipeDiet } from "../../../../typings/recipe";
 
 export default function AddUserRecipePage() {
   const router = useRouter();

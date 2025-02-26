@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { CustomerContact, registerContact } from "../../services/contactService";
+import {
+  CustomerContact,
+  registerContact,
+} from "../../services/contactService";
 
 const IconBox = ({ icon }: { icon: string }) => (
   <div className="flex items-center justify-center w-10 h-10 bg-yellow-500 rounded-md shadow-md">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { FOOTER_LINKS } from "../constants";
+import { FOOTER_LINKS } from "../../constants";
 
 const Footer = () => {
   return (

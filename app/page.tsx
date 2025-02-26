@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
 import { getRecipes } from "../services/recipeService";
-import RecipeCard from "../components/RecipeCard";
+import RecipeCard from "../components/Cards/RecipeCard";
 import CardSkeleton from "../components/Skeletons/CardSkeleton";
-import { PaginationResponse, Post, Recipe } from "../typings/api";
-import PostCard from "../components/PostCard";
+import PostCard from "../components/Cards/PostCard";
 import { getPosts } from "../services/postService";
-import NewsletterForm from "../components/NewsletterForm";
 import toast from "react-hot-toast";
+import NewsletterForm from "../components/Forms/NewsletterForm";
+import { PaginationResponse } from "../typings/pagination";
+import { Post } from "../typings/post";
+import { Recipe } from "../typings/recipe";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

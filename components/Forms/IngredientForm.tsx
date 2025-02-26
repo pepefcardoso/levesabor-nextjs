@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { RecipeIngredient, RecipeUnit } from "../typings/api";
-import { getRecipeUnits } from "../services/recipeUnitService";
+import { getRecipeUnits } from "../../services/recipeUnitService";
+import { RecipeIngredient, RecipeUnit } from "../../typings/recipe";
 
 interface IngredientFormProps {
   onIngredientsChange: (ingredients: RecipeIngredient[]) => void;

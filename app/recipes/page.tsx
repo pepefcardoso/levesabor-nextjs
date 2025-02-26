@@ -1,21 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import RecipeCard from "../../components/RecipeCard";
-import NewsletterForm from "../../components/NewsletterForm";
-import {
-  PaginationResponse,
-  Recipe,
-  RecipeCategory,
-  RecipeDiet,
-  RecipeFilters,
-} from "../../typings/api";
+import RecipeCard from "../../components/Cards/RecipeCard";
 import { getRecipes } from "../../services/recipeService";
 import CardSkeleton from "../../components/Skeletons/CardSkeleton";
 import { getRecipeCategories } from "../../services/recipeCategoryService";
 import { getRecipeDiets } from "../../services/recipeDietService";
-import EmptyList from "../../components/EmptyList";
+import EmptyList from "../../components/Others/EmptyList";
 import toast from "react-hot-toast";
+import NewsletterForm from "../../components/Forms/NewsletterForm";
+import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "../../typings/recipe";
+import { PaginationResponse } from "../../typings/pagination";
 
 export default function RecipesHome() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -47,10 +42,9 @@ export default function RecipesHome() {
       setRecipes(response.data);
       setTotalPages(response.last_page);
     } catch (err) {
-      toast.error(
-        "Falha ao carregar receitas. Por favor, atualize a página.",
-        { position: "bottom-left" }
-      );
+      toast.error("Falha ao carregar receitas. Por favor, atualize a página.", {
+        position: "bottom-left",
+      });
       throw err;
     }
   };
@@ -77,10 +71,9 @@ export default function RecipesHome() {
       });
       setDiets(response.data);
     } catch {
-      toast.error(
-        "Falha ao carregar dietas. Por favor, atualize a página.",
-        { position: "bottom-left" }
-      );
+      toast.error("Falha ao carregar dietas. Por favor, atualize a página.", {
+        position: "bottom-left",
+      });
     }
   };
 
@@ -182,7 +175,9 @@ export default function RecipesHome() {
                     <input
                       type="checkbox"
                       value={diet.id.toString()}
-                      checked={filters.diets?.includes(diet.id.toString()) || false}
+                      checked={
+                        filters.diets?.includes(diet.id.toString()) || false
+                      }
                       onChange={handleDietChange}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
@@ -195,19 +190,19 @@ export default function RecipesHome() {
           <div className="w-full md:w-3/4 flex flex-col">
             <div className="flex-grow">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
-                {!isLoaded
-                  ? Array.from({ length: 10 }).map((_, index) => (
+                {!isLoaded ? (
+                  Array.from({ length: 10 }).map((_, index) => (
                     <CardSkeleton key={`skeleton-${index}`} />
                   ))
-                  : recipes.length > 0
-                    ? recipes.map((recipe) => (
-                      <RecipeCard key={recipe.id} recipe={recipe} />
-                    ))
-                    : (
-                      <div className="col-span-full h-full flex items-center justify-center">
-                        <EmptyList message="Nenhuma receita encontrada." />
-                      </div>
-                    )}
+                ) : recipes.length > 0 ? (
+                  recipes.map((recipe) => (
+                    <RecipeCard key={recipe.id} recipe={recipe} />
+                  ))
+                ) : (
+                  <div className="col-span-full h-full flex items-center justify-center">
+                    <EmptyList message="Nenhuma receita encontrada." />
+                  </div>
+                )}
               </div>
             </div>
             {totalPages > 1 && (
@@ -223,10 +218,11 @@ export default function RecipesHome() {
                   <button
                     key={index + 1}
                     onClick={() => handlePageChange(index + 1)}
-                    className={`px-4 py-2 border ${currentPage === index + 1
+                    className={`px-4 py-2 border ${
+                      currentPage === index + 1
                         ? "bg-blue-500 text-white border-blue-500"
                         : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                      } rounded-md transition-colors`}
+                    } rounded-md transition-colors`}
                   >
                     {index + 1}
                   </button>

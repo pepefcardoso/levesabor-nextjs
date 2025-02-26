@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { PostCategory, PostTopic } from "../typings/api";
+import { PostCategory, PostTopic } from "../../typings/post";
 
 interface FormDataValues {
   title: string;
