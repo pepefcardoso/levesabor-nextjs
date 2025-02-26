@@ -6,9 +6,9 @@ interface StepFormProps {
   initialSteps?: RecipeStep[];
 }
 
-export const StepForm = ({ 
+export const StepForm = ({
   onStepsChange,
-  initialSteps = []
+  initialSteps = [],
 }: StepFormProps) => {
   const [steps, setSteps] = useState<RecipeStep[]>(initialSteps);
 
@@ -29,10 +29,15 @@ export const StepForm = ({
   return (
     <div className="space-y-4">
       {steps.map((step, index) => (
-        <div key={index} className="p-4 border rounded shadow-sm">
-          <span className="block font-medium mb-2">Passo {step.order}</span>
+        <div
+          key={index}
+          className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+        >
+          <span className="block font-medium mb-2 text-gray-700">
+            Passo {step.order}
+          </span>
           <textarea
-            className="w-full p-2 border rounded shadow-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
             placeholder="Descrição do passo"
             value={step.description}
             onChange={(e) => handleChange(index, e.target.value)}
@@ -42,7 +47,7 @@ export const StepForm = ({
       <button
         type="button"
         onClick={addStep}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm font-medium"
       >
         Adicionar Passo
       </button>

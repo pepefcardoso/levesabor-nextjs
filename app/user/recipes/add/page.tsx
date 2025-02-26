@@ -59,16 +59,20 @@ export default function AddUserRecipePage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">
-        Criar Nova Receita
-      </h1>
-      <RecipeForm
-        categories={categories}
-        diets={diets}
-        isSubmitting={isSubmitting}
-        onSubmit={handleCreateRecipe}
-      />
+    <div className="min-h-screen bg-[#d3d3d3] py-12">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">
+            Criar Nova Receita
+          </h1>
+          <RecipeForm
+            categories={categories}
+            diets={diets}
+            isSubmitting={isSubmitting}
+            onSubmit={handleCreateRecipe}
+          />
+        </div>
+      </div>
     </div>
   );
 }
