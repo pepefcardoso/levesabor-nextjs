@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../../services/authService";
 import routes from "../../../routes/routes";
+import CustomFormTextInput, { InputType } from "../../../components/Inputs/CustomFormTextInput";
+import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
+import CustomTextButton from "../../../components/Buttons/CustomTextButton";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -60,12 +63,11 @@ export default function ForgotPasswordPage() {
               >
                 E-mail
               </label>
-              <input
-                type="email"
+              <CustomFormTextInput
+                type={InputType.Email}
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
                 required
                 disabled={loading}
                 autoComplete="email"
@@ -74,21 +76,25 @@ export default function ForgotPasswordPage() {
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full px-6 py-3 text-black bg-yellow-500 rounded-md hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-          >
-            {loading ? "Enviando..." : "Enviar link de redefinição"}
-          </button>
+          <div className="flex justify-center">
+            <CustomBackgroundTextButton
+              type="submit"
+              text="Enviar link de redefinição"
+              loading={loading}
+              loadingText="Enviando..."
+              backgroundColor="bg-yellow-500"
+            />
+          </div>
         </form>
 
         <div className="text-lg text-center">
           <p className="text-gray-400">
             Lembrou sua senha?{" "}
-            <a href={routes.auth.login} className="text-black hover:underline">
-              Faça login aqui
-            </a>
+            <CustomTextButton
+              href={routes.auth.login}
+              text="Faça login aqui"
+              fontColor="black"
+            />
           </p>
         </div>
       </div>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import routes from "../../routes/routes";
-import TextButton from "../../components/Buttons/TextButton";
+import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 import { ABOUT_US_IMAGE, ABOUT_US_PARAGRAPHS } from "../../constants";
 
 const AboutPage = () => {
@@ -34,7 +34,7 @@ const AboutPage = () => {
           </div>
 
           <div className="mt-8">
-            <TextButton
+            <CustomBackgroundTextButton
               text="Converse Conosco"
               href={routes.contact}
               backgroundColor="#F59E0B"

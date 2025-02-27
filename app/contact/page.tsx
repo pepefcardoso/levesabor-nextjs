@@ -6,9 +6,9 @@ import toast from "react-hot-toast";
 import { CustomerContact, registerContact } from "../../services/contactService";
 import { CONTACT_ITEMS } from "../../constants";
 import { IconTextItem } from "../../components/Others/IconTextItem";
-import CustomFormTextInput from "../../components/Inputs/CustomFormTextInput";
+import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
 import CustomTextAreaInput from "../../components/Inputs/CustomTextAreaInput";
-import TextButton from "../../components/Buttons/TextButton";
+import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState<CustomerContact>({
@@ -68,7 +68,7 @@ const ContactUs = () => {
               required
             />
             <CustomFormTextInput
-              type="tel"
+              type={InputType.Tel}
               name="phone"
               placeholder="Seu telefone"
               value={formData.phone}
@@ -76,7 +76,7 @@ const ContactUs = () => {
               required
             />
             <CustomFormTextInput
-              type="email"
+              type={InputType.Email}
               name="email"
               placeholder="Seu e-mail"
               value={formData.email}
@@ -91,7 +91,7 @@ const ContactUs = () => {
               required
             />
             <div className="flex justify-start">
-              <TextButton
+              <CustomBackgroundTextButton
                 text="Enviar mensagem"
                 loading={submitting}
                 loadingText="Enviando..."

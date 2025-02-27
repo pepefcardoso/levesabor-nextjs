@@ -16,11 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen" style={{ backgroundColor: "#ffffed" }}>
         <Navbar />
         <main className="flex-1 min-h-[85vh]">
           <Toaster position="bottom-center" />
-          <div className="container mx-auto  h-full">{children}</div>
+          <div className="container mx-auto h-full">{children}</div>
         </main>
         <Footer />
       </body>

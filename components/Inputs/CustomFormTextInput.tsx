@@ -2,13 +2,24 @@
 
 import { InputHTMLAttributes } from "react";
 
+export const enum InputType {
+  Text = "text",
+  Email = "email",
+  Tel = "tel",
+  Password = "password",
+  Number = "number",
+  Date = "date",
+}
+
 interface CustomFormTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  type?: "text" | "email" | "tel" | "password" | "number";
+  type?: InputType;
+  label?: string;
 }
 
 const CustomFormTextInput = ({
-  type = "text",
+  type = InputType.Text,
   disabled,
+  label,
   ...props
 }: CustomFormTextInputProps) => {
   const baseClasses = `
@@ -23,12 +34,19 @@ const CustomFormTextInput = ({
   `;
 
   return (
-    <input
-      {...props}
-      type={type}
-      disabled={disabled}
-      className={baseClasses.trim()}
-    />
+    <div className="space-y-1">
+      {label && (
+        <label htmlFor={props.id} className="block text-sm font-medium text-gray-700">
+          {label}
+        </label>
+      )}
+      <input
+        {...props}
+        type={type}
+        disabled={disabled}
+        className={baseClasses.trim()}
+      />
+    </div>
   );
 };
 

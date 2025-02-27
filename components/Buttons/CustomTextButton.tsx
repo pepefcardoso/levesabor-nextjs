@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { FC } from "react";
 
-interface TextButtonProps {
+interface CustomTextButtonProps {
     text: string;
     fontColor?: string;
-    backgroundColor?: string;
     href?: string;
     onClick?: () => void;
     loading?: boolean;
@@ -14,30 +13,23 @@ interface TextButtonProps {
     type?: "submit" | "button" | "reset";
 }
 
-const TextButton: FC<TextButtonProps> = ({
+const CustomTextButton: FC<CustomTextButtonProps> = ({
     text,
     fontColor = "black",
-    backgroundColor = "transparent",
     href,
     onClick,
     loading = false,
     loadingText = text,
     type = "submit",
 }) => {
-    const isTailwindClass = backgroundColor.startsWith("bg-");
-
     const baseClasses = `
-    rounded-md shadow-md transition-all duration-200 px-4 py-2 flex items-center justify-center
-    ${!loading ? "hover:shadow-lg hover:scale-105 hover:font-bold" : "cursor-not-allowed"}
-    ${isTailwindClass ? backgroundColor : ""} // Apply Tailwind class if applicable
-  `;
+        transition-all duration-200
+        ${!loading ? "hover:font-bold hover:scale-105" : "cursor-not-allowed"}
+    `;
 
-    const inlineStyle = loading
-        ? { color: "#6B7280", backgroundColor: "#E5E7EB" }
-        : {
-            color: fontColor,
-            backgroundColor: isTailwindClass ? undefined : backgroundColor,
-        };
+    const inlineStyle = {
+        color: fontColor,
+    };
 
     const content = loading ? <span>{loadingText}</span> : <span>{text}</span>;
 
@@ -68,4 +60,4 @@ const TextButton: FC<TextButtonProps> = ({
     );
 };
 
-export default TextButton;
+export default CustomTextButton;

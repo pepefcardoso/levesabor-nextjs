@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { createUser } from "../../../services/userService";
 import toast, { Toaster } from "react-hot-toast";
 import routes from "../../../routes/routes";
+import CustomTextButton from "../../../components/Buttons/CustomTextButton";
+import RegisterUserForm from "../../../components/Forms/RegisterUserForm";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -61,92 +63,32 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6"> {/* Removed bg-white class from outer container */}
       <Toaster position="bottom-left" />
-      <div className="max-w-lg w-full p-8 space-y-6 bg-white rounded-lg shadow-lg">
-        <div className="text-left">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
+      <div className="w-full max-w-lg p-6 sm:p-8 space-y-6 bg-white rounded-xl shadow-2xl"> {/* Added bg-white for the card */}
+        <div className="text-left space-y-2">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
             Crie sua conta
           </h1>
           <p className="text-gray-500 text-base sm:text-lg">
             Já possui conta?{" "}
-            <a href={routes.auth.login} className="text-black hover:underline font-medium">
-              Faça seu login
-            </a>
+            <CustomTextButton
+              href={routes.auth.login}
+              text="Faça seu login"
+              fontColor="black"
+            />
           </p>
         </div>
 
-        {error && (
-          <div className="p-3 bg-red-100 text-red-700 rounded-md">{error}</div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            {[
-              { id: "name", label: "Nome", type: "text" },
-              { id: "email", label: "Email", type: "email" },
-              { id: "phone", label: "Telefone", type: "tel" },
-              { id: "birthdate", label: "Data de Nascimento", type: "date" },
-              { id: "password", label: "Senha", type: "password" },
-              {
-                id: "confirmPassword",
-                label: "Confirmar Senha",
-                type: "password",
-              },
-            ].map((field) => (
-              <div key={field.id}>
-                <label
-                  htmlFor={field.id}
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  {field.label}
-                </label>
-                <input
-                  id={field.id}
-                  type={field.type}
-                  value={formData[field.id as keyof typeof formData]}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  required
-                  minLength={field.type === "password" ? 6 : undefined}
-                  maxLength={field.id === "phone" ? 15 : undefined}
-                  disabled={loading}
-                />
-              </div>
-            ))}
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full px-6 py-3 text-black bg-yellow-500 rounded-md hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 font-medium disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
-          >
-            {loading ? (
-              <span className="flex items-center justify-center">
-                <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    fill="none"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-                Cadastrando...
-              </span>
-            ) : (
-              "Cadastrar"
-            )}
-          </button>
-        </form>
+        <RegisterUserForm
+          formData={formData}
+          loading={loading}
+          error={error}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </div>
   );
 }
+

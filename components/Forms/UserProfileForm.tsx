@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
 import { sanitizeImageUrl } from "../../tools/helper";
 
-type UserFormProps = {
+type UserProfileFormProps = {
   initialData: {
     name: string;
     birthday: string;
@@ -14,11 +14,11 @@ type UserFormProps = {
   isSubmitting?: boolean;
 };
 
-export const UserForm = ({
+export const UserProfileForm = ({
   initialData,
   onSubmit,
   isSubmitting,
-}: UserFormProps) => {
+}: UserProfileFormProps) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [formValues, setFormValues] = useState({
     name: "",

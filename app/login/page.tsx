@@ -5,31 +5,10 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
-
-export function LoginSkeleton() {
-  return (
-    <div className="max-w-lg w-full p-8 space-y-8 bg-white rounded-lg shadow-lg">
-      <div className="text-left">
-        <div className="h-8 bg-gray-200 rounded w-3/4 mb-4 animate-pulse" />
-        <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse" />
-      </div>
-      <div className="space-y-8">
-        <div className="space-y-6">
-          <div>
-            <div className="h-5 bg-gray-200 rounded w-1/4 mb-2 animate-pulse" />
-            <div className="h-10 bg-gray-200 rounded animate-pulse" />
-          </div>
-          <div>
-            <div className="h-5 bg-gray-200 rounded w-1/4 mb-2 animate-pulse" />
-            <div className="h-10 bg-gray-200 rounded animate-pulse" />
-          </div>
-          <div className="h-4 bg-gray-200 rounded w-1/3 ml-auto animate-pulse" />
-        </div>
-        <div className="h-12 bg-gray-200 rounded animate-pulse" />
-      </div>
-    </div>
-  );
-}
+import { LoginSkeleton } from "../../components/Skeletons/LoginFormSkeleton";
+import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
+import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import CustomTextButton from "../../components/Buttons/CustomTextButton";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -77,76 +56,58 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-300 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       {loading ? (
         <LoginSkeleton />
       ) : (
-        <div className="max-w-lg w-full p-8 space-y-8 bg-white rounded-lg shadow-lg">
-          <div className="text-left">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="w-full max-w-lg p-6 sm:p-8 space-y-8 bg-white rounded-xl shadow-2xl">
+          <div className="text-left space-y-2">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
               Bem-vindo!
             </h1>
-            <p className="text-gray-400 text-lg">
+            <p className="text-gray-500 text-base sm:text-lg">
               Ainda não possui conta?{" "}
-              <a href={routes.auth.register} className="text-black hover:underline">
-                Cadastre-se aqui
-              </a>
+              <CustomTextButton
+                href={routes.auth.register}
+                text="Cadastre-se aqui"
+              />
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="space-y-6">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-lg font-medium text-gray-700"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  required
-                  disabled={loading}
-                  autoComplete="email"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-lg font-medium text-gray-700"
-                >
-                  Senha
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  required
-                  disabled={loading}
-                  autoComplete="current-password"
-                />
-              </div>
-              <div className="text-lg text-right">
-                <a
-                  href={routes.auth.forgotPassword}
-                  className="text-black hover:underline"
-                >
-                  Esqueceu sua senha?
-                </a>
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-4">
+              <CustomFormTextInput
+                id="email"
+                type={InputType.Email}
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={loading}
+                autoComplete="email"
+              />
+              <CustomFormTextInput
+                id="password"
+                type={InputType.Password}
+                label="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+                autoComplete="current-password"
+              />
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full px-6 py-3 text-black bg-yellow-500 rounded-md hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-            >
-              {loading ? "Carregando..." : "Entrar"}
-            </button>
+            <div className="text-right">
+              <CustomTextButton
+                href={routes.auth.forgotPassword}
+                text="Esqueceu sua senha?"
+              />
+            </div>
+            <CustomBackgroundTextButton
+              text="Entrar"
+              loading={loading}
+              loadingText="Carregando..."
+              backgroundColor="bg-yellow-500"
+            />
           </form>
         </div>
       )}

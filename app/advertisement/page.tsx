@@ -7,8 +7,8 @@ import {
   registerContact,
 } from "../../services/contactService";
 import { ADVERTISEMENTS_ITEMS } from "../../constants";
-import TextButton from "../../components/Buttons/TextButton";
-import CustomFormTextInput from "../../components/Inputs/CustomFormTextInput";
+import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
 import { IconTextItem } from "../../components/Others/IconTextItem";
 
 const Advertisement = () => {
@@ -72,7 +72,7 @@ const Advertisement = () => {
           </p>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <CustomFormTextInput
-              type="text"
+              type={InputType.Text}
               name="name"
               placeholder="Seu nome"
               value={formData.name}
@@ -81,7 +81,7 @@ const Advertisement = () => {
             />
 
             <CustomFormTextInput
-              type="tel"
+              type={InputType.Tel}
               name="phone"
               placeholder="Seu telefone"
               value={formData.phone}
@@ -90,7 +90,7 @@ const Advertisement = () => {
             />
 
             <CustomFormTextInput
-              type="email"
+              type={InputType.Email}
               name="email"
               placeholder="Seu email"
               value={formData.email}
@@ -98,7 +98,7 @@ const Advertisement = () => {
               required
             />
 
-            <TextButton
+            <CustomBackgroundTextButton
               text="Converse Conosco"
               loading={submitting}
               loadingText="Enviando..."

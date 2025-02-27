@@ -9,7 +9,7 @@ import {
 import { useRouter } from "next/navigation";
 import { UserProfileSkeleton } from "../../../components/Skeletons/UserProfileSkeleton";
 import toast from "react-hot-toast";
-import { UserForm } from "../../../components/Forms/UserForm";
+import { UserProfileForm } from "../../../components/Forms/UserProfileForm";
 import { User } from "../../../typings/user";
 
 export default function UserProfile() {
@@ -100,7 +100,7 @@ export default function UserProfile() {
               Meu Perfil
             </h1>
 
-            <UserForm
+            <UserProfileForm
               initialData={user}
               onSubmit={handleUpdateProfile}
               isSubmitting={isSubmitting}
