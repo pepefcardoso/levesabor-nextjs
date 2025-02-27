@@ -20,7 +20,7 @@ const routes = {
   },
   resetPassword: "/reset-password",
   user: {
-    profile: "/user",
+    profile: "/user/profile",
     posts: {
       index: "/user/posts",
       create: "/user/posts/add",
