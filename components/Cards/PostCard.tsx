@@ -10,7 +10,7 @@ const PostCard = ({ post }: { post: Post }) => {
       <div
         className="border border-gray-300 rounded-lg shadow-md cursor-pointer 
                       transition-transform duration-300 ease-in-out 
-                      hover:scale-105 hover:shadow-lg flex flex-col h-[420px] w-full sm:w-auto"
+                      hover:scale-105 hover:shadow-lg flex flex-col h-[420px] w-full sm:w-auto bg-white" // Added bg-white here
       >
         <div className="w-full h-48 sm:h-40 relative">
           <Image

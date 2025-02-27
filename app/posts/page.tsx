@@ -10,6 +10,9 @@ import toast from "react-hot-toast";
 import NewsletterForm from "../../components/Forms/NewsletterForm";
 import { Post, PostCategory, PostFilters } from "../../typings/post";
 import { PaginationResponse } from "../../typings/pagination";
+import CustomInputSelect from "../../components/Inputs/CustomSelectInput";
+import CustomFormTextInput from "../../components/Inputs/CustomFormTextInput";
+import CustomPaginator from "../../components/Others/CustomPaginator";
 
 export default function PostsHome() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -98,27 +101,23 @@ export default function PostsHome() {
           Pesquise nossos posts
         </h1>
         <form onSubmit={handleSubmit} className="mb-6">
-          <input
-            type="text"
+          <CustomFormTextInput
             placeholder="Pesquisar posts..."
             value={tempSearch}
             onChange={(e) => setTempSearch(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </form>
         <div className="mb-6 flex gap-4">
-          <select
+          <CustomInputSelect
             name="category_id"
+            options={categories.map((category) => ({
+              value: category.id,
+              label: category.name,
+            }))}
+            placeholder="Todas as categorias"
             onChange={handleFilterChange}
-            className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="">Todas as categorias</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+            className="min-w-[220px]"
+          />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
           {!isLoaded ? (
@@ -133,37 +132,15 @@ export default function PostsHome() {
             </div>
           )}
         </div>
-        {totalPages > 1 && (
-          <div className="flex justify-center mt-8 flex-wrap gap-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50"
-            >
-              Anterior
-            </button>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => handlePageChange(index + 1)}
-                className={`px-4 py-2 border ${
-                  currentPage === index + 1
-                    ? "bg-blue-500 text-white border-blue-500"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                } rounded-md transition-colors`}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50"
-            >
-              Próximo
-            </button>
-          </div>
-        )}
+
+        <CustomPaginator
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          previousLabel="Anterior"
+          nextLabel="Próximo"
+          className="mt-8"
+        />
       </div>
       <NewsletterForm />
     </div>
