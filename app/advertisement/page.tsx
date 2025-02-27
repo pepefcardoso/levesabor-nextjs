@@ -6,12 +6,10 @@ import {
   CustomerContact,
   registerContact,
 } from "../../services/contactService";
-
-const IconBox = ({ icon }: { icon: string }) => (
-  <div className="flex items-center justify-center w-10 h-10 bg-yellow-500 rounded-md shadow-md">
-    <span className="text-white text-lg">{icon}</span>
-  </div>
-);
+import { ADVERTISEMENTS_ITEMS } from "../../constants";
+import TextButton from "../../components/Buttons/TextButton";
+import CustomFormTextInput from "../../components/Inputs/CustomFormTextInput";
+import { IconTextItem } from "../../components/Others/IconTextItem";
 
 const Advertisement = () => {
   const [formData, setFormData] = useState<CustomerContact>({
@@ -60,34 +58,9 @@ const Advertisement = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-16 md:gap-x-28">
         <div>
           <div className="space-y-4 sm:space-y-6">
-            <div className="flex items-center space-x-3">
-              <IconBox icon="👥" />
-              <span className="text-sm sm:text-base">
-                +500 Usuários ativos por mês
-              </span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <IconBox icon="📈" />
-              <span className="text-sm sm:text-base">
-                +2000 Acessos diários
-              </span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <IconBox icon="⏰" />
-              <span className="text-sm sm:text-base">
-                Exposição 24 horas, 7 dias
-              </span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <IconBox icon="🌱" />
-              <span className="text-sm sm:text-base">Marketing orgânico</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <IconBox icon="📝" />
-              <span className="text-sm sm:text-base">
-                Conteúdo relevante e atualizado
-              </span>
-            </div>
+            {ADVERTISEMENTS_ITEMS.map((item, index) => (
+              <IconTextItem key={index} icon={item.icon} text={item.text} />
+            ))}
           </div>
         </div>
         <div>
@@ -98,42 +71,40 @@ const Advertisement = () => {
             Não perca esta oportunidade!
           </p>
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <input
+            <CustomFormTextInput
               type="text"
               name="name"
               placeholder="Seu nome"
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full border rounded-md p-2 shadow-md focus:ring focus:ring-green-300"
             />
-            <input
+
+            <CustomFormTextInput
               type="tel"
               name="phone"
               placeholder="Seu telefone"
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full border rounded-md p-2 shadow-md focus:ring focus:ring-green-300"
             />
-            <input
+
+            <CustomFormTextInput
               type="email"
               name="email"
               placeholder="Seu email"
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full border rounded-md p-2 shadow-md focus:ring focus:ring-green-300"
             />
-            <div className="flex justify-start">
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-1/2 bg-yellow-500 text-black font-bold py-2 rounded-md shadow-md hover:bg-yellow-600 disabled:opacity-50"
-              >
-                {submitting ? "Enviando..." : "Enviar"}
-              </button>
-            </div>
+
+            <TextButton
+              text="Converse Conosco"
+              loading={submitting}
+              loadingText="Enviando..."
+              backgroundColor="#F59E0B"
+            />
+
           </form>
         </div>
       </div>
