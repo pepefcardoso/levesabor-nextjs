@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
+import CustomTextButton from "../../components/Buttons/CustomTextButton";
+import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -13,14 +16,10 @@ export default function ResetPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Get token and email from URL params
   const token = searchParams.get("token");
   const email = searchParams.get("email");
 
   useEffect(() => {
-    console.log('Token:', token);
-    console.log('Email:', email);
-
     if (!token || !email) {
       toast.error("Link de redefinição inválido ou expirado.", {
         position: "bottom-left",
@@ -60,7 +59,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-lg w-full p-8 space-y-8 bg-white rounded-lg shadow-lg">
         <div className="text-left">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -73,64 +72,47 @@ export default function ResetPasswordPage() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="space-y-6">
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-lg font-medium text-gray-700"
-              >
-                Nova Senha
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
-                required
-                minLength={8}
-                disabled={loading}
-                autoComplete="new-password"
-                placeholder="••••••••"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-lg font-medium text-gray-700"
-              >
-                Confirmar Senha
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-2 block w-full px-5 py-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-lg"
-                required
-                minLength={8}
-                disabled={loading}
-                autoComplete="new-password"
-                placeholder="••••••••"
-              />
-            </div>
+            <CustomFormTextInput
+              type={InputType.Password}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
+              minLength={8}
+              autoComplete="new-password"
+              placeholder="••••••••"
+              label="Nova Senha"
+            />
+            <CustomFormTextInput
+              type={InputType.Password}
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              disabled={loading}
+              minLength={8}
+              autoComplete="new-password"
+              placeholder="••••••••"
+              label="Confirmar Senha"
+            />
           </div>
 
-          <button
+          <CustomBackgroundTextButton
+            text={loading ? "Redefinindo..." : "Redefinir Senha"}
             type="submit"
-            disabled={loading}
-            className="w-full px-6 py-3 text-black bg-yellow-500 rounded-md hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-          >
-            {loading ? "Redefinindo..." : "Redefinir Senha"}
-          </button>
+            loading={loading}
+            backgroundColor="bg-yellow-500"
+            fontColor="black"
+          />
         </form>
 
         <div className="text-lg text-center">
           <p className="text-gray-400">
             Não solicitou redefinição?{" "}
-            <a href={routes.auth.login} className="text-black hover:underline">
-              Entre em contato
-            </a>
+            <CustomTextButton
+              text="Entre em contato"
+              href={routes.auth.login}
+              fontColor="black"
+            />
           </p>
         </div>
       </div>

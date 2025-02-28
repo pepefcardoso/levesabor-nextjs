@@ -38,3 +38,17 @@ export const CONTACT_ITEMS = [
   { icon: FaInstagram, text: "@levesabor" },
   { icon: FaEnvelope, text: "contato@levesabor.com.br" },
 ];
+
+export const PRIVACY_PARAGRAPHS = [
+  "Sua privacidade é importante para nós. Esta política descreve como coletamos, usamos e protegemos suas informações pessoais.",
+  "Coletamos informações para fornecer melhores serviços a todos os nossos usuários. As informações coletadas e a forma como são usadas dependem de como você utiliza nossos serviços.",
+  "Implementamos medidas de segurança para proteger suas informações e não compartilhamos seus dados pessoais com terceiros, exceto conforme necessário para fornecer nossos serviços ou conforme exigido por lei.",
+  "Ao utilizar nossos serviços, você concorda com a coleta e uso de informações de acordo com esta política.",
+];
+
+export const TERMS_OF_USE_PARAGRAPHS = [
+  "Ao acessar e utilizar nossos serviços, você concorda em cumprir os seguintes termos e condições.",
+  "Você é responsável por manter a confidencialidade de suas informações de login e por todas as atividades que ocorram sob sua conta.",
+  "É proibido utilizar nossos serviços para qualquer finalidade ilegal ou não autorizada. Você concorda em não violar nenhuma lei em sua jurisdição ao usar nossos serviços.",
+  "Reservamo-nos o direito de modificar ou encerrar nossos serviços a qualquer momento, sem aviso prévio."
+];

@@ -53,26 +53,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    let isMounted = true;
-
-    const initFetch = () => {
-      if (isMounted) {
-        fetchRecipes();
-        fetchPosts();
-      }
+    const initFetch = async () => {
+      await Promise.all([fetchRecipes(), fetchPosts()]);
     };
-
     initFetch();
-
-    return () => {
-      isMounted = false;
-    };
   }, [fetchRecipes, fetchPosts]);
 
   return (
-    <section className="max-container padding-container flex flex-col gap-10 py-12 pb-12 lg:py-16">
+    <section className="container mx-auto px-4 py-12 lg:py-16 flex flex-col gap-10">
       <div className="text-center mb-6">
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-4xl font-bold text-gray-900">
           Cozinha inclusiva para todas as dietas.
         </h1>
         <p className="text-gray-600 text-lg mt-2">
@@ -82,37 +72,37 @@ export default function Home() {
 
       <div className="px-4">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-left">Receitas</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Receitas</h2>
           <Link href={routes.recipes.index} className="text-blue-500 hover:underline">
             Ver Todas
           </Link>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {!recipesLoaded
-            ? [1, 2, 3, 4].map((skeletonId) => (
-                <CardSkeleton key={skeletonId} />
-              ))
+            ? Array.from({ length: 4 }).map((_, index) => (
+              <CardSkeleton key={index} />
+            ))
             : recipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
         </div>
       </div>
 
       <div className="px-4">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-left">Posts</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Posts</h2>
           <Link href={routes.posts.index} className="text-blue-500 hover:underline">
             Ver Todos
           </Link>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {!postsLoaded
-            ? [1, 2, 3, 4].map((skeletonId) => (
-                <CardSkeleton key={skeletonId} />
-              ))
-            : posts.map((post) => <PostCard key={post.id} post={post} />)}
+            ? Array.from({ length: 4 }).map((_, index) => (
+              <CardSkeleton key={index} />
+            ))
+            : posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
         </div>
       </div>
 

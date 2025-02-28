@@ -9,8 +9,13 @@ import { getRecipeDiets } from "../../services/recipeDietService";
 import EmptyList from "../../components/Others/EmptyList";
 import toast from "react-hot-toast";
 import NewsletterForm from "../../components/Forms/NewsletterForm";
+import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "../../typings/recipe";
 import { PaginationResponse } from "../../typings/pagination";
+import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
+import CustomInputSelect from "../../components/Inputs/CustomSelectInput";
+import CustomCheckboxInput from "../../components/Inputs/CustomCheckboxInput";
+import CustomPaginator from "../../components/Others/CustomPaginator";
 
 export default function RecipesHome() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -30,14 +35,8 @@ export default function RecipesHome() {
   ) => {
     try {
       const response: PaginationResponse<Recipe> = await getRecipes({
-        filters: {
-          ...filters,
-          title: search,
-        },
-        pagination: {
-          page,
-          per_page: 10,
-        },
+        filters: { ...filters, title: search },
+        pagination: { page, per_page: 10 },
       });
       setRecipes(response.data);
       setTotalPages(response.last_page);
@@ -51,16 +50,14 @@ export default function RecipesHome() {
 
   const fetchCategories = async () => {
     try {
-      const response: PaginationResponse<RecipeCategory> =
-        await getRecipeCategories({
-          pagination: { page: 1, per_page: 100 },
-        });
+      const response: PaginationResponse<RecipeCategory> = await getRecipeCategories({
+        pagination: { page: 1, per_page: 100 },
+      });
       setCategories(response.data);
     } catch {
-      toast.error(
-        "Falha ao carregar categorias. Por favor, atualize a página.",
-        { position: "bottom-left" }
-      );
+      toast.error("Falha ao carregar categorias. Por favor, atualize a página.", {
+        position: "bottom-left",
+      });
     }
   };
 
@@ -106,23 +103,27 @@ export default function RecipesHome() {
     setCurrentPage(1);
   };
 
-  const handleDietChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-    setFilters((prev) => {
-      const diets = prev.diets || [];
-      return {
-        ...prev,
-        diets: checked
-          ? [...diets, value]
-          : diets.filter((diet) => diet !== value),
-      };
-    });
+  const handleDietsChange = (selectedDiets: (string | number)[]) => {
+    setFilters((prev) => ({ ...prev, diets: selectedDiets.map(String) }));
     setCurrentPage(1);
   };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  const categoryOptions = [
+    { value: "", label: "Todas as Categorias" },
+    ...categories.map((category) => ({
+      value: category.id.toString(),
+      label: category.name,
+    })),
+  ];
+
+  const dietOptions = diets.map((diet) => ({
+    id: diet.id.toString(),
+    label: diet.name,
+  }));
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl w-full">
@@ -131,19 +132,18 @@ export default function RecipesHome() {
           Pesquisar Receitas
         </h1>
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
-          <input
-            type="text"
+          <CustomFormTextInput
+            type={InputType.Text}
             placeholder="Pesquisar receitas..."
             value={tempSearch}
             onChange={(e) => setTempSearch(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
-          <button
+          <CustomBackgroundTextButton
+            text="Pesquisar"
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Pesquisar
-          </button>
+            backgroundColor="bg-blue-500"
+            fontColor="white"
+          />
         </form>
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full md:w-1/4">
@@ -151,40 +151,24 @@ export default function RecipesHome() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Categorias
               </label>
-              <select
+              <CustomInputSelect
                 name="category_id"
-                onChange={handleCategoryChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={filters.category_id || ""}
-              >
-                <option value="">Todas as Categorias</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id.toString()}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
+                onChange={handleCategoryChange}
+                options={categoryOptions}
+                placeholder="Todas as Categorias"
+              />
             </div>
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Dietas
               </label>
-              <div className="flex flex-col gap-2">
-                {diets.map((diet) => (
-                  <label key={diet.id} className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      value={diet.id.toString()}
-                      checked={
-                        filters.diets?.includes(diet.id.toString()) || false
-                      }
-                      onChange={handleDietChange}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                    />
-                    <span>{diet.name}</span>
-                  </label>
-                ))}
-              </div>
+              <CustomCheckboxInput
+                options={dietOptions}
+                selected={filters.diets || []}
+                onChange={handleDietsChange}
+                variant="list"
+              />
             </div>
           </div>
           <div className="w-full md:w-3/4 flex flex-col">
@@ -205,37 +189,14 @@ export default function RecipesHome() {
                 )}
               </div>
             </div>
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-8 flex-wrap gap-2">
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50"
-                >
-                  Anterior
-                </button>
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <button
-                    key={index + 1}
-                    onClick={() => handlePageChange(index + 1)}
-                    className={`px-4 py-2 border ${
-                      currentPage === index + 1
-                        ? "bg-blue-500 text-white border-blue-500"
-                        : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                    } rounded-md transition-colors`}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className="px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50"
-                >
-                  Próxima
-                </button>
-              </div>
-            )}
+            <CustomPaginator
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              previousLabel="Anterior"
+              nextLabel="Próxima"
+              className="mt-8"
+            />
           </div>
         </div>
       </div>

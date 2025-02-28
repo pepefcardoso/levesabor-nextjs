@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import React from "react";
 import routes from "../../routes/routes";
 import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 import { ABOUT_US_IMAGE, ABOUT_US_PARAGRAPHS } from "../../constants";
+import CustomImage from "../../components/Others/CustomImage";
 
 const AboutPage = () => {
   return (
@@ -15,12 +15,14 @@ const AboutPage = () => {
 
       <div className="flex flex-col md:flex-row items-stretch md:space-x-12 w-full">
         <div className="flex-shrink-0 w-full md:w-1/2">
-          <Image
+          <CustomImage
             src={ABOUT_US_IMAGE}
             alt="Team Working"
-            width={800}
-            height={800}
-            className="rounded-lg object-cover h-full"
+            width="100%"
+            height="100%"
+            rounded="lg"
+            objectFit="cover"
+            shadow="md"
           />
         </div>
 
