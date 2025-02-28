@@ -1,6 +1,10 @@
+"use client";
+
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { createNewsletterCustomer } from '../../services/NewsletterCustomerService';
+import CustomFormTextInput, { InputType } from '../Inputs/CustomFormTextInput';
+import CustomBackgroundTextButton from '../Buttons/CustomBackgroundTextButton';
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState('');
@@ -23,26 +27,26 @@ const NewsletterForm = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-left mb-2">Nossa newsletter</h2>
       <p className="text-sm text-gray-500 text-left mb-6">
         Cadastre-se e não perca nenhuma novidade
       </p>
-      <form onSubmit={handleSubmit} className="flex flex-col items-start">
-        <input
-          type="email"
+      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 w-full">
+        <CustomFormTextInput
+          type={InputType.Email}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Seu email"
-          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400"
           required
         />
-        <button
+        <CustomBackgroundTextButton
           type="submit"
-          className="w-full py-2 bg-yellow-500 text-black font-semibold rounded-md hover:drop-shadow-lg transition duration-200"
-        >
-          Cadastrar
-        </button>
+          text="Cadastrar"
+          backgroundColor="bg-yellow-500"
+          fontColor="text-black"
+          className="w-full"
+        />
       </form>
     </div>
   );

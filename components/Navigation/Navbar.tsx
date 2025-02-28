@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import ReactDOM from "react-dom";
@@ -9,43 +7,21 @@ import { NAV_LINKS } from "../../constants";
 import useAuthStore from "../../store/authStore";
 import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
+import CustomTextButton from "../Buttons/CustomTextButton";
+import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import CustomImage from "../Others/CustomImage";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useAuthStore();
   const router = useRouter();
-  const [authLoading, setAuthLoading] = useState<boolean>(true);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const [dropdownPosition, setDropdownPosition] = useState<{
-    top: number;
-    right: number;
-  }>({ top: 0, right: 0 });
-  const [hasMounted, setHasMounted] = useState<boolean>(false);
+  const [authLoading, setAuthLoading] = useState(true);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0 });
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        !(buttonRef.current && buttonRef.current.contains(event.target as Node))
-      ) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const updateDropdownPosition = () => {
+  const calculateDropdownPosition = () => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
@@ -55,267 +31,222 @@ const Navbar = () => {
     }
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current?.contains(event.target as Node) ||
+      buttonRef.current?.contains(event.target as Node)
+    ) return;
+    setIsDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   useEffect(() => {
     if (isDropdownOpen) {
-      updateDropdownPosition();
-      window.addEventListener("resize", updateDropdownPosition);
-      window.addEventListener("scroll", updateDropdownPosition, true);
+      calculateDropdownPosition();
+      window.addEventListener("resize", calculateDropdownPosition);
+      return () => window.removeEventListener("resize", calculateDropdownPosition);
     }
-    return () => {
-      window.removeEventListener("resize", updateDropdownPosition);
-      window.removeEventListener("scroll", updateDropdownPosition, true);
-    };
   }, [isDropdownOpen]);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    if (token && !user) {
-      setTimeout(() => {
-        setAuthLoading(false);
-      }, 500);
-    } else {
-      setAuthLoading(false);
-    }
+    setAuthLoading(!!(token && !user));
   }, [user]);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const handleLogout = async () => {
     try {
       await AuthService.logout();
-      router.push("/login");
+      router.push(routes.auth.login);
     } catch (error) {
       console.error("Logout failed", error);
     }
   };
 
-  return (
-    <div className="bg-green-800 drop-shadow-lg z-50">
-      <nav className="flex items-center justify-between max-container padding-container relative z-30 py-4">
-        <Link href={routes.home} className="bold-32 text-white cursor-pointer">
-          LeveSabor
-        </Link>
+  const UserAvatar = () => (
+    <button
+      ref={buttonRef}
+      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      className="focus:ring-2 focus:ring-white rounded-full"
+    >
+      {user?.image ? (
+        <CustomImage
+          src={user.image.url}
+          alt="User profile"
+          width={40}
+          height={40}
+          className="rounded-full hover:ring-2 ring-white"
+        />
+      ) : (
+        <div className="w-10 h-10 rounded-full bg-white flex-center hover:ring-2 ring-white">
+          <span className="text-green-800 font-bold">{user?.name?.charAt(0)}</span>
+        </div>
+      )}
+    </button>
+  );
 
-        <ul className="hidden lg:flex gap-8">
+  const AuthButtons = () => (
+    <div className="flex gap-4 items-center">
+      <CustomTextButton
+        href={routes.auth.login}
+        text="Entrar"
+        fontColor="white"
+        className="hover:font-bold"
+      />
+      <CustomBackgroundTextButton
+        href={routes.auth.register}
+        text="Cadastrar"
+        fontColor="text-green-800"
+        backgroundColor="white"
+        className="hover:opacity-80"
+      />
+    </div>
+  );
+
+  const MobileMenu = () => (
+    <div className={`lg:hidden bg-green-700 text-white transition-all duration-300 
+      ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}>
+      <ul className="flex flex-col gap-2 w-full text-center py-4">
+        {NAV_LINKS.map((link) => (
+          <CustomTextButton
+            key={link.key}
+            href={link.href}
+            text={link.label}
+            fontColor="white"
+            className="regular-18 py-2"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        ))}
+        {user ? (
+          <>
+            <CustomTextButton
+              href={routes.user.profile}
+              text="Perfil"
+              fontColor="white"
+              className="regular-18 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <CustomTextButton
+              href={routes.user.recipes.index}
+              text="Minhas Receitas"
+              fontColor="white"
+              className="regular-18 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <CustomTextButton
+              href={routes.user.posts.index}
+              text="Meus Posts"
+              fontColor="white"
+              className="regular-18 py-2"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <CustomTextButton
+              text="Sair"
+              fontColor="white"
+              className="regular-18 py-2"
+              onClick={handleLogout}
+            />
+          </>
+        ) : (
+          <AuthButtons />
+        )}
+      </ul>
+    </div>
+  );
+
+  return (
+    <header className="bg-green-800 shadow-lg z-50">
+      <nav className="flex items-center justify-between max-container padding-container py-4">
+        <CustomTextButton
+          href={routes.home}
+          text="LeveSabor"
+          fontColor="white"
+          className="bold-32"
+        />
+
+        <div className="hidden lg:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
-            <Link
-              href={link.href}
+            <CustomTextButton
               key={link.key}
-              className="regular-18 text-white cursor-pointer transition-all hover:font-bold"
-            >
-              {link.label}
-            </Link>
+              href={link.href}
+              text={link.label}
+              fontColor="white"
+              className="regular-18"
+            />
           ))}
-        </ul>
+        </div>
 
         <div className="hidden lg:flex items-center gap-6">
           {authLoading ? (
-            <Image
+            <CustomImage
               src="/spinner.svg"
-              alt="spinner"
+              alt="Loading"
               width={32}
               height={32}
-              className="text-white animate-spin"
+              className="animate-spin"
             />
           ) : user ? (
-            <>
-              <div className="flex items-center gap-3">
-                <Link
-                  href={routes.user.profile}
-                  className="flex items-center gap-2 hover:underline"
-                >
-                  <span className="text-white">{user.name}</span>
-                </Link>
-                <div className="relative">
-                  <button
-                    ref={buttonRef}
-                    onClick={toggleDropdown}
-                    className="focus:outline-none focus:ring-2 focus:ring-white relative z-50"
-                  >
-                    {user.image ? (
-                      <Image
-                        src={user.image?.url}
-                        alt="User profile"
-                        width={40}
-                        height={40}
-                        className="rounded-full cursor-pointer hover:ring-2 hover:ring-white"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-white">
-                        <span className="text-green-800 font-bold">
-                          {user.name.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="flex gap-4 items-center">
-              <Link
-                href={routes.auth.login}
-                className="text-white hover:font-bold flex items-center justify-center"
-              >
-                Entrar
-              </Link>
-              <Link
-                href={routes.auth.register}
-                className="bg-white text-green-800 font-semibold px-4 py-2 rounded-md hover:opacity-80 transition mx-auto max-w-max"
-              >
-                Cadastrar
-              </Link>
+            <div className="flex items-center gap-3">
+              <CustomTextButton
+                href={routes.user.profile}
+                text={user.name}
+                fontColor="white"
+                className="hover:underline"
+              />
+              <UserAvatar />
             </div>
+          ) : (
+            <AuthButtons />
           )}
         </div>
 
-        <div className="lg:hidden">
-          <Image
+        <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <CustomImage
             src={isMenuOpen ? "/close.svg" : "/menu.svg"}
-            alt="menu"
+            alt="Menu"
             width={32}
             height={32}
-            onClick={toggleMenu}
-            className="cursor-pointer"
+            className="invert"
           />
-        </div>
+        </button>
       </nav>
 
-      <div
-        className={`${
-          isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        } overflow-hidden transition-all duration-300 ease-in-out transform bg-green-700 text-white lg:hidden`}
-      >
-        <ul className="flex flex-col gap-2 w-full text-center mt-2 pb-4">
-          {NAV_LINKS.map((link) => (
-            <Link
-              href={link.href}
-              key={link.key}
-              className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          {authLoading ? (
-            <li className="py-2 flex justify-center">
-              <Image
-                src="/spinner.svg"
-                alt="spinner"
-                width={32}
-                height={32}
-                className="text-white animate-spin"
-              />
-            </li>
-          ) : user ? (
-            <>
-              <Link
-                href={routes.user.profile}
-                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Perfil
-              </Link>
-              <Link
-                href={routes.user.recipes.index}
-                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Minhas Receitas
-              </Link>
-              <Link
-                href={routes.user.posts.index}
-                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Meus Posts
-              </Link>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsMenuOpen(false);
-                }}
-                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <Image
-                    src="/logout.svg"
-                    alt="Logout"
-                    width={24}
-                    height={24}
-                    className="invert"
-                  />
-                  <span>Sair</span>
-                </div>
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href={routes.auth.login}
-                className="regular-18 cursor-pointer transition-all hover:font-bold py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Entrar
-              </Link>
-              <Link
-                href={routes.auth.register}
-                className="bg-white text-green-800 font-semibold px-4 py-2 rounded-full hover:opacity-80 transition mx-auto w-1/2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Cadastrar
-              </Link>
-            </>
-          )}
-        </ul>
-      </div>
+      <MobileMenu />
 
-      {hasMounted &&
-        ReactDOM.createPortal(
-          <div
-            ref={dropdownRef}
-            className={`fixed w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-[1000] ${
-              isDropdownOpen ? "block" : "hidden"
-            }`}
-            style={{ top: dropdownPosition.top, right: dropdownPosition.right }}
-          >
-            <div className="py-1">
-              <Link
-                href={routes.user.profile}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                Meu perfil
-              </Link>
-              <Link
-                href={routes.user.recipes.index}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                Minhas Receitas
-              </Link>
-              <Link
-                href={routes.user.posts.index}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                Meus Posts
-              </Link>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsDropdownOpen(false);
-                }}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
-              >
-                Logout
-              </button>
-            </div>
-          </div>,
-          document.body
-        )}
-    </div>
+      {isDropdownOpen && ReactDOM.createPortal(
+        <div ref={dropdownRef} className="fixed bg-white shadow-lg rounded-md z-[1000]"
+          style={{ top: dropdownPosition.top, right: dropdownPosition.right }}>
+          <CustomTextButton
+            href={routes.user.profile}
+            text="Meu perfil"
+            fontColor="text-gray-700"
+            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
+          />
+          <CustomTextButton
+            href={routes.user.recipes.index}
+            text="Minhas Receitas"
+            fontColor="text-gray-700"
+            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
+          />
+          <CustomTextButton
+            href={routes.user.posts.index}
+            text="Meus Posts"
+            fontColor="text-gray-700"
+            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
+          />
+          <CustomTextButton
+            text="Logout"
+            fontColor="text-gray-700"
+            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
+            onClick={handleLogout}
+          />
+        </div>,
+        document.body
+      )}
+    </header>
   );
 };
 

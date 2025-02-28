@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import toast from "react-hot-toast";
 import useAuthStore from "../../../store/authStore";
 import { Recipe } from "../../../typings/recipe";
@@ -9,7 +8,9 @@ import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
 import routes from "../../../routes/routes";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/Others/EmptyList";
-import UserRecipeListCard from "../../../components/Cards/UserRecipeListCard";
+import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
+import CustomPaginator from "../../../components/Others/CustomPaginator";
+import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
 
 export default function ListUserRecipes() {
   const { user } = useAuthStore();
@@ -61,12 +62,12 @@ export default function ListUserRecipes() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Minhas Receitas</h1>
-        <Link
+        <CustomBackgroundTextButton
+          text="Adicionar Nova Receita"
           href={routes.user.recipes.create}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
-          Adicionar Nova Receita
-        </Link>
+          backgroundColor="bg-yellow-500"
+          fontColor="white"
+        />
       </div>
 
       {!isLoaded ? (
@@ -81,45 +82,21 @@ export default function ListUserRecipes() {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recipes.map((recipe) => (
-              <UserRecipeListCard
+              <ListItemContentCard
                 key={recipe.id}
-                recipe={recipe}
+                detailRoute={(id) => routes.recipes.details(id)}
+                editRoute={(id) => routes.user.recipes.update(id)}
                 handleDelete={handleDelete}
+                item={recipe}
               />
             ))}
           </div>
           {totalPages > 1 && (
-            <div className="mt-8 flex justify-center gap-2">
-              <button
-                onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 disabled:opacity-50"
-              >
-                Anterior
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 border rounded-md ${
-                      currentPage === page
-                        ? "bg-blue-600 text-white border-blue-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                )
-              )}
-              <button
-                onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 disabled:opacity-50"
-              >
-                Próximo
-              </button>
-            </div>
+            <CustomPaginator
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
           )}
         </>
       )}

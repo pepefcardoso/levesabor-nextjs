@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 
 interface CustomPaginatorProps {
     currentPage: number;
@@ -21,34 +24,41 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
 
     return (
         <div className={`flex justify-center mt-8 flex-wrap gap-2 ${className}`}>
-            <button
+            <CustomBackgroundTextButton
+                text={previousLabel}
                 onClick={() => onPageChange(currentPage - 1)}
+                type="button"
+                backgroundColor="bg-white"
+                fontColor="gray-700"
                 disabled={currentPage === 1}
-                className="px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50 transition-colors"
-            >
-                {previousLabel}
-            </button>
+                loading={false}
+            />
 
-            {Array.from({ length: totalPages }, (_, index) => (
-                <button
-                    key={index + 1}
-                    onClick={() => onPageChange(index + 1)}
-                    className={`px-4 py-2 border ${currentPage === index + 1
-                            ? "bg-blue-500 text-white border-blue-500"
-                            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                        } rounded-md transition-colors`}
-                >
-                    {index + 1}
-                </button>
-            ))}
+            {Array.from({ length: totalPages }, (_, index) => {
+                const page = index + 1;
+                return (
+                    <CustomBackgroundTextButton
+                        key={page}
+                        text={String(page)}
+                        onClick={() => onPageChange(page)}
+                        type="button"
+                        backgroundColor={currentPage === page ? "bg-blue-500" : "bg-white"}
+                        fontColor={currentPage === page ? "white" : "gray-700"}
+                        disabled={false}
+                        loading={false}
+                    />
+                );
+            })}
 
-            <button
+            <CustomBackgroundTextButton
+                text={nextLabel}
                 onClick={() => onPageChange(currentPage + 1)}
+                type="button"
+                backgroundColor="bg-white"
+                fontColor="gray-700"
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50 transition-colors"
-            >
-                {nextLabel}
-            </button>
+                loading={false}
+            />
         </div>
     );
 };

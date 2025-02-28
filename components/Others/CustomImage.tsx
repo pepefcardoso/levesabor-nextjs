@@ -4,12 +4,13 @@ import React from "react";
 interface CustomImageProps {
     src: string;
     alt: string;
-    width?: string;
-    height?: string;
+    width?: string | number;
+    height?: string | number;
     rounded?: "sm" | "md" | "lg" | "full";
     objectFit?: "cover" | "contain" | "fill" | "none";
     priority?: boolean;
     shadow?: "none" | "sm" | "md" | "lg";
+    className?: string;
 }
 
 const CustomImage: React.FC<CustomImageProps> = ({
@@ -21,6 +22,7 @@ const CustomImage: React.FC<CustomImageProps> = ({
     objectFit = "cover",
     priority = false,
     shadow = "md",
+    className = "",
 }) => {
     const roundedClass = {
         sm: "rounded-sm",
@@ -36,13 +38,22 @@ const CustomImage: React.FC<CustomImageProps> = ({
         lg: "shadow-lg",
     }[shadow];
 
+    const objectFitClass = `object-${objectFit}`;
+
+
+    const widthStyle = typeof width === "number" ? `${width}px` : width;
+    const heightStyle = typeof height === "number" ? `${height}px` : height;
+
     return (
-        <div className="relative" style={{ width, height }}>
+        <div
+            className={`relative ${roundedClass} ${shadowClass} ${className}`}
+            style={{ width: widthStyle, height: heightStyle }}
+        >
             <Image
-                src={src}
+                src={src || "/placeholder.jpg"}
                 alt={alt}
                 fill
-                className={`${roundedClass} object-${objectFit} ${shadowClass}`}
+                className={objectFitClass}
                 priority={priority}
             />
         </div>

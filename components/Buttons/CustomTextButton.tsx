@@ -11,6 +11,7 @@ interface CustomTextButtonProps {
     loading?: boolean;
     loadingText?: string;
     type?: "submit" | "button" | "reset";
+    className?: string;
 }
 
 const CustomTextButton: FC<CustomTextButtonProps> = ({
@@ -21,10 +22,12 @@ const CustomTextButton: FC<CustomTextButtonProps> = ({
     loading = false,
     loadingText = text,
     type = "submit",
+    className = "",
 }) => {
     const baseClasses = `
         transition-all duration-200
         ${!loading ? "hover:font-bold hover:scale-105" : "cursor-not-allowed"}
+        ${className}
     `;
 
     const inlineStyle = {

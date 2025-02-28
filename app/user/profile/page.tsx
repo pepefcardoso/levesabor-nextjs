@@ -11,6 +11,10 @@ import { UserProfileSkeleton } from "../../../components/Skeletons/UserProfileSk
 import toast from "react-hot-toast";
 import { UserProfileForm } from "../../../components/Forms/UserProfileForm";
 import { User } from "../../../typings/user";
+import CustomIconButton from "../../../components/Buttons/CustomIconButton";
+import CustomDialog from "../../../components/Others/CustomDialog";
+import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
+import { FaTrash } from "react-icons/fa";
 
 export default function UserProfile() {
   const router = useRouter();
@@ -75,26 +79,12 @@ export default function UserProfile() {
           <UserProfileSkeleton />
         ) : (
           <div className="bg-white rounded-2xl shadow-xl p-8 relative">
-            <button
+            <CustomIconButton
               onClick={() => setShowDeleteDialog(true)}
+              ariaLabel="Excluir conta"
               className="absolute top-6 right-6 text-red-600 hover:text-red-700"
-              aria-label="Excluir conta"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-            </button>
+              Icon={FaTrash}  // Updated prop name here!
+            />
 
             <h1 className="text-4xl font-bold text-gray-900 mb-8">
               Meu Perfil
@@ -109,28 +99,30 @@ export default function UserProfile() {
         )}
 
         {showDeleteDialog && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full">
-              <h3 className="text-2xl font-bold mb-4">Confirmar Exclusão</h3>
-              <p className="mb-6 text-lg text-gray-600">
-                Tem certeza que deseja excluir sua conta permanentemente?
-              </p>
-              <div className="flex justify-end gap-4">
-                <button
-                  onClick={() => setShowDeleteDialog(false)}
-                  className="px-6 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-lg"
-                >
-                  Cancelar
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 text-lg"
-                >
-                  Confirmar
-                </button>
-              </div>
+          <CustomDialog
+            title="Confirmar Exclusão"
+            onClose={() => setShowDeleteDialog(false)}
+          >
+            <p className="mb-6 text-lg text-gray-600">
+              Tem certeza que deseja excluir sua conta permanentemente?
+            </p>
+            <div className="flex justify-end gap-4">
+              <CustomBackgroundTextButton
+                text="Cancelar"
+                onClick={() => setShowDeleteDialog(false)}
+                type="button"
+                backgroundColor="bg-white"
+                fontColor="gray-700"
+              />
+              <CustomBackgroundTextButton
+                text="Confirmar"
+                onClick={handleDelete}
+                type="button"
+                backgroundColor="bg-red-600"
+                fontColor="white"
+              />
             </div>
-          </div>
+          </CustomDialog>
         )}
       </div>
     </div>

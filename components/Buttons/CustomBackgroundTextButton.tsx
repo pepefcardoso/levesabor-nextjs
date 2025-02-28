@@ -12,6 +12,8 @@ interface CustomBackgroundTextButtonProps {
     loading?: boolean;
     loadingText?: string;
     type?: "submit" | "button" | "reset";
+    disabled?: boolean;
+    className?: string;
 }
 
 const CustomBackgroundTextButton: FC<CustomBackgroundTextButtonProps> = ({
@@ -23,16 +25,19 @@ const CustomBackgroundTextButton: FC<CustomBackgroundTextButtonProps> = ({
     loading = false,
     loadingText = text,
     type = "submit",
+    disabled = false,
+    className = "",
 }) => {
     const isTailwindClass = backgroundColor.startsWith("bg-");
 
     const baseClasses = `
-    rounded-md shadow-md transition-all duration-200 px-4 py-2 flex items-center justify-center
-    ${!loading ? "hover:shadow-lg hover:scale-105 hover:font-bold" : "cursor-not-allowed"}
-    ${isTailwindClass ? backgroundColor : ""}
-  `;
+        rounded-md shadow-sm transition-all duration-200 px-4 py-2 flex items-center justify-center
+        ${!loading && !disabled ? "hover:opacity-80" : "cursor-not-allowed"} // Change opacity on hover
+        ${isTailwindClass ? backgroundColor : ""}
+        ${className}
+    `;
 
-    const inlineStyle = loading
+    const inlineStyle = loading || disabled
         ? { color: "#6B7280", backgroundColor: "#E5E7EB" }
         : {
             color: fontColor,
@@ -48,7 +53,7 @@ const CustomBackgroundTextButton: FC<CustomBackgroundTextButtonProps> = ({
                 onClick={onClick}
                 className={baseClasses}
                 style={inlineStyle}
-                aria-disabled={loading}
+                aria-disabled={loading || disabled}
             >
                 {content}
             </Link>
@@ -60,7 +65,7 @@ const CustomBackgroundTextButton: FC<CustomBackgroundTextButtonProps> = ({
             onClick={onClick}
             className={baseClasses}
             style={inlineStyle}
-            disabled={loading}
+            disabled={loading || disabled}
             type={type}
         >
             {content}

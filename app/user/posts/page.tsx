@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import toast from "react-hot-toast";
 import useAuthStore from "../../../store/authStore";
 import { deletePost, getMyPosts } from "../../../services/postService";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/Others/EmptyList";
-import UserPostListCard from "../../../components/Cards/UserPostListCard";
 import routes from "../../../routes/routes";
 import { PaginationResponse } from "../../../typings/pagination";
 import { Post } from "../../../typings/post";
+import CustomPaginator from "../../../components/Others/CustomPaginator";
+import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
+import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
 
 export default function UserPosts() {
   const { user } = useAuthStore();
@@ -63,12 +64,12 @@ export default function UserPosts() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Meus Posts</h1>
-        <Link
+        <CustomBackgroundTextButton
+          text="Adicionar Novo Post"
           href={routes.user.posts.create}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
-          Adicionar Novo Post
-        </Link>
+          backgroundColor="bg-yellow-500"
+          fontColor="white"
+        />
       </div>
 
       {!isLoaded ? (
@@ -83,45 +84,24 @@ export default function UserPosts() {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post) => (
-              <UserPostListCard
+              <ListItemContentCard
                 key={post.id}
-                post={post}
+                detailRoute={(id) => routes.posts.details(id)}
+                editRoute={(id) => routes.user.posts.update(id)}
                 handleDelete={handleDelete}
+                item={post}
               />
             ))}
           </div>
           {totalPages > 1 && (
-            <div className="mt-8 flex justify-center gap-2">
-              <button
-                onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 disabled:opacity-50"
-              >
-                Anterior
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 border rounded-md ${
-                      currentPage === page
-                        ? "bg-blue-600 text-white border-blue-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                )
-              )}
-              <button
-                onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-md hover:bg-gray-50 disabled:opacity-50"
-              >
-                Próximo
-              </button>
-            </div>
+            <CustomPaginator
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              previousLabel="Anterior"
+              nextLabel="Próxima"
+              className="mt-8"
+            />
           )}
         </>
       )}
