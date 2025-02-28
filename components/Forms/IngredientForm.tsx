@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { getRecipeUnits } from "../../services/recipeUnitService";
 import { RecipeIngredient, RecipeUnit } from "../../typings/recipe";
+import CustomFormTextInput, { InputType } from "../Inputs/CustomFormTextInput";
+import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import CustomInputSelect from "../Inputs/CustomSelectInput";
 
 interface IngredientFormProps {
   onIngredientsChange: (ingredients: RecipeIngredient[]) => void;
@@ -60,48 +63,48 @@ export const IngredientForm = ({
 
       {ingredients.map((ingredient, index) => (
         <div key={index} className="grid grid-cols-3 gap-4 items-center">
-          <input
-            type="text"
+          <CustomFormTextInput
+            type={InputType.Text}
             placeholder="Nome"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             value={ingredient.name}
             onChange={(e) => handleChange(index, "name", e.target.value)}
             disabled={isLoading}
+            className="w-full"
           />
-          <input
-            type="number"
+
+          <CustomFormTextInput
+            type={InputType.Number}
             placeholder="Quantidade"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             value={ingredient.quantity}
             onChange={(e) =>
               handleChange(index, "quantity", e.target.valueAsNumber)
             }
             disabled={isLoading}
+            className="w-full"
           />
-          <select
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+
+          <CustomInputSelect
+            options={units.map(unit => ({
+              value: unit.id,
+              label: unit.name
+            }))}
             value={ingredient.unit_id}
             onChange={(e) => handleChange(index, "unit_id", e.target.value)}
+            placeholder="Selecione"
             disabled={isLoading}
-          >
-            <option value="">Selecione</option>
-            {units.map((unit) => (
-              <option key={unit.id} value={unit.id}>
-                {unit.name}
-              </option>
-            ))}
-          </select>
+            className="w-full"
+          />
         </div>
       ))}
 
-      <button
-        type="button"
+      <CustomBackgroundTextButton
+        text="Adicionar Ingrediente"
+        backgroundColor="bg-blue-500"
+        fontColor="text-white"
         onClick={addIngredient}
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={isLoading}
-      >
-        Adicionar Ingrediente
-      </button>
+        className="w-full"
+      />
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { RecipeStep } from "../../typings/recipe";
+import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 
 interface StepFormProps {
   onStepsChange: (steps: RecipeStep[]) => void;
@@ -36,21 +38,22 @@ export const StepForm = ({
           <span className="block font-medium mb-2 text-gray-700">
             Passo {step.order}
           </span>
-          <textarea
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-            placeholder="Descrição do passo"
+          <CustomTextAreaInput
             value={step.description}
             onChange={(e) => handleChange(index, e.target.value)}
+            placeholder="Descrição do passo"
+            className="w-full"
           />
         </div>
       ))}
-      <button
+      <CustomBackgroundTextButton
         type="button"
+        text="Adicionar Passo"
+        backgroundColor="bg-blue-500"
+        fontColor="text-white"
         onClick={addStep}
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm font-medium"
-      >
-        Adicionar Passo
-      </button>
+        className="w-full sm:w-auto"
+      />
     </div>
   );
 };

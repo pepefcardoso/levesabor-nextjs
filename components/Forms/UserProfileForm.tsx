@@ -1,6 +1,8 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import Image from "next/image";
 import { sanitizeImageUrl } from "../../tools/helper";
+import CustomImage from "../Others/CustomImage";
+import CustomFormTextInput, { InputType } from "../Inputs/CustomFormTextInput";
+import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
 
 type UserProfileFormProps = {
   initialData: {
@@ -46,17 +48,21 @@ export const UserProfileForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto space-y-8 px-4 sm:px-0">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-2xl mx-auto space-y-8 px-4 sm:px-0"
+    >
       <div className="flex flex-col items-center space-y-6">
         <div className="relative group">
           <div className="w-48 h-48 rounded-full ring-4 ring-white shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-            <Image
+            <CustomImage
               src={previewImage || sanitizeImageUrl(initialData.image?.url)}
               alt="Perfil"
               width={192}
               height={192}
-              className="object-cover w-full h-full"
-              sizes="(max-width: 768px) 100vw, 192px"
+              rounded="full"
+              objectFit="cover"
+              className="w-full h-full"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <svg
@@ -102,14 +108,15 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               Nome
             </label>
-            <input
+            <CustomFormTextInput
               name="name"
               value={formValues.name}
               onChange={(e) =>
                 setFormValues((prev) => ({ ...prev, name: e.target.value }))
               }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
+              placeholder="Nome"
               disabled={isSubmitting}
+              className="w-full"
             />
           </div>
 
@@ -117,11 +124,12 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               E-mail
             </label>
-            <input
+            <CustomFormTextInput
               name="email"
               value={initialData.email}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed text-base"
+              placeholder="E-mail"
               disabled
+              className="w-full bg-gray-100 cursor-not-allowed"
             />
           </div>
 
@@ -129,15 +137,16 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               Data de Nascimento
             </label>
-            <input
-              type="date"
+            <CustomFormTextInput
+              type={InputType.Date}
               name="birthday"
               value={formValues.birthday}
               onChange={(e) =>
                 setFormValues((prev) => ({ ...prev, birthday: e.target.value }))
               }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
+              placeholder="Data de Nascimento"
               disabled={isSubmitting}
+              className="w-full"
             />
           </div>
 
@@ -145,27 +154,29 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               Telefone
             </label>
-            <input
+            <CustomFormTextInput
               name="phone"
               value={formValues.phone}
               onChange={(e) =>
                 setFormValues((prev) => ({ ...prev, phone: e.target.value }))
               }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
+              placeholder="Telefone"
               disabled={isSubmitting}
+              className="w-full"
             />
           </div>
         </div>
       </div>
 
       <div className="flex justify-end">
-        <button
+        <CustomBackgroundTextButton
           type="submit"
-          className="px-8 py-3 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 transition-all shadow-lg font-medium text-base disabled:opacity-50"
+          text="Salvar"
+          backgroundColor="bg-yellow-400"
+          fontColor="text-black"
+          className="px-8 py-3 rounded-lg hover:bg-yellow-500 shadow-lg font-medium text-base"
           disabled={isSubmitting}
-        >
-          Salvar
-        </button>
+        />
       </div>
     </form>
   );
