@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../../services/authService";
 import routes from "../../../routes/routes";
-import CustomFormTextInput, { InputType } from "../../../components/Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../../../components/Inputs/CustomTextInput";
 import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
 import CustomTextButton from "../../../components/Buttons/CustomTextButton";
 
@@ -63,7 +63,7 @@ export default function ForgotPasswordPage() {
               >
                 E-mail
               </label>
-              <CustomFormTextInput
+              <CustomTextInput
                 type={InputType.Email}
                 id="email"
                 value={email}

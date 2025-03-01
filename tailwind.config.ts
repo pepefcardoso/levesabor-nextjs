@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "./constants/colors";
 
 const config: Config = {
   content: [
@@ -12,16 +13,16 @@ const config: Config = {
         "3xl": "1920px",
       },
       colors: {
-        green: {
-          80: "#06402B",
-        },
+        // Custom colors
+        limeGreen: { DEFAULT: colors.limeGreen },
+        erinGreen: { DEFAULT: colors.erinGreen },
+        pineappleYellow: { DEFAULT: colors.pineappleYellow },
+        // Gray shades
         gray: {
-          10: "#EEEEEE",
-          20: "#A2A2A2",
-          30: "#7B7B7B",
-          50: "#585858",
-          90: "#141414",
-        },
+          200: colors.gray.light,
+          500: colors.gray.regular,
+          800: colors.gray.dark,
+        }
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

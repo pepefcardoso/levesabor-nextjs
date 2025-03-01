@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { sanitizeImageUrl } from "../../tools/helper";
 import CustomImage from "../Others/CustomImage";
-import CustomFormTextInput, { InputType } from "../Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
 
 type UserProfileFormProps = {
@@ -108,7 +108,7 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               Nome
             </label>
-            <CustomFormTextInput
+            <CustomTextInput
               name="name"
               value={formValues.name}
               onChange={(e) =>
@@ -124,7 +124,7 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               E-mail
             </label>
-            <CustomFormTextInput
+            <CustomTextInput
               name="email"
               value={initialData.email}
               placeholder="E-mail"
@@ -137,7 +137,7 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               Data de Nascimento
             </label>
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Date}
               name="birthday"
               value={formValues.birthday}
@@ -154,7 +154,7 @@ export const UserProfileForm = ({
             <label className="block text-gray-700 text-sm font-medium mb-2">
               Telefone
             </label>
-            <CustomFormTextInput
+            <CustomTextInput
               name="phone"
               value={formValues.phone}
               onChange={(e) =>

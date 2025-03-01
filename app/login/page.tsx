@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
 import { LoginSkeleton } from "../../components/Skeletons/LoginFormSkeleton";
-import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 import CustomTextButton from "../../components/Buttons/CustomTextButton";
 
@@ -75,7 +75,7 @@ export default function LoginPage() {
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
-              <CustomFormTextInput
+              <CustomTextInput
                 id="email"
                 type={InputType.Email}
                 label="Email"
@@ -85,7 +85,7 @@ export default function LoginPage() {
                 disabled={loading}
                 autoComplete="email"
               />
-              <CustomFormTextInput
+              <CustomTextInput
                 id="password"
                 type={InputType.Password}
                 label="Senha"

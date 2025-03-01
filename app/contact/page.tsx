@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { CustomerContact, registerContact } from "../../services/contactService";
 import { CONTACT_ITEMS } from "../../constants";
 import { IconTextItem } from "../../components/Others/IconTextItem";
-import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import CustomTextAreaInput from "../../components/Inputs/CustomTextAreaInput";
 import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 
@@ -60,14 +60,14 @@ const ContactUs = () => {
           <h2 className="text-lg font-semibold mb-2">Mande sua mensagem</h2>
           <p className="text-gray-500 mb-4">Estamos sempre disponíveis!</p>
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <CustomFormTextInput
+            <CustomTextInput
               name="name"
               placeholder="Seu nome"
               value={formData.name}
               onChange={handleChange}
               required
             />
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Tel}
               name="phone"
               placeholder="Seu telefone"
@@ -75,7 +75,7 @@ const ContactUs = () => {
               onChange={handleChange}
               required
             />
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Email}
               name="email"
               placeholder="Seu e-mail"

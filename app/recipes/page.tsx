@@ -12,7 +12,7 @@ import NewsletterForm from "../../components/Forms/NewsletterForm";
 import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
 import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "../../typings/recipe";
 import { PaginationResponse } from "../../typings/pagination";
-import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import CustomInputSelect from "../../components/Inputs/CustomSelectInput";
 import CustomCheckboxInput from "../../components/Inputs/CustomCheckboxInput";
 import CustomPaginator from "../../components/Others/CustomPaginator";
@@ -132,7 +132,7 @@ export default function RecipesHome() {
           Pesquisar Receitas
         </h1>
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
-          <CustomFormTextInput
+          <CustomTextInput
             type={InputType.Text}
             placeholder="Pesquisar receitas..."
             value={tempSearch}

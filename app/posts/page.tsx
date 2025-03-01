@@ -11,7 +11,7 @@ import NewsletterForm from "../../components/Forms/NewsletterForm";
 import { Post, PostCategory, PostFilters } from "../../typings/post";
 import { PaginationResponse } from "../../typings/pagination";
 import CustomInputSelect from "../../components/Inputs/CustomSelectInput";
-import CustomFormTextInput from "../../components/Inputs/CustomFormTextInput";
+import CustomTextInput from "../../components/Inputs/CustomTextInput";
 import CustomPaginator from "../../components/Others/CustomPaginator";
 
 export default function PostsHome() {
@@ -101,7 +101,7 @@ export default function PostsHome() {
           Pesquise nossos posts
         </h1>
         <form onSubmit={handleSubmit} className="mb-6">
-          <CustomFormTextInput
+          <CustomTextInput
             placeholder="Pesquisar posts..."
             value={tempSearch}
             onChange={(e) => setTempSearch(e.target.value)}

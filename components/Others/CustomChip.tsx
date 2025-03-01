@@ -11,9 +11,21 @@ const CustomChip: React.FC<CustomChipProps> = ({
   fontColor = "white",
   text,
 }) => {
+  // Helper function to handle color values
+  const getColorStyle = (value: string, type: 'bg' | 'text') => {
+    if (value.startsWith('#')) {
+      return { [type === 'bg' ? 'backgroundColor' : 'color']: value };
+    }
+    return {};
+  };
+
   return (
     <span
-      className={`bg-${color}-500 text-${fontColor} text-xs font-semibold px-3 py-1 rounded-lg shadow-md`} // Added shadow-md for a smooth, always-visible shadow
+      className="text-xs font-semibold px-3 py-1 rounded-lg shadow-md"
+      style={{
+        ...getColorStyle(color, 'bg'),
+        ...getColorStyle(fontColor, 'text'),
+      }}
     >
       {text}
     </span>

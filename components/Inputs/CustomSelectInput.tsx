@@ -10,6 +10,7 @@ interface CustomSelectInputProps {
     name?: string;
     className?: string;
     required?: boolean;
+    label?: string;
 }
 
 const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
@@ -22,6 +23,7 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
     name,
     className = "",
     required = false,
+    label,
 }) => {
     const baseClasses = [
         "p-2 border border-gray-300 rounded-md",
@@ -32,25 +34,33 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
     ].join(" ");
 
     return (
-        <select
-            name={name}
-            value={value}
-            onChange={onChange}
-            disabled={disabled || isLoading}
-            className={`${baseClasses} ${className}`}
-            required={required}
-        >
-            {placeholder && (
-                <option value="" disabled={required}>
-                    {placeholder}
-                </option>
+        <div className="space-y-1">
+            {label && (
+                <label htmlFor={name} className="text-sm font-medium text-gray-700">
+                    {label}
+                </label>
             )}
-            {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                    {option.label}
-                </option>
-            ))}
-        </select>
+            <select
+                name={name}
+                id={name}
+                value={value}
+                onChange={onChange}
+                disabled={disabled || isLoading}
+                className={`${baseClasses} ${className}`}
+                required={required}
+            >
+                {placeholder && (
+                    <option value="" disabled={required}>
+                        {placeholder}
+                    </option>
+                )}
+                {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
+        </div>
     );
 };
 

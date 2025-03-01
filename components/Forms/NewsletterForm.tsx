@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { createNewsletterCustomer } from '../../services/NewsletterCustomerService';
-import CustomFormTextInput, { InputType } from '../Inputs/CustomFormTextInput';
+import CustomTextInput, { InputType } from '../Inputs/CustomTextInput';
 import CustomBackgroundTextButton from '../Buttons/CustomBackgroundTextButton';
 
 const NewsletterForm = () => {
@@ -33,7 +33,7 @@ const NewsletterForm = () => {
         Cadastre-se e não perca nenhuma novidade
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 w-full">
-        <CustomFormTextInput
+        <CustomTextInput
           type={InputType.Email}
           value={email}
           onChange={(e) => setEmail(e.target.value)}

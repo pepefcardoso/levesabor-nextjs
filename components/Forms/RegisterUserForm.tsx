@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent } from "react";
-import CustomFormTextInput, { InputType } from "../Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
 
 interface RegisterUserFormProps {
@@ -50,7 +50,7 @@ const RegisterUserForm = ({
 
             <div className="grid gap-4">
                 {formFields.map((field) => (
-                    <CustomFormTextInput
+                    <CustomTextInput
                         key={field.id}
                         id={field.id}
                         type={field.type}

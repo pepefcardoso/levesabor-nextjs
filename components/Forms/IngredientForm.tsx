@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getRecipeUnits } from "../../services/recipeUnitService";
 import { RecipeIngredient, RecipeUnit } from "../../typings/recipe";
-import CustomFormTextInput, { InputType } from "../Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
 
@@ -63,7 +63,7 @@ export const IngredientForm = ({
 
       {ingredients.map((ingredient, index) => (
         <div key={index} className="grid grid-cols-3 gap-4 items-center">
-          <CustomFormTextInput
+          <CustomTextInput
             type={InputType.Text}
             placeholder="Nome"
             value={ingredient.name}
@@ -72,7 +72,7 @@ export const IngredientForm = ({
             className="w-full"
           />
 
-          <CustomFormTextInput
+          <CustomTextInput
             type={InputType.Number}
             placeholder="Quantidade"
             value={ingredient.quantity}

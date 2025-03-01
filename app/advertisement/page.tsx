@@ -8,7 +8,7 @@ import {
 } from "../../services/contactService";
 import { ADVERTISEMENTS_ITEMS } from "../../constants";
 import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
-import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import { IconTextItem } from "../../components/Others/IconTextItem";
 
 const Advertisement = () => {
@@ -71,7 +71,7 @@ const Advertisement = () => {
             Não perca esta oportunidade!
           </p>
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Text}
               name="name"
               placeholder="Seu nome"
@@ -80,7 +80,7 @@ const Advertisement = () => {
               required
             />
 
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Tel}
               name="phone"
               placeholder="Seu telefone"
@@ -89,7 +89,7 @@ const Advertisement = () => {
               required
             />
 
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Email}
               name="email"
               placeholder="Seu email"

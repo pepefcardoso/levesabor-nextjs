@@ -1,10 +1,17 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useState, useRef } from "react";
 import { IngredientForm } from "./IngredientForm";
 import { StepForm } from "./StepForm";
 import { RecipeDifficultyEnum } from "../../typings/enums";
 import { RecipeCategory, RecipeDiet, RecipeIngredient, RecipeStep } from "../../typings/recipe";
+import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
+import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
+import CustomInputSelect from "../Inputs/CustomSelectInput";
+import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
+import CustomImage from "../Others/CustomImage";
+import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import { Typography } from "../../constants/typography";
+import colors from "../../constants/colors";
 
 interface FormDataValues {
   title: string;
@@ -26,13 +33,7 @@ interface RecipeFormProps {
   onSubmit: (data: FormData) => Promise<void>;
 }
 
-export const RecipeForm: React.FC<RecipeFormProps> = ({
-  initialData,
-  categories,
-  diets,
-  isSubmitting,
-  onSubmit,
-}) => {
+export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories, diets, isSubmitting, onSubmit }) => {
   const [formData, setFormData] = useState<FormDataValues>({
     title: initialData?.title || "",
     description: initialData?.description || "",
@@ -46,14 +47,10 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
   });
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleDietChange = (dietId: string, checked: boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      diets: checked
-        ? [...prev.diets, dietId]
-        : prev.diets.filter((id) => id !== dietId),
-    }));
+  const handleDietChange = (selected: (string | number)[]) => {
+    setFormData((prev) => ({ ...prev, diets: selected.map(String) }));
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,264 +64,151 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
-
     data.append("title", formData.title);
     data.append("description", formData.description);
     data.append("time", formData.time);
     data.append("portion", formData.portion);
     data.append("difficulty", String(formData.difficulty));
     data.append("category_id", formData.category_id);
-
     formData.diets.forEach((dietId) => {
       data.append("diets[]", dietId);
     });
-
     formData.ingredients.forEach((ingredient, index) => {
       data.append(`ingredients[${index}][name]`, ingredient.name);
-      data.append(
-        `ingredients[${index}][quantity]`,
-        String(ingredient.quantity)
-      );
+      data.append(`ingredients[${index}][quantity]`, String(ingredient.quantity));
       data.append(`ingredients[${index}][unit_id]`, ingredient.unit_id);
     });
-
     formData.steps.forEach((step, index) => {
       data.append(`steps[${index}][description]`, step.description);
       data.append(`steps[${index}][order]`, String(index + 1));
     });
-
     if (selectedImage) data.append("image", selectedImage);
-
     await onSubmit(data);
   };
+
+  const difficultyOptions = Object.values(RecipeDifficultyEnum)
+    .filter((v): v is number => typeof v === "number")
+    .map((value) => ({ value, label: RecipeDifficultyEnum[value] }));
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       <div className="space-y-6">
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-3">
-            Título
-          </label>
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
+        <CustomTextInput
+          label="Título"
+          id="title"
+          value={formData.title}
+          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          required
+          disabled={isSubmitting}
+        />
+
+        <CustomTextAreaInput
+          label="Descrição"
+          value={formData.description}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          required
+          disabled={isSubmitting}
+          rows={4}
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <CustomTextInput
+            label="Tempo de Preparo (minutos)"
+            type={InputType.Number}
+            value={formData.time}
+            onChange={(e) => setFormData({ ...formData, time: e.target.value })}
             required
             disabled={isSubmitting}
           />
-        </div>
 
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-3">
-            Descrição
-          </label>
-          <textarea
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base h-32 disabled:opacity-50"
+          <CustomTextInput
+            label="Porções"
+            type={InputType.Number}
+            value={formData.portion}
+            onChange={(e) => setFormData({ ...formData, portion: e.target.value })}
             required
             disabled={isSubmitting}
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-lg font-medium text-gray-700 mb-3">
-              Tempo de Preparo (minutos)
-            </label>
-            <input
-              type="number"
-              value={formData.time}
-              onChange={(e) =>
-                setFormData({ ...formData, time: e.target.value })
-              }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
-              required
-              disabled={isSubmitting}
-            />
-          </div>
+          <CustomInputSelect
+            label="Dificuldade"
+            value={formData.difficulty}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                difficulty: Number(e.target.value) as RecipeDifficultyEnum,
+              })
+            }
+            options={difficultyOptions}
+            disabled={isSubmitting}
+          />
 
-          <div>
-            <label className="block text-lg font-medium text-gray-700 mb-3">
-              Porções
-            </label>
-            <input
-              type="number"
-              value={formData.portion}
-              onChange={(e) =>
-                setFormData({ ...formData, portion: e.target.value })
-              }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
-              required
-              disabled={isSubmitting}
-            />
-          </div>
+          <CustomInputSelect
+            label="Categoria"
+            value={formData.category_id}
+            onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+            options={[
+              { value: "", label: "Selecione uma categoria" },
+              ...categories.map((category) => ({ value: category.id, label: category.name })),
+            ]}
+            required
+            disabled={isSubmitting}
+          />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-lg font-medium text-gray-700 mb-3">
-              Dificuldade
-            </label>
-            <select
-              value={formData.difficulty}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  difficulty: Number(e.target.value) as RecipeDifficultyEnum,
-                })
-              }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
-              disabled={isSubmitting}
-            >
-              {Object.values(RecipeDifficultyEnum)
-                .filter((v): v is number => typeof v === "number")
-                .map((value) => (
-                  <option key={value} value={value}>
-                    {RecipeDifficultyEnum[value]}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-lg font-medium text-gray-700 mb-3">
-              Categoria
-            </label>
-            <select
-              value={formData.category_id}
-              onChange={(e) =>
-                setFormData({ ...formData, category_id: e.target.value })
-              }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:opacity-50"
-              required
-              disabled={isSubmitting}
-            >
-              <option value="">Selecione uma categoria</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Modernized Diets Section */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-4">
+          <label className={`${Typography.h6} mb-4`} style={{ color: colors.gray.dark }}>
             Dietas
           </label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {diets.map((diet) => (
-              <label
-                key={diet.id}
-                className={`
-                  relative flex items-center p-3 border rounded-lg cursor-pointer
-                  transition-all duration-200
-                  ${
-                    formData.diets.includes(diet.id)
-                      ? "border-blue-500 bg-blue-50"
-                      : "border-gray-200 hover:border-blue-300"
-                  }
-                `}
-              >
-                <input
-                  type="checkbox"
-                  value={diet.id}
-                  checked={formData.diets.includes(diet.id)}
-                  onChange={(e) => handleDietChange(diet.id, e.target.checked)}
-                  className="hidden"
-                  disabled={isSubmitting}
-                />
-                <div className="flex items-center gap-2">
-                  <div
-                    className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center
-                    ${
-                      formData.diets.includes(diet.id)
-                        ? "bg-blue-500 border-blue-500"
-                        : "bg-white border-gray-300"
-                    }`}
-                  >
-                    {formData.diets.includes(diet.id) && (
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    )}
-                  </div>
-                  <span className="text-gray-700 text-sm">{diet.name}</span>
-                </div>
-              </label>
-            ))}
-          </div>
+          <CustomCheckboxInput
+            options={diets.map((diet) => ({ id: diet.id, label: diet.name }))}
+            selected={formData.diets}
+            onChange={handleDietChange}
+            variant="grid"
+            disabled={isSubmitting}
+          />
         </div>
 
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-3">
+          <label className={`${Typography.h6} mb-3`} style={{ color: colors.gray.dark }}>
             Ingredientes
           </label>
           <IngredientForm
-            onIngredientsChange={(ingredients) =>
-              setFormData({ ...formData, ingredients })
-            }
+            onIngredientsChange={(ingredients) => setFormData({ ...formData, ingredients })}
             initialIngredients={formData.ingredients}
           />
         </div>
 
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-3">
+          <label className={`${Typography.h6} mb-3`} style={{ color: colors.gray.dark }}>
             Passos
           </label>
-          <StepForm
-            onStepsChange={(steps) => setFormData({ ...formData, steps })}
-            initialSteps={formData.steps}
-          />
+          <StepForm onStepsChange={(steps) => setFormData({ ...formData, steps })} initialSteps={formData.steps} />
         </div>
 
-        {/* Modernized Image Section */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-4">
+          <label className={`${Typography.h6} mb-4`} style={{ color: colors.gray.dark }}>
             Imagem da Receita
           </label>
           <div className="flex flex-col items-center gap-6">
             {previewImage ? (
-              <div className="relative group">
-                <Image
+              <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                <CustomImage
                   src={previewImage}
                   alt="Preview"
                   width={300}
                   height={200}
-                  className="rounded-lg object-cover shadow-lg"
+                  rounded="md"
+                  objectFit="cover"
+                  shadow="md"
+                  className="hover:opacity-80 transition-all"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all rounded-lg flex items-center justify-center">
-                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                    Alterar Imagem
-                  </span>
-                </div>
               </div>
             ) : (
               <div className="w-full max-w-md p-8 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 text-center">
-                <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
+                <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -332,46 +216,38 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({
                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
-                <p className="mt-2 text-sm text-gray-600">
-                  Arraste ou clique para fazer upload
-                </p>
+                <p className="mt-2 text-sm text-gray-600">Arraste ou clique para fazer upload</p>
               </div>
             )}
 
-            <label className="inline-flex items-center px-6 py-2 bg-white border border-gray-300 rounded-full shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="sr-only"
-                disabled={isSubmitting}
-              />
-              <svg
-                className="-ml-1 mr-2 h-5 w-5 text-gray-400"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              {previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
-            </label>
+            <CustomBackgroundTextButton
+              text={previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isSubmitting}
+              backgroundColor="bg-white"
+              className="px-6 py-2"
+            />
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+              disabled={isSubmitting}
+            />
           </div>
         </div>
       </div>
 
       <div className="flex justify-end pt-8">
-        <button
+        <CustomBackgroundTextButton
+          text={isSubmitting ? "Salvando..." : "Salvar Receita"}
           type="submit"
           disabled={isSubmitting}
-          className="px-8 py-3 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 transition-colors shadow-sm font-medium text-base disabled:bg-gray-300 disabled:cursor-not-allowed"
-        >
-          {isSubmitting ? "Salvando..." : "Salvar Receita"}
-        </button>
+          backgroundColor="bg-yellow-400"
+          className={`${Typography.button} text-black hover:bg-yellow-500 transition-colors shadow-sm font-medium text-base disabled:bg-gray-300 disabled:cursor-not-allowed`}
+        />
       </div>
     </form>
   );

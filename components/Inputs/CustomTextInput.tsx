@@ -11,17 +11,17 @@ export const enum InputType {
   Date = "date",
 }
 
-interface CustomFormTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface CustomTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: InputType;
   label?: string;
 }
 
-const CustomFormTextInput = ({
+const CustomTextInput = ({
   type = InputType.Text,
   disabled,
   label,
   ...props
-}: CustomFormTextInputProps) => {
+}: CustomTextInputProps) => {
   const baseClasses = `
     w-full border border-gray-300 rounded-md
     px-4 py-3
@@ -50,4 +50,4 @@ const CustomFormTextInput = ({
   );
 };
 
-export default CustomFormTextInput;
+export default CustomTextInput;

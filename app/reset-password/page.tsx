@@ -7,7 +7,7 @@ import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
 import CustomTextButton from "../../components/Buttons/CustomTextButton";
 import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
-import CustomFormTextInput, { InputType } from "../../components/Inputs/CustomFormTextInput";
+import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -72,7 +72,7 @@ export default function ResetPasswordPage() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="space-y-6">
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Password}
               id="password"
               value={password}
@@ -83,7 +83,7 @@ export default function ResetPasswordPage() {
               placeholder="••••••••"
               label="Nova Senha"
             />
-            <CustomFormTextInput
+            <CustomTextInput
               type={InputType.Password}
               id="confirmPassword"
               value={confirmPassword}
