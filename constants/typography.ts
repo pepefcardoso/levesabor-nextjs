@@ -1,24 +1,15 @@
 export const Typography = {
-  h1: "font-inter text-5xl font-bold leading-tight m-0",
-  h2: "font-inter text-4xl font-bold leading-snug m-0",
-  h3: "font-inter text-3xl font-semibold leading-snug m-0",
-  h4: "font-inter text-2xl font-semibold leading-snug m-0",
-  h5: "font-inter text-xl font-medium m-0",
-  h6: "font-inter text-lg font-medium m-0",
-
-  body: "font-inter text-base leading-relaxed m-0",
-
-  subtitle: "font-inter text-sm font-medium m-0",
-
-  caption: "font-inter text-xs m-0",
-
-  overline: "font-inter text-xs uppercase tracking-wide m-0",
-
-  button: "font-inter text-sm font-semibold uppercase tracking-wider",
-
-  link: "font-inter text-base underline hover:no-underline transition-colors cursor-pointer",
-
-  code: "font-mono text-sm bg-gray-100 p-1 rounded",
-
-  blockquote: "font-inter text-base italic border-l-4 border-gray-300 pl-4 text-gray-600 my-4",
+  h1: "text-2xl sm:text-3xl font-bold my-4 leading-tight",
+  h2: "text-lg sm:text-xl font-bold my-2 line-clamp-2",
+  h3: "text-base sm:text-lg font-semibold my-3",
+  h4: "text-sm sm:text-base font-semibold my-2",
+  h5: "text-xs sm:text-sm font-semibold my-1",
+  h6: "text-sm font-semibold",
+  body: "text-sm leading-relaxed",
+  subtitle: "text-xs sm:text-sm font-medium italic",
+  caption: "text-xs leading-snug",
+  overline: "text-xs uppercase tracking-widest",
+  button: "text-sm font-semibold uppercase tracking-wide",
+  link: "text-sm font-medium underline hover:text-primary transition-colors",
+  summary: "text-sm line-clamp-3 h-[4.5rem] overflow-hidden",
 };

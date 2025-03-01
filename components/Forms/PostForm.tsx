@@ -8,7 +8,7 @@ import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
 import CustomImage from "../Others/CustomImage";
 import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
 import { Typography } from "../../constants/typography";
-import colors from "../../constants/colors";
+import tailwindConfigColors from "../../constants/colors";
 
 interface FormDataValues {
   title: string;
@@ -121,7 +121,7 @@ export const PostForm: React.FC<PostFormProps> = ({
       <div>
         <label
           className={`${Typography.h6} mb-4`}
-          style={{ color: colors.gray.dark }}
+          style={{ color: tailwindConfigColors.gray.dark }}
         >
           Tópicos
         </label>
@@ -140,7 +140,7 @@ export const PostForm: React.FC<PostFormProps> = ({
       <div>
         <label
           className={`${Typography.h6} mb-4`}
-          style={{ color: colors.gray.dark }}
+          style={{ color: tailwindConfigColors.gray.dark }}
         >
           Imagem do Post
         </label>

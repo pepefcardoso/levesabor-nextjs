@@ -6,6 +6,8 @@ import routes from "../../routes/routes";
 import { Post } from "../../typings/post";
 import CustomImage from "../Others/CustomImage";
 import CustomChip from "../Others/CustomChip";
+import { bgColors, txtColors } from "../../constants/colors";
+import { Typography } from "../../constants/typography";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
@@ -26,18 +28,14 @@ const PostCard = ({ post }: { post: Post }) => {
           />
         </div>
 
-        <div className="p-4 flex flex-col flex-grow">
+        <div className="p-4 flex-col flex-grow">
           {post.category?.name && (
-            <CustomChip color="green" fontColor="white" text={post.category.name} />
+            <CustomChip bgColor={bgColors.pineapple} fontColor={txtColors.black} text={post.category.name} />
           )}
 
-          <h2 className="text-lg sm:text-xl font-bold mb-1 line-clamp-2">
-            {post.title}
-          </h2>
+          <h2 className="text-lg sm:text-xl font-bold my-2 line-clamp-2">{post.title}</h2>
 
-          <p className="text-gray-600 text-sm line-clamp-3 h-[4.5rem] overflow-hidden">
-            {post.summary}
-          </p>
+          <p className={`${Typography.summary} ${txtColors.gray500}`}>{post.summary}</p>
         </div>
       </div>
     </Link>

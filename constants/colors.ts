@@ -1,12 +1,19 @@
-const colors = {
-  limeGreen: "#89F336",
-  erinGreen: "#36F342",
-  pineappleYellow: "#e7f336",
-  gray: {
-    light: "#F9FAFB",
-    regular: "#6B7280",
-    dark: "#374151",
-  },
+export type BgColorType = (typeof bgColors)[keyof typeof bgColors];
+export type TxtColorType = (typeof txtColors)[keyof typeof txtColors];
+
+export const bgColors = {
+  lime: "bg-lime",
+  erin: "bg-erin",
+  pineapple: "bg-pineapple",
+  gray200: "bg-gray-200",
+  gray500: "bg-gray-500",
+  gray800: "bg-gray-800",
 };
 
-export default colors;
+export const txtColors = {
+  gray200: "text-gray-200",
+  gray500: "text-gray-500",
+  gray800: "text-gray-800",
+  white: "text-white",
+  black: "text-black",
+};

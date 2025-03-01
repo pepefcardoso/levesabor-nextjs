@@ -1,35 +1,29 @@
 import React from "react";
+import { bgColors, BgColorType, txtColors, TxtColorType } from "../../constants/colors";
 
 interface CustomChipProps {
-  color?: string;
-  fontColor?: string;
+  bgColor?: BgColorType;
+  fontColor?: TxtColorType;
   text: string;
 }
 
 const CustomChip: React.FC<CustomChipProps> = ({
-  color = "blue",
-  fontColor = "white",
+  bgColor = bgColors.erin,
+  fontColor = txtColors.white,
   text,
 }) => {
-  // Helper function to handle color values
-  const getColorStyle = (value: string, type: 'bg' | 'text') => {
-    if (value.startsWith('#')) {
-      return { [type === 'bg' ? 'backgroundColor' : 'color']: value };
-    }
-    return {};
-  };
+  const chipClasses = [
+    "text-xs",
+    "font-semibold",
+    "px-3",
+    "py-1",
+    "rounded-lg",
+    "shadow-md",
+    bgColor,
+    fontColor,
+  ].join(" ");
 
-  return (
-    <span
-      className="text-xs font-semibold px-3 py-1 rounded-lg shadow-md"
-      style={{
-        ...getColorStyle(color, 'bg'),
-        ...getColorStyle(fontColor, 'text'),
-      }}
-    >
-      {text}
-    </span>
-  );
+  return <span className={chipClasses}>{text}</span>;
 };
 
 export default CustomChip;
