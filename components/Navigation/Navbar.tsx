@@ -7,9 +7,10 @@ import { NAV_LINKS } from "../../constants";
 import useAuthStore from "../../store/authStore";
 import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
-import CustomTextButton from "../Buttons/CustomTextButton";
-import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import TextButton, { HoverAnimations } from "../Buttons/TextButton";
+import FilledButton from "../Buttons/FilledButton";
 import CustomImage from "../Others/CustomImage";
+import { txtColors } from "../../constants/colors";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -90,13 +91,13 @@ const Navbar = () => {
 
   const AuthButtons = () => (
     <div className="flex gap-4 items-center">
-      <CustomTextButton
+      <TextButton
         href={routes.auth.login}
         text="Entrar"
-        fontColor="white"
-        className="hover:font-bold"
+        color={txtColors.white}
+        hoverAnimation={HoverAnimations.bold}
       />
-      <CustomBackgroundTextButton
+      <FilledButton
         href={routes.auth.register}
         text="Cadastrar"
         fontColor="text-green-800"
@@ -111,39 +112,39 @@ const Navbar = () => {
       ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}>
       <ul className="flex flex-col gap-2 w-full text-center py-4">
         {NAV_LINKS.map((link) => (
-          <CustomTextButton
+          <TextButton
             key={link.key}
             href={link.href}
             text={link.label}
-            fontColor="white"
-            className="regular-18 py-2"
+            color={txtColors.white}
+            hoverAnimation={HoverAnimations.scale}
             onClick={() => setIsMenuOpen(false)}
           />
         ))}
         {user ? (
           <>
-            <CustomTextButton
+            <TextButton
               href={routes.user.profile}
               text="Perfil"
               fontColor="white"
               className="regular-18 py-2"
               onClick={() => setIsMenuOpen(false)}
             />
-            <CustomTextButton
+            <TextButton
               href={routes.user.recipes.index}
               text="Minhas Receitas"
               fontColor="white"
               className="regular-18 py-2"
               onClick={() => setIsMenuOpen(false)}
             />
-            <CustomTextButton
+            <TextButton
               href={routes.user.posts.index}
               text="Meus Posts"
               fontColor="white"
               className="regular-18 py-2"
               onClick={() => setIsMenuOpen(false)}
             />
-            <CustomTextButton
+            <TextButton
               text="Sair"
               fontColor="white"
               className="regular-18 py-2"
@@ -160,7 +161,7 @@ const Navbar = () => {
   return (
     <header className="bg-green-800 shadow-lg z-50">
       <nav className="flex items-center justify-between max-container padding-container py-4">
-        <CustomTextButton
+        <TextButton
           href={routes.home}
           text="LeveSabor"
           fontColor="white"
@@ -169,7 +170,7 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
-            <CustomTextButton
+            <TextButton
               key={link.key}
               href={link.href}
               text={link.label}
@@ -190,7 +191,7 @@ const Navbar = () => {
             />
           ) : user ? (
             <div className="flex items-center gap-3">
-              <CustomTextButton
+              <TextButton
                 href={routes.user.profile}
                 text={user.name}
                 fontColor="white"
@@ -219,25 +220,25 @@ const Navbar = () => {
       {isDropdownOpen && ReactDOM.createPortal(
         <div ref={dropdownRef} className="fixed bg-white shadow-lg rounded-md z-[1000]"
           style={{ top: dropdownPosition.top, right: dropdownPosition.right }}>
-          <CustomTextButton
+          <TextButton
             href={routes.user.profile}
             text="Meu perfil"
             fontColor="text-gray-700"
             className="px-4 py-2 hover:bg-gray-100 w-full text-left"
           />
-          <CustomTextButton
+          <TextButton
             href={routes.user.recipes.index}
             text="Minhas Receitas"
             fontColor="text-gray-700"
             className="px-4 py-2 hover:bg-gray-100 w-full text-left"
           />
-          <CustomTextButton
+          <TextButton
             href={routes.user.posts.index}
             text="Meus Posts"
             fontColor="text-gray-700"
             className="px-4 py-2 hover:bg-gray-100 w-full text-left"
           />
-          <CustomTextButton
+          <TextButton
             text="Logout"
             fontColor="text-gray-700"
             className="px-4 py-2 hover:bg-gray-100 w-full text-left"

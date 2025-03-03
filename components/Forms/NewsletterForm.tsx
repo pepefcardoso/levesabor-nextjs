@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { createNewsletterCustomer } from '../../services/NewsletterCustomerService';
 import CustomTextInput, { InputType } from '../Inputs/CustomTextInput';
-import CustomBackgroundTextButton from '../Buttons/CustomBackgroundTextButton';
+import FilledButton from '../Buttons/FilledButton';
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState('');
@@ -40,7 +40,7 @@ const NewsletterForm = () => {
           placeholder="Seu email"
           required
         />
-        <CustomBackgroundTextButton
+        <FilledButton
           type="submit"
           text="Cadastrar"
           backgroundColor="bg-yellow-500"

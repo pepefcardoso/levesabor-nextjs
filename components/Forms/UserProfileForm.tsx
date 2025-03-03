@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { sanitizeImageUrl } from "../../tools/helper";
 import CustomImage from "../Others/CustomImage";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
-import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import FilledButton from "../Buttons/FilledButton";
 
 type UserProfileFormProps = {
   initialData: {
@@ -169,7 +169,7 @@ export const UserProfileForm = ({
       </div>
 
       <div className="flex justify-end">
-        <CustomBackgroundTextButton
+        <FilledButton
           type="submit"
           text="Salvar"
           backgroundColor="bg-yellow-400"

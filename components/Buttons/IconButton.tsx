@@ -3,8 +3,8 @@
 import React, { FC } from "react";
 import { IconType } from "react-icons";
 
-interface CustomIconButtonProps {
-    onClick: (e: React.MouseEvent) => void; // Updated to accept event
+interface IconButtonProps {
+    onClick: (e: React.MouseEvent) => void;
     Icon: IconType;
     ariaLabel: string;
     className?: string;
@@ -13,7 +13,7 @@ interface CustomIconButtonProps {
     color?: string;
 }
 
-const CustomIconButton: FC<CustomIconButtonProps> = ({
+const IconButton: FC<IconButtonProps> = ({
     onClick,
     Icon,
     ariaLabel,
@@ -24,16 +24,15 @@ const CustomIconButton: FC<CustomIconButtonProps> = ({
 }) => {
     return (
         <button
-            onClick={onClick} // Event is now properly passed
+            onClick={onClick}
             aria-label={ariaLabel}
             disabled={disabled}
-            className={`p-2 rounded-full transition-colors duration-200 focus:outline-none ${
-                disabled ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
-            } ${className}`}
+            className={`p-2 rounded-full transition-colors duration-200 focus:outline-none ${disabled ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
+                } ${className}`}
         >
             <Icon size={size} color={color} />
         </button>
     );
 };
 
-export default CustomIconButton;
+export default IconButton;

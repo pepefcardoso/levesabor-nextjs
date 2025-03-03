@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
-import CustomIconButton from "../../components/Buttons/CustomIconButton";
+import IconButton from "../Buttons/IconButton";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import CustomImage from "../Others/CustomImage";
 
@@ -42,7 +42,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
             </Link>
             <div className="flex justify-end gap-2 p-4">
                 <Link href={editRoute(item.id)} onClick={(e) => e.stopPropagation()}>
-                    <CustomIconButton
+                    <IconButton
                         onClick={() => { }}
                         ariaLabel="Edit item"
                         Icon={FaEdit}
@@ -50,7 +50,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
                         color="green"
                     />
                 </Link>
-                <CustomIconButton
+                <IconButton
                     onClick={(e) => {
                         e.stopPropagation();
                         handleDelete(item.id);

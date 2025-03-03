@@ -6,7 +6,7 @@ import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
 import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
 import CustomImage from "../Others/CustomImage";
-import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "../../constants/typography";
 import { txtColors } from "../../constants/colors";
 
@@ -163,7 +163,7 @@ export const PostForm: React.FC<PostFormProps> = ({
             </div>
           )}
 
-          <CustomBackgroundTextButton
+          <FilledButton
             text={previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
             onClick={() => fileInputRef.current?.click()}
             disabled={isSubmitting}
@@ -183,7 +183,7 @@ export const PostForm: React.FC<PostFormProps> = ({
       </div>
 
       <div className="flex justify-end">
-        <CustomBackgroundTextButton
+        <FilledButton
           text={isSubmitting ? "Salvando..." : "Salvar"}
           type="submit"
           disabled={isSubmitting}

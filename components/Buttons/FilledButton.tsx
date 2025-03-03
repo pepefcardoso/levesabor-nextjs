@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-interface CustomBackgroundTextButtonProps {
+interface FilledButtonProps {
     text: string;
     fontColor?: string;
     backgroundColor?: string;
@@ -16,7 +16,7 @@ interface CustomBackgroundTextButtonProps {
     className?: string;
 }
 
-const CustomBackgroundTextButton: FC<CustomBackgroundTextButtonProps> = ({
+const FilledButton: FC<FilledButtonProps> = ({
     text,
     fontColor = "black",
     backgroundColor = "transparent",
@@ -73,4 +73,4 @@ const CustomBackgroundTextButton: FC<CustomBackgroundTextButtonProps> = ({
     );
 };
 
-export default CustomBackgroundTextButton;
+export default FilledButton;

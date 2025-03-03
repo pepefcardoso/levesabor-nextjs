@@ -9,7 +9,7 @@ import { getRecipeDiets } from "../../services/recipeDietService";
 import EmptyList from "../../components/Others/EmptyList";
 import toast from "react-hot-toast";
 import NewsletterForm from "../../components/Forms/NewsletterForm";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../components/Buttons/FilledButton";
 import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "../../typings/recipe";
 import { PaginationResponse } from "../../typings/pagination";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
@@ -138,7 +138,7 @@ export default function RecipesHome() {
             value={tempSearch}
             onChange={(e) => setTempSearch(e.target.value)}
           />
-          <CustomBackgroundTextButton
+          <FilledButton
             text="Pesquisar"
             type="submit"
             backgroundColor="bg-blue-500"

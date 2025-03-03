@@ -6,8 +6,9 @@ import toast from "react-hot-toast";
 import { AuthService } from "../../../services/authService";
 import routes from "../../../routes/routes";
 import CustomTextInput, { InputType } from "../../../components/Inputs/CustomTextInput";
-import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
-import CustomTextButton from "../../../components/Buttons/CustomTextButton";
+import FilledButton from "../../../components/Buttons/FilledButton";
+import TextButton, { HoverAnimations } from "../../../components/Buttons/TextButton";
+import { txtColors } from "../../../constants/colors";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -77,7 +78,7 @@ export default function ForgotPasswordPage() {
           </div>
 
           <div className="flex justify-center">
-            <CustomBackgroundTextButton
+            <FilledButton
               type="submit"
               text="Enviar link de redefinição"
               loading={loading}
@@ -90,10 +91,11 @@ export default function ForgotPasswordPage() {
         <div className="text-lg text-center">
           <p className="text-gray-400">
             Lembrou sua senha?{" "}
-            <CustomTextButton
+            <TextButton
               href={routes.auth.login}
               text="Faça login aqui"
-              fontColor="black"
+              color={txtColors.gray800}
+              hoverAnimation={HoverAnimations.bold}
             />
           </p>
         </div>

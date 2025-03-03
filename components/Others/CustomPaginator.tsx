@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../Buttons/FilledButton";
 
 interface CustomPaginatorProps {
     currentPage: number;
@@ -24,7 +24,7 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
 
     return (
         <div className={`flex justify-center mt-8 flex-wrap gap-2 ${className}`}>
-            <CustomBackgroundTextButton
+            <FilledButton
                 text={previousLabel}
                 onClick={() => onPageChange(currentPage - 1)}
                 type="button"
@@ -37,7 +37,7 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
             {Array.from({ length: totalPages }, (_, index) => {
                 const page = index + 1;
                 return (
-                    <CustomBackgroundTextButton
+                    <FilledButton
                         key={page}
                         text={String(page)}
                         onClick={() => onPageChange(page)}
@@ -50,7 +50,7 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
                 );
             })}
 
-            <CustomBackgroundTextButton
+            <FilledButton
                 text={nextLabel}
                 onClick={() => onPageChange(currentPage + 1)}
                 type="button"

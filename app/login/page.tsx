@@ -7,8 +7,9 @@ import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
 import { LoginSkeleton } from "../../components/Skeletons/LoginFormSkeleton";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
-import CustomTextButton from "../../components/Buttons/CustomTextButton";
+import FilledButton from "../../components/Buttons/FilledButton";
+import TextButton, { HoverAnimations } from "../../components/Buttons/TextButton";
+import { txtColors } from "../../constants/colors";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -67,9 +68,11 @@ export default function LoginPage() {
             </h1>
             <p className="text-gray-500 text-base sm:text-lg">
               Ainda não possui conta?{" "}
-              <CustomTextButton
+              <TextButton
                 href={routes.auth.register}
                 text="Cadastre-se aqui"
+                color={txtColors.white}
+                hoverAnimation={HoverAnimations.bold}
               />
             </p>
           </div>
@@ -97,12 +100,12 @@ export default function LoginPage() {
               />
             </div>
             <div className="text-right">
-              <CustomTextButton
+              <TextButton
                 href={routes.auth.forgotPassword}
                 text="Esqueceu sua senha?"
               />
             </div>
-            <CustomBackgroundTextButton
+            <FilledButton
               text="Entrar"
               loading={loading}
               loadingText="Carregando..."

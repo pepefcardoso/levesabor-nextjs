@@ -8,7 +8,7 @@ import { CONTACT_ITEMS } from "../../constants";
 import { IconTextItem } from "../../components/Others/IconTextItem";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import CustomTextAreaInput from "../../components/Inputs/CustomTextAreaInput";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../components/Buttons/FilledButton";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState<CustomerContact>({
@@ -91,7 +91,7 @@ const ContactUs = () => {
               required
             />
             <div className="flex justify-start">
-              <CustomBackgroundTextButton
+              <FilledButton
                 text="Enviar mensagem"
                 loading={submitting}
                 loadingText="Enviando..."

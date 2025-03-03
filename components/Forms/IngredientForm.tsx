@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getRecipeUnits } from "../../services/recipeUnitService";
 import { RecipeIngredient, RecipeUnit } from "../../typings/recipe";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
-import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import FilledButton from "../Buttons/FilledButton";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
 
 interface IngredientFormProps {
@@ -97,7 +97,7 @@ export const IngredientForm = ({
         </div>
       ))}
 
-      <CustomBackgroundTextButton
+      <FilledButton
         text="Adicionar Ingrediente"
         backgroundColor="bg-blue-500"
         fontColor="text-white"

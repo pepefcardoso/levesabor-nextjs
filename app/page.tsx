@@ -12,7 +12,8 @@ import { PaginationResponse } from "../typings/pagination";
 import { Post } from "../typings/post";
 import { Recipe } from "../typings/recipe";
 import routes from "../routes/routes";
-import CustomTextButton from "../components/Buttons/CustomTextButton"; // Import CustomTextButton
+import TextButton, { HoverAnimations } from "../components/Buttons/TextButton"; // Import CustomTextButton
+import { txtColors } from "../constants/colors";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -74,11 +75,11 @@ export default function Home() {
         <div className="px-4">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Receitas</h2>
-            <CustomTextButton
+            <TextButton
               href={routes.recipes.index}
               text="Ver Todas"
-              fontColor="text-blue-500"
-              className="hover:underline"
+              color={txtColors.gray800}
+              hoverAnimation={HoverAnimations.underline}
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -95,11 +96,11 @@ export default function Home() {
         <div className="px-4">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Posts</h2>
-            <CustomTextButton
+            <TextButton
               href={routes.posts.index}
-              text="Ver Todos"
-              fontColor="text-blue-500"
-              className="hover:underline"
+              text="Ver Todas"
+              color={txtColors.gray800}
+              hoverAnimation={HoverAnimations.underline}
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

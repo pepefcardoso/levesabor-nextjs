@@ -7,7 +7,7 @@ import {
   registerContact,
 } from "../../services/contactService";
 import { ADVERTISEMENTS_ITEMS } from "../../constants";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../components/Buttons/FilledButton";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import { IconTextItem } from "../../components/Others/IconTextItem";
 
@@ -98,7 +98,7 @@ const Advertisement = () => {
               required
             />
 
-            <CustomBackgroundTextButton
+            <FilledButton
               text="Converse Conosco"
               loading={submitting}
               loadingText="Enviando..."

@@ -2,7 +2,7 @@
 
 import { FormEvent } from "react";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
-import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import FilledButton from "../Buttons/FilledButton";
 
 interface RegisterUserFormProps {
     formData: {
@@ -65,7 +65,7 @@ const RegisterUserForm = ({
                 ))}
             </div>
 
-            <CustomBackgroundTextButton
+            <FilledButton
                 type="submit"
                 text="Cadastrar"
                 loading={loading}

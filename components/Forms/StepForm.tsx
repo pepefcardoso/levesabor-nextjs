@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RecipeStep } from "../../typings/recipe";
-import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
+import FilledButton from "../Buttons/FilledButton";
 import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 
 interface StepFormProps {
@@ -46,7 +46,7 @@ export const StepForm = ({
           />
         </div>
       ))}
-      <CustomBackgroundTextButton
+      <FilledButton
         type="button"
         text="Adicionar Passo"
         backgroundColor="bg-blue-500"

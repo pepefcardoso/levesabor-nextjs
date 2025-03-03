@@ -11,9 +11,9 @@ import { UserProfileSkeleton } from "../../../components/Skeletons/UserProfileSk
 import toast from "react-hot-toast";
 import { UserProfileForm } from "../../../components/Forms/UserProfileForm";
 import { User } from "../../../typings/user";
-import CustomIconButton from "../../../components/Buttons/CustomIconButton";
+import IconButton from "../../../components/Buttons/IconButton";
 import CustomDialog from "../../../components/Others/CustomDialog";
-import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../../components/Buttons/FilledButton";
 import { FaTrash } from "react-icons/fa";
 
 export default function UserProfile() {
@@ -79,7 +79,7 @@ export default function UserProfile() {
           <UserProfileSkeleton />
         ) : (
           <div className="bg-white rounded-2xl shadow-xl p-8 relative">
-            <CustomIconButton
+            <IconButton
               onClick={() => setShowDeleteDialog(true)}
               ariaLabel="Excluir conta"
               className="absolute top-6 right-6 text-red-600 hover:text-red-700"
@@ -107,14 +107,14 @@ export default function UserProfile() {
               Tem certeza que deseja excluir sua conta permanentemente?
             </p>
             <div className="flex justify-end gap-4">
-              <CustomBackgroundTextButton
+              <FilledButton
                 text="Cancelar"
                 onClick={() => setShowDeleteDialog(false)}
                 type="button"
                 backgroundColor="bg-white"
                 fontColor="gray-700"
               />
-              <CustomBackgroundTextButton
+              <FilledButton
                 text="Confirmar"
                 onClick={handleDelete}
                 type="button"

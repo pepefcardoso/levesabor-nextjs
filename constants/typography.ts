@@ -1,3 +1,5 @@
+export type TypographyType = (typeof Typography)[keyof typeof Typography];
+
 export const Typography = {
   h1: "text-2xl sm:text-3xl font-bold my-4 leading-tight",
   h2: "text-lg sm:text-xl font-bold my-2 line-clamp-2",

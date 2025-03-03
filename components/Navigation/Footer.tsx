@@ -1,7 +1,7 @@
 import React from "react";
 import { FOOTER_LINKS } from "../../constants";
 import routes from "../../routes/routes";
-import CustomTextButton from "../Buttons/CustomTextButton";
+import TextButton from "../Buttons/TextButton";
 
 const Footer = () => {
   return (
@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="flex flex-col w-full">
         <div className="shadow-[0_-4px_8px_-2px_rgba(0,0,0,0.2)]">
           <div className="flex flex-col lg:flex-row items-center justify-between max-container padding-container relative z-30 py-4">
-            <CustomTextButton
+            <TextButton
               href={routes.home}
               text="LeveSabor"
               fontColor="white"
@@ -21,7 +21,7 @@ const Footer = () => {
             <ul className="hidden lg:flex h-full gap-12">
               {FOOTER_LINKS.map((link) => (
                 <li key={link.key}>
-                  <CustomTextButton
+                  <TextButton
                     href={link.href}
                     text={link.label}
                     fontColor="white"
@@ -34,7 +34,7 @@ const Footer = () => {
             <ul className="lg:hidden flex flex-col gap-2 w-full text-center">
               {FOOTER_LINKS.map((link) => (
                 <li key={link.key}>
-                  <CustomTextButton
+                  <TextButton
                     href={link.href}
                     text={link.label}
                     fontColor="white"
@@ -49,7 +49,7 @@ const Footer = () => {
         <div className="bg-white text-gray-800 pt-2">
           <p className="regular-14 w-full text-center">
             2025 LeveSabor® | Todos os direitos reservados | Desenvolvido por{" "}
-            <CustomTextButton
+            <TextButton
               href="https://instagram.com/julialfelisb"
               text="Pedro Paulo"
               fontColor="inherit"

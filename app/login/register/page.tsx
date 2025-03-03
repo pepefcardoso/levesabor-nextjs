@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createUser } from "../../../services/userService";
 import toast, { Toaster } from "react-hot-toast";
 import routes from "../../../routes/routes";
-import CustomTextButton from "../../../components/Buttons/CustomTextButton";
+import TextButton from "../../../components/Buttons/TextButton";
 import RegisterUserForm from "../../../components/Forms/RegisterUserForm";
 
 export default function RegisterPage() {
@@ -72,7 +72,7 @@ export default function RegisterPage() {
           </h1>
           <p className="text-gray-500 text-base sm:text-lg">
             Já possui conta?{" "}
-            <CustomTextButton
+            <TextButton
               href={routes.auth.login}
               text="Faça seu login"
               fontColor="black"

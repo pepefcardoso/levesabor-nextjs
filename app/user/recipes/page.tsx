@@ -8,7 +8,7 @@ import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
 import routes from "../../../routes/routes";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/Others/EmptyList";
-import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../../components/Buttons/FilledButton";
 import CustomPaginator from "../../../components/Others/CustomPaginator";
 import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
 
@@ -62,7 +62,7 @@ export default function ListUserRecipes() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Minhas Receitas</h1>
-        <CustomBackgroundTextButton
+        <FilledButton
           text="Adicionar Nova Receita"
           href={routes.user.recipes.create}
           backgroundColor="bg-yellow-500"

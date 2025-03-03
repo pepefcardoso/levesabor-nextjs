@@ -2,7 +2,7 @@
 
 import React from "react";
 import routes from "../../routes/routes";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../components/Buttons/FilledButton";
 import { ABOUT_US_IMAGE, ABOUT_US_PARAGRAPHS } from "../../constants";
 import CustomImage from "../../components/Others/CustomImage";
 
@@ -36,7 +36,7 @@ const AboutPage = () => {
           </div>
 
           <div className="mt-8">
-            <CustomBackgroundTextButton
+            <FilledButton
               text="Converse Conosco"
               href={routes.contact}
               backgroundColor="#F59E0B"

@@ -3,7 +3,7 @@
 import React from "react";
 import routes from "../../routes/routes";
 import { TERMS_OF_USE_PARAGRAPHS } from "../../constants";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../components/Buttons/FilledButton";
 
 const TermsOfUsePage = () => {
   return (
@@ -20,12 +20,12 @@ const TermsOfUsePage = () => {
           ))}
         </div>
         <div className="mt-8 w-full flex justify-start">
-          <CustomBackgroundTextButton
+          <FilledButton
             text="Converse Conosco"
             href={routes.contact}
             backgroundColor="#F59E0B"
             type="button">
-          </CustomBackgroundTextButton>
+          </FilledButton>
         </div>
       </div>
     </div>

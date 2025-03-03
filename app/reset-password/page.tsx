@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
-import CustomTextButton from "../../components/Buttons/CustomTextButton";
-import CustomBackgroundTextButton from "../../components/Buttons/CustomBackgroundTextButton";
+import TextButton from "../../components/Buttons/TextButton";
+import FilledButton from "../../components/Buttons/FilledButton";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 
 export default function ResetPasswordPage() {
@@ -96,7 +96,7 @@ export default function ResetPasswordPage() {
             />
           </div>
 
-          <CustomBackgroundTextButton
+          <FilledButton
             text={loading ? "Redefinindo..." : "Redefinir Senha"}
             type="submit"
             loading={loading}
@@ -108,7 +108,7 @@ export default function ResetPasswordPage() {
         <div className="text-lg text-center">
           <p className="text-gray-400">
             Não solicitou redefinição?{" "}
-            <CustomTextButton
+            <TextButton
               text="Entre em contato"
               href={routes.auth.login}
               fontColor="black"

@@ -10,7 +10,7 @@ import routes from "../../../routes/routes";
 import { PaginationResponse } from "../../../typings/pagination";
 import { Post } from "../../../typings/post";
 import CustomPaginator from "../../../components/Others/CustomPaginator";
-import CustomBackgroundTextButton from "../../../components/Buttons/CustomBackgroundTextButton";
+import FilledButton from "../../../components/Buttons/FilledButton";
 import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
 
 export default function UserPosts() {
@@ -64,7 +64,7 @@ export default function UserPosts() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Meus Posts</h1>
-        <CustomBackgroundTextButton
+        <FilledButton
           text="Adicionar Novo Post"
           href={routes.user.posts.create}
           backgroundColor="bg-yellow-500"
