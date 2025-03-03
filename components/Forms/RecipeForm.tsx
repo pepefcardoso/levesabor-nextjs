@@ -11,7 +11,7 @@ import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
 import CustomImage from "../Others/CustomImage";
 import CustomBackgroundTextButton from "../Buttons/CustomBackgroundTextButton";
 import { Typography } from "../../constants/typography";
-import tailwindConfigColors from "../../constants/colors";
+import { txtColors } from "../../constants/colors";
 
 interface FormDataValues {
   title: string;
@@ -159,7 +159,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
         </div>
 
         <div>
-          <label className={`${Typography.h6} mb-4`} style={{ color: tailwindConfigColors.gray.dark }}>
+          <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
             Dietas
           </label>
           <CustomCheckboxInput
@@ -172,7 +172,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
         </div>
 
         <div>
-          <label className={`${Typography.h6} mb-3`} style={{ color: tailwindConfigColors.gray.dark }}>
+          <label className={`${Typography.h6} mb-3`} style={{ color: txtColors.gray500 }}>
             Ingredientes
           </label>
           <IngredientForm
@@ -182,14 +182,14 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
         </div>
 
         <div>
-          <label className={`${Typography.h6} mb-3`} style={{ color: tailwindConfigColors.gray.dark }}>
+          <label className={`${Typography.h6} mb-3`} style={{ color: txtColors.gray500 }}>
             Passos
           </label>
           <StepForm onStepsChange={(steps) => setFormData({ ...formData, steps })} initialSteps={formData.steps} />
         </div>
 
         <div>
-          <label className={`${Typography.h6} mb-4`} style={{ color: tailwindConfigColors.gray.dark }}>
+          <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
             Imagem da Receita
           </label>
           <div className="flex flex-col items-center gap-6">

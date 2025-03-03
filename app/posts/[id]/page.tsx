@@ -10,6 +10,7 @@ import { Post } from "../../../typings/post";
 import CustomChip from "../../../components/Others/CustomChip";
 import AuthorInfo from "../../../components/Others/AuthorInfo";
 import CustomImage from "../../../components/Others/CustomImage";
+import { bgColors } from "../../../constants/colors";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const PostDetails = () => {
     <div className="container mx-auto px-6 max-w-4xl py-6">
       {post.category?.name && (
         <div className="mb-4">
-          <CustomChip color="green" fontColor="white" text={post.category?.name} />
+          <CustomChip bgColor={bgColors.erin} fontColor="white" text={post.category?.name} />
         </div>
       )}
 
@@ -72,7 +73,7 @@ const PostDetails = () => {
       {post.topics && post.topics.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           {post.topics.map((topic) => (
-            <CustomChip key={topic.id} color="gray" fontColor="black" text={'#' + topic.name.toLowerCase()} />
+            <CustomChip key={topic.id} bgColor={bgColors.pineapple} fontColor="black" text={'#' + topic.name.toLowerCase()} />
           ))}
         </div>
       )}

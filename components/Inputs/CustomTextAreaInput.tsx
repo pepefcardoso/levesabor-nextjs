@@ -1,8 +1,8 @@
 "use client";
 
 import { TextareaHTMLAttributes, useState } from "react";
-import tailwindConfigColors from "../../constants/colors";
 import { Typography } from "../../constants/typography";
+import { bgColors, txtColors } from "../../constants/colors";
 
 interface CustomTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -27,17 +27,16 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
     disabled:opacity-50 disabled:cursor-not-allowed
     transition-all
     resize-y
-    ${
-      isFocused
-        ? "focus:ring-2 focus:ring-[" + tailwindConfigColors.pineappleYellow + "] focus:border-[" + tailwindConfigColors.pineappleYellow + "]"
-        : "focus:ring-2 focus:ring-[" + tailwindConfigColors.erinGreen + "] focus:border-[" + tailwindConfigColors.erinGreen + "]"
+    ${isFocused
+      ? "focus:ring-2 focus:ring-[" + bgColors.pineapple + "] focus:border-[" + bgColors.pineapple + "]"
+      : "focus:ring-2 focus:ring-[" + bgColors.erin + "] focus:border-[" + bgColors.erin + "]"
     }
   `;
 
   return (
     <div className="space-y-1">
       {label && (
-        <label htmlFor={props.id} className={`${Typography.subtitle} text-[${tailwindConfigColors.gray.dark}]`}>
+        <label htmlFor={props.id} className={`${Typography.subtitle} text-[${txtColors.gray500}]`}>
           {label}
         </label>
       )}
