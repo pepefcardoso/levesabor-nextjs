@@ -99,7 +99,7 @@ export const IngredientForm = ({
 
       <FilledButton
         text="Adicionar Ingrediente"
-        backgroundColor="bg-blue-500"
+        color="bg-blue-500"
         fontColor="text-white"
         onClick={addIngredient}
         disabled={isLoading}

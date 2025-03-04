@@ -1,62 +1,26 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ReactDOM from "react-dom";
-import { NAV_LINKS } from "../../constants";
+import { NAV_LINKS, USER_LINKS } from "../../constants";
 import useAuthStore from "../../store/authStore";
 import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
-import TextButton, { HoverAnimations } from "../Buttons/TextButton";
+import TextButton from "../Buttons/TextButton";
 import FilledButton from "../Buttons/FilledButton";
 import CustomImage from "../Others/CustomImage";
-import { txtColors } from "../../constants/colors";
+import { bgColors, txtColors } from "../../constants/colors";
+import { Typography } from "../../constants/typography";
+import { FilledButtonHovers, TextButtonHovers } from "../../typings/buttons";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useAuthStore();
   const router = useRouter();
-  const [authLoading, setAuthLoading] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0 });
-
-  const calculateDropdownPosition = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY + 8,
-        right: window.innerWidth - rect.right + window.scrollX,
-      });
-    }
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current?.contains(event.target as Node) ||
-      buttonRef.current?.contains(event.target as Node)
-    ) return;
-    setIsDropdownOpen(false);
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    if (isDropdownOpen) {
-      calculateDropdownPosition();
-      window.addEventListener("resize", calculateDropdownPosition);
-      return () => window.removeEventListener("resize", calculateDropdownPosition);
-    }
-  }, [isDropdownOpen]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    setAuthLoading(!!(token && !user));
-  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -67,11 +31,66 @@ const Navbar = () => {
     }
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current?.contains(event.target as Node) ||
+      buttonRef.current?.contains(event.target as Node)
+    ) {
+      return;
+    }
+    setIsDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const renderLinks = (links: typeof NAV_LINKS, mobile = false) => (
+    <>
+      {links.map((link) => (
+        <TextButton
+          key={link.key}
+          href={link.href}
+          text={link.label}
+          color={txtColors.white}
+          hoverAnimation={TextButtonHovers.scale}
+          className={mobile ? "w-full text-center" : ""}
+          onClick={mobile ? () => setIsMenuOpen(false) : undefined}
+        />
+      ))}
+    </>
+  );
+
+  const renderUserMenu = (mobile = false) => (
+    <>
+      {USER_LINKS.map((link) => (
+        <TextButton
+          key={link.key}
+          href={link.href}
+          text={link.label}
+          color={mobile ? txtColors.white : txtColors.gray500}
+          hoverAnimation={TextButtonHovers.bold}
+          className={mobile ? "w-full text-center" : ""}
+          onClick={mobile ? () => setIsMenuOpen(false) : undefined}
+        />
+      ))}
+      <TextButton
+        text="Sair"
+        color={mobile ? txtColors.white : txtColors.gray500}
+        hoverAnimation={TextButtonHovers.bold}
+        className={mobile ? "w-full text-center" : ""}
+        onClick={handleLogout}
+      />
+    </>
+  );
+
   const UserAvatar = () => (
     <button
       ref={buttonRef}
       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      className="focus:ring-2 focus:ring-white rounded-full"
+      className="focus:ring-2 focus:ring-white rounded-full transition-transform hover:scale-105"
+      aria-label="Abrir menu do usuário"
     >
       {user?.image ? (
         <CustomImage
@@ -89,113 +108,48 @@ const Navbar = () => {
     </button>
   );
 
-  const AuthButtons = () => (
-    <div className="flex gap-4 items-center">
+  const AuthButtons = ({ mobile = false }) => (
+    <div className={`flex ${mobile ? "flex-col gap-4 w-full items-center" : "gap-4 items-center"}`}>
       <TextButton
         href={routes.auth.login}
         text="Entrar"
         color={txtColors.white}
-        hoverAnimation={HoverAnimations.bold}
+        hoverAnimation={TextButtonHovers.scale}
+        className={mobile ? "w-full text-center" : ""}
       />
       <FilledButton
         href={routes.auth.register}
         text="Cadastrar"
-        fontColor="text-green-800"
-        backgroundColor="white"
-        className="hover:opacity-80"
+        color={bgColors.secondary}
+        hoverAnimation={FilledButtonHovers.opacity}
+        className={mobile ? "w-full text-center" : ""}
       />
     </div>
   );
 
-  const MobileMenu = () => (
-    <div className={`lg:hidden bg-green-700 text-white transition-all duration-300 
-      ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}>
-      <ul className="flex flex-col gap-2 w-full text-center py-4">
-        {NAV_LINKS.map((link) => (
-          <TextButton
-            key={link.key}
-            href={link.href}
-            text={link.label}
-            color={txtColors.white}
-            hoverAnimation={HoverAnimations.scale}
-            onClick={() => setIsMenuOpen(false)}
-          />
-        ))}
-        {user ? (
-          <>
-            <TextButton
-              href={routes.user.profile}
-              text="Perfil"
-              fontColor="white"
-              className="regular-18 py-2"
-              onClick={() => setIsMenuOpen(false)}
-            />
-            <TextButton
-              href={routes.user.recipes.index}
-              text="Minhas Receitas"
-              fontColor="white"
-              className="regular-18 py-2"
-              onClick={() => setIsMenuOpen(false)}
-            />
-            <TextButton
-              href={routes.user.posts.index}
-              text="Meus Posts"
-              fontColor="white"
-              className="regular-18 py-2"
-              onClick={() => setIsMenuOpen(false)}
-            />
-            <TextButton
-              text="Sair"
-              fontColor="white"
-              className="regular-18 py-2"
-              onClick={handleLogout}
-            />
-          </>
-        ) : (
-          <AuthButtons />
-        )}
-      </ul>
-    </div>
-  );
-
   return (
-    <header className="bg-green-800 shadow-lg z-50">
-      <nav className="flex items-center justify-between max-container padding-container py-4">
+    <header className={`${bgColors.primary} shadow-lg z-50 relative`}>
+      <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <TextButton
           href={routes.home}
           text="LeveSabor"
-          fontColor="white"
-          className="bold-32"
+          color={txtColors.white}
+          typography={Typography.Title}
         />
 
         <div className="hidden lg:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <TextButton
-              key={link.key}
-              href={link.href}
-              text={link.label}
-              fontColor="white"
-              className="regular-18"
-            />
-          ))}
+          {renderLinks(NAV_LINKS)}
         </div>
 
         <div className="hidden lg:flex items-center gap-6">
-          {authLoading ? (
-            <CustomImage
-              src="/spinner.svg"
-              alt="Loading"
-              width={32}
-              height={32}
-              className="animate-spin"
-            />
-          ) : user ? (
+          {user ? (
             <div className="flex items-center gap-3">
               <TextButton
                 href={routes.user.profile}
                 text={user.name}
-                fontColor="white"
-                className="hover:underline"
+                color={txtColors.white}
+                hoverAnimation={TextButtonHovers.underline}
+                typography={Typography.Link2}
               />
               <UserAvatar />
             </div>
@@ -204,46 +158,62 @@ const Navbar = () => {
           )}
         </div>
 
-        <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <CustomImage
-            src={isMenuOpen ? "/close.svg" : "/menu.svg"}
-            alt="Menu"
-            width={32}
-            height={32}
-            className="invert"
-          />
+        <button
+          className="lg:hidden p-2 text-white"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+        >
+          <div className="relative w-8 h-8">
+            <svg
+              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'
+                }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M3 12h18M3 6h18M3 18h18" />
+            </svg>
+
+            <svg
+              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'
+                }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
         </button>
       </nav>
 
-      <MobileMenu />
+      <div className={`lg:hidden ${bgColors.primary} overflow-hidden transition-all duration-300 
+        ${isMenuOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
+        <div className="px-4 py-4 flex flex-col items-center gap-4">
+          {renderLinks(NAV_LINKS, true)}
+          {user ? (
+            renderUserMenu(true)
+          ) : (
+            <AuthButtons mobile={true} />
+          )}
+        </div>
+      </div>
 
       {isDropdownOpen && ReactDOM.createPortal(
-        <div ref={dropdownRef} className="fixed bg-white shadow-lg rounded-md z-[1000]"
-          style={{ top: dropdownPosition.top, right: dropdownPosition.right }}>
-          <TextButton
-            href={routes.user.profile}
-            text="Meu perfil"
-            fontColor="text-gray-700"
-            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
-          />
-          <TextButton
-            href={routes.user.recipes.index}
-            text="Minhas Receitas"
-            fontColor="text-gray-700"
-            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
-          />
-          <TextButton
-            href={routes.user.posts.index}
-            text="Meus Posts"
-            fontColor="text-gray-700"
-            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
-          />
-          <TextButton
-            text="Logout"
-            fontColor="text-gray-700"
-            className="px-4 py-2 hover:bg-gray-100 w-full text-left"
-            onClick={handleLogout}
-          />
+        <div
+          ref={dropdownRef}
+          className="absolute bg-white shadow-xl rounded-lg p-2 min-w-[200px] z-[1000] 
+                   border border-gray-100 animate-fade-in"
+          style={{
+            top: (buttonRef.current?.getBoundingClientRect().bottom || 0) + window.scrollY + 8,
+            right: window.innerWidth - (buttonRef.current?.getBoundingClientRect().right || 0),
+          }}
+        >
+          <div className="flex flex-col gap-2">
+            {renderUserMenu()}
+          </div>
         </div>,
         document.body
       )}

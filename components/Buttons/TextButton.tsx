@@ -4,24 +4,18 @@ import Link from "next/link";
 import { FC } from "react";
 import { Typography, TypographyType } from "../../constants/typography";
 import { txtColors, TxtColorType } from "../../constants/colors";
-
-export type HoverAnimationType = (typeof HoverAnimations)[keyof typeof HoverAnimations];
-export const HoverAnimations = {
-    underline: "hover:underline",
-    scale: "hover:scale-105",
-    bold: "hover:font-bold",
-    none: "",
-}
+import { ButtonType, ButtonTypes, TextButtonHovers, TextButtonHoverType } from "../../typings/buttons";
 
 interface TextButtonProps {
     text: string;
     href?: string;
     onClick?: () => void;
     disabled?: boolean;
-    type?: "submit" | "button" | "reset";
+    type?: ButtonType;
     color?: TxtColorType;
     typography?: TypographyType;
-    hoverAnimation?: HoverAnimationType;
+    hoverAnimation?: TextButtonHoverType;
+    className?: string;
 }
 
 const TextButton: FC<TextButtonProps> = ({
@@ -29,18 +23,22 @@ const TextButton: FC<TextButtonProps> = ({
     href,
     onClick,
     disabled = false,
-    type = "button",
+    type = ButtonTypes.button,
     color = txtColors.black,
-    typography = Typography.button,
-    hoverAnimation = HoverAnimations.none,
+    typography = Typography.Link,
+    hoverAnimation = TextButtonHovers.none,
+    className: className = "",
 }) => {
 
     const baseClasses = `
+    inline-block
     ${typography}
     ${color}
-    transition-all duration-200
+    transform
+    transition-transform duration-200
     ${hoverAnimation}
     ${disabled ? "cursor-not-allowed opacity-50" : ""}
+    ${className}
   `;
 
     if (href && !disabled) {

@@ -28,8 +28,8 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
     transition-all
     resize-y
     ${isFocused
-      ? "focus:ring-2 focus:ring-[" + bgColors.pineapple + "] focus:border-[" + bgColors.pineapple + "]"
-      : "focus:ring-2 focus:ring-[" + bgColors.erin + "] focus:border-[" + bgColors.erin + "]"
+      ? "focus:ring-2 focus:ring-[" + bgColors.tertiary + "] focus:border-[" + bgColors.tertiary + "]"
+      : "focus:ring-2 focus:ring-[" + bgColors.secondary + "] focus:border-[" + bgColors.secondary + "]"
     }
   `;
 

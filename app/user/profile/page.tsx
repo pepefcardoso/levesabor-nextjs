@@ -111,14 +111,14 @@ export default function UserProfile() {
                 text="Cancelar"
                 onClick={() => setShowDeleteDialog(false)}
                 type="button"
-                backgroundColor="bg-white"
+                color="bg-white"
                 fontColor="gray-700"
               />
               <FilledButton
                 text="Confirmar"
                 onClick={handleDelete}
                 type="button"
-                backgroundColor="bg-red-600"
+                color="bg-red-600"
                 fontColor="white"
               />
             </div>

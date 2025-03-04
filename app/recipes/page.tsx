@@ -141,7 +141,7 @@ export default function RecipesHome() {
           <FilledButton
             text="Pesquisar"
             type="submit"
-            backgroundColor="bg-blue-500"
+            color="bg-blue-500"
             fontColor="white"
           />
         </form>

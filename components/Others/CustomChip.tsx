@@ -8,7 +8,7 @@ interface CustomChipProps {
 }
 
 const CustomChip: React.FC<CustomChipProps> = ({
-  bgColor = bgColors.erin,
+  bgColor = bgColors.secondary,
   fontColor = txtColors.white,
   text,
 }) => {

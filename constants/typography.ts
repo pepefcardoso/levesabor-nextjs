@@ -1,17 +1,36 @@
+const fontSizes = {
+  xs: "text-xs",
+  sm: "text-sm",
+  base: "text-base",
+  lg: "text-lg",
+  xl: "text-xl",
+  xl2: "text-2xl",
+  xl3: "text-3xl",
+  xl4: "text-4xl",
+  // xl5: "text-5xl",
+  // xl6: "text-6xl",
+  // xl7: "text-7xl",
+  // xl8: "text-8xl",
+} as const;
+
+const fontWeights = {
+  // thin: "font-thin",
+  // extralight: "font-extralight",
+  // light: "font-light",
+  normal: "font-normal",
+  medium: "font-medium",
+  semibold: "font-semibold",
+  bold: "font-bold",
+  // extrabold: "font-extrabold",
+  // black: "font-black",
+} as const;
+
 export type TypographyType = (typeof Typography)[keyof typeof Typography];
 
 export const Typography = {
-  h1: "text-2xl sm:text-3xl font-bold my-4 leading-tight",
-  h2: "text-lg sm:text-xl font-bold my-2 line-clamp-2",
-  h3: "text-base sm:text-lg font-semibold my-3",
-  h4: "text-sm sm:text-base font-semibold my-2",
-  h5: "text-xs sm:text-sm font-semibold my-1",
-  h6: "text-sm font-semibold",
-  body: "text-sm leading-relaxed",
-  subtitle: "text-xs sm:text-sm font-medium italic",
-  caption: "text-xs leading-snug",
-  overline: "text-xs uppercase tracking-widest",
-  button: "text-sm font-semibold uppercase tracking-wide",
-  link: "text-sm font-medium underline hover:text-primary transition-colors",
-  summary: "text-sm line-clamp-3 h-[4.5rem] overflow-hidden",
+  Title: `${fontSizes.xl4} ${fontWeights.bold} line-clamp-2`,
+  Body: `${fontSizes.lg} ${fontWeights.normal} line-clamp-2`,
+  Button: `${fontSizes.base} ${fontWeights.medium}`,
+  Link: `${fontSizes.lg} ${fontWeights.medium}`,
+  Link2: `${fontSizes.base} ${fontWeights.normal}`,
 };

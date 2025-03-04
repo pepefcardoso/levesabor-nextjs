@@ -48,7 +48,7 @@ const PostDetails = () => {
     <div className="container mx-auto px-6 max-w-4xl py-6">
       {post.category?.name && (
         <div className="mb-4">
-          <CustomChip bgColor={bgColors.erin} fontColor="white" text={post.category?.name} />
+          <CustomChip bgColor={bgColors.secondary} fontColor="white" text={post.category?.name} />
         </div>
       )}
 
@@ -73,7 +73,7 @@ const PostDetails = () => {
       {post.topics && post.topics.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           {post.topics.map((topic) => (
-            <CustomChip key={topic.id} bgColor={bgColors.pineapple} fontColor="black" text={'#' + topic.name.toLowerCase()} />
+            <CustomChip key={topic.id} bgColor={bgColors.tertiary} fontColor="black" text={'#' + topic.name.toLowerCase()} />
           ))}
         </div>
       )}

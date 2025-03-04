@@ -30,7 +30,7 @@ const PostCard = ({ post }: { post: Post }) => {
 
         <div className="p-4 flex-col flex-grow">
           {post.category?.name && (
-            <CustomChip bgColor={bgColors.pineapple} fontColor={txtColors.black} text={post.category.name} />
+            <CustomChip bgColor={bgColors.tertiary} fontColor={txtColors.black} text={post.category.name} />
           )}
 
           <h2 className="text-lg sm:text-xl font-bold my-2 line-clamp-2">{post.title}</h2>

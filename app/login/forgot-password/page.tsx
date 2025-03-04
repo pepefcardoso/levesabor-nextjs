@@ -7,8 +7,9 @@ import { AuthService } from "../../../services/authService";
 import routes from "../../../routes/routes";
 import CustomTextInput, { InputType } from "../../../components/Inputs/CustomTextInput";
 import FilledButton from "../../../components/Buttons/FilledButton";
-import TextButton, { HoverAnimations } from "../../../components/Buttons/TextButton";
-import { txtColors } from "../../../constants/colors";
+import TextButton from "../../../components/Buttons/TextButton";
+import { bgColors, txtColors } from "../../../constants/colors";
+import { ButtonTypes, TextButtonHovers } from "../../../typings/buttons";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -79,11 +80,10 @@ export default function ForgotPasswordPage() {
 
           <div className="flex justify-center">
             <FilledButton
-              type="submit"
+              type={ButtonTypes.submit}
               text="Enviar link de redefinição"
-              loading={loading}
-              loadingText="Enviando..."
-              backgroundColor="bg-yellow-500"
+              disabled={loading}
+              color={bgColors.tertiary}
             />
           </div>
         </form>
@@ -95,7 +95,7 @@ export default function ForgotPasswordPage() {
               href={routes.auth.login}
               text="Faça login aqui"
               color={txtColors.gray800}
-              hoverAnimation={HoverAnimations.bold}
+              hoverAnimation={TextButtonHovers.bold}
             />
           </p>
         </div>

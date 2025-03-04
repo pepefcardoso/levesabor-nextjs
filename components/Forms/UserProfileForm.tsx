@@ -172,7 +172,7 @@ export const UserProfileForm = ({
         <FilledButton
           type="submit"
           text="Salvar"
-          backgroundColor="bg-yellow-400"
+          color="bg-yellow-400"
           fontColor="text-black"
           className="px-8 py-3 rounded-lg hover:bg-yellow-500 shadow-lg font-medium text-base"
           disabled={isSubmitting}

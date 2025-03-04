@@ -65,7 +65,7 @@ export default function ListUserRecipes() {
         <FilledButton
           text="Adicionar Nova Receita"
           href={routes.user.recipes.create}
-          backgroundColor="bg-yellow-500"
+          color="bg-yellow-500"
           fontColor="white"
         />
       </div>

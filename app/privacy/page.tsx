@@ -23,7 +23,7 @@ const PrivacyPolicyPage = () => {
           <FilledButton
             text="Converse Conosco"
             href={routes.contact}
-            backgroundColor="#F59E0B"
+            color="#F59E0B"
             type="button">
           </FilledButton>
         </div>

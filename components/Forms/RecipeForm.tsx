@@ -224,7 +224,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
               text={previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
               onClick={() => fileInputRef.current?.click()}
               disabled={isSubmitting}
-              backgroundColor="bg-white"
+              color="bg-white"
               className="px-6 py-2"
             />
 
@@ -245,7 +245,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
           text={isSubmitting ? "Salvando..." : "Salvar Receita"}
           type="submit"
           disabled={isSubmitting}
-          backgroundColor="bg-yellow-400"
+          color="bg-yellow-400"
           className={`${Typography.button} text-black hover:bg-yellow-500 transition-colors shadow-sm font-medium text-base disabled:bg-gray-300 disabled:cursor-not-allowed`}
         />
       </div>

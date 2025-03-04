@@ -8,6 +8,8 @@ import routes from "../../routes/routes";
 import TextButton from "../../components/Buttons/TextButton";
 import FilledButton from "../../components/Buttons/FilledButton";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
+import { ButtonTypes, TextButtonHovers } from "../../typings/buttons";
+import { bgColors } from "../../constants/colors";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -98,10 +100,9 @@ export default function ResetPasswordPage() {
 
           <FilledButton
             text={loading ? "Redefinindo..." : "Redefinir Senha"}
-            type="submit"
-            loading={loading}
-            backgroundColor="bg-yellow-500"
-            fontColor="black"
+            type={ButtonTypes.submit}
+            disabled={loading}
+            color={bgColors.tertiary}
           />
         </form>
 
@@ -111,7 +112,7 @@ export default function ResetPasswordPage() {
             <TextButton
               text="Entre em contato"
               href={routes.auth.login}
-              fontColor="black"
+              hoverAnimation={TextButtonHovers.bold}
             />
           </p>
         </div>

@@ -2,18 +2,21 @@ import React from "react";
 import { FOOTER_LINKS } from "../../constants";
 import routes from "../../routes/routes";
 import TextButton from "../Buttons/TextButton";
+import { bgColors, txtColors } from "../../constants/colors";
+import { TextButtonHovers } from "../../typings/buttons";
+import { Typography } from "../../constants/typography";
 
 const Footer = () => {
   return (
-    <footer className="flexCenter mb-2 bg-green-80">
+    <footer className={`flexCenter mb-2 ${bgColors.primary}`}>
       <div className="flex flex-col w-full">
         <div className="shadow-[0_-4px_8px_-2px_rgba(0,0,0,0.2)]">
           <div className="flex flex-col lg:flex-row items-center justify-between max-container padding-container relative z-30 py-4">
             <TextButton
               href={routes.home}
               text="LeveSabor"
-              fontColor="white"
-              className="bold-32"
+              color={txtColors.white}
+              typography={Typography.Title}
             />
 
             <div className="lg:hidden mb-5" />
@@ -24,8 +27,8 @@ const Footer = () => {
                   <TextButton
                     href={link.href}
                     text={link.label}
-                    fontColor="white"
-                    className="regular-18"
+                    color={txtColors.white}
+                    hoverAnimation={TextButtonHovers.scale}
                   />
                 </li>
               ))}
@@ -37,8 +40,8 @@ const Footer = () => {
                   <TextButton
                     href={link.href}
                     text={link.label}
-                    fontColor="white"
-                    className="regular-18"
+                    color={txtColors.white}
+                    hoverAnimation={TextButtonHovers.scale}
                   />
                 </li>
               ))}
@@ -46,14 +49,15 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="bg-white text-gray-800 pt-2">
+        <div className={`bg-white ${txtColors.gray500} pt-2`}>
           <p className="regular-14 w-full text-center">
             2025 LeveSabor® | Todos os direitos reservados | Desenvolvido por{" "}
             <TextButton
               href="https://instagram.com/julialfelisb"
               text="Pedro Paulo"
-              fontColor="inherit"
-              className="font-bold hover:underline"
+              color={txtColors.gray500}
+              typography={Typography.Link2}
+              hoverAnimation={TextButtonHovers.underline}
             />
           </p>
         </div>

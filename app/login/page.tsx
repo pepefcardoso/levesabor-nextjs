@@ -8,8 +8,9 @@ import routes from "../../routes/routes";
 import { LoginSkeleton } from "../../components/Skeletons/LoginFormSkeleton";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import FilledButton from "../../components/Buttons/FilledButton";
-import TextButton, { HoverAnimations } from "../../components/Buttons/TextButton";
-import { txtColors } from "../../constants/colors";
+import TextButton from "../../components/Buttons/TextButton";
+import { bgColors, txtColors } from "../../constants/colors";
+import { TextButtonHovers } from "../../typings/buttons";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -72,7 +73,7 @@ export default function LoginPage() {
                 href={routes.auth.register}
                 text="Cadastre-se aqui"
                 color={txtColors.white}
-                hoverAnimation={HoverAnimations.bold}
+                hoverAnimation={TextButtonHovers.bold}
               />
             </p>
           </div>
@@ -107,9 +108,8 @@ export default function LoginPage() {
             </div>
             <FilledButton
               text="Entrar"
-              loading={loading}
-              loadingText="Carregando..."
-              backgroundColor="bg-yellow-500"
+              disabled={loading}
+              color={bgColors.tertiary}
             />
           </form>
         </div>

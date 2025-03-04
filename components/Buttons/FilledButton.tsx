@@ -2,58 +2,62 @@
 
 import Link from "next/link";
 import { FC } from "react";
+import clsx from "clsx";
+import { Typography, TypographyType } from "../../constants/typography";
+import { bgColors, BgColorType, txtColors, TxtColorType } from "../../constants/colors";
+import { ButtonType, ButtonTypes, FilledButtonHovers, FilledButtonHoverType } from "../../typings/buttons";
 
 interface FilledButtonProps {
     text: string;
-    fontColor?: string;
-    backgroundColor?: string;
+    color?: BgColorType;
+    fontColor?: TxtColorType;
+    typography?: TypographyType;
+    hoverAnimation?: FilledButtonHoverType;
     href?: string;
     onClick?: () => void;
-    loading?: boolean;
-    loadingText?: string;
-    type?: "submit" | "button" | "reset";
+    type?: ButtonType;
     disabled?: boolean;
     className?: string;
 }
 
 const FilledButton: FC<FilledButtonProps> = ({
     text,
-    fontColor = "black",
-    backgroundColor = "transparent",
+    color = bgColors.gray200,
+    fontColor = txtColors.black,
+    typography = Typography.Button,
+    hoverAnimation = FilledButtonHovers.none,
     href,
     onClick,
-    loading = false,
-    loadingText = text,
-    type = "submit",
+    type = ButtonTypes.button,
     disabled = false,
-    className = "",
+    className,
 }) => {
-    const isTailwindClass = backgroundColor.startsWith("bg-");
+    const baseClasses = clsx(
+        "rounded-md shadow-sm px-4 py-2 flex items-center justify-center transform",
+        "transition-[transform,shadow,opacity] transition-transform duration-200",
+        typography,
+        color,
+        fontColor,
+        disabled
+            ? "cursor-not-allowed opacity-50"
+            : clsx(
+                hoverAnimation,
+                "active:scale-[0.98]",
+                "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            ),
+        className
+    );
 
-    const baseClasses = `
-        rounded-md shadow-sm transition-all duration-200 px-4 py-2 flex items-center justify-center
-        ${!loading && !disabled ? "hover:opacity-80" : "cursor-not-allowed"} // Change opacity on hover
-        ${isTailwindClass ? backgroundColor : ""}
-        ${className}
-    `;
+    const content = <span>{text}</span>;
 
-    const inlineStyle = loading || disabled
-        ? { color: "#6B7280", backgroundColor: "#E5E7EB" }
-        : {
-            color: fontColor,
-            backgroundColor: isTailwindClass ? undefined : backgroundColor,
-        };
-
-    const content = loading ? <span>{loadingText}</span> : <span>{text}</span>;
-
-    if (href) {
+    if (href && !disabled) {
         return (
             <Link
                 href={href}
                 onClick={onClick}
                 className={baseClasses}
-                style={inlineStyle}
-                aria-disabled={loading || disabled}
+                aria-disabled={disabled}
+                role="button"
             >
                 {content}
             </Link>
@@ -64,9 +68,9 @@ const FilledButton: FC<FilledButtonProps> = ({
         <button
             onClick={onClick}
             className={baseClasses}
-            style={inlineStyle}
-            disabled={loading || disabled}
+            disabled={disabled}
             type={type}
+            aria-disabled={disabled}
         >
             {content}
         </button>

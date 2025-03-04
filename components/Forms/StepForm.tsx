@@ -49,7 +49,7 @@ export const StepForm = ({
       <FilledButton
         type="button"
         text="Adicionar Passo"
-        backgroundColor="bg-blue-500"
+        color="bg-blue-500"
         fontColor="text-white"
         onClick={addStep}
         className="w-full sm:w-auto"

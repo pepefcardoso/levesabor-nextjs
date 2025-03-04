@@ -50,5 +50,11 @@ export const TERMS_OF_USE_PARAGRAPHS = [
   "Ao acessar e utilizar nossos serviços, você concorda em cumprir os seguintes termos e condições.",
   "Você é responsável por manter a confidencialidade de suas informações de login e por todas as atividades que ocorram sob sua conta.",
   "É proibido utilizar nossos serviços para qualquer finalidade ilegal ou não autorizada. Você concorda em não violar nenhuma lei em sua jurisdição ao usar nossos serviços.",
-  "Reservamo-nos o direito de modificar ou encerrar nossos serviços a qualquer momento, sem aviso prévio."
+  "Reservamo-nos o direito de modificar ou encerrar nossos serviços a qualquer momento, sem aviso prévio.",
+];
+
+export const USER_LINKS = [
+  { key: "profile", label: "Meu Perfil", href: routes.user.profile },
+  { key: "recipes", label: "Minhas Receitas", href: routes.user.recipes.index },
+  { key: "posts", label: "Meus Posts", href: routes.user.posts.index },
 ];

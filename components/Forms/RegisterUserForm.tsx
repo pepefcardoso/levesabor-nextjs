@@ -3,6 +3,8 @@
 import { FormEvent } from "react";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
+import { ButtonTypes } from "../../typings/buttons";
+import { bgColors } from "../../constants/colors";
 
 interface RegisterUserFormProps {
     formData: {
@@ -66,11 +68,10 @@ const RegisterUserForm = ({
             </div>
 
             <FilledButton
-                type="submit"
+                type={ButtonTypes.submit}
                 text="Cadastrar"
-                loading={loading}
-                loadingText="Cadastrando..."
-                backgroundColor="bg-yellow-500"
+                disabled={loading}
+                color={bgColors.tertiary}
             />
         </form>
     );

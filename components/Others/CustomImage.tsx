@@ -53,7 +53,7 @@ const CustomImage: React.FC<CustomImageProps> = ({
                 src={src || "/placeholder.jpg"}
                 alt={alt}
                 fill
-                className={objectFitClass}
+                className={`${objectFitClass} ${roundedClass}`}
                 priority={priority}
             />
         </div>

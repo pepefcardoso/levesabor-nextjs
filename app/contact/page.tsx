@@ -9,6 +9,7 @@ import { IconTextItem } from "../../components/Others/IconTextItem";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import CustomTextAreaInput from "../../components/Inputs/CustomTextAreaInput";
 import FilledButton from "../../components/Buttons/FilledButton";
+import { bgColors } from "../../constants/colors";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState<CustomerContact>({
@@ -93,9 +94,8 @@ const ContactUs = () => {
             <div className="flex justify-start">
               <FilledButton
                 text="Enviar mensagem"
-                loading={submitting}
-                loadingText="Enviando..."
-                backgroundColor="bg-yellow-500"
+                disabled={submitting}
+                color={bgColors.tertiary}
               />
             </div>
           </form>

@@ -12,8 +12,9 @@ import { PaginationResponse } from "../typings/pagination";
 import { Post } from "../typings/post";
 import { Recipe } from "../typings/recipe";
 import routes from "../routes/routes";
-import TextButton, { HoverAnimations } from "../components/Buttons/TextButton"; // Import CustomTextButton
+import TextButton from "../components/Buttons/TextButton"; // Import CustomTextButton
 import { txtColors } from "../constants/colors";
+import { TextButtonHovers } from "../typings/buttons";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -79,7 +80,7 @@ export default function Home() {
               href={routes.recipes.index}
               text="Ver Todas"
               color={txtColors.gray800}
-              hoverAnimation={HoverAnimations.underline}
+              hoverAnimation={TextButtonHovers.underline}
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -100,7 +101,7 @@ export default function Home() {
               href={routes.posts.index}
               text="Ver Todas"
               color={txtColors.gray800}
-              hoverAnimation={HoverAnimations.underline}
+              hoverAnimation={TextButtonHovers.underline}
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

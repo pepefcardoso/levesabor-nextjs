@@ -45,7 +45,7 @@ const RecipeDetails = () => {
   return (
     <div className="container mx-auto px-6 py-8 max-w-4xl">
       <div className="mb-4">
-        <CustomChip bgColor={bgColors.erin} fontColor="white" text={recipe.category?.name || ""} />
+        <CustomChip bgColor={bgColors.secondary} fontColor="white" text={recipe.category?.name || ""} />
       </div>
 
       <h1 className="text-3xl font-bold mb-4 text-left">{recipe.title}</h1>
@@ -73,9 +73,9 @@ const RecipeDetails = () => {
       </div>
 
       <div className="flex gap-4 mb-6">
-        <CustomChip bgColor={bgColors.pineapple} fontColor="white" text={`Tempo: ${recipe.time} min`} />
-        <CustomChip bgColor={bgColors.pineapple} fontColor="white" text={`Dificuldade: ${recipe.difficulty}`} />
-        <CustomChip bgColor={bgColors.pineapple} fontColor="white" text={`Rende ${recipe.portion} porções`} />
+        <CustomChip bgColor={bgColors.tertiary} fontColor="white" text={`Tempo: ${recipe.time} min`} />
+        <CustomChip bgColor={bgColors.tertiary} fontColor="white" text={`Dificuldade: ${recipe.difficulty}`} />
+        <CustomChip bgColor={bgColors.tertiary} fontColor="white" text={`Rende ${recipe.portion} porções`} />
       </div>
 
       <p className="text-gray-800 mb-8 text-left">{recipe.description}</p>
@@ -97,7 +97,7 @@ const RecipeDetails = () => {
       <h2 className="text-2xl font-semibold mb-4">Dietas</h2>
       <div className="flex flex-wrap gap-3 mb-8 text-left">
         {recipe.diets?.map((diet) => (
-          <CustomChip key={diet.id} bgColor={bgColors.pineapple} fontColor="white" text={diet.name} />
+          <CustomChip key={diet.id} bgColor={bgColors.tertiary} fontColor="white" text={diet.name} />
         ))}
       </div>
     </div>

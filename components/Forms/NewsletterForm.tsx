@@ -43,7 +43,7 @@ const NewsletterForm = () => {
         <FilledButton
           type="submit"
           text="Cadastrar"
-          backgroundColor="bg-yellow-500"
+          color="bg-yellow-500"
           fontColor="text-black"
           className="w-full"
         />

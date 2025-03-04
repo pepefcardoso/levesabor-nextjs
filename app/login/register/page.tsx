@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import routes from "../../../routes/routes";
 import TextButton from "../../../components/Buttons/TextButton";
 import RegisterUserForm from "../../../components/Forms/RegisterUserForm";
+import { TextButtonHovers } from "../../../typings/buttons";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -75,7 +76,7 @@ export default function RegisterPage() {
             <TextButton
               href={routes.auth.login}
               text="Faça seu login"
-              fontColor="black"
+              hoverAnimation={TextButtonHovers.bold}
             />
           </p>
         </div>

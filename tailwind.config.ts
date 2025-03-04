@@ -1,36 +1,60 @@
 import type { Config } from "tailwindcss";
 
+const hoverAnimations = [
+  "hover:underline",
+  "hover:scale-105",
+  "hover:font-bold",
+  "hover:opacity-75",
+  "hover:scale-[1.05]",
+  "hover:shadow-md",
+  "hover:-translate-y-0.6",
+  "hover:shadow-glow",
+];
+
+const bgColors = [
+  "bg-primary",
+  "bg-secondary",
+  "bg-tertiary",
+  "bg-background",
+  "bg-gray-200",
+  "bg-gray-500",
+  "bg-gray-800",
+];
+
+const txtColors = [
+  "text-primary",
+  "text-secondary",
+  "text-tertiary",
+  "text-background",
+  "text-gray-200",
+  "text-gray-500",
+  "text-gray-800",
+];
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [
-    "bg-lime",
-    "bg-erin",
-    "bg-pineapple",
-    "bg-gray-200",
-    "bg-gray-500",
-    "bg-gray-800",
-    "text-gray-200",
-    "text-gray-500",
-    "text-gray-800",
-  ],
+  safelist: [...bgColors, ...txtColors, ...hoverAnimations],
   theme: {
     extend: {
       screens: {
         "3xl": "1920px",
       },
       colors: {
-        lime: {
-          DEFAULT: "#89F336",
+        primary: {
+          DEFAULT: "#A94A4A",
         },
-        erin: {
-          DEFAULT: "#36F342",
+        secondary: {
+          DEFAULT: "#F4D793",
         },
-        pineapple: {
-          DEFAULT: "#e7f336",
+        tertiary: {
+          DEFAULT: "#889E73",
+        },
+        background: {
+          DEFAULT: "#FFF6DA",
         },
         gray: {
           200: "#F9FAFB",

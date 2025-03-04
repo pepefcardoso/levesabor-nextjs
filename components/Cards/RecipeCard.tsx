@@ -28,7 +28,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           />
           {recipe.category?.name && (
             <div className="absolute top-2 right-2">
-              <CustomChip bgColor={bgColors.erin} fontColor={txtColors.black} text={recipe.category.name} />
+              <CustomChip bgColor={bgColors.secondary} fontColor={txtColors.black} text={recipe.category.name} />
             </div>
           )}
         </div>
@@ -46,7 +46,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           {Array.isArray(recipe.diets) && recipe.diets.length > 0 && (
             <div className="mt-4 flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
               {recipe.diets.map((diet, index) => (
-                <CustomChip key={index} bgColor={bgColors.pineapple} fontColor={txtColors.black} text={diet.name} />
+                <CustomChip key={index} bgColor={bgColors.tertiary} fontColor={txtColors.black} text={diet.name} />
               ))}
             </div>
           )}

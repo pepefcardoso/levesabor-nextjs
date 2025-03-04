@@ -10,6 +10,7 @@ import { ADVERTISEMENTS_ITEMS } from "../../constants";
 import FilledButton from "../../components/Buttons/FilledButton";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import { IconTextItem } from "../../components/Others/IconTextItem";
+import { bgColors } from "../../constants/colors";
 
 const Advertisement = () => {
   const [formData, setFormData] = useState<CustomerContact>({
@@ -100,9 +101,8 @@ const Advertisement = () => {
 
             <FilledButton
               text="Converse Conosco"
-              loading={submitting}
-              loadingText="Enviando..."
-              backgroundColor="#F59E0B"
+              disabled={submitting}
+              color={bgColors.tertiary}
             />
 
           </form>

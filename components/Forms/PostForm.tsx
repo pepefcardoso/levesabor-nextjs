@@ -167,7 +167,7 @@ export const PostForm: React.FC<PostFormProps> = ({
             text={previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
             onClick={() => fileInputRef.current?.click()}
             disabled={isSubmitting}
-            backgroundColor="bg-white"
+            color="bg-white"
             className={`px-6 py-2 ${Typography.button}`}
           />
 
@@ -187,7 +187,7 @@ export const PostForm: React.FC<PostFormProps> = ({
           text={isSubmitting ? "Salvando..." : "Salvar"}
           type="submit"
           disabled={isSubmitting}
-          backgroundColor="bg-blue-600"
+          color="bg-blue-600"
           className={`${Typography.button} text-white hover:bg-blue-700`}
         />
       </div>

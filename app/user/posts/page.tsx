@@ -67,7 +67,7 @@ export default function UserPosts() {
         <FilledButton
           text="Adicionar Novo Post"
           href={routes.user.posts.create}
-          backgroundColor="bg-yellow-500"
+          color="bg-yellow-500"
           fontColor="white"
         />
       </div>

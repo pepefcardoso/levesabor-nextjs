@@ -2,6 +2,7 @@
 
 import React from "react";
 import FilledButton from "../Buttons/FilledButton";
+import { bgColors, txtColors } from "../../constants/colors";
 
 interface CustomPaginatorProps {
     currentPage: number;
@@ -28,10 +29,8 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
                 text={previousLabel}
                 onClick={() => onPageChange(currentPage - 1)}
                 type="button"
-                backgroundColor="bg-white"
-                fontColor="gray-700"
+                color={bgColors.tertiary}
                 disabled={currentPage === 1}
-                loading={false}
             />
 
             {Array.from({ length: totalPages }, (_, index) => {
@@ -42,10 +41,9 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
                         text={String(page)}
                         onClick={() => onPageChange(page)}
                         type="button"
-                        backgroundColor={currentPage === page ? "bg-blue-500" : "bg-white"}
-                        fontColor={currentPage === page ? "white" : "gray-700"}
-                        disabled={false}
-                        loading={false}
+                        color={bgColors.tertiary}
+                        fontColor={txtColors.gray500}
+                        disabled={currentPage === page}
                     />
                 );
             })}
@@ -54,10 +52,9 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
                 text={nextLabel}
                 onClick={() => onPageChange(currentPage + 1)}
                 type="button"
-                backgroundColor="bg-white"
-                fontColor="gray-700"
+                color={bgColors.tertiary}
+                fontColor={txtColors.gray800}
                 disabled={currentPage === totalPages}
-                loading={false}
             />
         </div>
     );
