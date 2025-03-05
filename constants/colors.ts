@@ -1,5 +1,6 @@
 export type BgColorType = (typeof bgColors)[keyof typeof bgColors];
 export type TxtColorType = (typeof txtColors)[keyof typeof txtColors];
+export type IconColorType = (typeof iconColors)[keyof typeof iconColors];
 
 export const bgColors = {
   primary: "bg-primary",
@@ -35,4 +36,12 @@ export const ringColors = {
   primary: "ring-primary",
   secondary: "ring-secondary",
   tertiary: "ring-tertiary",
+} as const;
+
+export const iconColors = {
+  primary: "#A94A4A",
+  secondary: "#F4D793",
+  tertiary: "#889E73",
+  white: "#FFFFFF",
+  black: "#000000",
 } as const;

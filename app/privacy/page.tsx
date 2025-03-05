@@ -20,7 +20,7 @@ const PrivacyPolicyPage = () => {
         Política de Privacidade
       </h1>
 
-      <div className=" leading-relaxed w-full">
+      <div className="leading-relaxed w-full">
         <div className={clsx(
           Typography.Body,
           txtColors.gray500,

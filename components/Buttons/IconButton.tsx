@@ -2,6 +2,7 @@
 
 import React, { FC } from "react";
 import { IconType } from "react-icons";
+import { iconColors, IconColorType } from "../../constants/colors";
 
 interface IconButtonProps {
     onClick: (e: React.MouseEvent) => void;
@@ -10,7 +11,7 @@ interface IconButtonProps {
     className?: string;
     disabled?: boolean;
     size?: number;
-    color?: string;
+    color?: IconColorType;
 }
 
 const IconButton: FC<IconButtonProps> = ({
@@ -20,7 +21,7 @@ const IconButton: FC<IconButtonProps> = ({
     className = "",
     disabled = false,
     size = 24,
-    color = "currentColor",
+    color = iconColors.white,
 }) => {
     return (
         <button
