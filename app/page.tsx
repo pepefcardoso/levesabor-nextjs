@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { getRecipes } from "../services/recipeService";
-import RecipeCard from "../components/Cards/RecipeCard";
-import CardSkeleton from "../components/Skeletons/CardSkeleton";
-import PostCard from "../components/Cards/PostCard";
-import { getPosts } from "../services/postService";
 import toast from "react-hot-toast";
-import NewsletterForm from "../components/Forms/NewsletterForm";
-import { PaginationResponse } from "../typings/pagination";
-import { Post } from "../typings/post";
-import { Recipe } from "../typings/recipe";
 import routes from "../routes/routes";
-import TextButton from "../components/Buttons/TextButton"; // Import CustomTextButton
-import { txtColors } from "../constants/colors";
-import { TextButtonHovers } from "../typings/buttons";
+import TextButton from "@/components/Buttons/TextButton";
+import CardSkeleton from "@/components/Skeletons/CardSkeleton";
+import RecipeCard from "@/components/Cards/RecipeCard";
+import PostCard from "@/components/Cards/PostCard";
+import NewsletterForm from "@/components/Forms/NewsletterForm";
+import { Recipe } from "@/typings/recipe";
+import { Post } from "@/typings/post";
+import { PaginationResponse } from "@/typings/pagination";
+import { getRecipes } from "@/services/recipeService";
+import { getPosts } from "@/services/postService";
+import { txtColors } from "@/constants/colors";
+import { TextButtonHovers } from "@/typings/buttons";
+import clsx from "clsx";
+import { Typography } from "@/constants/typography";
+import CustomImage from "@/components/Others/CustomImage";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -63,19 +66,56 @@ export default function Home() {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-7xl px-4 py-12 lg:py-16 flex flex-col gap-10">
-        <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold text-gray-900">
-            Cozinha inclusiva para todas as dietas.
-          </h1>
-          <p className="text-gray-600 text-lg mt-2">
-            Explore as nossas receitas deliciosas e artigos informativos!
-          </p>
-        </div>
+      <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16 flex flex-col gap-12">
+        {/* Modern Hero Section */}
+        <section className="relative min-h-[300px] flex items-center">
+          <div className="mx-auto pb-4 sm:pb-8">
+            <div className="flex flex-col lg:flex-row lg:items-stretch gap-8 h-full">
+              {/* Text Content */}
+              <div className="lg:w-1/2 flex flex-col justify-center">
+                <div className="space-y-6">
+                  <h1 className={clsx(Typography.Title, txtColors.black, "tracking-tight")}>
+                    Cozinha Inclusiva: Sabores que Respeitam Todas as Dietas
+                  </h1>
+                  <p className={clsx(Typography.Body, txtColors.gray500)}>
+                    Descubra um universo de possibilidades culinárias adaptadas às necessidades especiais. Desde opções
+                    sem glúten até receitas veganas e low-carb, nossa missão é oferecer refeições saborosas que se
+                    adequam a qualquer estilo de vida alimentar. Explore artigos informativos e guias práticos para uma
+                    nutrição consciente.
+                  </p>
+                  <div className="mt-6">
+                    <TextButton
+                      href={routes.recipes.index}
+                      text="Comece Sua Jornada Culinária"
+                      color={txtColors.primary}
+                      hoverAnimation={TextButtonHovers.scale}
+                    />
+                  </div>
+                </div>
+              </div>
 
-        <div className="px-4">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Receitas</h2>
+              <div className="lg:w-1/2 hidden sm:block relative h-[400px] lg:h-auto">
+                <div className="absolute inset-0 rounded-2xl overflow-hidden bg-gray-200">
+                  <CustomImage
+                    src="/placeholder.jpg"
+                    alt="Healthy ingredients arrangement"
+                    width="100%"
+                    height="100%"
+                    objectFit="cover"
+                    shadow="md"
+                    rounded="lg"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Recipes Section */}
+        <section>
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Últimas Receitas</h2>
             <TextButton
               href={routes.recipes.index}
               text="Ver Todas"
@@ -83,38 +123,36 @@ export default function Home() {
               hoverAnimation={TextButtonHovers.underline}
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {!recipesLoaded
-              ? Array.from({ length: 4 }).map((_, index) => (
-                <CardSkeleton key={index} />
-              ))
-              : recipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
+              ? Array(4)
+                  .fill(null)
+                  .map((_, index) => <CardSkeleton key={index} />)
+              : recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)}
           </div>
-        </div>
+        </section>
 
-        <div className="px-4">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Posts</h2>
+        {/* Posts Section */}
+        <section>
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Artigos Recentes</h2>
             <TextButton
               href={routes.posts.index}
-              text="Ver Todas"
+              text="Ver Todos"
               color={txtColors.gray800}
               hoverAnimation={TextButtonHovers.underline}
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {!postsLoaded
-              ? Array.from({ length: 4 }).map((_, index) => (
-                <CardSkeleton key={index} />
-              ))
-              : posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
+              ? Array(4)
+                  .fill(null)
+                  .map((_, index) => <CardSkeleton key={index} />)
+              : posts.map((post) => <PostCard key={post.id} post={post} />)}
           </div>
-        </div>
+        </section>
 
+        {/* Newsletter Section */}
         <NewsletterForm />
       </div>
     </div>

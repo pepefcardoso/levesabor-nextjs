@@ -28,8 +28,8 @@ const fontWeights = {
 export type TypographyType = (typeof Typography)[keyof typeof Typography];
 
 export const Typography = {
-  Title: `${fontSizes.xl2} sm:${fontSizes.xl4} ${fontWeights.bold} line-clamp-2`,
-  Title2: `${fontSizes.lg} sm:${fontSizes.xl} ${fontWeights.bold} line-clamp-2`,
+  Title: `${fontSizes.xl2} sm:${fontSizes.xl4} ${fontWeights.bold}`,
+  Title2: `${fontSizes.lg} sm:${fontSizes.xl} ${fontWeights.bold}`,
   Body: `${fontSizes.base} sm:${fontSizes.lg} ${fontWeights.normal}`,
   Body2: `${fontSizes.sm} sm:${fontSizes.base} ${fontWeights.normal}`,
   Button: `${fontSizes.sm} sm:${fontSizes.base} ${fontWeights.medium}`,
