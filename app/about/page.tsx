@@ -16,7 +16,7 @@ const AboutPage = () => {
       <h1 className={clsx(
         Typography.Title,
         txtColors.black,
-        "mb-8 text-left w-full"
+        "md:mb-8 text-left w-full"
       )}>
         Sobre Nós
       </h1>
@@ -37,7 +37,7 @@ const AboutPage = () => {
         <div className={clsx(
           Typography.Body,
           txtColors.gray500,
-          "text-left w-full mt-8 md:mt-0 md:w-1/2 flex flex-col justify-between"
+          "text-left w-full md:w-1/2 flex flex-col justify-between mt-4 md:mt-0"
         )}>
           <div>
             {ABOUT_US_PARAGRAPHS.map((paragraph, index) => (
@@ -47,7 +47,7 @@ const AboutPage = () => {
             ))}
           </div>
 
-          <div className="mt-8 flex justify-start pl-2 pr-6">
+          <div className="mt-8 flex justify-start">
             <FilledButton
               text="Converse Conosco"
               href={routes.contact}

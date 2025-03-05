@@ -24,3 +24,15 @@ export const txtColors = {
   white: "text-white",
   black: "text-black",
 } as const;
+
+export const borderColors = {
+  primary: "border-primary",
+  secondary: "border-secondary",
+  tertiary: "border-tertiary",
+} as const;
+
+export const ringColors = {
+  primary: "ring-primary",
+  secondary: "ring-secondary",
+  tertiary: "ring-tertiary",
+} as const;

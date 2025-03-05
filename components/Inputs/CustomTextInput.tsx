@@ -1,6 +1,7 @@
 "use client";
 
 import { InputHTMLAttributes } from "react";
+import clsx from "clsx";
 
 export const enum InputType {
   Text = "text",
@@ -22,16 +23,17 @@ const CustomTextInput = ({
   label,
   ...props
 }: CustomTextInputProps) => {
-  const baseClasses = `
-    w-full border border-gray-300 rounded-md
-    px-4 py-3
-    shadow-md
-    disabled:opacity-50 disabled:cursor-not-allowed
-    transition-all duration-200
-    text-base
-    outline-none
-    focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500
-  `;
+
+  const baseClasses = clsx(
+    "w-full border border-gray-300 rounded-md",
+    "px-4 py-3",
+    "shadow-md",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
+    "transition-all duration-200",
+    "text-base",
+    "outline-none",
+    "focus:border-secondary focus:ring-2 focus:ring-secondary"
+  );
 
   return (
     <div className="space-y-1">

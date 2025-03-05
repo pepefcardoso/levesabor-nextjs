@@ -9,7 +9,10 @@ import { IconTextItem } from "../../components/Others/IconTextItem";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import CustomTextAreaInput from "../../components/Inputs/CustomTextAreaInput";
 import FilledButton from "../../components/Buttons/FilledButton";
-import { bgColors } from "../../constants/colors";
+import { bgColors, txtColors } from "../../constants/colors";
+import clsx from "clsx";
+import { Typography } from "../../constants/typography";
+import { FilledButtonHovers } from "../../typings/buttons";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState<CustomerContact>({
@@ -45,21 +48,45 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-8 max-w-4xl" style={{ minHeight: "85vh" }}>
-      <h1 className="text-4xl font-bold mb-12">Entre em contato conosco</h1>
+    <div className="mx-auto px-8 py-12 max-w-4xl flex flex-col">
+
+      <h1 className={clsx(
+        Typography.Title,
+        txtColors.black,
+        "text-left w-full mb-6 sm:mb-8"
+      )}>Entre em contato conosco</h1>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-lg font-semibold mb-2">Nossas informações</h2>
-          <p className="text-gray-600 mb-6">Esperamos seu contato!</p>
-          <div className="space-y-4">
+          <h2 className={clsx(
+            Typography.Title2
+          )}>Nossas informações</h2>
+
+          <p className={clsx(
+            Typography.Body2,
+            txtColors.gray500,
+            "mb-2 sm:mb-4 mt-1"
+          )}>Esperamos seu contato!</p>
+
+          <div className="space-y-4 sm:space-y-6">
             {CONTACT_ITEMS.map((item, index) => (
               <IconTextItem key={index} icon={item.icon} text={item.text} />
             ))}
           </div>
+
         </div>
+
         <div>
-          <h2 className="text-lg font-semibold mb-2">Mande sua mensagem</h2>
-          <p className="text-gray-500 mb-4">Estamos sempre disponíveis!</p>
+          <h2 className={clsx(
+            Typography.Title2
+          )}>Mande sua mensagem</h2>
+
+          <p className={clsx(
+            Typography.Body2,
+            txtColors.gray500,
+            "mb-2 sm:mb-4 mt-1"
+          )}>Estamos sempre disponíveis!</p>
+
           <form className="space-y-4" onSubmit={handleSubmit}>
             <CustomTextInput
               name="name"
@@ -91,13 +118,13 @@ const ContactUs = () => {
               onChange={handleChange}
               required
             />
-            <div className="flex justify-start">
-              <FilledButton
-                text="Enviar mensagem"
-                disabled={submitting}
-                color={bgColors.tertiary}
-              />
-            </div>
+
+            <FilledButton
+              text="Enviar mensagem"
+              disabled={submitting}
+              color={bgColors.tertiary}
+              hoverAnimation={FilledButtonHovers.opacity}
+            />
           </form>
         </div>
       </div>

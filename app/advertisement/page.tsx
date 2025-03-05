@@ -10,7 +10,10 @@ import { ADVERTISEMENTS_ITEMS } from "../../constants";
 import FilledButton from "../../components/Buttons/FilledButton";
 import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
 import { IconTextItem } from "../../components/Others/IconTextItem";
-import { bgColors } from "../../constants/colors";
+import { bgColors, txtColors } from "../../constants/colors";
+import clsx from "clsx";
+import { Typography } from "../../constants/typography";
+import { FilledButtonHovers } from "../../typings/buttons";
 
 const Advertisement = () => {
   const [formData, setFormData] = useState<CustomerContact>({
@@ -49,26 +52,34 @@ const Advertisement = () => {
   };
 
   return (
-    <div
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-4xl"
-      style={{ minHeight: "85vh" }}
-    >
-      <h1 className="text-3xl sm:text-4xl font-bold mb-8 sm:mb-12 text-left">
+    <div className="mx-auto px-8 py-12 max-w-4xl flex flex-col">
+      <h1 className={clsx(
+        Typography.Title,
+        txtColors.black,
+        "text-left w-full mb-6 sm:mb-8"
+      )}>
         Anuncie Conosco
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-16 md:gap-x-28">
-        <div>
-          <div className="space-y-4 sm:space-y-6">
-            {ADVERTISEMENTS_ITEMS.map((item, index) => (
-              <IconTextItem key={index} icon={item.icon} text={item.text} />
-            ))}
-          </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-16 md:gap-x-28">
+
+        <div className="space-y-4 sm:space-y-6">
+          {ADVERTISEMENTS_ITEMS.map((item, index) => (
+            <IconTextItem key={index} icon={item.icon} text={item.text} />
+          ))}
         </div>
+
         <div>
-          <h2 className="text-base sm:text-lg font-semibold mb-2">
+          <h2 className={clsx(
+            Typography.Title2
+          )}>
             Nossa equipe entrará em contato
           </h2>
-          <p className="text-gray-500 text-sm sm:text-base mb-4">
+          <p className={clsx(
+            Typography.Body2,
+            txtColors.gray500,
+            "mb-4 sm:mb-6 mt-1"
+          )}>
             Não perca esta oportunidade!
           </p>
           <form className="space-y-4" onSubmit={handleSubmit}>
@@ -103,8 +114,8 @@ const Advertisement = () => {
               text="Converse Conosco"
               disabled={submitting}
               color={bgColors.tertiary}
+              hoverAnimation={FilledButtonHovers.opacity}
             />
-
           </form>
         </div>
       </div>

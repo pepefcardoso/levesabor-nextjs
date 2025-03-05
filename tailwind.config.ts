@@ -31,13 +31,17 @@ const txtColors = [
   "text-gray-800",
 ];
 
+const borderColors = ["border-primary", "border-secondary", "border-tertiary"];
+
+const ringColors = ["ring-primary", "ring-secondary", "ring-tertiary"];
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [...bgColors, ...txtColors, ...hoverAnimations],
+  safelist: [...bgColors, ...txtColors, ...hoverAnimations, ...borderColors, ...ringColors],
   theme: {
     extend: {
       screens: {

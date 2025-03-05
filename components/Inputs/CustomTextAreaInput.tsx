@@ -1,8 +1,9 @@
 "use client";
 
-import { TextareaHTMLAttributes, useState } from "react";
+import { TextareaHTMLAttributes } from "react";
 import { Typography } from "../../constants/typography";
-import { bgColors, txtColors } from "../../constants/colors";
+import { txtColors } from "../../constants/colors";
+import clsx from "clsx";
 
 interface CustomTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -15,28 +16,23 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
   label,
   ...props
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const baseClasses = `
-    w-full
-    border border-gray-300 rounded-md
-    p-4
-    text-base
-    shadow-md
-    outline-none
-    disabled:opacity-50 disabled:cursor-not-allowed
-    transition-all
-    resize-y
-    ${isFocused
-      ? "focus:ring-2 focus:ring-[" + bgColors.tertiary + "] focus:border-[" + bgColors.tertiary + "]"
-      : "focus:ring-2 focus:ring-[" + bgColors.secondary + "] focus:border-[" + bgColors.secondary + "]"
-    }
-  `;
+  const baseClasses = clsx(
+    "w-full",
+    "border border-gray-300 rounded-md",
+    "p-4",
+    "text-base",
+    "shadow-md",
+    "outline-none",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
+    "transition-all",
+    "resize-y",
+    "focus:border-secondary focus:ring-2 focus:ring-secondary"
+  );
 
   return (
     <div className="space-y-1">
       {label && (
-        <label htmlFor={props.id} className={`${Typography.subtitle} text-[${txtColors.gray500}]`}>
+        <label htmlFor={props.id} className={`${Typography.Body2} text-[${txtColors.gray500}]`}>
           {label}
         </label>
       )}
@@ -44,8 +40,6 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
         {...props}
         rows={rows}
         disabled={disabled}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
         className={`${baseClasses} ${className}`.trim()}
       />
     </div>
