@@ -5,10 +5,8 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
-import { bgColors, txtColors } from "@/constants/colors";
 import { FilledButtonHovers } from "@/typings/buttons";
-import { Typography } from "@/constants/typography";
-import clsx from "clsx";
+import { bgColors } from "@/constants/colors";
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState("");
@@ -32,9 +30,11 @@ const NewsletterForm = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h2 className={clsx(Typography.Title2, txtColors.black, "mb-2 text-left")}>Nossa newsletter</h2>
-      <p className={clsx(Typography.Body2, txtColors.gray500, "mb-6")}>Cadastre-se e não perca nenhuma novidade</p>
-      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 w-full">
+      <h2 className="text-3xl font-bold mb-2">Nossa newsletter</h2>
+      <p className="text-sm text-gray-500 mb-6">
+        Cadastre-se e não perca nenhuma novidade
+      </p>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
         <CustomTextInput
           type={InputType.Email}
           value={email}

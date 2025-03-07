@@ -21,6 +21,7 @@ const CustomTextInput = ({
   type = InputType.Text,
   disabled,
   label,
+  className,
   ...props
 }: CustomTextInputProps) => {
 
@@ -32,11 +33,12 @@ const CustomTextInput = ({
     "transition-all duration-200",
     "text-base",
     "outline-none",
-    "focus:border-secondary focus:ring-2 focus:ring-secondary"
+    "focus:border-secondary focus:ring-2 focus:ring-secondary",
+    className
   );
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 w-full">
       {label && (
         <label htmlFor={props.id} className="block text-sm font-medium text-gray-700">
           {label}
