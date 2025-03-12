@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
-import routes from "../../routes/routes";
-import { Post } from "../../typings/post";
-import CustomChip from "../Others/CustomChip";
-import { bgColors, txtColors } from "../../constants/colors";
-import { Typography } from "../../constants/typography";
+import { Post } from "@/typings/post";
 import Image from "next/image";
+import Link from "next/link";
+import routes from "routes/routes";
+import CustomChip from "../Others/CustomChip";
+import { Typography } from "@/constants/typography";
+import clsx from "clsx";
+import { txtColors } from "@/constants/colors";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
@@ -15,25 +15,29 @@ const PostCard = ({ post }: { post: Post }) => {
       <div
         className="border border-gray-300 rounded-lg shadow-md cursor-pointer 
                    transition-transform duration-300 ease-in-out 
-                   hover:scale-105 hover:shadow-lg flex flex-col h-[420px] w-full sm:w-auto bg-white"
+                   hover:scale-105 hover:shadow-lg flex flex-col h-[400px] w-full sm:w-auto bg-white"
       >
-        <div className="w-full h-48 sm:h-40 relative rounded-lg overflow-hidden">
+        <div className="w-full h-56 sm:h-48 relative rounded-t-lg overflow-hidden">
           <Image
             src={post.image?.url ?? "/placeholder.jpg"}
             alt={post.title}
             fill
-            className="object-cover rounded-lg"
+            className="object-cover"
           />
         </div>
 
         <div className="p-4 flex-col flex-grow">
           {post.category?.name && (
-            <CustomChip bgColor={bgColors.tertiary} fontColor={txtColors.black} text={post.category.name} />
+            <CustomChip text={post.category.name} />
           )}
 
-          <h2 className="text-lg sm:text-xl font-bold my-2 line-clamp-2">{post.title}</h2>
+          <h2 className={clsx(Typography.Title2, "my-2 line-clamp-2")}>
+            {post.title}
+          </h2>
 
-          <p className={`${Typography.summary} ${txtColors.gray500}`}>{post.summary}</p>
+          <p className={clsx(Typography.Body2, txtColors.gray500, "line-clamp-3")}>
+            {post.summary}
+          </p>
         </div>
       </div>
     </Link>

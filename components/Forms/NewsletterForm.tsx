@@ -1,18 +1,21 @@
 "use client";
 
+import { txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
 import { createNewsletterCustomer } from "@/services/NewsletterCustomerService";
-import React, { useState } from "react";
-import { toast } from "react-hot-toast";
+import clsx from "clsx";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
-import FilledButton from "../Buttons/FilledButton";
-import { FilledButtonHovers } from "@/typings/buttons";
-import { bgColors } from "@/constants/colors";
+import FilledIconButton from "../Buttons/FilledIconButton";
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       const formData = new FormData();
       formData.append("email", email);
@@ -25,28 +28,29 @@ const NewsletterForm = () => {
         errorMessage = error.message;
       }
       toast.error(errorMessage, { position: "bottom-left" });
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold mb-2">Nossa newsletter</h2>
-      <p className="text-sm text-gray-500 mb-6">
+    <div className="max-w-md mx-auto px-4 py-8">
+      <h2 className={clsx(Typography.Title, "mb-2")}>Nossa newsletter</h2>
+      <p className={clsx(Typography.Body, txtColors.gray500, "mb-6")}>
         Cadastre-se e não perca nenhuma novidade
       </p>
-      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
+      <form onSubmit={handleSubmit} className="flex items-center gap-2">
         <CustomTextInput
           type={InputType.Email}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Seu email"
           required
+          className="flex-1"
         />
-        <FilledButton
+        <FilledIconButton
+          disabled={submitting}
           type="submit"
-          text="Cadastrar"
-          color={bgColors.tertiary}
-          hoverAnimation={FilledButtonHovers.opacity}
         />
       </form>
     </div>

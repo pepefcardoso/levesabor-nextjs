@@ -3,7 +3,7 @@
 import { FormEvent } from "react";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
-import { ButtonTypes, FilledButtonHovers } from "../../typings/buttons";
+import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
 
 interface RegisterUserFormProps {
   formData: {

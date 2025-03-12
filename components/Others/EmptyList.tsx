@@ -1,24 +1,25 @@
-import React from "react";
-import Image from "next/image"; // Import the Image component from next/image
+import { txtColors } from '@/constants/colors';
+import { Typography } from '@/constants/typography';
+import clsx from 'clsx';
+import React from 'react';
+import { FaBoxOpen } from 'react-icons/fa';
 
 interface EmptyListProps {
-  message: string;
-  imageUrl?: string;
+  title?: string;
+  description?: string;
+  icon?: React.ReactNode;
 }
 
-const EmptyList: React.FC<EmptyListProps> = ({ message, imageUrl }) => {
+const EmptyList: React.FC<EmptyListProps> = ({
+  title = "Nenhum item foi encontrado",
+  description = "No momento não há itens disponíveis",
+  icon = <FaBoxOpen size={80} className="mx-auto text-gray-400" />
+}) => {
   return (
-    <div className="flex flex-col items-center justify-center p-8 text-center">
-      {imageUrl && (
-        <Image
-          src={imageUrl}
-          alt="No items"
-          width={128} // Set the width of the image
-          height={128} // Set the height of the image
-          className="w-32 h-32 mb-4"
-        />
-      )}
-      <p className="text-xl text-gray-600">{message}</p>
+    <div className="flex flex-col items-center text-center p-6">
+      <div className="mb-4">{icon}</div>
+      <h1 className={clsx(Typography.Title2)}>{title}</h1>
+      <p className={clsx(Typography.Body, txtColors.gray800)}>{description}</p>
     </div>
   );
 };

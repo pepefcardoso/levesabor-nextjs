@@ -1,16 +1,18 @@
 "use client";
 
+import AuthorInfo from "@/components/Others/AuthorInfo";
+import CustomChip from "@/components/Others/CustomChip";
+import PageLoadingSkeleton from "@/components/Skeletons/PageLoadingSkeleton";
+import { txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
+import { getPost } from "@/services/postService";
+import { Post } from "@/typings/post";
+import clsx from "clsx";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getPost } from "../../../services/postService";
-import { formatDate, sanitizeImageUrl } from "../../../tools/helper";
-import PageLoadingSkeleton from "../../../components/Skeletons/PageLoadingSkeleton";
 import toast from "react-hot-toast";
-import { Post } from "../../../typings/post";
-import CustomChip from "../../../components/Others/CustomChip";
-import AuthorInfo from "../../../components/Others/AuthorInfo";
-import { bgColors } from "../../../constants/colors";
-import Image from "next/image";
+import { formatDate, sanitizeImageUrl } from "tools/helper";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -47,14 +49,14 @@ const PostDetails = () => {
     <div className="container mx-auto px-6 max-w-4xl py-6">
       {post.category?.name && (
         <div className="mb-4">
-          <CustomChip bgColor={bgColors.secondary} fontColor="white" text={post.category?.name} />
+          <CustomChip text={post.category?.name} />
         </div>
       )}
 
-      <h1 className="text-3xl font-bold mb-4 leading-snug">{post.title}</h1>
-      <p className="text-gray-600 text-lg mb-6">{post.summary}</p>
+      <h1 className={clsx(Typography.Title, "mb-2 leading-snug")}>{post.title}</h1>
+      <p className={clsx(Typography.Body, txtColors.gray800, "mb-6")}>{post.summary}</p>
 
-      <div className="relative w-full h-[450px] rounded-md shadow-md overflow-hidden">
+      <div className="relative w-full h-[400px] rounded-md shadow-md overflow-hidden">
         <Image
           src={sanitizeImageUrl(post.image?.url) || "/placeholder.jpg"}
           alt={post.title}
@@ -64,7 +66,7 @@ const PostDetails = () => {
         />
       </div>
 
-      <div className="text-gray-800 text-base leading-relaxed space-y-4 my-6">
+      <div className={clsx(Typography.Body, "leading-relaxed space-y-4 my-6")}>
         {post.content.split("\n").map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
@@ -74,19 +76,20 @@ const PostDetails = () => {
           {post.topics.map((topic) => (
             <CustomChip
               key={topic.id}
-              bgColor={bgColors.tertiary}
-              fontColor="black"
               text={"#" + topic.name.toLowerCase()}
             />
           ))}
         </div>
       )}
 
-      <AuthorInfo
+      <div className="mt-10">
+        <AuthorInfo
         authorName={post.user?.name || "Autor"}
         authorImage={sanitizeImageUrl(post.user?.image?.url)}
         postDate={post.created_at ? `Postado em ${formatDate(post.created_at)}` : "Data indisponível"}
-      ></AuthorInfo>
+
+      ></AuthorInfo></div>
+
     </div>
   );
 };

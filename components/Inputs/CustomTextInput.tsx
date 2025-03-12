@@ -2,6 +2,8 @@
 
 import { InputHTMLAttributes } from "react";
 import clsx from "clsx";
+import { Typography } from "@/constants/typography";
+import { txtColors } from "@/constants/colors";
 
 export const enum InputType {
   Text = "text",
@@ -40,7 +42,7 @@ const CustomTextInput = ({
   return (
     <div className="space-y-1 w-full">
       {label && (
-        <label htmlFor={props.id} className="block text-sm font-medium text-gray-700">
+        <label className={clsx(Typography.Body2, txtColors.gray800, "block")}>
           {label}
         </label>
       )}

@@ -16,6 +16,15 @@ export const FilledButtonHovers = {
   none: "",
 } as const;
 
+export type FilledIconButtonHoverType = (typeof FilledIconButtonHovers)[keyof typeof FilledIconButtonHovers];
+export const FilledIconButtonHovers = {
+  opacity: "hover:opacity-75",
+  scale: "hover:scale-[1.05]",
+  shadow: "hover:shadow-md",
+  lift: "hover:-translate-y-0.6",
+  none: "",
+} as const;
+
 export type ButtonType = (typeof ButtonTypes)[keyof typeof ButtonTypes];
 export const ButtonTypes = {
   submit: "submit",

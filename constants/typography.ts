@@ -32,6 +32,7 @@ export const Typography = {
   Title2: `${fontSizes.lg} sm:${fontSizes.xl} ${fontWeights.bold}`,
   Body: `${fontSizes.base} sm:${fontSizes.lg} ${fontWeights.normal}`,
   Body2: `${fontSizes.sm} sm:${fontSizes.base} ${fontWeights.normal}`,
+  Body3:`${fontSizes.xs} sm:${fontSizes.sm} ${fontWeights.medium}`,
   Button: `${fontSizes.sm} sm:${fontSizes.base} ${fontWeights.medium}`,
   Link: `${fontSizes.base} sm:${fontSizes.lg} ${fontWeights.medium}`,
   Link2: `${fontSizes.sm} sm:${fontSizes.base} ${fontWeights.normal}`,

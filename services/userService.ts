@@ -9,7 +9,7 @@ export const getCurrentUser = async (): Promise<User> => {
     return response.data;
   } catch (error) {
     console.error("Error fetching current user", error);
-    throw new Error("Failed to fetch user");
+    throw new Error("Falha ao buscar usuário. Tente novamente");
   }
 };
 
@@ -27,13 +27,12 @@ export const getUsers = async ({
     });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida ao buscar usuários");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw new Error("Failed to fetch users");
+  } catch {
+    throw new Error("Falha ao buscar usuários. Tente novamente");
   }
 };
 
@@ -41,9 +40,8 @@ export const getUser = async (id: string): Promise<User> => {
   try {
     const response = await apiClient.get<User>(`/users/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error fetching user with ID ${id}:`, error);
-    throw new Error("Failed to fetch user");
+  } catch {
+    throw new Error("Falha ao buscar usuário. Tente novamente");
   }
 };
 
@@ -51,9 +49,8 @@ export const createUser = async (data: FormData): Promise<User> => {
   try {
     const response = await apiClient.post<User>("/users", data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating user:", error);
-    throw new Error("Failed to create user");
+  } catch {
+    throw new Error("Falha ao criar usuário. Tente novamente");
   }
 };
 
@@ -62,9 +59,8 @@ export const updateUser = async (id: string, data: FormData): Promise<User> => {
     data.append("_method", "PUT");
     const response = await apiClient.post<User>(`/users/${id}`, data);
     return response.data;
-  } catch (error) {
-    console.error(`Error updating user with ID ${id}:`, error);
-    throw new Error("Failed to update user");
+  } catch {
+    throw new Error("Falha ao atualizar usuário. Tente novamente");
   }
 };
 
@@ -72,8 +68,7 @@ export const deleteUser = async (id: string): Promise<void> => {
   try {
     const response = await apiClient.delete<void>(`/users/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error deleting user with ID ${id}:`, error);
-    throw new Error("Failed to delete user");
+  } catch {
+    throw new Error("Falha ao deletar usuário. Tente novamente");
   }
 };

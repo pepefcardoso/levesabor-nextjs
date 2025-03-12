@@ -1,18 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import PostCard from "../../components/Cards/PostCard";
-import { getPosts } from "../../services/postService";
-import CardSkeleton from "../../components/Skeletons/CardSkeleton";
-import { getPostCategories } from "../../services/postCategoryService";
-import EmptyList from "../../components/Others/EmptyList";
+import PostCard from "@/components/Cards/PostCard";
+import NewsletterForm from "@/components/Forms/NewsletterForm";
+import CustomInputSelect from "@/components/Inputs/CustomSelectInput";
+import CustomTextInput from "@/components/Inputs/CustomTextInput";
+import CustomPaginator from "@/components/Others/CustomPaginator";
+import EmptyList from "@/components/Others/EmptyList";
+import CardSkeleton from "@/components/Skeletons/CardSkeleton";
+import { Typography } from "@/constants/typography";
+import { getPostCategories } from "@/services/postCategoryService";
+import { getPosts } from "@/services/postService";
+import { PaginationResponse } from "@/typings/pagination";
+import { Post, PostCategory, PostFilters } from "@/typings/post";
+import clsx from "clsx";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import NewsletterForm from "../../components/Forms/NewsletterForm";
-import { Post, PostCategory, PostFilters } from "../../typings/post";
-import { PaginationResponse } from "../../typings/pagination";
-import CustomInputSelect from "../../components/Inputs/CustomSelectInput";
-import CustomTextInput from "../../components/Inputs/CustomTextInput";
-import CustomPaginator from "../../components/Others/CustomPaginator";
 
 export default function PostsHome() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -95,9 +97,9 @@ export default function PostsHome() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl w-full">
+    <div className="container mx-auto px-4 py-8 max-w-6xl w-full space-y-8">
       <div className="px-4">
-        <h1 className="text-3xl font-bold mb-8 text-left text-gray-800">
+        <h1 className={clsx(Typography.Title, "mb-4 sm:mb-6 text-left")}>
           Pesquise nossos posts
         </h1>
         <form onSubmit={handleSubmit} className="mb-6">
@@ -119,7 +121,7 @@ export default function PostsHome() {
             className="min-w-[220px]"
           />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 h-full">
           {!isLoaded ? (
             Array.from({ length: 10 }).map((_, index) => (
               <CardSkeleton key={`skeleton-${index}`} />
@@ -127,9 +129,7 @@ export default function PostsHome() {
           ) : posts.length > 0 ? (
             posts.map((post) => <PostCard key={post.id} post={post} />)
           ) : (
-            <div className="col-span-full h-full flex items-center justify-center">
-              <EmptyList message="Nenhum post encontrado." />
-            </div>
+            <EmptyList title="Nenhum post foi encontrado" description="Tente outra busca"></EmptyList>
           )}
         </div>
 
@@ -137,9 +137,7 @@ export default function PostsHome() {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
-          previousLabel="Anterior"
-          nextLabel="Próximo"
-          className="mt-8"
+          className="mt-10"
         />
       </div>
       <NewsletterForm />
