@@ -2,7 +2,7 @@ export type TextButtonHoverType = (typeof TextButtonHovers)[keyof typeof TextBut
 export const TextButtonHovers = {
   underline: "hover:underline",
   scale: "hover:scale-105",
-  bold: "hover:font-bold",
+  bold: "hover:font-semibold",
   none: "",
 } as const;
 

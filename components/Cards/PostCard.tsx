@@ -4,10 +4,10 @@ import Link from "next/link";
 import React from "react";
 import routes from "../../routes/routes";
 import { Post } from "../../typings/post";
-import CustomImage from "../Others/CustomImage";
 import CustomChip from "../Others/CustomChip";
 import { bgColors, txtColors } from "../../constants/colors";
 import { Typography } from "../../constants/typography";
+import Image from "next/image";
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
@@ -17,14 +17,12 @@ const PostCard = ({ post }: { post: Post }) => {
                    transition-transform duration-300 ease-in-out 
                    hover:scale-105 hover:shadow-lg flex flex-col h-[420px] w-full sm:w-auto bg-white"
       >
-        <div className="w-full h-48 sm:h-40 relative">
-          <CustomImage
+        <div className="w-full h-48 sm:h-40 relative rounded-lg overflow-hidden">
+          <Image
             src={post.image?.url ?? "/placeholder.jpg"}
             alt={post.title}
-            width="100%"
-            height="100%"
-            rounded="lg"
-            objectFit="cover"
+            fill
+            className="object-cover rounded-lg"
           />
         </div>
 

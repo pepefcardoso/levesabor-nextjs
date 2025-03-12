@@ -5,6 +5,7 @@ import Navbar from "../components/Navigation/Navbar";
 import Footer from "../components/Navigation/Footer";
 import TransitionWrapper from "../components/Others/TransitionWrapper";
 import { bgColors } from "../constants/colors";
+import clsx from "clsx";
 
 export const metadata: Metadata = {
   title: "LeveSabor",
@@ -18,10 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className="flex flex-col min-h-screen" style={{ backgroundColor: bgColors.background }}>
+      <body className={clsx(bgColors.background, "flex flex-col min-h-screen")}>
         <Navbar />
-        <main className="flex-1 min-h-[85vh]">
-          <Toaster position="bottom-center" />
+        <main className="flex-1">
+          <Toaster position="bottom-left" />
           <div className="container mx-auto h-full">
             <TransitionWrapper>{children}</TransitionWrapper>
           </div>

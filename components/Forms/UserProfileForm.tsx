@@ -1,8 +1,8 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { sanitizeImageUrl } from "../../tools/helper";
-import CustomImage from "../Others/CustomImage";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
+import Image from "next/image";
 
 type UserProfileFormProps = {
   initialData: {
@@ -16,11 +16,7 @@ type UserProfileFormProps = {
   isSubmitting?: boolean;
 };
 
-export const UserProfileForm = ({
-  initialData,
-  onSubmit,
-  isSubmitting,
-}: UserProfileFormProps) => {
+export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserProfileFormProps) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [formValues, setFormValues] = useState({
     name: "",
@@ -48,29 +44,21 @@ export const UserProfileForm = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-2xl mx-auto space-y-8 px-4 sm:px-0"
-    >
+    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto space-y-8 px-4 sm:px-0">
       <div className="flex flex-col items-center space-y-6">
         <div className="relative group">
           <div className="w-48 h-48 rounded-full ring-4 ring-white shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-            <CustomImage
-              src={previewImage || sanitizeImageUrl(initialData.image?.url)}
-              alt="Perfil"
-              width={192}
-              height={192}
-              rounded="full"
-              objectFit="cover"
-              className="w-full h-full"
-            />
+            <div className="w-[192px] h-[192px] rounded-full overflow-hidden">
+              <Image
+                src={previewImage || sanitizeImageUrl(initialData.image?.url)}
+                alt="Perfil"
+                width={192}
+                height={192}
+                className="object-cover w-full h-full"
+              />
+            </div>
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <svg
-                className="w-12 h-12 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -105,15 +93,11 @@ export const UserProfileForm = ({
       <div className="space-y-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              Nome
-            </label>
+            <label className="block text-gray-700 text-sm font-medium mb-2">Nome</label>
             <CustomTextInput
               name="name"
               value={formValues.name}
-              onChange={(e) =>
-                setFormValues((prev) => ({ ...prev, name: e.target.value }))
-              }
+              onChange={(e) => setFormValues((prev) => ({ ...prev, name: e.target.value }))}
               placeholder="Nome"
               disabled={isSubmitting}
               className="w-full"
@@ -121,9 +105,7 @@ export const UserProfileForm = ({
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              E-mail
-            </label>
+            <label className="block text-gray-700 text-sm font-medium mb-2">E-mail</label>
             <CustomTextInput
               name="email"
               value={initialData.email}
@@ -134,16 +116,12 @@ export const UserProfileForm = ({
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              Data de Nascimento
-            </label>
+            <label className="block text-gray-700 text-sm font-medium mb-2">Data de Nascimento</label>
             <CustomTextInput
               type={InputType.Date}
               name="birthday"
               value={formValues.birthday}
-              onChange={(e) =>
-                setFormValues((prev) => ({ ...prev, birthday: e.target.value }))
-              }
+              onChange={(e) => setFormValues((prev) => ({ ...prev, birthday: e.target.value }))}
               placeholder="Data de Nascimento"
               disabled={isSubmitting}
               className="w-full"
@@ -151,15 +129,11 @@ export const UserProfileForm = ({
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              Telefone
-            </label>
+            <label className="block text-gray-700 text-sm font-medium mb-2">Telefone</label>
             <CustomTextInput
               name="phone"
               value={formValues.phone}
-              onChange={(e) =>
-                setFormValues((prev) => ({ ...prev, phone: e.target.value }))
-              }
+              onChange={(e) => setFormValues((prev) => ({ ...prev, phone: e.target.value }))}
               placeholder="Telefone"
               disabled={isSubmitting}
               className="w-full"

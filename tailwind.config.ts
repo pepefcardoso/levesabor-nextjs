@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 const hoverAnimations = [
   "hover:underline",
   "hover:scale-105",
-  "hover:font-bold",
+  "hover:font-semibold",
   "hover:opacity-75",
   "hover:scale-[1.05]",
   "hover:shadow-md",

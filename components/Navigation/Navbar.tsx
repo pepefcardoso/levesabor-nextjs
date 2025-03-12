@@ -9,10 +9,10 @@ import { AuthService } from "../../services/authService";
 import routes from "../../routes/routes";
 import TextButton from "../Buttons/TextButton";
 import FilledButton from "../Buttons/FilledButton";
-import CustomImage from "../Others/CustomImage";
 import { bgColors, txtColors } from "../../constants/colors";
 import { Typography } from "../../constants/typography";
 import { FilledButtonHovers, TextButtonHovers } from "../../typings/buttons";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,10 +32,7 @@ const Navbar = () => {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current?.contains(event.target as Node) ||
-      buttonRef.current?.contains(event.target as Node)
-    ) {
+    if (dropdownRef.current?.contains(event.target as Node) || buttonRef.current?.contains(event.target as Node)) {
       return;
     }
     setIsDropdownOpen(false);
@@ -93,13 +90,9 @@ const Navbar = () => {
       aria-label="Abrir menu do usuário"
     >
       {user?.image ? (
-        <CustomImage
-          src={user.image.url}
-          alt="User profile"
-          width={40}
-          height={40}
-          className="rounded-full hover:ring-2 ring-white"
-        />
+        <div className="relative w-[40px] h-[40px] rounded-full hover:ring-2 ring-white">
+          <Image src={user.image.url} alt="User profile" width={40} height={40} className="object-cover rounded-full" />
+        </div>
       ) : (
         <div className="w-10 h-10 rounded-full bg-white flex-center hover:ring-2 ring-white">
           <span className="text-green-800 font-bold">{user?.name?.charAt(0)}</span>
@@ -130,16 +123,9 @@ const Navbar = () => {
   return (
     <header className={`${bgColors.primary} shadow-lg z-50 relative`}>
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <TextButton
-          href={routes.home}
-          text="LeveSabor"
-          color={txtColors.white}
-          typography={Typography.Title}
-        />
+        <TextButton href={routes.home} text="LeveSabor" color={txtColors.white} typography={Typography.Title} />
 
-        <div className="hidden lg:flex items-center gap-8">
-          {renderLinks(NAV_LINKS)}
-        </div>
+        <div className="hidden lg:flex items-center gap-8">{renderLinks(NAV_LINKS)}</div>
 
         <div className="hidden lg:flex items-center gap-6">
           {user ? (
@@ -165,8 +151,9 @@ const Navbar = () => {
         >
           <div className="relative w-8 h-8">
             <svg
-              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'
-                }`}
+              className={`absolute inset-0 transition-all duration-300 ${
+                isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+              }`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -176,8 +163,9 @@ const Navbar = () => {
             </svg>
 
             <svg
-              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'
-                }`}
+              className={`absolute inset-0 transition-all duration-300 ${
+                isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+              }`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -189,34 +177,31 @@ const Navbar = () => {
         </button>
       </nav>
 
-      <div className={`lg:hidden ${bgColors.primary} overflow-hidden transition-all duration-300 
-        ${isMenuOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
+      <div
+        className={`lg:hidden ${bgColors.primary} overflow-hidden transition-all duration-300 
+        ${isMenuOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}
+      >
         <div className="px-4 py-4 flex flex-col items-center gap-4">
           {renderLinks(NAV_LINKS, true)}
-          {user ? (
-            renderUserMenu(true)
-          ) : (
-            <AuthButtons mobile={true} />
-          )}
+          {user ? renderUserMenu(true) : <AuthButtons mobile={true} />}
         </div>
       </div>
 
-      {isDropdownOpen && ReactDOM.createPortal(
-        <div
-          ref={dropdownRef}
-          className="absolute bg-white shadow-xl rounded-lg p-2 min-w-[200px] z-[1000] 
+      {isDropdownOpen &&
+        ReactDOM.createPortal(
+          <div
+            ref={dropdownRef}
+            className="absolute bg-white shadow-xl rounded-lg p-2 min-w-[200px] z-[1000] 
                    border border-gray-100 animate-fade-in"
-          style={{
-            top: (buttonRef.current?.getBoundingClientRect().bottom || 0) + window.scrollY + 8,
-            right: window.innerWidth - (buttonRef.current?.getBoundingClientRect().right || 0),
-          }}
-        >
-          <div className="flex flex-col gap-2">
-            {renderUserMenu()}
-          </div>
-        </div>,
-        document.body
-      )}
+            style={{
+              top: (buttonRef.current?.getBoundingClientRect().bottom || 0) + window.scrollY + 8,
+              right: window.innerWidth - (buttonRef.current?.getBoundingClientRect().right || 0),
+            }}
+          >
+            <div className="flex flex-col gap-2">{renderUserMenu()}</div>
+          </div>,
+          document.body
+        )}
     </header>
   );
 };

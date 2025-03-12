@@ -24,22 +24,16 @@ export const AuthService = {
       localStorage.removeItem("authToken");
       delete apiClient.defaults.headers.common["Authorization"];
 
-      let errorMessage = "Login failed. Please check your credentials.";
+      let errorMessage = "Por favor, confira suas credenciais e tente novamente.";
 
       if (error instanceof Error) {
         errorMessage = error.message;
-      } else if (
-        typeof error === "object" &&
-        error !== null &&
-        "response" in error
-      ) {
+      } else if (typeof error === "object" && error !== null && "response" in error) {
         const errorResponse = error as {
           response: { data?: { errors?: string[]; message?: string } };
         };
         errorMessage =
-          errorResponse.response.data?.errors?.join(", ") ||
-          errorResponse.response.data?.message ||
-          errorMessage;
+          errorResponse.response.data?.errors?.join(", ") || errorResponse.response.data?.message || errorMessage;
       }
       throw new Error(errorMessage);
     }
@@ -54,7 +48,7 @@ export const AuthService = {
       return true;
     } catch (error) {
       console.error("Logout error:", error);
-      throw new Error("Logout failed. Please try again.");
+      throw new Error("O logout falhou. Por favor, tente novamente.");
     }
   },
 
@@ -64,18 +58,11 @@ export const AuthService = {
       return true;
     } catch (error) {
       console.error("Forgot password error:", error);
-      throw new Error(
-        "Failed to send reset password request. Please try again."
-      );
+      throw new Error("Falha ao enviar e-mail de recuperação de senha. Por favor, tente novamente.");
     }
   },
 
-  async resetPassword(
-    token: string,
-    email: string,
-    password: string,
-    passwordConfirmation: string
-  ): Promise<boolean> {
+  async resetPassword(token: string, email: string, password: string, passwordConfirmation: string): Promise<boolean> {
     try {
       await apiClient.post("/password/reset", {
         token,
@@ -86,7 +73,7 @@ export const AuthService = {
       return true;
     } catch (error) {
       console.error("Reset password error:", error);
-      throw new Error("Failed to reset password. Please try again.");
+      throw new Error("Falha ao redefinir a senha. Por favor, tente novamente.");
     }
   },
 };

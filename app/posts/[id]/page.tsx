@@ -9,8 +9,8 @@ import toast from "react-hot-toast";
 import { Post } from "../../../typings/post";
 import CustomChip from "../../../components/Others/CustomChip";
 import AuthorInfo from "../../../components/Others/AuthorInfo";
-import CustomImage from "../../../components/Others/CustomImage";
 import { bgColors } from "../../../constants/colors";
+import Image from "next/image";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -26,8 +26,7 @@ const PostDetails = () => {
           setPost(data);
           setIsLoaded(true);
         } catch (err) {
-          const message =
-            err instanceof Error ? err.message : "Falha ao carregar post";
+          const message = err instanceof Error ? err.message : "Falha ao carregar post";
           toast.error(message, { position: "bottom-left" });
           console.error(err);
         }
@@ -55,15 +54,15 @@ const PostDetails = () => {
       <h1 className="text-3xl font-bold mb-4 leading-snug">{post.title}</h1>
       <p className="text-gray-600 text-lg mb-6">{post.summary}</p>
 
-      <CustomImage
-        src={sanitizeImageUrl(post.image?.url)}
-        alt={post.title}
-        height="450px"
-        rounded="md"
-        objectFit="cover"
-        priority
-        shadow="md"
-      />
+      <div className="relative w-full h-[450px] rounded-md shadow-md overflow-hidden">
+        <Image
+          src={sanitizeImageUrl(post.image?.url) || "/placeholder.jpg"}
+          alt={post.title}
+          fill
+          className="object-cover rounded-md"
+          priority
+        />
+      </div>
 
       <div className="text-gray-800 text-base leading-relaxed space-y-4 my-6">
         {post.content.split("\n").map((paragraph, index) => (
@@ -73,7 +72,12 @@ const PostDetails = () => {
       {post.topics && post.topics.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           {post.topics.map((topic) => (
-            <CustomChip key={topic.id} bgColor={bgColors.tertiary} fontColor="black" text={'#' + topic.name.toLowerCase()} />
+            <CustomChip
+              key={topic.id}
+              bgColor={bgColors.tertiary}
+              fontColor="black"
+              text={"#" + topic.name.toLowerCase()}
+            />
           ))}
         </div>
       )}
@@ -81,11 +85,8 @@ const PostDetails = () => {
       <AuthorInfo
         authorName={post.user?.name || "Autor"}
         authorImage={sanitizeImageUrl(post.user?.image?.url)}
-        postDate={post.created_at
-          ? `Postado em ${formatDate(post.created_at)}`
-          : "Data indisponível"}>
-      </AuthorInfo>
-
+        postDate={post.created_at ? `Postado em ${formatDate(post.created_at)}` : "Data indisponível"}
+      ></AuthorInfo>
     </div>
   );
 };

@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import TextButton from "@/components/Buttons/TextButton";
+import RegisterUserForm from "@/components/Forms/RegisterUserForm";
+import { txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
+import { createUser } from "@/services/userService";
+import { TextButtonHovers } from "@/typings/buttons";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { createUser } from "../../../services/userService";
-import toast, { Toaster } from "react-hot-toast";
-import routes from "../../../routes/routes";
-import TextButton from "../../../components/Buttons/TextButton";
-import RegisterUserForm from "../../../components/Forms/RegisterUserForm";
-import { TextButtonHovers } from "../../../typings/buttons";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import routes from "routes/routes";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -19,7 +22,6 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,12 +35,11 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      setError("As senhas não coincidem");
+      toast.error("As senhas não coincidem");
       return;
     }
 
     setLoading(true);
-    setError("");
 
     const form = new FormData();
     Object.keys(formData).forEach((key) => {
@@ -52,39 +53,33 @@ export default function RegisterPage() {
         toast.success("Cadastro realizado com sucesso!");
         setTimeout(() => router.push("/login"), 3000);
       } else {
-        setError("Falha no cadastro. Tente novamente.");
+        toast.error("Falha no cadastro. Tente novamente.");
       }
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Ocorreu um erro inesperado"
-      );
+      toast.error(err instanceof Error ? err.message : "Ocorreu um erro inesperado");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6"> {/* Removed bg-white class from outer container */}
-      <Toaster position="bottom-left" />
-      <div className="w-full max-w-lg p-6 sm:p-8 space-y-6 bg-white rounded-xl shadow-2xl"> {/* Added bg-white for the card */}
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
+      <div className="w-full max-w-lg p-6 sm:p-8 space-y-6 bg-white rounded-xl shadow-2xl">
         <div className="text-left space-y-2">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            Crie sua conta
-          </h1>
-          <p className="text-gray-500 text-base sm:text-lg">
+          <h1 className={clsx(Typography.Title)}>Crie sua conta</h1>
+          <p className={clsx(Typography.Body, txtColors.gray500)}>
             Já possui conta?{" "}
             <TextButton
               href={routes.auth.login}
               text="Faça seu login"
+              typography={Typography.Body}
               hoverAnimation={TextButtonHovers.bold}
             />
           </p>
         </div>
-
         <RegisterUserForm
           formData={formData}
           loading={loading}
-          error={error}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
         />
@@ -92,4 +87,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-

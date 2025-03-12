@@ -17,7 +17,7 @@ import { txtColors } from "@/constants/colors";
 import { TextButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { Typography } from "@/constants/typography";
-import CustomImage from "@/components/Others/CustomImage";
+import Image from "next/image";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -96,14 +96,11 @@ export default function Home() {
 
               <div className="lg:w-1/2 hidden sm:block relative h-[400px] lg:h-auto">
                 <div className="absolute inset-0 rounded-2xl overflow-hidden bg-gray-200">
-                  <CustomImage
+                  <Image
                     src="/placeholder.jpg"
                     alt="Healthy ingredients arrangement"
-                    width="100%"
-                    height="100%"
-                    objectFit="cover"
-                    shadow="md"
-                    rounded="lg"
+                    fill
+                    className="object-cover rounded-lg shadow-md"
                     priority
                   />
                 </div>

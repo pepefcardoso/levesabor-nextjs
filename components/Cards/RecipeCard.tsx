@@ -4,9 +4,9 @@ import React from "react";
 import { Recipe } from "../../typings/recipe";
 import routes from "../../routes/routes";
 import CustomChip from "../Others/CustomChip";
-import CustomImage from "../Others/CustomImage";
 import { Typography } from "../../constants/typography";
 import { bgColors, txtColors } from "../../constants/colors";
+import Image from "next/image";
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
@@ -18,14 +18,14 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     >
       <div className="flex flex-col h-[500px] w-full sm:w-auto rounded-lg shadow-lg bg-white cursor-pointer overflow-hidden">
         <div className="flex-none basis-2/5 relative">
-          <CustomImage
-            src={recipe.image?.url ?? "/placeholder.jpg"}
-            alt={recipe.title}
-            width="100%"
-            height="100%"
-            objectFit="cover"
-            className="rounded-t-lg"
-          />
+          <div className="relative w-full h-full rounded-t-lg overflow-hidden">
+            <Image
+              src={recipe.image?.url ?? "/placeholder.jpg"}
+              alt={recipe.title}
+              fill
+              className="object-cover rounded-t-lg"
+            />
+          </div>
           {recipe.category?.name && (
             <div className="absolute top-2 right-2">
               <CustomChip bgColor={bgColors.secondary} fontColor={txtColors.black} text={recipe.category.name} />

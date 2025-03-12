@@ -8,10 +8,10 @@ import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
 import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
-import CustomImage from "../Others/CustomImage";
 import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "../../constants/typography";
 import { txtColors } from "../../constants/colors";
+import Image from "next/image";
 
 interface FormDataValues {
   title: string;
@@ -195,16 +195,15 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
           <div className="flex flex-col items-center gap-6">
             {previewImage ? (
               <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                <CustomImage
-                  src={previewImage}
-                  alt="Preview"
-                  width={300}
-                  height={200}
-                  rounded="md"
-                  objectFit="cover"
-                  shadow="md"
-                  className="hover:opacity-80 transition-all"
-                />
+                <div className="w-[300px] h-[200px] rounded-md shadow-md overflow-hidden">
+                  <Image
+                    src={previewImage}
+                    alt="Preview"
+                    width={300}
+                    height={200}
+                    className="object-cover rounded-md hover:opacity-80 transition-all"
+                  />
+                </div>
               </div>
             ) : (
               <div className="w-full max-w-md p-8 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 text-center">

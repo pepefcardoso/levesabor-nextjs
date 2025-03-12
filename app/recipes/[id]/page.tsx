@@ -9,10 +9,10 @@ import toast from "react-hot-toast";
 import { Recipe } from "../../../typings/recipe";
 import CustomChip from "../../../components/Others/CustomChip";
 import AuthorInfo from "../../../components/Others/AuthorInfo";
-import CustomImage from "../../../components/Others/CustomImage";
 import { StepListItem } from "../../../components/Others/StepListItem";
 import { IngredientListItem } from "../../../components/Others/IngredientListItem";
 import { bgColors } from "../../../constants/colors";
+import Image from "next/image";
 
 const RecipeDetails = () => {
   const { id } = useParams();
@@ -28,8 +28,7 @@ const RecipeDetails = () => {
           setRecipe(data);
           setIsLoaded(true);
         } catch (err) {
-          const message =
-            err instanceof Error ? err.message : "Falha ao carregar receita";
+          const message = err instanceof Error ? err.message : "Falha ao carregar receita";
           toast.error(message, { position: "bottom-left" });
           console.error(err);
         }
@@ -39,8 +38,7 @@ const RecipeDetails = () => {
   }, [id]);
 
   if (!isLoaded) return <PageLoadingSkeleton />;
-  if (!recipe)
-    return <div className="text-center py-20">Receita não encontrada.</div>;
+  if (!recipe) return <div className="text-center py-20">Receita não encontrada.</div>;
 
   return (
     <div className="container mx-auto px-6 py-8 max-w-4xl">
@@ -53,21 +51,17 @@ const RecipeDetails = () => {
       <div className="mb-6">
         <AuthorInfo
           authorName={recipe.user?.name || "Autor"}
-          authorImage={
-            recipe.user?.image ? sanitizeImageUrl(recipe.user.image.url) : null
-          }
+          authorImage={recipe.user?.image ? sanitizeImageUrl(recipe.user.image.url) : null}
           postDate={recipe.created_at || "Data desconhecida"}
         />
       </div>
 
-      <div className="relative w-full h-[340px] mb-6">
-        <CustomImage
-          src={sanitizeImageUrl(recipe.image?.url)}
+      <div className="relative w-full h-[340px] mb-6 rounded-lg overflow-hidden">
+        <Image
+          src={sanitizeImageUrl(recipe.image?.url) || "/placeholder.jpg"}
           alt={recipe.title}
-          width="100%"
-          height="100%"
-          rounded="lg"
-          objectFit="cover"
+          fill
+          className="object-cover rounded-lg"
           priority
         />
       </div>

@@ -5,10 +5,10 @@ import CustomTextInput from "../Inputs/CustomTextInput";
 import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
 import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
-import CustomImage from "../Others/CustomImage";
 import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "../../constants/typography";
 import { txtColors } from "../../constants/colors";
+import Image from "next/image";
 
 interface FormDataValues {
   title: string;
@@ -26,13 +26,7 @@ interface PostFormProps {
   onSubmit: (data: FormData) => Promise<void>;
 }
 
-export const PostForm: React.FC<PostFormProps> = ({
-  initialData,
-  categories,
-  topics,
-  isSubmitting,
-  onSubmit,
-}) => {
+export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, topics, isSubmitting, onSubmit }) => {
   const [formData, setFormData] = useState<FormDataValues>({
     title: initialData?.title || "",
     summary: initialData?.summary || "",
@@ -119,10 +113,7 @@ export const PostForm: React.FC<PostFormProps> = ({
       />
 
       <div>
-        <label
-          className={`${Typography.h6} mb-4`}
-          style={{ color: txtColors.gray500 }}
-        >
+        <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
           Tópicos
         </label>
         <CustomCheckboxInput
@@ -138,28 +129,21 @@ export const PostForm: React.FC<PostFormProps> = ({
       </div>
 
       <div>
-        <label
-          className={`${Typography.h6} mb-4`}
-          style={{ color: txtColors.gray500 }}
-        >
+        <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
           Imagem do Post
         </label>
         <div className="flex flex-col items-center gap-6">
           {previewImage && (
-            <div
-              className="relative group cursor-pointer"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <CustomImage
-                src={previewImage}
-                alt="Preview"
-                width={300}
-                height={200}
-                rounded="md"
-                objectFit="cover"
-                shadow="md"
-                className="hover:opacity-80 transition-all"
-              />
+            <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+              <div className="w-[300px] h-[200px] rounded-md shadow-md overflow-hidden">
+                <Image
+                  src={previewImage}
+                  alt="Preview"
+                  width={300}
+                  height={200}
+                  className="object-cover rounded-md hover:opacity-80 transition-all"
+                />
+              </div>
             </div>
           )}
 

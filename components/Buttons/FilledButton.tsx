@@ -22,7 +22,7 @@ interface FilledButtonProps {
 
 const FilledButton: FC<FilledButtonProps> = ({
     text,
-    color = bgColors.gray200,
+    color = bgColors.tertiary,
     fontColor = txtColors.black,
     typography = Typography.Button,
     hoverAnimation = FilledButtonHovers.none,
