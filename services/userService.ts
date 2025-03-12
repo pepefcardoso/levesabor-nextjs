@@ -1,4 +1,3 @@
-
 import { PaginationParams, PaginationResponse } from "../typings/pagination";
 import { User } from "../typings/user";
 import apiClient from "./apiClient";
@@ -7,17 +6,12 @@ export const getCurrentUser = async (): Promise<User> => {
   try {
     const response = await apiClient.get<User>("/user/me");
     return response.data;
-  } catch (error) {
-    console.error("Error fetching current user", error);
+  } catch {
     throw new Error("Falha ao buscar usuário. Tente novamente");
   }
 };
 
-export const getUsers = async ({
-  pagination,
-}: {
-  pagination: PaginationParams;
-}): Promise<PaginationResponse<User>> => {
+export const getUsers = async ({ pagination }: { pagination: PaginationParams }): Promise<PaginationResponse<User>> => {
   try {
     const response = await apiClient.get<PaginationResponse<User>>("/users", {
       params: {

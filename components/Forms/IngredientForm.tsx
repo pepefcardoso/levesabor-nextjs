@@ -4,6 +4,7 @@ import { RecipeIngredient, RecipeUnit } from "../../typings/recipe";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
+import toast from "react-hot-toast";
 
 interface IngredientFormProps {
   onIngredientsChange: (ingredients: RecipeIngredient[]) => void;
@@ -26,8 +27,8 @@ export const IngredientForm = ({
           pagination: { page: 1, per_page: 50 },
         });
         setUnits(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar unidades:", error);
+      } catch {
+        toast.error("Erro ao carregar unidades de medida");
       } finally {
         setIsLoading(false);
       }

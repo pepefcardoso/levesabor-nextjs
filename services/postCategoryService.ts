@@ -1,6 +1,5 @@
-
-import { PaginationParams, PaginationResponse } from "../typings/pagination";
-import { PostCategory } from "../typings/post";
+import { PaginationParams, PaginationResponse } from "@/typings/pagination";
+import { PostCategory } from "@/typings/post";
 import apiClient from "./apiClient";
 
 export const getPostCategories = async ({
@@ -9,83 +8,56 @@ export const getPostCategories = async ({
   pagination: PaginationParams;
 }): Promise<PaginationResponse<PostCategory>> => {
   try {
-    const response = await apiClient.get<PaginationResponse<PostCategory>>(
-      "/post-categories",
-      {
-        params: {
-          page: pagination.page,
-          per_page: pagination.per_page,
-        },
-      }
-    );
+    const response = await apiClient.get<PaginationResponse<PostCategory>>("/post-categories", {
+      params: {
+        page: pagination.page,
+        per_page: pagination.per_page,
+      },
+    });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching post categories:", error);
-    throw new Error("Failed to fetch posts categories");
+  } catch {
+    throw new Error("Falha ao buscar categorias de postagem");
   }
 };
 
-export const getPostCategory = async (
-  id: string
-): Promise<PostCategory> => {
+export const getPostCategory = async (id: string): Promise<PostCategory> => {
   try {
-    const response = await apiClient.get<PostCategory>(
-      `/post-categories/${id}`
-    );
+    const response = await apiClient.get<PostCategory>(`/post-categories/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error fetching post category with ID ${id}:`, error);
-    throw new Error("Failed to fetch post category");
+  } catch {
+    throw new Error("Falha ao buscar categoria de postagem");
   }
 };
 
-export const createPostCategory = async (
-  data: FormData
-): Promise<PostCategory> => {
+export const createPostCategory = async (data: FormData): Promise<PostCategory> => {
   try {
-    const response = await apiClient.post<PostCategory>(
-      "/post-categories",
-      data
-    );
+    const response = await apiClient.post<PostCategory>("/post-categories", data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating post category:", error);
-    throw new Error("Failed to create post category");
+  } catch {
+    throw new Error("Falha ao criar categoria de postagem");
   }
 };
 
-export const updatePostCategory = async (
-  id: string,
-  data: FormData
-): Promise<PostCategory> => {
+export const updatePostCategory = async (id: string, data: FormData): Promise<PostCategory> => {
   try {
     data.append("_method", "PUT");
-    const response = await apiClient.post<PostCategory>(
-      `/post-categories/${id}`,
-      data
-    );
+    const response = await apiClient.post<PostCategory>(`/post-categories/${id}`, data);
     return response.data;
-  } catch (error) {
-    console.error(`Error updating post category with ID ${id}:`, error);
-    throw new Error("Failed to update post category");
+  } catch {
+    throw new Error("Falha ao atualizar categoria de postagem");
   }
 };
 
-export const deletePostCategory = async (
-  id: string
-): Promise<void> => {
+export const deletePostCategory = async (id: string): Promise<void> => {
   try {
-    const response = await apiClient.delete<void>(
-      `/post-categories/${id}`
-    );
+    const response = await apiClient.delete<void>(`/post-categories/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error deleting post category with ID ${id}:`, error);
-    throw new Error("Failed to delete post category");
+  } catch {
+    throw new Error("Falha ao deletar categoria de postagem");
   }
 };

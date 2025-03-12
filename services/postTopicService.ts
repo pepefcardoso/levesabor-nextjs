@@ -1,6 +1,5 @@
-
-import { PaginationParams, PaginationResponse } from "../typings/pagination";
-import { PostTopic } from "../typings/post";
+import { PaginationParams, PaginationResponse } from "@/typings/pagination";
+import { PostTopic } from "@/typings/post";
 import apiClient from "./apiClient";
 
 export const getPostTopics = async ({
@@ -9,83 +8,56 @@ export const getPostTopics = async ({
   pagination: PaginationParams;
 }): Promise<PaginationResponse<PostTopic>> => {
   try {
-    const response = await apiClient.get<PaginationResponse<PostTopic>>(
-      "/post-topics",
-      {
-        params: {
-          page: pagination.page,
-          per_page: pagination.per_page,
-        },
-      }
-    );
+    const response = await apiClient.get<PaginationResponse<PostTopic>>("/post-topics", {
+      params: {
+        page: pagination.page,
+        per_page: pagination.per_page,
+      },
+    });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching post topics:", error);
-    throw new Error("Failed to fetch post topics");
+  } catch {
+    throw new Error("Falha ao buscar tópicos de postagem");
   }
 };
 
-export const getPostTopic = async (
-  id: string
-): Promise<PostTopic> => {
+export const getPostTopic = async (id: string): Promise<PostTopic> => {
   try {
-    const response = await apiClient.get<PostTopic>(
-      `/post-topics/${id}`
-    );
+    const response = await apiClient.get<PostTopic>(`/post-topics/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error fetching post topic with ID ${id}:`, error);
-    throw new Error("Failed to fetch post topic");
+  } catch {
+    throw new Error("Falha ao buscar tópico de postagem");
   }
 };
 
-export const createPostTopic = async (
-  data: FormData
-): Promise<PostTopic> => {
+export const createPostTopic = async (data: FormData): Promise<PostTopic> => {
   try {
-    const response = await apiClient.post<PostTopic>(
-      "/post-topics",
-      data
-    );
+    const response = await apiClient.post<PostTopic>("/post-topics", data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating post topic:", error);
-    throw new Error("Failed to create post topic");
+  } catch {
+    throw new Error("Falha ao criar tópico de postagem");
   }
 };
 
-export const updatePostTopic = async (
-  id: string,
-  data: FormData
-): Promise<PostTopic> => {
+export const updatePostTopic = async (id: string, data: FormData): Promise<PostTopic> => {
   try {
     data.append("_method", "PUT");
-    const response = await apiClient.post<PostTopic>(
-      `/post-topics/${id}`,
-      data
-    );
+    const response = await apiClient.post<PostTopic>(`/post-topics/${id}`, data);
     return response.data;
-  } catch (error) {
-    console.error(`Error updating post topic with ID ${id}:`, error);
-    throw new Error("Failed to update post topic");
+  } catch {
+    throw new Error("Falha ao atualizar tópico de postagem");
   }
 };
 
-export const deletePostTopic = async (
-  id: string
-): Promise<void> => {
+export const deletePostTopic = async (id: string): Promise<void> => {
   try {
-    const response = await apiClient.delete<void>(
-      `/post-topics/${id}`
-    );
+    const response = await apiClient.delete<void>(`/post-topics/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error deleting post topic with ID ${id}:`, error);
-    throw new Error("Failed to delete post topic");
+  } catch {
+    throw new Error("Falha ao deletar tópico de postagem");
   }
 };

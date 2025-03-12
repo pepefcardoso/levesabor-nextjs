@@ -13,6 +13,7 @@ import { bgColors, txtColors } from "../../constants/colors";
 import { Typography } from "../../constants/typography";
 import { FilledButtonHovers, TextButtonHovers } from "../../typings/buttons";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,8 +27,9 @@ const Navbar = () => {
     try {
       await AuthService.logout();
       router.push(routes.auth.login);
-    } catch (error) {
-      console.error("Logout failed", error);
+      toast.success('Fez logout com sucesso.');
+    } catch {
+      toast.error('Falha ao fazer logout. Por favor, tente novamente.');
     }
   };
 
@@ -151,9 +153,8 @@ const Navbar = () => {
         >
           <div className="relative w-8 h-8">
             <svg
-              className={`absolute inset-0 transition-all duration-300 ${
-                isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
-              }`}
+              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+                }`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -163,9 +164,8 @@ const Navbar = () => {
             </svg>
 
             <svg
-              className={`absolute inset-0 transition-all duration-300 ${
-                isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
-              }`}
+              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+                }`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

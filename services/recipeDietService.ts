@@ -1,6 +1,5 @@
-
-import { PaginationParams, PaginationResponse } from "../typings/pagination";
-import { RecipeDiet } from "../typings/recipe";
+import { PaginationParams, PaginationResponse } from "@/typings/pagination";
+import { RecipeDiet } from "@/typings/recipe";
 import apiClient from "./apiClient";
 
 export const getRecipeDiets = async ({
@@ -9,83 +8,56 @@ export const getRecipeDiets = async ({
   pagination: PaginationParams;
 }): Promise<PaginationResponse<RecipeDiet>> => {
   try {
-    const response = await apiClient.get<PaginationResponse<RecipeDiet>>(
-      "/recipe-diets",
-      {
-        params: {
-          page: pagination.page,
-          per_page: pagination.per_page,
-        },
-      }
-    );
+    const response = await apiClient.get<PaginationResponse<RecipeDiet>>("/recipe-diets", {
+      params: {
+        page: pagination.page,
+        per_page: pagination.per_page,
+      },
+    });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching recipe diets:", error);
-    throw new Error("Failed to fetch recipe diets");
+  } catch {
+    throw new Error("Falha ao buscar dietas de receitas");
   }
 };
 
-export const getRecipeDiet = async (
-  id: string
-): Promise<RecipeDiet> => {
+export const getRecipeDiet = async (id: string): Promise<RecipeDiet> => {
   try {
-    const response = await apiClient.get<RecipeDiet>(
-      `/recipe-diets/${id}`
-    );
+    const response = await apiClient.get<RecipeDiet>(`/recipe-diets/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error fetching recipe diet with ID ${id}:`, error);
-    throw new Error("Failed to fetch recipe diet");
+  } catch {
+    throw new Error("Falha ao buscar dieta de receita");
   }
 };
 
-export const createRecipeDiet = async (
-  data: FormData
-): Promise<RecipeDiet> => {
+export const createRecipeDiet = async (data: FormData): Promise<RecipeDiet> => {
   try {
-    const response = await apiClient.post<RecipeDiet>(
-      "/recipe-diets",
-      data
-    );
+    const response = await apiClient.post<RecipeDiet>("/recipe-diets", data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating recipe diet:", error);
-    throw new Error("Failed to create recipe diet");
+  } catch {
+    throw new Error("Falha ao criar dieta de receita");
   }
 };
 
-export const updateRecipeDiet = async (
-  id: string,
-  data: FormData
-): Promise<RecipeDiet> => {
+export const updateRecipeDiet = async (id: string, data: FormData): Promise<RecipeDiet> => {
   try {
     data.append("_method", "PUT");
-    const response = await apiClient.post<RecipeDiet>(
-      `/recipe-diets/${id}`,
-      data
-    );
+    const response = await apiClient.post<RecipeDiet>(`/recipe-diets/${id}`, data);
     return response.data;
-  } catch (error) {
-    console.error(`Error updating recipe diet with ID ${id}:`, error);
-    throw new Error("Failed to update recipe diet");
+  } catch {
+    throw new Error("Falha ao atualizar dieta de receita");
   }
 };
 
-export const deleteRecipeDiet = async (
-  id: string
-): Promise<void> => {
+export const deleteRecipeDiet = async (id: string): Promise<void> => {
   try {
-    const response = await apiClient.delete<void>(
-      `/recipe-diets/${id}`
-    );
+    const response = await apiClient.delete<void>(`/recipe-diets/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error deleting recipe diet with ID ${id}:`, error);
-    throw new Error("Failed to delete recipe diet");
+  } catch {
+    throw new Error("Falha ao deletar dieta de receita");
   }
 };

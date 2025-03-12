@@ -29,8 +29,7 @@ const PostDetails = () => {
           setIsLoaded(true);
         } catch (err) {
           const message = err instanceof Error ? err.message : "Falha ao carregar post";
-          toast.error(message, { position: "bottom-left" });
-          console.error(err);
+          toast.error(message);
         }
       };
       fetchPost();

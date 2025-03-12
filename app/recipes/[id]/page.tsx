@@ -29,8 +29,7 @@ const RecipeDetails = () => {
           setIsLoaded(true);
         } catch (err) {
           const message = err instanceof Error ? err.message : "Falha ao carregar receita";
-          toast.error(message, { position: "bottom-left" });
-          console.error(err);
+          toast.error(message);
         }
       };
       fetchRecipe();

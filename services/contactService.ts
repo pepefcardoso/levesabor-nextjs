@@ -4,9 +4,8 @@ export const registerContact = async (data: CustomerContact): Promise<CustomerCo
   try {
     const response = await apiClient.post<CustomerContact>("/contact", data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating CustomerContact:", error);
-    throw new Error("Failed to create CustomerContact");
+  } catch {
+    throw new Error("Falha ao enviar mensagem. Por favor, tente novamente.");
   }
 };
 

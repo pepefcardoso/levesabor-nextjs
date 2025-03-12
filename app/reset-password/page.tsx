@@ -23,9 +23,7 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     if (!token || !email) {
-      toast.error("Link de redefinição inválido ou expirado.", {
-        position: "bottom-left",
-      });
+      toast.error("Link de redefinição inválido ou expirado.");
       router.push("/login/forgot-password");
     }
   }, [token, email, router]);
@@ -35,7 +33,7 @@ export default function ResetPasswordPage() {
     if (loading || !token || !email) return;
 
     if (password !== confirmPassword) {
-      toast.error("As senhas não coincidem", { position: "bottom-left" });
+      toast.error("As senhas não coincidem");
       return;
     }
 
@@ -43,18 +41,14 @@ export default function ResetPasswordPage() {
 
     try {
       await AuthService.resetPassword(token, email, password, confirmPassword);
-      toast.success("Senha redefinida com sucesso!", {
-        position: "bottom-left",
-      });
+      toast.success("Senha redefinida com sucesso!");
       setTimeout(() => router.push("/login"), 2000);
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error
           ? err.message
           : "Falha ao redefinir a senha. Tente novamente.";
-      toast.error(errorMessage, {
-        position: "bottom-left",
-      });
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

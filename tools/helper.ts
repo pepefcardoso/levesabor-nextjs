@@ -3,8 +3,7 @@ export const sanitizeImageUrl = (url: string | undefined): string => {
   try {
     const parsedUrl = new URL(url);
     return parsedUrl.origin + parsedUrl.pathname;
-  } catch (error) {
-    console.error("Failed to sanitize image URL:", error);
+  } catch {
     return "/placeholder.jpg";
   }
 };

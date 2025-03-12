@@ -1,6 +1,5 @@
-
-import { NewsletterCustomer } from "../typings/newsletter";
-import { PaginationParams, PaginationResponse } from "../typings/pagination";
+import { NewsletterCustomer } from "@/typings/newsletter";
+import { PaginationParams, PaginationResponse } from "@/typings/pagination";
 import apiClient from "./apiClient";
 
 export const getNewsletterCustomers = async ({
@@ -9,9 +8,7 @@ export const getNewsletterCustomers = async ({
   pagination: PaginationParams;
 }): Promise<PaginationResponse<NewsletterCustomer>> => {
   try {
-    const response = await apiClient.get<
-      PaginationResponse<NewsletterCustomer>
-    >("/newsletter", {
+    const response = await apiClient.get<PaginationResponse<NewsletterCustomer>>("/newsletter", {
       params: {
         page: pagination.page,
         per_page: pagination.per_page,
@@ -19,60 +16,40 @@ export const getNewsletterCustomers = async ({
     });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida do servidor");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching NewsletterCustomers:", error);
-    throw new Error("Failed to fetch NewsletterCustomers");
+  } catch {
+    throw new Error("Falha ao buscar os clientes da newsletter");
   }
 };
 
-export const getNewsletterCustomer = async (
-  id: string
-): Promise<NewsletterCustomer> => {
+export const getNewsletterCustomer = async (id: string): Promise<NewsletterCustomer> => {
   try {
-    const response = await apiClient.get<NewsletterCustomer>(
-      `/newsletter/${id}`
-    );
+    const response = await apiClient.get<NewsletterCustomer>(`/newsletter/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error fetching NewsletterCustomer with ID ${id}:`, error);
-    throw new Error("Failed to fetch NewsletterCustomer");
+  } catch {
+    throw new Error("Falha ao buscar o cliente da newsletter");
   }
 };
 
-export const createNewsletterCustomer = async (
-  data: FormData
-): Promise<NewsletterCustomer> => {
+export const createNewsletterCustomer = async (data: FormData): Promise<NewsletterCustomer> => {
   try {
-    const response = await apiClient.post<NewsletterCustomer>(
-      "/newsletter",
-      data
-    );
+    const response = await apiClient.post<NewsletterCustomer>("/newsletter", data);
     return response.data;
   } catch (error) {
-    console.error("Error creating NewsletterCustomer:", error);
-
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 };
 
-export const updateNewsletterCustomer = async (
-  id: string,
-  data: FormData
-): Promise<NewsletterCustomer> => {
+export const updateNewsletterCustomer = async (id: string, data: FormData): Promise<NewsletterCustomer> => {
   try {
     data.append("_method", "PUT");
-    const response = await apiClient.post<NewsletterCustomer>(
-      `/newsletter/${id}`,
-      data
-    );
+    const response = await apiClient.post<NewsletterCustomer>(`/newsletter/${id}`, data);
     return response.data;
-  } catch (error) {
-    console.error(`Error updating NewsletterCustomer with ID ${id}:`, error);
-    throw new Error("Failed to update NewsletterCustomer");
+  } catch {
+    throw new Error("Falha ao atualizar o cliente da newsletter");
   }
 };
 
@@ -80,8 +57,7 @@ export const deleteNewsletterCustomer = async (id: string): Promise<void> => {
   try {
     const response = await apiClient.delete<void>(`/newsletter/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error deleting NewsletterCustomer with ID ${id}:`, error);
-    throw new Error("Failed to delete NewsletterCustomer");
+  } catch {
+    throw new Error("Falha ao deletar o cliente da newsletter");
   }
 };

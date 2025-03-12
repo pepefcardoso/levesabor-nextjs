@@ -26,11 +26,8 @@ export default function AddUserRecipePage() {
         ]);
         setCategories(categoriesRes.data);
         setDiets(dietsRes.data);
-      } catch (error) {
-        console.error("Erro ao carregar dados:", error);
-        toast.error("Erro ao carregar categorias ou dietas. Tente novamente.", {
-          position: "bottom-left",
-        });
+      } catch {
+        toast.error("Erro ao carregar categorias ou dietas. Tente novamente.");
       } finally {
         setIsLoadingData(false);
       }
@@ -42,13 +39,10 @@ export default function AddUserRecipePage() {
     setIsSubmitting(true);
     try {
       await createRecipe(data);
-      toast.success("Receita criada com sucesso!", { position: "bottom-left" });
+      toast.success("Receita criada com sucesso!");
       setTimeout(() => router.push("/user/recipes"), 2000);
-    } catch (err) {
-      console.error(err);
-      toast.error("Falha ao criar a receita. Tente novamente.", {
-        position: "bottom-left",
-      });
+    } catch {
+      toast.error("Falha ao criar a receita. Tente novamente.");
     } finally {
       setIsSubmitting(false);
     }

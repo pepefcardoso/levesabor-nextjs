@@ -19,8 +19,6 @@ export const AuthService = {
       useAuthStore.getState().login(token, user);
       return true;
     } catch (error: unknown) {
-      console.error("Login error:", error);
-
       localStorage.removeItem("authToken");
       delete apiClient.defaults.headers.common["Authorization"];
 
@@ -46,8 +44,7 @@ export const AuthService = {
       delete apiClient.defaults.headers.common["Authorization"];
       useAuthStore.getState().logout();
       return true;
-    } catch (error) {
-      console.error("Logout error:", error);
+    } catch {
       throw new Error("O logout falhou. Por favor, tente novamente.");
     }
   },
@@ -56,8 +53,7 @@ export const AuthService = {
     try {
       await apiClient.post("/password/forgot", { email });
       return true;
-    } catch (error) {
-      console.error("Forgot password error:", error);
+    } catch {
       throw new Error("Falha ao enviar e-mail de recuperação de senha. Por favor, tente novamente.");
     }
   },
@@ -71,8 +67,7 @@ export const AuthService = {
         password_confirmation: passwordConfirmation,
       });
       return true;
-    } catch (error) {
-      console.error("Reset password error:", error);
+    } catch {
       throw new Error("Falha ao redefinir a senha. Por favor, tente novamente.");
     }
   },

@@ -21,13 +21,13 @@ const NewsletterForm = () => {
       formData.append("email", email);
       await createNewsletterCustomer(formData);
       setEmail("");
-      toast.success("Cadastro realizado com sucesso!", { position: "bottom-left" });
+      toast.success("Cadastro realizado com sucesso!");
     } catch (error) {
       let errorMessage = "Erro ao cadastrar. Tente novamente.";
       if (error instanceof Error) {
         errorMessage = error.message;
       }
-      toast.error(errorMessage, { position: "bottom-left" });
+      toast.error(errorMessage);
     } finally {
       setSubmitting(false);
     }

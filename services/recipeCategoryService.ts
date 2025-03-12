@@ -1,6 +1,5 @@
-
-import { PaginationParams, PaginationResponse } from "../typings/pagination";
-import { RecipeCategory } from "../typings/recipe";
+import { PaginationParams, PaginationResponse } from "@/typings/pagination";
+import { RecipeCategory } from "@/typings/recipe";
 import apiClient from "./apiClient";
 
 export const getRecipeCategories = async ({
@@ -9,83 +8,56 @@ export const getRecipeCategories = async ({
   pagination: PaginationParams;
 }): Promise<PaginationResponse<RecipeCategory>> => {
   try {
-    const response = await apiClient.get<PaginationResponse<RecipeCategory>>(
-      "/recipe-categories",
-      {
-        params: {
-          page: pagination.page,
-          per_page: pagination.per_page,
-        },
-      }
-    );
+    const response = await apiClient.get<PaginationResponse<RecipeCategory>>("/recipe-categories", {
+      params: {
+        page: pagination.page,
+        per_page: pagination.per_page,
+      },
+    });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching recipe categories:", error);
-    throw new Error("Failed to fetch recipe categories");
+  } catch {
+    throw new Error("Falha ao buscar categorias de receitas");
   }
 };
 
-export const getRecipeCategory = async (
-  id: string
-): Promise<RecipeCategory> => {
+export const getRecipeCategory = async (id: string): Promise<RecipeCategory> => {
   try {
-    const response = await apiClient.get<RecipeCategory>(
-      `/recipe-categories/${id}`
-    );
+    const response = await apiClient.get<RecipeCategory>(`/recipe-categories/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error fetching recipe category with ID ${id}:`, error);
-    throw new Error("Failed to fetch recipe category");
+  } catch {
+    throw new Error("Falha ao buscar categoria de receita");
   }
 };
 
-export const createRecipeCategory = async (
-  data: FormData
-): Promise<RecipeCategory> => {
+export const createRecipeCategory = async (data: FormData): Promise<RecipeCategory> => {
   try {
-    const response = await apiClient.post<RecipeCategory>(
-      "/recipe-categories",
-      data
-    );
+    const response = await apiClient.post<RecipeCategory>("/recipe-categories", data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating recipe category:", error);
-    throw new Error("Failed to create recipe category");
+  } catch {
+    throw new Error("Falha ao criar categoria de receita");
   }
 };
 
-export const updateRecipeCategory = async (
-  id: string,
-  data: FormData
-): Promise<RecipeCategory> => {
+export const updateRecipeCategory = async (id: string, data: FormData): Promise<RecipeCategory> => {
   try {
     data.append("_method", "PUT");
-    const response = await apiClient.post<RecipeCategory>(
-      `/recipe-categories/${id}`,
-      data
-    );
+    const response = await apiClient.post<RecipeCategory>(`/recipe-categories/${id}`, data);
     return response.data;
-  } catch (error) {
-    console.error(`Error updating recipe category with ID ${id}:`, error);
-    throw new Error("Failed to update recipe category");
+  } catch {
+    throw new Error("Falha ao atualizar categoria de receita");
   }
 };
 
-export const deleteRecipeCategory = async (
-  id: string
-): Promise<void> => {
+export const deleteRecipeCategory = async (id: string): Promise<void> => {
   try {
-    const response = await apiClient.delete<void>(
-      `/recipe-categories/${id}`
-    );
+    const response = await apiClient.delete<void>(`/recipe-categories/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error deleting recipe category with ID ${id}:`, error);
-    throw new Error("Failed to delete recipe category");
+  } catch {
+    throw new Error("Falha ao deletar categoria de receita");
   }
 };

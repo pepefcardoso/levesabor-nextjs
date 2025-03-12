@@ -1,6 +1,5 @@
-
-import { PaginationParams, PaginationResponse } from "../typings/pagination";
-import { Post, PostFilters } from "../typings/post";
+import { PaginationParams, PaginationResponse } from "@/typings/pagination";
+import { Post, PostFilters } from "@/typings/post";
 import apiClient from "./apiClient";
 
 export const getPosts = async ({
@@ -20,13 +19,12 @@ export const getPosts = async ({
     });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    throw new Error("Failed to fetch posts");
+  } catch {
+    throw new Error("Falha ao buscar posts");
   }
 };
 
@@ -34,9 +32,8 @@ export const getPost = async (id: string): Promise<Post> => {
   try {
     const response = await apiClient.get<Post>(`/posts/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error fetching post with ID ${id}:`, error);
-    throw new Error("Failed to fetch post");
+  } catch {
+    throw new Error("Falha ao buscar post");
   }
 };
 
@@ -44,9 +41,8 @@ export const createPost = async (data: FormData): Promise<Post> => {
   try {
     const response = await apiClient.post<Post>("/posts", data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw new Error("Failed to create post");
+  } catch {
+    throw new Error("Falha ao criar post");
   }
 };
 
@@ -55,9 +51,8 @@ export const updatePost = async (id: string, data: FormData): Promise<Post> => {
     data.append("_method", "PUT");
     const response = await apiClient.post<Post>(`/posts/${id}`, data);
     return response.data;
-  } catch (error) {
-    console.error(`Error updating post with ID ${id}:`, error);
-    throw new Error("Failed to update post");
+  } catch {
+    throw new Error("Falha ao atualizar post");
   }
 };
 
@@ -65,9 +60,8 @@ export const deletePost = async (id: string): Promise<void> => {
   try {
     const response = await apiClient.delete<void>(`/posts/${id}`);
     return response.data;
-  } catch (error) {
-    console.error(`Error deleting post with ID ${id}:`, error);
-    throw new Error("Failed to delete post");
+  } catch {
+    throw new Error("Falha ao deletar post");
   }
 };
 
@@ -79,24 +73,20 @@ export const getMyPosts = async ({
   pagination: PaginationParams;
 }): Promise<PaginationResponse<Post>> => {
   try {
-    const response = await apiClient.get<PaginationResponse<Post>>(
-      "/posts/my",
-      {
-        params: {
-          ...filters,
-          page: pagination.page,
-          per_page: pagination.per_page,
-        },
-      }
-    );
+    const response = await apiClient.get<PaginationResponse<Post>>("/posts/my", {
+      params: {
+        ...filters,
+        page: pagination.page,
+        per_page: pagination.per_page,
+      },
+    });
 
     if (!response.data || !Array.isArray(response.data.data)) {
-      throw new Error("Invalid response structure");
+      throw new Error("Resposta inválida");
     }
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching my posts:", error);
-    throw new Error("Failed to fetch my posts");
+  } catch {
+    throw new Error("Falha ao buscar meus posts");
   }
 };

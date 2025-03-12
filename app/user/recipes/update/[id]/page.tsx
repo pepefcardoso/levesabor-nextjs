@@ -60,11 +60,8 @@ export default function UpdateUserRecipePage() {
           ingredients: recipeRes.ingredients || [],
           steps: recipeRes.steps || [],
         });
-      } catch (err) {
-        console.error("Erro ao carregar dados da receita:", err);
-        toast.error("Falha ao carregar dados da receita. Tente novamente.", {
-          position: "bottom-left",
-        });
+      } catch {
+        toast.error("Falha ao carregar dados da receita. Tente novamente.");
       } finally {
         setIsLoadingData(false);
       }
@@ -77,15 +74,10 @@ export default function UpdateUserRecipePage() {
     setIsSubmitting(true);
     try {
       await updateRecipe(recipeId, data);
-      toast.success("Receita atualizada com sucesso!", {
-        position: "bottom-left",
-      });
+      toast.success("Receita atualizada com sucesso!");
       setTimeout(() => router.push("/user/recipes"), 2000);
-    } catch (err) {
-      console.error("Erro ao atualizar receita:", err);
-      toast.error("Falha ao atualizar receita. Tente novamente.", {
-        position: "bottom-left",
-      });
+    } catch {
+      toast.error("Falha ao atualizar receita. Tente novamente.");
     } finally {
       setIsSubmitting(false);
     }

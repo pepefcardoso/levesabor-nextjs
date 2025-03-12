@@ -26,11 +26,8 @@ export default function CreatePostPage() {
         ]);
         setCategories(categoriesRes.data);
         setTopics(topicsRes.data);
-      } catch (err) {
-        console.error("Erro ao carregar dados:", err);
-        toast.error("Falha ao carregar dados. Tente novamente.", {
-          position: "bottom-left",
-        });
+      } catch {
+        toast.error("Falha ao carregar dados. Tente novamente.");
       } finally {
         setIsLoadingData(false);
       }
@@ -42,13 +39,10 @@ export default function CreatePostPage() {
     setIsSubmitting(true);
     try {
       await createPost(data);
-      toast.success("Post criado com sucesso!", { position: "bottom-left" });
+      toast.success("Post criado com sucesso!");
       setTimeout(() => router.push("/user/posts"), 2000);
-    } catch (err) {
-      console.error("Erro ao criar post:", err);
-      toast.error("Falha ao criar post. Tente novamente.", {
-        position: "bottom-left",
-      });
+    } catch {
+      toast.error("Falha ao criar post. Tente novamente.");
     } finally {
       setIsSubmitting(false);
     }

@@ -53,7 +53,7 @@ export default function LoginPage() {
       }
     } catch (err: unknown) {
       const errorMessage = extractErrorMessage(err);
-      toast.error(errorMessage, { position: "bottom-left" });
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

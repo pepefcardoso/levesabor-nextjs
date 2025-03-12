@@ -53,11 +53,8 @@ export default function UpdatePostPage() {
             ? postRes.topics.map((t: PostTopic) => t.id)
             : [],
         });
-      } catch (err) {
-        console.error("Error loading post data:", err);
-        toast.error("Failed to load post data. Please try again.", {
-          position: "bottom-left",
-        });
+      } catch {
+        toast.error("Falha ao carregar dados do post");
       } finally {
         setIsLoadingData(false);
       }
@@ -70,13 +67,10 @@ export default function UpdatePostPage() {
     setIsSubmitting(true);
     try {
       await updatePost(postId, data);
-      toast.success("Post updated successfully!", { position: "bottom-left" });
+      toast.success("Post updated successfully!");
       setTimeout(() => router.push("/user/posts"), 2000);
-    } catch (err) {
-      console.error("Error updating post:", err);
-      toast.error("Failed to update post. Please try again.", {
-        position: "bottom-left",
-      });
+    } catch {
+      toast.error("Falha ao atualizar post");
     } finally {
       setIsSubmitting(false);
     }
