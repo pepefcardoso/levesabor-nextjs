@@ -1,12 +1,13 @@
 "use client";
-import Link from "next/link";
-import React from "react";
-import { Recipe } from "../../typings/recipe";
-import routes from "../../routes/routes";
-import CustomChip from "../Others/CustomChip";
-import { Typography } from "../../constants/typography";
-import { bgColors, txtColors } from "../../constants/colors";
+
+import { Recipe } from "@/typings/recipe";
 import Image from "next/image";
+import Link from "next/link";
+import routes from "routes/routes";
+import CustomChip from "../Others/CustomChip";
+import { Typography } from "@/constants/typography";
+import clsx from "clsx";
+import { bgColors, txtColors } from "@/constants/colors";
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
@@ -28,17 +29,17 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           </div>
           {recipe.category?.name && (
             <div className="absolute top-2 right-2">
-              <CustomChip bgColor={bgColors.secondary} fontColor={txtColors.black} text={recipe.category.name} />
+              <CustomChip bgColor={bgColors.secondary} text={recipe.category.name} />
             </div>
           )}
         </div>
 
         <div className="flex-grow basis-3/5 p-4 flex flex-col justify-between">
           <div>
-            <h2 className={`${Typography.h4} mb-1 line-clamp-2`} style={{ color: txtColors.gray800 }}>
+            <h2 className={clsx(Typography.Title2, "mb-1 line-clamp-2")}>
               {recipe.title}
             </h2>
-            <p className={`${Typography.body} line-clamp-3`} style={{ color: txtColors.gray200 }}>
+            <p className={clsx(Typography.Body2, txtColors.gray800, "line-clamp-3")}>
               {recipe.description}
             </p>
           </div>
@@ -46,7 +47,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           {Array.isArray(recipe.diets) && recipe.diets.length > 0 && (
             <div className="mt-4 flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
               {recipe.diets.map((diet, index) => (
-                <CustomChip key={index} bgColor={bgColors.tertiary} fontColor={txtColors.black} text={diet.name} />
+                <CustomChip key={index} text={diet.name} />
               ))}
             </div>
           )}

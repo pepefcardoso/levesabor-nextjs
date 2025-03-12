@@ -8,6 +8,7 @@ interface CustomChipProps {
   fontColor?: TxtColorType;
   typography?: TypographyType;
   text: string;
+  className?: string;
 }
 
 const CustomChip: React.FC<CustomChipProps> = ({
@@ -15,8 +16,9 @@ const CustomChip: React.FC<CustomChipProps> = ({
   fontColor = txtColors.black,
   typography = Typography.Body3,
   text,
+  className,
 }) => {
-  return <span className={clsx(bgColor, fontColor, typography, "px-2 py-1 rounded-md shadow-sm")}>{text}</span>;
+  return <span className={clsx(className, bgColor, fontColor, typography, "px-2 py-1 rounded-md shadow-sm")}>{text}</span>;
 };
 
 export default CustomChip;

@@ -1,21 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import RecipeCard from "../../components/Cards/RecipeCard";
-import { getRecipes } from "../../services/recipeService";
-import CardSkeleton from "../../components/Skeletons/CardSkeleton";
-import { getRecipeCategories } from "../../services/recipeCategoryService";
-import { getRecipeDiets } from "../../services/recipeDietService";
-import EmptyList from "../../components/Others/EmptyList";
+import FilledButton from "@/components/Buttons/FilledButton";
+import RecipeCard from "@/components/Cards/RecipeCard";
+import NewsletterForm from "@/components/Forms/NewsletterForm";
+import CustomCheckboxInput from "@/components/Inputs/CustomCheckboxInput";
+import CustomInputSelect from "@/components/Inputs/CustomSelectInput";
+import CustomTextInput from "@/components/Inputs/CustomTextInput";
+import Paginator from "@/components/Others/Paginator";
+import EmptyList from "@/components/Others/EmptyList";
+import CardSkeleton from "@/components/Skeletons/CardSkeleton";
+import { Typography } from "@/constants/typography";
+import { getRecipeCategories } from "@/services/recipeCategoryService";
+import { getRecipeDiets } from "@/services/recipeDietService";
+import { getRecipes } from "@/services/recipeService";
+import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import { PaginationResponse } from "@/typings/pagination";
+import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "@/typings/recipe";
+import clsx from "clsx";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import NewsletterForm from "../../components/Forms/NewsletterForm";
-import FilledButton from "../../components/Buttons/FilledButton";
-import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "../../typings/recipe";
-import { PaginationResponse } from "../../typings/pagination";
-import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
-import CustomInputSelect from "../../components/Inputs/CustomSelectInput";
-import CustomCheckboxInput from "../../components/Inputs/CustomCheckboxInput";
-import CustomPaginator from "../../components/Others/CustomPaginator";
 
 export default function RecipesHome() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -41,9 +44,7 @@ export default function RecipesHome() {
       setRecipes(response.data);
       setTotalPages(response.last_page);
     } catch (err) {
-      toast.error("Falha ao carregar receitas. Por favor, atualize a página.", {
-        position: "bottom-left",
-      });
+      toast.error("Falha ao carregar receitas. Por favor, atualize a página.");
       throw err;
     }
   };
@@ -55,9 +56,7 @@ export default function RecipesHome() {
       });
       setCategories(response.data);
     } catch {
-      toast.error("Falha ao carregar categorias. Por favor, atualize a página.", {
-        position: "bottom-left",
-      });
+      toast.error("Falha ao carregar categorias. Por favor, atualize a página.");
     }
   };
 
@@ -68,9 +67,7 @@ export default function RecipesHome() {
       });
       setDiets(response.data);
     } catch {
-      toast.error("Falha ao carregar dietas. Por favor, atualize a página.", {
-        position: "bottom-left",
-      });
+      toast.error("Falha ao carregar dietas. Por favor, atualize a página.");
     }
   };
 
@@ -126,54 +123,58 @@ export default function RecipesHome() {
   }));
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl w-full">
+    <div className="container mx-auto px-4 py-8 max-w-6xl w-full">
       <div className="px-4">
-        <h1 className="text-3xl font-bold mb-8 text-left text-gray-800">
+        <h1 className={clsx(Typography.Title, "mb-8 text-left")}>
           Pesquisar Receitas
         </h1>
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
           <CustomTextInput
-            type={InputType.Text}
             placeholder="Pesquisar receitas..."
             value={tempSearch}
             onChange={(e) => setTempSearch(e.target.value)}
           />
           <FilledButton
             text="Pesquisar"
-            type="submit"
-            color="bg-blue-500"
-            fontColor="white"
+            type={ButtonTypes.submit}
+            hoverAnimation={FilledButtonHovers.opacity}
           />
         </form>
         <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-1/4">
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Categorias
-              </label>
-              <CustomInputSelect
-                name="category_id"
-                value={filters.category_id || ""}
-                onChange={handleCategoryChange}
-                options={categoryOptions}
-                placeholder="Todas as Categorias"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Dietas
-              </label>
-              <CustomCheckboxInput
-                options={dietOptions}
-                selected={filters.diets || []}
-                onChange={handleDietsChange}
-                variant="list"
-              />
+          <div className="w-full sm:w-1/5 mr-4">
+            <div className="flex flex-row sm:flex-col gap-4">
+              <div className="w-1/2 sm:w-full">
+                <div className="mb-6">
+                  <label className={clsx(Typography.Body, "block mb-2")}>
+                    Categorias
+                  </label>
+                  <CustomInputSelect
+                    name="category_id"
+                    value={filters.category_id || ""}
+                    onChange={handleCategoryChange}
+                    options={categoryOptions}
+                    placeholder="Todas as Categorias"
+                  />
+                </div>
+              </div>
+              <div className="w-1/2 sm:w-full">
+                <div className="mb-6">
+                  <label className={clsx(Typography.Body, "block mb-2")}>
+                    Dietas
+                  </label>
+                  <CustomCheckboxInput
+                    options={dietOptions}
+                    selected={filters.diets || []}
+                    onChange={handleDietsChange}
+                    placeholder="Todas as dietas"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          <div className="w-full md:w-3/4 flex flex-col">
+          <div className="w-full md:w-4/5 flex flex-col">
             <div className="flex-grow">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 h-full">
                 {!isLoaded ? (
                   Array.from({ length: 10 }).map((_, index) => (
                     <CardSkeleton key={`skeleton-${index}`} />
@@ -183,19 +184,15 @@ export default function RecipesHome() {
                     <RecipeCard key={recipe.id} recipe={recipe} />
                   ))
                 ) : (
-                  <div className="col-span-full h-full flex items-center justify-center">
-                    <EmptyList message="Nenhuma receita encontrada." />
-                  </div>
+                  <EmptyList title="Nenhuma receita encontrada." description="Tente outra busca" />
                 )}
               </div>
             </div>
-            <CustomPaginator
+            <Paginator
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}
-              previousLabel="Anterior"
-              nextLabel="Próxima"
-              className="mt-8"
+              className="mt-10"
             />
           </div>
         </div>

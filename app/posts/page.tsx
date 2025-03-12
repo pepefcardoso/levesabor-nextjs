@@ -4,7 +4,7 @@ import PostCard from "@/components/Cards/PostCard";
 import NewsletterForm from "@/components/Forms/NewsletterForm";
 import CustomInputSelect from "@/components/Inputs/CustomSelectInput";
 import CustomTextInput from "@/components/Inputs/CustomTextInput";
-import CustomPaginator from "@/components/Others/CustomPaginator";
+import Paginator from "@/components/Others/Paginator";
 import EmptyList from "@/components/Others/EmptyList";
 import CardSkeleton from "@/components/Skeletons/CardSkeleton";
 import { Typography } from "@/constants/typography";
@@ -128,7 +128,7 @@ export default function PostsHome() {
           )}
         </div>
 
-        <CustomPaginator
+        <Paginator
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}

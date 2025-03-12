@@ -2,7 +2,7 @@
 
 import AuthorInfo from "@/components/Others/AuthorInfo";
 import CustomChip from "@/components/Others/CustomChip";
-import PageLoadingSkeleton from "@/components/Skeletons/PageLoadingSkeleton";
+import PageSkeleton from "@/components/Skeletons/PageSkeleton";
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { getPost } from "@/services/postService";
@@ -37,7 +37,7 @@ const PostDetails = () => {
   }, [id]);
 
   if (!isLoaded) {
-    return <PageLoadingSkeleton />;
+    return <PageSkeleton />;
   }
 
   if (!post) {

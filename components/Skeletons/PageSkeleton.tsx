@@ -1,6 +1,6 @@
 import React from "react";
 
-const PageLoadingSkeleton = () => {
+const PageSkeleton = () => {
   return (
     <div className="container mx-auto px-6 py-8 max-w-4xl animate-pulse">
       <div className="h-6 w-24 bg-gray-300 rounded mb-4"></div>
@@ -55,4 +55,4 @@ const PageLoadingSkeleton = () => {
   );
 };
 
-export default PageLoadingSkeleton;
+export default PageSkeleton;

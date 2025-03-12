@@ -9,7 +9,7 @@ import EmptyList from "../../../components/Others/EmptyList";
 import routes from "../../../routes/routes";
 import { PaginationResponse } from "../../../typings/pagination";
 import { Post } from "../../../typings/post";
-import CustomPaginator from "../../../components/Others/CustomPaginator";
+import Paginator from "../../../components/Others/Paginator";
 import FilledButton from "../../../components/Buttons/FilledButton";
 import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
 
@@ -33,9 +33,7 @@ export default function UserPosts() {
       setTotalPages(response.last_page);
       setIsLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página", {
-        position: "bottom-left",
-      });
+      toast.error("Por favor, recarregue a página");
       setIsLoaded(false);
     }
   }, [user, currentPage]);
@@ -54,9 +52,7 @@ export default function UserPosts() {
         fetchUserPosts();
       }
     } catch {
-      toast.error("Por favor, recarregue a página", {
-        position: "bottom-left",
-      });
+      toast.error("Por favor, recarregue a página");
     }
   };
 
@@ -94,7 +90,7 @@ export default function UserPosts() {
             ))}
           </div>
           {totalPages > 1 && (
-            <CustomPaginator
+            <Paginator
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={setCurrentPage}

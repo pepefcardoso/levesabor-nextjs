@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
+import clsx from "clsx";
 
 interface Option {
     id: string | number;
@@ -9,7 +12,7 @@ interface CustomCheckboxInputProps {
     options: Option[];
     selected: (string | number)[];
     onChange: (selected: (string | number)[]) => void;
-    variant?: "grid" | "list";
+    placeholder?: string;
     disabled?: boolean;
 }
 
@@ -17,9 +20,12 @@ const CustomCheckboxInput: React.FC<CustomCheckboxInputProps> = ({
     options,
     selected,
     onChange,
-    variant = "list",
+    placeholder = "Selecione opções",
     disabled = false,
 }) => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
     const handleChange = (optionId: string | number, isChecked: boolean) => {
         const newSelected = isChecked
             ? [...selected, optionId]
@@ -27,92 +33,92 @@ const CustomCheckboxInput: React.FC<CustomCheckboxInputProps> = ({
         onChange(newSelected);
     };
 
-    const containerClass =
-        variant === "grid"
-            ? "grid grid-cols-2 sm:grid-cols-3 gap-4"
-            : "flex flex-col gap-2";
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(event.target as Node)
+            ) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const selectedLabels = options
+        .filter((option) => selected.includes(option.id))
+        .map((option) => option.label)
+        .join(", ");
 
     return (
-        <div className={containerClass}>
-            {options.map((option) => {
-                const isSelected = selected.includes(option.id);
-                if (variant === "grid") {
-                    return (
-                        <div
-                            key={option.id}
-                            onClick={() => {
-                                if (!disabled) {
-                                    handleChange(option.id, !isSelected);
-                                }
-                            }}
-                            className={`
-                flex items-center p-4 border rounded-lg cursor-pointer transition-colors duration-200
-                ${isSelected ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-blue-400"}
-                ${disabled ? "opacity-50 cursor-not-allowed" : ""}
-              `}
-                        >
-                            <input
-                                type="checkbox"
-                                value={option.id}
-                                checked={isSelected}
-                                onChange={(e) => handleChange(option.id, e.target.checked)}
-                                className="hidden"
-                                disabled={disabled}
-                            />
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={`w-6 h-6 flex-shrink-0 border-2 rounded-sm flex items-center justify-center transition-colors duration-200
-                    ${isSelected ? "bg-blue-500 border-blue-500" : "bg-white border-gray-300"}`}
-                                >
-                                    {isSelected && (
-                                        <svg
-                                            className="w-3 h-3 text-white"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M5 13l4 4L19 7"
-                                            />
-                                        </svg>
-                                    )}
-                                </div>
-                                <span className="text-gray-800 text-sm font-medium">
+        <div className="relative w-full" ref={containerRef}>
+            <div
+                className={clsx(
+                    "disabled:opacity-50 disabled:cursor-not-allowed",
+                    "border-gray-300 border",
+                    "flex justify-between items-center",
+                    "transition-all duration-150 ease-in-out",
+                    "bg-white rounded-md p-2 cursor-pointer ",
+                    disabled ? "opacity-50 cursor-not-allowed" : "hover:border-yellow-400",
+                    Typography.Body2,
+                    txtColors.gray800,
+                )}
+                onClick={() => {
+                    if (!disabled) setIsDropdownOpen(!isDropdownOpen);
+                }}
+            >
+                <span className={clsx(Typography.Body2, txtColors.gray800)}>
+                    {selectedLabels || placeholder}
+                </span>
+                <svg
+                    className="w-4 h-4 text-gray-800"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d={isDropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
+                    ></path>
+                </svg>
+            </div>
+
+            {isDropdownOpen && (
+                <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+                    {options.map((option) => {
+                        const isSelected = selected.includes(option.id);
+                        return (
+                            <label
+                                key={option.id}
+                                className={clsx(
+                                    "flex items-center gap-3 p-2 cursor-pointer hover:bg-yellow-50",
+                                    disabled && "opacity-50 cursor-not-allowed"
+                                )}
+                            >
+                                <input
+                                    type="checkbox"
+                                    value={option.id}
+                                    checked={isSelected}
+                                    onChange={(e) =>
+                                        handleChange(option.id, e.target.checked)
+                                    }
+                                    className="mr-2"
+                                    disabled={disabled}
+                                />
+                                <span className={clsx(Typography.Body2, txtColors.gray800)}>
                                     {option.label}
                                 </span>
-                            </div>
-                        </div>
-                    );
-                } else {
-                    return (
-                        <div
-                            key={option.id}
-                            onClick={() => {
-                                if (!disabled) {
-                                    handleChange(option.id, !isSelected);
-                                }
-                            }}
-                            className={`flex items-center gap-3 cursor-pointer transition-colors duration-200 ${disabled ? "opacity-50 cursor-not-allowed" : ""
-                                }`}
-                        >
-                            <input
-                                type="checkbox"
-                                value={option.id}
-                                checked={isSelected}
-                                onChange={(e) => handleChange(option.id, e.target.checked)}
-                                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                disabled={disabled}
-                            />
-                            <span className="text-gray-800 text-sm font-medium">
-                                {option.label}
-                            </span>
-                        </div>
-                    );
-                }
-            })}
+                            </label>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 };

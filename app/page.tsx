@@ -34,9 +34,7 @@ export default function Home() {
       setRecipes(response.data);
       setRecipesLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página", {
-        position: "bottom-left",
-      });
+      toast.error("Por favor, recarregue a página");
       setRecipesLoaded(false);
     }
   }, []);
@@ -50,9 +48,7 @@ export default function Home() {
       setPosts(response.data);
       setPostsLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página", {
-        position: "bottom-left",
-      });
+      toast.error("Por favor, recarregue a página");
       setPostsLoaded(false);
     }
   }, []);

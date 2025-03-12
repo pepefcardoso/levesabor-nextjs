@@ -9,7 +9,7 @@ import routes from "../../../routes/routes";
 import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/Others/EmptyList";
 import FilledButton from "../../../components/Buttons/FilledButton";
-import CustomPaginator from "../../../components/Others/CustomPaginator";
+import Paginator from "../../../components/Others/Paginator";
 import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
 
 export default function ListUserRecipes() {
@@ -31,9 +31,7 @@ export default function ListUserRecipes() {
       setTotalPages(response.last_page);
       setIsLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página", {
-        position: "bottom-left",
-      });
+      toast.error("Por favor, recarregue a página");
       setIsLoaded(false);
     }
   }, [user, currentPage]);
@@ -52,9 +50,7 @@ export default function ListUserRecipes() {
         fetchUserRecipes();
       }
     } catch {
-      toast.error("Por favor, recarregue a página", {
-        position: "bottom-left",
-      });
+      toast.error("Por favor, recarregue a página");
     }
   };
 
@@ -92,7 +88,7 @@ export default function ListUserRecipes() {
             ))}
           </div>
           {totalPages > 1 && (
-            <CustomPaginator
+            <Paginator
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={setCurrentPage}

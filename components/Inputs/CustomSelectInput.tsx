@@ -1,67 +1,120 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
+import clsx from "clsx";
+
+interface Option {
+  value: string | number;
+  label: string;
+}
 
 interface CustomSelectInputProps {
-    options: { value: string | number; label: string }[];
-    value?: string | number;
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    placeholder?: string;
-    disabled?: boolean;
-    isLoading?: boolean;
-    name?: string;
-    className?: string;
-    required?: boolean;
-    label?: string;
+  options: Option[];
+  value?: string | number;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  isLoading?: boolean;
+  name?: string;
+  className?: string;
+  required?: boolean;
+  label?: string;
 }
 
 const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
-    options,
-    value,
-    onChange,
-    placeholder,
-    disabled = false,
-    isLoading = false,
-    name,
-    className = "",
-    required = false,
-    label,
+  options,
+  value,
+  onChange,
+  placeholder = "Selecione uma opção",
+  disabled = false,
+  isLoading = false,
+  name,
+  className = "",
+  label,
 }) => {
-    const baseClasses = [
-        "p-2 border border-gray-300 rounded-md",
-        "focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent",
-        "transition-all duration-150 ease-in-out",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
-        "text-gray-700 bg-white",
-    ].join(" ");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    return (
-        <div className="space-y-1">
-            {label && (
-                <label htmlFor={name} className="text-sm font-medium text-gray-700">
-                    {label}
-                </label>
-            )}
-            <select
-                name={name}
-                id={name}
-                value={value}
-                onChange={onChange}
-                disabled={disabled || isLoading}
-                className={`${baseClasses} ${className}`}
-                required={required}
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedOption = options.find(option => option.value === value);
+  const displayValue = selectedOption ? selectedOption.label : placeholder;
+
+  const handleSelect = (optionValue: string | number) => {
+    const event = {
+      target: { value: optionValue },
+    } as React.ChangeEvent<HTMLSelectElement>;
+    onChange(event);
+    setIsDropdownOpen(false);
+  };
+
+  return (
+    <div className="space-y-1 relative" ref={containerRef}>
+      {label && (
+        <label htmlFor={name} className={clsx(Typography.Body)}>
+          {label}
+        </label>
+      )}
+      <div
+        className={clsx(
+          "border border-gray-300 rounded-md p-2 cursor-pointer flex justify-between items-center",
+          "transition-all duration-150 ease-in-out",
+          "bg-white",
+          disabled || isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-yellow-400",
+          className
+        )}
+        onClick={() => {
+          if (!disabled && !isLoading) {
+            setIsDropdownOpen(!isDropdownOpen);
+          }
+        }}
+      >
+        <span className={clsx(Typography.Body2, txtColors.gray800)}>
+          {displayValue}
+        </span>
+        <svg
+          className="w-4 h-4 text-gray-800"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d={isDropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
+          ></path>
+        </svg>
+      </div>
+      {isDropdownOpen && (
+        <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+          {options.map((option) => (
+            <div
+              key={option.value}
+              className={clsx(
+                "p-2 cursor-pointer hover:bg-yellow-50 transition-all duration-150 ease-in-out",
+                Typography.Body2,
+                option.value === value ? "bg-yellow-50" : ""
+              )}
+              onClick={() => handleSelect(option.value)}
             >
-                {placeholder && (
-                    <option value="" disabled={required}>
-                        {placeholder}
-                    </option>
-                )}
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.label}
-                    </option>
-                ))}
-            </select>
+              {option.label}
+            </div>
+          ))}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default CustomInputSelect;

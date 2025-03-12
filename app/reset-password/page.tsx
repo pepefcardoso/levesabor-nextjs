@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import FilledButton from "@/components/Buttons/FilledButton";
+import TextButton from "@/components/Buttons/TextButton";
+import CustomTextInput, { InputType } from "@/components/Inputs/CustomTextInput";
+import { txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
+import { AuthService } from "@/services/authService";
+import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import clsx from "clsx";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { AuthService } from "../../services/authService";
-import routes from "../../routes/routes";
-import TextButton from "../../components/Buttons/TextButton";
-import FilledButton from "../../components/Buttons/FilledButton";
-import CustomTextInput, { InputType } from "../../components/Inputs/CustomTextInput";
-import { ButtonTypes, TextButtonHovers } from "../../typings/buttons";
-import { bgColors } from "../../constants/colors";
+import routes from "routes/routes";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -55,13 +57,13 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-lg w-full p-8 space-y-8 bg-white rounded-lg shadow-lg">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="max-w-lg w-full  p-6 sm:p-8 space-y-8 bg-white rounded-xl shadow-2xl mx-4">
         <div className="text-left">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className={clsx(Typography.Title, "mb-4")}>
             Nova Senha
           </h1>
-          <p className="text-gray-400 text-lg">
+          <p className={clsx(Typography.Body, txtColors.gray800)}>
             Digite sua nova senha para {email}
           </p>
         </div>
@@ -93,23 +95,21 @@ export default function ResetPasswordPage() {
           </div>
 
           <FilledButton
-            text={loading ? "Redefinindo..." : "Redefinir Senha"}
+            text={"Redefinir Senha"}
             type={ButtonTypes.submit}
             disabled={loading}
-            color={bgColors.tertiary}
+            hoverAnimation={FilledButtonHovers.opacity}
           />
         </form>
 
-        <div className="text-lg text-center">
-          <p className="text-gray-400">
-            Não solicitou redefinição?{" "}
-            <TextButton
-              text="Entre em contato"
-              href={routes.auth.login}
-              hoverAnimation={TextButtonHovers.bold}
-            />
-          </p>
-        </div>
+        <p className={clsx(Typography.Body, txtColors.gray800, "text-center")}>
+          Não solicitou redefinição?{" "}
+          <TextButton
+            text="Entre em contato"
+            href={routes.auth.login}
+            hoverAnimation={TextButtonHovers.bold}
+          />
+        </p>
       </div>
     </div>
   );

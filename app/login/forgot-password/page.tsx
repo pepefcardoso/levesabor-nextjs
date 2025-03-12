@@ -25,15 +25,11 @@ export default function ForgotPasswordPage() {
 
     try {
       await AuthService.forgotPassword(email);
-      toast.success("Um e-mail foi enviado com instruções para redefinir sua senha!", {
-        position: "bottom-left",
-      });
+      toast.success("Um e-mail foi enviado com instruções para redefinir sua senha!");
       setTimeout(() => router.push("/login"), 3000);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Tente novamente.";
-      toast.error(errorMessage, {
-        position: "bottom-left",
-      });
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

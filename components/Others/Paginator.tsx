@@ -4,14 +4,14 @@ import { FilledButtonHovers } from "@/typings/buttons";
 import FilledButton from "../Buttons/FilledButton";
 import { bgColors } from "@/constants/colors";
 
-interface CustomPaginatorProps {
+interface PaginatorProps {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
     className?: string;
 }
 
-const CustomPaginator: React.FC<CustomPaginatorProps> = ({
+const Paginator: React.FC<PaginatorProps> = ({
     currentPage,
     totalPages,
     onPageChange,
@@ -65,4 +65,4 @@ const CustomPaginator: React.FC<CustomPaginatorProps> = ({
     );
 };
 
-export default CustomPaginator;
+export default Paginator;
