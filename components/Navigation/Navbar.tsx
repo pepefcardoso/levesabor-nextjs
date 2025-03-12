@@ -1,19 +1,19 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { NAV_LINKS, USER_LINKS } from "@/constants/index";
+import { AuthService } from "@/services/authService";
 import { useRouter } from "next/navigation";
-import ReactDOM from "react-dom";
-import { NAV_LINKS, USER_LINKS } from "../../constants";
-import useAuthStore from "../../store/authStore";
-import { AuthService } from "../../services/authService";
-import routes from "../../routes/routes";
-import TextButton from "../Buttons/TextButton";
-import FilledButton from "../Buttons/FilledButton";
-import { bgColors, txtColors } from "../../constants/colors";
-import { Typography } from "../../constants/typography";
-import { FilledButtonHovers, TextButtonHovers } from "../../typings/buttons";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import routes from "routes/routes";
+import useAuthStore from "store/authStore";
+import TextButton from "../Buttons/TextButton";
+import { FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { bgColors, txtColors } from "@/constants/colors";
+import Image from "next/image";
+import FilledButton from "../Buttons/FilledButton";
+import { Typography } from "@/constants/typography";
+import ReactDOM from "react-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,7 +54,7 @@ const Navbar = () => {
           text={link.label}
           color={txtColors.white}
           hoverAnimation={TextButtonHovers.scale}
-          className={mobile ? "w-full text-center" : ""}
+          className={mobile ? "w-full text-left px-4 py-3 hover:bg-green-700" : ""}
           onClick={mobile ? () => setIsMenuOpen(false) : undefined}
         />
       ))}
@@ -68,17 +68,17 @@ const Navbar = () => {
           key={link.key}
           href={link.href}
           text={link.label}
-          color={mobile ? txtColors.white : txtColors.gray500}
+          color={txtColors.white}
           hoverAnimation={TextButtonHovers.bold}
-          className={mobile ? "w-full text-center" : ""}
+          className={mobile ? "w-full text-left px-4 py-3 hover:bg-green-700" : ""}
           onClick={mobile ? () => setIsMenuOpen(false) : undefined}
         />
       ))}
       <TextButton
         text="Sair"
-        color={mobile ? txtColors.white : txtColors.gray500}
+        color={txtColors.white}
         hoverAnimation={TextButtonHovers.bold}
-        className={mobile ? "w-full text-center" : ""}
+        className={mobile ? "w-full text-left px-4 py-3 hover:bg-green-700" : ""}
         onClick={handleLogout}
       />
     </>
@@ -153,8 +153,7 @@ const Navbar = () => {
         >
           <div className="relative w-8 h-8">
             <svg
-              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
-                }`}
+              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"}`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -164,8 +163,7 @@ const Navbar = () => {
             </svg>
 
             <svg
-              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
-                }`}
+              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"}`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -178,14 +176,64 @@ const Navbar = () => {
       </nav>
 
       <div
-        className={`lg:hidden ${bgColors.primary} overflow-hidden transition-all duration-300 
-        ${isMenuOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}
+        className={`lg:hidden fixed inset-y-0 left-0 w-64 ${bgColors.primary} shadow-2xl z-50
+          transform transition-transform duration-300 ease-in-out
+          ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="px-4 py-4 flex flex-col items-center gap-4">
-          {renderLinks(NAV_LINKS, true)}
-          {user ? renderUserMenu(true) : <AuthButtons mobile={true} />}
+        <div className="flex items-center justify-between px-4 py-4">
+          <TextButton
+            href={routes.home}
+            text="LeveSabor"
+            color={txtColors.white}
+            typography={Typography.Title}
+          />
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="text-white p-2 rounded-lg"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex flex-col py-4 overflow-y-auto">
+          <nav className="flex flex-col gap-2">
+            {renderLinks(NAV_LINKS, true)}
+            {user ? (
+              <>
+                <div className="px-4 py-3 flex items-center gap-3 border-t border-green-700 mt-4">
+                  <UserAvatar />
+                  <TextButton
+                    href={routes.user.profile}
+                    text={user.name}
+                    color={txtColors.white}
+                    hoverAnimation={TextButtonHovers.underline}
+                    typography={Typography.Link2}
+                  />
+                </div>
+                {renderUserMenu(true)}
+              </>
+            ) : (
+              <div className="px-4 mt-4">
+                <AuthButtons mobile={true} />
+              </div>
+            )}
+          </nav>
         </div>
       </div>
+
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
 
       {isDropdownOpen &&
         ReactDOM.createPortal(
