@@ -125,7 +125,7 @@ const Navbar = () => {
   return (
     <header className={`${bgColors.primary} shadow-lg z-50 relative`}>
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <TextButton href={routes.home} text="LeveSabor" color={txtColors.white} typography={Typography.Title} />
+        <TextButton href={routes.home} text="LeveSabor" color={txtColors.white} typography={Typography.Display} />
 
         <div className="hidden lg:flex items-center gap-8">{renderLinks(NAV_LINKS)}</div>
 
@@ -137,7 +137,7 @@ const Navbar = () => {
                 text={user.name}
                 color={txtColors.white}
                 hoverAnimation={TextButtonHovers.underline}
-                typography={Typography.Link2}
+                typography={Typography.Quote}
               />
               <UserAvatar />
             </div>
@@ -185,7 +185,7 @@ const Navbar = () => {
             href={routes.home}
             text="LeveSabor"
             color={txtColors.white}
-            typography={Typography.Title}
+            typography={Typography.Display}
           />
           <button
             onClick={() => setIsMenuOpen(false)}
@@ -214,7 +214,7 @@ const Navbar = () => {
                     text={user.name}
                     color={txtColors.white}
                     hoverAnimation={TextButtonHovers.underline}
-                    typography={Typography.Link2}
+                    typography={Typography.Quote}
                   />
                 </div>
                 {renderUserMenu(true)}

@@ -62,7 +62,7 @@ export default function UserPosts() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex justify-between items-center mb-8">
-        <h1 className={clsx(Typography.Title)}>Meus Posts</h1>
+        <h1 className={clsx(Typography.Display)}>Meus Posts</h1>
         <FilledButton
           text="Adicionar Novo Post"
           href={routes.user.posts.create}

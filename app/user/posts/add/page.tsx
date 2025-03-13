@@ -1,13 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import { PostForm } from "@/components/Forms/PostForm";
+import PageSkeleton from "@/components/Skeletons/PageSkeleton";
+import { Typography } from "@/constants/typography";
+import { getPostCategories } from "@/services/postCategoryService";
+import { createPost } from "@/services/postService";
+import { getPostTopics } from "@/services/postTopicService";
+import { PostCategory, PostTopic } from "@/typings/post";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getPostCategories } from "../../../../services/postCategoryService";
-import { getPostTopics } from "../../../../services/postTopicService";
-import { createPost } from "../../../../services/postService";
-import { FormSkeleton } from "../../../../components/Skeletons/FormSkeleton";
-import { PostForm } from "../../../../components/Forms/PostForm";
-import { PostCategory, PostTopic } from "../../../../typings/post";
 
 export default function CreatePostPage() {
   const router = useRouter();
@@ -49,23 +52,21 @@ export default function CreatePostPage() {
   };
 
   if (isLoadingData) {
-    return <FormSkeleton />;
+    return <PageSkeleton />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            Criar Novo Post
-          </h1>
-          <PostForm
-            categories={categories}
-            topics={topics}
-            isSubmitting={isSubmitting}
-            onSubmit={handleCreatePost}
-          />
-        </div>
+    <div className="container mx-auto px-4 py-10 max-w-4xl">
+      <div className="bg-white rounded-lg shadow-lg p-8">
+        <h1 className={clsx(Typography.Title, "mb-8")}>
+          Criar Novo Post
+        </h1>
+        <PostForm
+          categories={categories}
+          topics={topics}
+          isSubmitting={isSubmitting}
+          onSubmit={handleCreatePost}
+        />
       </div>
     </div>
   );

@@ -6,6 +6,13 @@ import Footer from "../components/Navigation/Footer";
 import TransitionWrapper from "../components/Others/TransitionWrapper";
 import { bgColors } from "../constants/colors";
 import clsx from "clsx";
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
   title: "LeveSabor",
@@ -19,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={clsx(bgColors.background, "flex flex-col min-h-screen")}>
+      <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen font-sans")}>
         <Navbar />
         <main className="flex-1">
           <Toaster position="bottom-left" />

@@ -31,11 +31,11 @@ const PostCard = ({ post }: { post: Post }) => {
             <CustomChip text={post.category.name} />
           )}
 
-          <h2 className={clsx(Typography.Title2, "my-2 line-clamp-2")}>
+          <h2 className={clsx(Typography.Headline, "my-2 line-clamp-2")}>
             {post.title}
           </h2>
 
-          <p className={clsx(Typography.Body2, txtColors.gray500, "line-clamp-3")}>
+          <p className={clsx(Typography.Subtitle, txtColors.gray500, "line-clamp-3")}>
             {post.summary}
           </p>
         </div>

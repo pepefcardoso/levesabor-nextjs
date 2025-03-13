@@ -12,7 +12,7 @@ import routes from "routes/routes";
 const AboutPage = () => {
   return (
     <div className="mx-auto px-8 py-12 max-w-7xl flex flex-col items-center">
-      <h1 className={clsx(Typography.Title, txtColors.black, "mb-4 sm:mb-8 text-left w-full")}>Sobre Nós</h1>
+      <h1 className={clsx(Typography.Display, txtColors.black, "mb-4 sm:mb-8 text-left w-full")}>Sobre Nós</h1>
 
       <div className="flex flex-col md:flex-row items-stretch md:space-x-12 w-full">
         <div className="relative flex-shrink-0 w-full md:w-1/2 rounded-lg shadow-md h-[300px] md:h-[450px]">
@@ -27,7 +27,7 @@ const AboutPage = () => {
 
         <div
           className={clsx(
-            Typography.Body,
+            Typography.Title,
             txtColors.gray500,
             "text-left w-full md:w-1/2 flex flex-col justify-between mt-4 md:mt-0"
           )}

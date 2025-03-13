@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { fontSizes, fontWeights } from "./constants/typography";
 
 const hoverAnimations = [
   "hover:underline",
@@ -41,12 +42,23 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [...bgColors, ...txtColors, ...hoverAnimations, ...borderColors, ...ringColors],
+  safelist: [
+    ...bgColors,
+    ...txtColors,
+    ...hoverAnimations,
+    ...borderColors,
+    ...ringColors,
+    ...Object.values(fontSizes),
+    ...Object.values(fontWeights),
+    ...Object.values(fontSizes).map((size) => `sm:${size}`),
+    ...Object.values(fontSizes).map((size) => `md:${size}`),
+    ...Object.values(fontSizes).map((size) => `lg:${size}`),
+    ...Object.values(fontWeights).map((weight) => `sm:${weight}`),
+    ...Object.values(fontWeights).map((weight) => `md:${weight}`),
+    ...Object.values(fontWeights).map((weight) => `lg:${weight}`),
+  ],
   theme: {
     extend: {
-      screens: {
-        "3xl": "1920px",
-      },
       colors: {
         primary: {
           DEFAULT: "#A94A4A",
@@ -67,7 +79,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["var(--font-inter)"],
       },
     },
   },

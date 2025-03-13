@@ -18,8 +18,8 @@ const EmptyList: React.FC<EmptyListProps> = ({
   return (
     <div className="flex flex-col items-center text-center p-6">
       <div className="mb-4">{icon}</div>
-      <h1 className={clsx(Typography.Title2)}>{title}</h1>
-      <p className={clsx(Typography.Body, txtColors.gray800)}>{description}</p>
+      <h1 className={clsx(Typography.Headline)}>{title}</h1>
+      <p className={clsx(Typography.Title, txtColors.gray800)}>{description}</p>
     </div>
   );
 };

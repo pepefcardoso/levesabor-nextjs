@@ -32,7 +32,7 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
   return (
     <div className="space-y-1">
       {label && (
-        <label htmlFor={props.id} className={`${Typography.Body2} text-[${txtColors.gray500}]`}>
+        <label htmlFor={props.id} className={`${Typography.Subtitle} text-[${txtColors.gray500}]`}>
           {label}
         </label>
       )}

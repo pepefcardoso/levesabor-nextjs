@@ -39,8 +39,8 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-lg w-full p-8 mx-4 space-y-8 bg-white rounded-lg shadow-lg">
         <div className="text-left">
-          <h1 className={clsx(Typography.Title, "mb-2")}>Redefinir Senha</h1>
-          <p className={clsx(Typography.Body, txtColors.gray500)}>
+          <h1 className={clsx(Typography.Display, "mb-2")}>Redefinir Senha</h1>
+          <p className={clsx(Typography.Title, txtColors.gray500)}>
             Digite seu endereço de e-mail e enviaremos um link para redefinir sua senha.
           </p>
         </div>
@@ -74,13 +74,13 @@ export default function ForgotPasswordPage() {
         </form>
 
         <div className="text-lg text-left">
-          <p className={clsx(Typography.Body, txtColors.gray500)}>
+          <p className={clsx(Typography.Title, txtColors.gray500)}>
             Lembrou sua senha?{" "}
             <TextButton
               href={routes.auth.login}
               text="Faça login aqui"
               color={txtColors.black}
-              typography={clsx(Typography.Body)}
+              typography={clsx(Typography.Title)}
               hoverAnimation={TextButtonHovers.bold}
             />
           </p>

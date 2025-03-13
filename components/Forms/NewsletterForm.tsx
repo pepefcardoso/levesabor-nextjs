@@ -35,8 +35,8 @@ const NewsletterForm = () => {
 
   return (
     <div className="max-w-md mx-auto px-4 py-8">
-      <h2 className={clsx(Typography.Title, "mb-2")}>Nossa newsletter</h2>
-      <p className={clsx(Typography.Body, txtColors.gray500, "mb-6")}>
+      <h2 className={clsx(Typography.Display, "mb-2")}>Nossa newsletter</h2>
+      <p className={clsx(Typography.Title, txtColors.gray500, "mb-6")}>
         Cadastre-se e não perca nenhuma novidade
       </p>
       <form onSubmit={handleSubmit} className="flex items-center gap-2">

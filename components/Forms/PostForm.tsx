@@ -1,14 +1,18 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { PostCategory, PostTopic } from "../../typings/post";
+
+import { PostCategory, PostTopic } from "@/typings/post";
+import { useRef, useState } from "react";
 import CustomTextInput from "../Inputs/CustomTextInput";
 import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
+import clsx from "clsx";
+import { Typography } from "@/constants/typography";
 import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
-import FilledButton from "../Buttons/FilledButton";
-import { Typography } from "../../constants/typography";
-import { txtColors } from "../../constants/colors";
 import Image from "next/image";
+import FilledButton from "../Buttons/FilledButton";
+import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+
+
 
 interface FormDataValues {
   title: string;
@@ -112,27 +116,27 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
         required
       />
 
-      <div>
-        <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
+      <div className="space-y-2">
+        <label className={clsx(Typography.Title)}>
           Tópicos
         </label>
         <CustomCheckboxInput
           options={topics.map((topic) => ({
-            id: topic.id,
+            id: String(topic.id),
             label: topic.name,
           }))}
           selected={formData.topics}
           onChange={handleTopicChange}
-          variant="grid"
           disabled={isSubmitting}
+          placeholder="Selecione os tópicos"
         />
       </div>
 
-      <div>
-        <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
+      <div className="space-y-8">
+        <label className={clsx(Typography.Title)}>
           Imagem do Post
         </label>
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-6 ">
           {previewImage && (
             <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
               <div className="w-[300px] h-[200px] rounded-md shadow-md overflow-hidden">
@@ -151,8 +155,7 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
             text={previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
             onClick={() => fileInputRef.current?.click()}
             disabled={isSubmitting}
-            color="bg-white"
-            className={`px-6 py-2 ${Typography.button}`}
+            hoverAnimation={FilledButtonHovers.opacity}
           />
 
           <input
@@ -168,11 +171,10 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
 
       <div className="flex justify-end">
         <FilledButton
-          text={isSubmitting ? "Salvando..." : "Salvar"}
-          type="submit"
+          text={"Salvar"}
+          type={ButtonTypes.submit}
           disabled={isSubmitting}
-          color="bg-blue-600"
-          className={`${Typography.button} text-white hover:bg-blue-700`}
+          hoverAnimation={FilledButtonHovers.opacity}
         />
       </div>
     </form>

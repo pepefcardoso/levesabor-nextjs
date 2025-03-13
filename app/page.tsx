@@ -70,10 +70,10 @@ export default function Home() {
               {/* Text Content */}
               <div className="lg:w-1/2 flex flex-col justify-center">
                 <div className="space-y-6">
-                  <h1 className={clsx(Typography.Title, txtColors.black, "tracking-tight")}>
+                  <h1 className={clsx(Typography.Display, txtColors.black, "tracking-tight")}>
                     Cozinha Inclusiva: Sabores que Respeitam Todas as Dietas
                   </h1>
-                  <p className={clsx(Typography.Body, txtColors.gray500)}>
+                  <p className={clsx(Typography.Title, txtColors.gray500)}>
                     Descubra um universo de possibilidades culinárias adaptadas às necessidades especiais. Desde opções
                     sem glúten até receitas veganas e low-carb, nossa missão é oferecer refeições saborosas que se
                     adequam a qualquer estilo de vida alimentar. Explore artigos informativos e guias práticos para uma

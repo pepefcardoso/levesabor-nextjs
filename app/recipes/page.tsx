@@ -125,7 +125,7 @@ export default function RecipesHome() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl w-full">
       <div className="px-4">
-        <h1 className={clsx(Typography.Title, "mb-8 text-left")}>
+        <h1 className={clsx(Typography.Display, "mb-8 text-left")}>
           Pesquisar Receitas
         </h1>
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
@@ -145,7 +145,7 @@ export default function RecipesHome() {
             <div className="flex flex-row sm:flex-col gap-4">
               <div className="w-1/2 sm:w-full">
                 <div className="mb-6">
-                  <label className={clsx(Typography.Body, "block mb-2")}>
+                  <label className={clsx(Typography.Title, "block mb-2")}>
                     Categorias
                   </label>
                   <CustomInputSelect
@@ -159,7 +159,7 @@ export default function RecipesHome() {
               </div>
               <div className="w-1/2 sm:w-full">
                 <div className="mb-6">
-                  <label className={clsx(Typography.Body, "block mb-2")}>
+                  <label className={clsx(Typography.Title, "block mb-2")}>
                     Dietas
                   </label>
                   <CustomCheckboxInput

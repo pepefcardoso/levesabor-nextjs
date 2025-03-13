@@ -16,7 +16,7 @@ const Footer = () => {
               href={routes.home}
               text="LeveSabor"
               color={txtColors.white}
-              typography={Typography.Title}
+              typography={Typography.Display}
             />
 
             <div className="lg:hidden mb-5" />
@@ -56,7 +56,7 @@ const Footer = () => {
               href="https://instagram.com/julialfelisb"
               text="Pedro Paulo"
               color={txtColors.gray500}
-              typography={Typography.Link2}
+              typography={Typography.Quote}
               hoverAnimation={TextButtonHovers.underline}
             />
           </p>

@@ -12,7 +12,7 @@ const PrivacyPolicyPage = () => {
   return (
     <div className="mx-auto px-8 py-12 max-w-4xl flex flex-col">
       <h1 className={clsx(
-        Typography.Title,
+        Typography.Display,
         txtColors.black,
         "text-left w-full mb-6 sm:mb-8"
       )}>
@@ -21,7 +21,7 @@ const PrivacyPolicyPage = () => {
 
       <div className="leading-relaxed w-full">
         <div className={clsx(
-          Typography.Body,
+          Typography.Title,
           txtColors.gray800,
         )}>
           {PRIVACY_PARAGRAPHS.map((paragraph, index) => (

@@ -63,13 +63,13 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-lg p-6 sm:p-8 space-y-8 bg-white rounded-xl shadow-2xl mx-4">
         <div className="text-left space-y-2">
-          <h1 className={clsx(Typography.Title)}>Bem-vindo!</h1>
-          <p className={clsx(Typography.Body, txtColors.gray500)}>
+          <h1 className={clsx(Typography.Display)}>Bem-vindo!</h1>
+          <p className={clsx(Typography.Title, txtColors.gray500)}>
             Ainda não possui conta?{" "}
             <TextButton
               href={routes.auth.register}
               text="Cadastre-se aqui"
-              typography={Typography.Body}
+              typography={Typography.Title}
               hoverAnimation={TextButtonHovers.bold}
             />
           </p>
@@ -100,7 +100,7 @@ export default function LoginPage() {
               <TextButton
                 href={routes.auth.forgotPassword}
                 text="Esqueceu sua senha?"
-                typography={Typography.Body}
+                typography={Typography.Title}
                 color={txtColors.gray800}
                 hoverAnimation={TextButtonHovers.bold}
               />
@@ -112,7 +112,7 @@ export default function LoginPage() {
             hoverAnimation={FilledButtonHovers.opacity}
             className="w-full mt-8"
             type="submit"
-            typography={Typography.Link}
+            typography={Typography.Footnote}
           />
         </form>
       </div>

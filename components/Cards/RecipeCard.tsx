@@ -36,10 +36,10 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
         <div className="flex-grow basis-3/5 p-4 flex flex-col justify-between">
           <div>
-            <h2 className={clsx(Typography.Title2, "mb-1 line-clamp-2")}>
+            <h2 className={clsx(Typography.Headline, "mb-1 line-clamp-2")}>
               {recipe.title}
             </h2>
-            <p className={clsx(Typography.Body2, txtColors.gray800, "line-clamp-3")}>
+            <p className={clsx(Typography.Subtitle, txtColors.gray800, "line-clamp-3")}>
               {recipe.description}
             </p>
           </div>

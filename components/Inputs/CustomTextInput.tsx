@@ -42,7 +42,7 @@ const CustomTextInput = ({
   return (
     <div className="space-y-1 w-full">
       {label && (
-        <label className={clsx(Typography.Body2, txtColors.gray800, "block")}>
+        <label className={clsx(Typography.Subtitle, txtColors.gray800, "block")}>
           {label}
         </label>
       )}

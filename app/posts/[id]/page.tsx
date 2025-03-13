@@ -52,8 +52,8 @@ const PostDetails = () => {
         </div>
       )}
 
-      <h1 className={clsx(Typography.Title, "mb-2 leading-snug")}>{post.title}</h1>
-      <p className={clsx(Typography.Body, txtColors.gray800, "mb-6")}>{post.summary}</p>
+      <h1 className={clsx(Typography.Display, "mb-2 leading-snug")}>{post.title}</h1>
+      <p className={clsx(Typography.Title, txtColors.gray800, "mb-6")}>{post.summary}</p>
 
       <div className="relative w-full h-[400px] rounded-md shadow-md overflow-hidden">
         <Image
@@ -65,7 +65,7 @@ const PostDetails = () => {
         />
       </div>
 
-      <div className={clsx(Typography.Body, "leading-relaxed space-y-4 my-6")}>
+      <div className={clsx(Typography.Title, "leading-relaxed space-y-4 my-6")}>
         {post.content.split("\n").map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}

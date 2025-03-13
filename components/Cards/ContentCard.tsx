@@ -43,8 +43,8 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
         </div>
 
         <div className="p-2">
-          <h2 className={clsx(Typography.Title2, "mb-1 line-clamp-2")}>{item.title}</h2>
-          <p className={clsx(Typography.Body, txtColors.gray500, "line-clamp-2")}>{"#" + item.id}</p>
+          <h2 className={clsx(Typography.Headline, "mb-1 line-clamp-2")}>{item.title}</h2>
+          <p className={clsx(Typography.Title, txtColors.gray500, "line-clamp-2")}>{"#" + item.id}</p>
         </div>
       </Link>
       <div className="flex justify-end gap-1 p-2">
