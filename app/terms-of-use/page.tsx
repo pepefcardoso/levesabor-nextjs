@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
-import routes from "../../routes/routes";
-import { TERMS_OF_USE_PARAGRAPHS } from "../../constants";
-import FilledButton from "../../components/Buttons/FilledButton";
+import FilledButton from "@/components/Buttons/FilledButton";
+import { txtColors } from "@/constants/colors";
+import { TERMS_OF_USE_PARAGRAPHS } from "@/constants/index";
+import { Typography } from "@/constants/typography";
+import { FilledButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
-import { Typography } from "../../constants/typography";
-import { bgColors, txtColors } from "../../constants/colors";
-import { FilledButtonHovers } from "../../typings/buttons";
+import routes from "routes/routes";
 
 const TermsOfUsePage = () => {
   return (
@@ -23,10 +22,10 @@ const TermsOfUsePage = () => {
       <div className="leading-relaxed w-full">
         <div className={clsx(
           Typography.Body,
-          txtColors.gray500,
+          txtColors.gray800,
         )}>
           {TERMS_OF_USE_PARAGRAPHS.map((paragraph, index) => (
-            <p key={index} className={index > 0 ? "mt-6" : ""}>
+            <p key={index} className={index > 0 ? "mt-4" : ""}>
               {paragraph}
             </p>
           ))}
@@ -35,7 +34,6 @@ const TermsOfUsePage = () => {
           <FilledButton
             text="Converse Conosco"
             href={routes.contact}
-            color={bgColors.tertiary}
             hoverAnimation={FilledButtonHovers.opacity}>
           </FilledButton>
         </div>

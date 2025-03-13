@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import FilledButton from "@/components/Buttons/FilledButton";
+import ContentCard from "@/components/Cards/ContentCard";
+import EmptyList from "@/components/Others/EmptyList";
+import Paginator from "@/components/Others/Paginator";
+import CardSkeleton from "@/components/Skeletons/CardSkeleton";
+import { Typography } from "@/constants/typography";
+import { deletePost, getMyPosts } from "@/services/postService";
+import { FilledButtonHovers } from "@/typings/buttons";
+import { PaginationResponse } from "@/typings/pagination";
+import { Post } from "@/typings/post";
+import clsx from "clsx";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useAuthStore from "../../../store/authStore";
-import { deletePost, getMyPosts } from "../../../services/postService";
-import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
-import EmptyList from "../../../components/Others/EmptyList";
-import routes from "../../../routes/routes";
-import { PaginationResponse } from "../../../typings/pagination";
-import { Post } from "../../../typings/post";
-import Paginator from "../../../components/Others/Paginator";
-import FilledButton from "../../../components/Buttons/FilledButton";
-import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
+import routes from "routes/routes";
+import useAuthStore from "store/authStore";
 
 export default function UserPosts() {
   const { user } = useAuthStore();
@@ -57,14 +60,13 @@ export default function UserPosts() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Meus Posts</h1>
+        <h1 className={clsx(Typography.Title)}>Meus Posts</h1>
         <FilledButton
           text="Adicionar Novo Post"
           href={routes.user.posts.create}
-          color="bg-yellow-500"
-          fontColor="white"
+          hoverAnimation={FilledButtonHovers.opacity}
         />
       </div>
 
@@ -75,12 +77,12 @@ export default function UserPosts() {
           ))}
         </div>
       ) : posts.length === 0 ? (
-        <EmptyList message="Você ainda não criou nenhum post." />
+        <EmptyList title="Você ainda não criou nenhum post." />
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {posts.map((post) => (
-              <ListItemContentCard
+              <ContentCard
                 key={post.id}
                 detailRoute={(id) => routes.posts.details(id)}
                 editRoute={(id) => routes.user.posts.update(id)}
@@ -89,16 +91,12 @@ export default function UserPosts() {
               />
             ))}
           </div>
-          {totalPages > 1 && (
-            <Paginator
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              previousLabel="Anterior"
-              nextLabel="Próxima"
-              className="mt-8"
-            />
-          )}
+          <Paginator
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            className="mt-10"
+          />
         </>
       )}
     </div>

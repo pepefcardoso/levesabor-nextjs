@@ -1,19 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import {
-  getCurrentUser,
-  updateUser,
-  deleteUser,
-} from "../../../services/userService";
-import { useRouter } from "next/navigation";
-import { UserProfileSkeleton } from "../../../components/Skeletons/UserProfileSkeleton";
+import FilledButton from "@/components/Buttons/FilledButton";
+import IconButton from "@/components/Buttons/IconButton";
+import { UserProfileForm } from "@/components/Forms/UserProfileForm";
+import { UserProfileSkeleton } from "@/components/Skeletons/UserProfileSkeleton";
+import { txtColors } from "@/constants/colors";
+import { deleteUser, getCurrentUser, updateUser } from "@/services/userService";
+import { User } from "@/typings/user";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { UserProfileForm } from "../../../components/Forms/UserProfileForm";
-import { User } from "../../../typings/user";
-import IconButton from "../../../components/Buttons/IconButton";
-import CustomDialog from "../../../components/Others/CustomDialog";
-import FilledButton from "../../../components/Buttons/FilledButton";
 import { FaTrash } from "react-icons/fa";
 
 export default function UserProfile() {
@@ -83,7 +79,7 @@ export default function UserProfile() {
               onClick={() => setShowDeleteDialog(true)}
               ariaLabel="Excluir conta"
               className="absolute top-6 right-6 text-red-600 hover:text-red-700"
-              Icon={FaTrash}  // Updated prop name here!
+              Icon={FaTrash}
             />
 
             <h1 className="text-4xl font-bold text-gray-900 mb-8">
@@ -98,32 +94,32 @@ export default function UserProfile() {
           </div>
         )}
 
-        {showDeleteDialog && (
-          <CustomDialog
-            title="Confirmar Exclusão"
-            onClose={() => setShowDeleteDialog(false)}
-          >
-            <p className="mb-6 text-lg text-gray-600">
-              Tem certeza que deseja excluir sua conta permanentemente?
-            </p>
-            <div className="flex justify-end gap-4">
-              <FilledButton
-                text="Cancelar"
-                onClick={() => setShowDeleteDialog(false)}
-                type="button"
-                color="bg-white"
-                fontColor="gray-700"
-              />
-              <FilledButton
-                text="Confirmar"
-                onClick={handleDelete}
-                type="button"
-                color="bg-red-600"
-                fontColor="white"
-              />
-            </div>
-          </CustomDialog>
-        )}
+        <dialog
+          open={showDeleteDialog}
+          onClose={() => setShowDeleteDialog(false)}
+          className="bg-white rounded-lg p-6 max-w-md mx-auto z-50"
+        >
+          <h2 className="text-xl font-semibold mb-4">Confirmar Exclusão</h2>
+          <p className="mb-6 text-lg text-gray-600">
+            Tem certeza que deseja excluir sua conta permanentemente?
+          </p>
+          <div className="flex justify-end gap-4">
+            <FilledButton
+              text="Cancelar"
+              onClick={() => setShowDeleteDialog(false)}
+              type="button"
+              color="bg-white"
+              fontColor={txtColors.gray800}
+            />
+            <FilledButton
+              text="Confirmar"
+              onClick={handleDelete}
+              type="button"
+              color="bg-red-600"
+              fontColor={txtColors.white}
+            />
+          </div>
+        </dialog>
       </div>
     </div>
   );

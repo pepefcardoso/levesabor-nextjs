@@ -10,7 +10,7 @@ import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
 import EmptyList from "../../../components/Others/EmptyList";
 import FilledButton from "../../../components/Buttons/FilledButton";
 import Paginator from "../../../components/Others/Paginator";
-import ListItemContentCard from "../../../components/Cards/ListItemContentCard";
+import ListItemContentCard from "../../../components/Cards/ContentCard";
 
 export default function ListUserRecipes() {
   const { user } = useAuthStore();
