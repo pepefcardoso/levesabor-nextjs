@@ -46,7 +46,7 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selectedOption = options.find(option => option.value === value);
+  const selectedOption = options.find((option) => option.value === value);
   const displayValue = selectedOption ? selectedOption.label : placeholder;
 
   const handleSelect = (optionValue: string | number) => {
@@ -60,7 +60,7 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
   return (
     <div className="space-y-2 relative" ref={containerRef}>
       {label && (
-        <label htmlFor={name} className={clsx(Typography.Title)}>
+        <label htmlFor={name} className={clsx(Typography.Subtitle)}>
           {label}
         </label>
       )}
@@ -78,9 +78,7 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
           }
         }}
       >
-        <span className={clsx(Typography.Subtitle, txtColors.gray800)}>
-          {displayValue}
-        </span>
+        <span className={clsx(Typography.Helper, txtColors.gray800)}>{displayValue}</span>
         <svg
           className="w-4 h-4 text-gray-800"
           fill="none"
@@ -103,7 +101,7 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
               key={option.value}
               className={clsx(
                 "p-2 cursor-pointer hover:bg-yellow-50 transition-all duration-150 ease-in-out",
-                Typography.Subtitle,
+                Typography.Caption,
                 option.value === value ? "bg-yellow-50" : ""
               )}
               onClick={() => handleSelect(option.value)}

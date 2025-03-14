@@ -1,9 +1,8 @@
 "use client";
 
 import { TextareaHTMLAttributes } from "react";
-import { Typography } from "../../constants/typography";
-import { txtColors } from "../../constants/colors";
 import clsx from "clsx";
+import { Typography } from "@/constants/typography";
 
 interface CustomTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -19,8 +18,7 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
   const baseClasses = clsx(
     "w-full",
     "border border-gray-300 rounded-md",
-    "p-4",
-    "text-base",
+    "px-4 py-3",
     "shadow-md",
     "outline-none",
     "disabled:opacity-50 disabled:cursor-not-allowed",
@@ -30,18 +28,13 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
   );
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-2">
       {label && (
-        <label htmlFor={props.id} className={`${Typography.Subtitle} text-[${txtColors.gray500}]`}>
+        <label htmlFor={props.id} className={clsx(Typography.Subtitle)}>
           {label}
         </label>
       )}
-      <textarea
-        {...props}
-        rows={rows}
-        disabled={disabled}
-        className={`${baseClasses} ${className}`.trim()}
-      />
+      <textarea {...props} rows={rows} disabled={disabled} className={clsx(baseClasses, className)} />
     </div>
   );
 };

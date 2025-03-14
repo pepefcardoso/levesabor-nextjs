@@ -56,9 +56,9 @@ export default function CreatePostPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-4xl">
+    <div className="container mx-auto px-6 py-10 max-w-4xl">
       <div className="bg-white rounded-lg shadow-lg p-8">
-        <h1 className={clsx(Typography.Title, "mb-8")}>
+        <h1 className={clsx(Typography.Title, "mb-12")}>
           Criar Novo Post
         </h1>
         <PostForm

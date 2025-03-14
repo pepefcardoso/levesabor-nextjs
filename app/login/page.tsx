@@ -112,7 +112,6 @@ export default function LoginPage() {
             hoverAnimation={FilledButtonHovers.opacity}
             className="w-full mt-8"
             type="submit"
-            typography={Typography.Footnote}
           />
         </form>
       </div>

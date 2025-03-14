@@ -24,7 +24,7 @@ const FilledButton: FC<FilledButtonProps> = ({
     text,
     color = bgColors.tertiary,
     fontColor = txtColors.black,
-    typography = Typography.Caption,
+    typography = Typography.Button,
     hoverAnimation = FilledButtonHovers.none,
     href,
     onClick,

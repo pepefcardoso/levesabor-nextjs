@@ -1,7 +1,7 @@
 "use client";
 
 import { PostCategory, PostTopic } from "@/typings/post";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CustomTextInput from "../Inputs/CustomTextInput";
 import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
@@ -12,14 +12,13 @@ import Image from "next/image";
 import FilledButton from "../Buttons/FilledButton";
 import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
 
-
-
 interface FormDataValues {
   title: string;
   summary: string;
   content: string;
   category_id: string;
   topics: string[];
+  image_url: string;
 }
 
 interface PostFormProps {
@@ -37,10 +36,17 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
     content: initialData?.content || "",
     category_id: initialData?.category_id || "",
     topics: initialData?.topics || [],
+    image_url: initialData?.image_url || "",
   });
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(formData.image_url || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (formData.image_url) {
+      setPreviewImage(formData.image_url);
+    }
+  }, [formData.image_url]);
 
   const handleTopicChange = (selectedTopics: (string | number)[]) => {
     setFormData((prev) => ({ ...prev, topics: selectedTopics.map(String) }));
@@ -69,7 +75,7 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto">
       <CustomTextInput
         label="Título"
         id="title"
@@ -117,9 +123,7 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
       />
 
       <div className="space-y-2">
-        <label className={clsx(Typography.Title)}>
-          Tópicos
-        </label>
+        <label className={clsx(Typography.Subtitle)}>Tópicos</label>
         <CustomCheckboxInput
           options={topics.map((topic) => ({
             id: String(topic.id),
@@ -133,9 +137,7 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
       </div>
 
       <div className="space-y-8">
-        <label className={clsx(Typography.Title)}>
-          Imagem do Post
-        </label>
+        <label className={clsx(Typography.Subtitle)}>Imagem do Post</label>
         <div className="flex flex-col items-center gap-6 ">
           {previewImage && (
             <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>

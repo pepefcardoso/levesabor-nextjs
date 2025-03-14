@@ -29,42 +29,45 @@ export type TypographyType = (typeof Typography)[keyof typeof Typography];
 
 export const Typography = {
   // Headings & Titles
+  //ok
   Display: clsx(
-    fontSizes.xl3,
+    fontSizes.xl4,
     fontWeights.bold,
-    `sm:${fontSizes.xl6}`,
-    `md:${fontSizes.xl7}`,
-    `lg:${fontSizes.xl8}`,
+    `sm:${fontSizes.xl5}`,
+    `md:${fontSizes.xl6}`,
+    `lg:${fontSizes.xl7}`,
     `sm:${fontWeights.extrabold}`,
     `lg:${fontWeights.black}`
   ),
 
   Headline: clsx(
-    fontSizes.xl2,
-    fontWeights.semibold,
-    `sm:${fontSizes.xl4}`,
-    `md:${fontSizes.xl5}`,
-    `lg:${fontSizes.xl6}`,
-    `md:${fontWeights.bold}`,
-    `lg:${fontWeights.extrabold}`
-  ),
-
-  Title: clsx(
-    fontSizes.xl2,
+    fontSizes.xl3,
     fontWeights.bold,
     `sm:${fontSizes.xl3}`,
     `md:${fontSizes.xl4}`,
     `lg:${fontSizes.xl5}`,
+    `md:${fontWeights.bold}`,
+    `lg:${fontWeights.extrabold}`
+  ),
+
+  //ok
+  Title: clsx(
+    fontSizes.xl2,
+    fontWeights.semibold,
+    `sm:${fontSizes.xl2}`,
+    `md:${fontSizes.xl3}`,
+    `lg:${fontSizes.xl4}`,
     `md:${fontWeights.semibold}`,
     `lg:${fontWeights.bold}`
   ),
 
+  //ok
   Subtitle: clsx(
     fontSizes.lg,
-    fontWeights.normal,
-    `sm:${fontSizes.xl2}`,
-    `md:${fontSizes.xl3}`,
-    `lg:${fontSizes.xl4}`,
+    fontWeights.medium,
+    `sm:${fontSizes.lg}`,
+    `md:${fontSizes.xl}`,
+    `lg:${fontSizes.xl2}`,
     `md:${fontWeights.medium}`,
     `lg:${fontWeights.semibold}`
   ),
@@ -80,14 +83,15 @@ export const Typography = {
     `lg:${fontWeights.semibold}`
   ),
 
+  //ok
   Caption: clsx(
     fontSizes.sm,
     fontWeights.light,
     `sm:${fontSizes.base}`,
-    `md:${fontSizes.lg}`,
-    `lg:${fontSizes.xl}`,
-    `md:${fontWeights.normal}`,
-    `lg:${fontWeights.medium}`
+    `md:${fontSizes.base}`,
+    `lg:${fontSizes.lg}`,
+    `md:${fontWeights.light}`,
+    `lg:${fontWeights.normal}`
   ),
 
   Footnote: clsx(
@@ -111,14 +115,15 @@ export const Typography = {
   ),
 
   // UI & Interactive Elements
+  //ok
   Button: clsx(
-    fontSizes.base,
-    fontWeights.bold,
+    fontSizes.lg,
+    fontWeights.medium,
     `sm:${fontSizes.lg}`,
     `md:${fontSizes.xl}`,
-    `lg:${fontSizes.xl2}`,
-    `md:${fontWeights.extrabold}`,
-    `lg:${fontWeights.black}`
+    `lg:${fontSizes.xl}`,
+    `md:${fontWeights.semibold}`,
+    `lg:${fontWeights.semibold}`
   ),
 
   Label: clsx(
@@ -148,7 +153,7 @@ export const Typography = {
     `md:${fontSizes.lg}`,
     `lg:${fontSizes.xl}`,
     `md:${fontWeights.normal}`,
-    `lg:${fontWeights.medium}`
+    `lg:${fontWeights.normal}`
   ),
 
   Link: clsx(

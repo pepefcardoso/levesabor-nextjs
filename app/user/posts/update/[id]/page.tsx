@@ -1,14 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+
+import { PostForm } from "@/components/Forms/PostForm";
+import PageSkeleton from "@/components/Skeletons/PageSkeleton";
+import { Typography } from "@/constants/typography";
+import { getPostCategories } from "@/services/postCategoryService";
+import { getPost, updatePost } from "@/services/postService";
+import { getPostTopics } from "@/services/postTopicService";
+import { PostCategory, PostTopic } from "@/typings/post";
+import clsx from "clsx";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getPostCategories } from "../../../../../services/postCategoryService";
-import { getPostTopics } from "../../../../../services/postTopicService";
-import { updatePost } from "../../../../../services/postService";
-import { getPost } from "../../../../../services/postService";
-import { FormSkeleton } from "../../../../../components/Skeletons/FormSkeleton";
-import { PostForm } from "../../../../../components/Forms/PostForm";
-import { PostCategory, PostTopic } from "../../../../../typings/post";
 
 export default function UpdatePostPage() {
   const router = useRouter();
@@ -25,6 +27,7 @@ export default function UpdatePostPage() {
     content: "",
     category_id: "",
     topics: [] as string[],
+    image_url: "",
   });
 
   useEffect(() => {
@@ -49,9 +52,8 @@ export default function UpdatePostPage() {
           summary: postRes.summary,
           content: postRes.content,
           category_id: postRes.category_id,
-          topics: postRes.topics
-            ? postRes.topics.map((t: PostTopic) => t.id)
-            : [],
+          topics: postRes.topics ? postRes.topics.map((t: PostTopic) => String(t.id)) : [],
+          image_url: postRes.image?.url ?? "",
         });
       } catch {
         toast.error("Falha ao carregar dados do post");
@@ -77,24 +79,20 @@ export default function UpdatePostPage() {
   };
 
   if (isLoadingData) {
-    return <FormSkeleton />;
+    return <PageSkeleton />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            Editar Post #{postId}
-          </h1>
-          <PostForm
-            initialData={initialData}
-            categories={categories}
-            topics={topics}
-            isSubmitting={isSubmitting}
-            onSubmit={handleUpdatePost}
-          />
-        </div>
+    <div className="container mx-auto px-6 py-10 max-w-4xl">
+      <div className="bg-white rounded-lg shadow-lg p-8">
+        <h1 className={clsx(Typography.Title, "mb-12")}>Editar Post #{postId}</h1>
+        <PostForm
+          initialData={initialData}
+          categories={categories}
+          topics={topics}
+          isSubmitting={isSubmitting}
+          onSubmit={handleUpdatePost}
+        />
       </div>
     </div>
   );

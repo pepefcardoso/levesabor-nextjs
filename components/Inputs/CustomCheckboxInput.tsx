@@ -63,14 +63,12 @@ const CustomCheckboxInput: React.FC<CustomCheckboxInputProps> = ({
                     "transition-all duration-150 ease-in-out",
                     "bg-white rounded-md p-2 cursor-pointer ",
                     disabled ? "opacity-50 cursor-not-allowed" : "hover:border-yellow-400",
-                    Typography.Subtitle,
-                    txtColors.gray800,
                 )}
                 onClick={() => {
                     if (!disabled) setIsDropdownOpen(!isDropdownOpen);
                 }}
             >
-                <span className={clsx(Typography.Subtitle, txtColors.gray800)}>
+                <span className={clsx(Typography.Helper, txtColors.gray800)}>
                     {selectedLabels || placeholder}
                 </span>
                 <svg
@@ -111,7 +109,7 @@ const CustomCheckboxInput: React.FC<CustomCheckboxInputProps> = ({
                                     className="mr-2"
                                     disabled={disabled}
                                 />
-                                <span className={clsx(Typography.Subtitle, txtColors.gray800)}>
+                                <span className={clsx(Typography.Caption)}>
                                     {option.label}
                                 </span>
                             </label>

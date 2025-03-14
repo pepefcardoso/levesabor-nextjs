@@ -29,8 +29,10 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
   };
 
   return (
-    <div className="rounded-md overflow-hidden shadow-md transition-transform duration-300 ease-in-out 
-                   hover:scale-105 hover:shadow-lg bg-white">
+    <div
+      className="rounded-md overflow-hidden shadow-md transition-transform duration-300 ease-in-out 
+                   hover:scale-105 hover:shadow-lg bg-white"
+    >
       <Link href={detailRoute(item.id)} className="block">
         <div className="relative w-full h-36 rounded-t-lg overflow-hidden">
           <Image
@@ -42,12 +44,12 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
           />
         </div>
 
-        <div className="p-2">
-          <h2 className={clsx(Typography.Headline, "mb-1 line-clamp-2")}>{item.title}</h2>
-          <p className={clsx(Typography.Title, txtColors.gray500, "line-clamp-2")}>{"#" + item.id}</p>
+        <div className="px-4 py-2">
+          <h2 className={clsx(Typography.Subtitle, "mb-1 line-clamp-2")}>{item.title}</h2>
+          <p className={clsx(Typography.Caption, txtColors.gray800, "line-clamp-2")}>{"#" + item.id}</p>
         </div>
       </Link>
-      <div className="flex justify-end gap-1 p-2">
+      <div className="flex justify-end gap-3 p-3">
         <Link href={editRoute(item.id)} onClick={(e) => e.stopPropagation()}>
           <IconButton
             href={editRoute(item.id)}
