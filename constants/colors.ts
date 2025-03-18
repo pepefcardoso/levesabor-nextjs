@@ -12,6 +12,7 @@ export const bgColors = {
   gray800: "bg-gray-800",
   white: "bg-white",
   black: "bg-black",
+  red: "bg-red",
 } as const;
 
 export const txtColors = {

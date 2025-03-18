@@ -67,20 +67,20 @@ export const Typography = {
     fontWeights.medium,
     `sm:${fontSizes.lg}`,
     `md:${fontSizes.xl}`,
-    `lg:${fontSizes.xl2}`,
+    `lg:${fontSizes.xl}`,
     `md:${fontWeights.medium}`,
-    `lg:${fontWeights.semibold}`
+    `lg:${fontWeights.medium}`
   ),
 
   // Body & Paragraphs
   Body: clsx(
-    fontSizes.base,
+    fontSizes.lg,
     fontWeights.normal,
     `sm:${fontSizes.lg}`,
     `md:${fontSizes.xl}`,
-    `lg:${fontSizes.xl2}`,
-    `md:${fontWeights.medium}`,
-    `lg:${fontWeights.semibold}`
+    `lg:${fontSizes.xl}`,
+    `md:${fontWeights.normal}`,
+    `lg:${fontWeights.normal}`
   ),
 
   //ok
@@ -117,13 +117,13 @@ export const Typography = {
   // UI & Interactive Elements
   //ok
   Button: clsx(
-    fontSizes.lg,
-    fontWeights.medium,
-    `sm:${fontSizes.lg}`,
-    `md:${fontSizes.xl}`,
-    `lg:${fontSizes.xl}`,
-    `md:${fontWeights.semibold}`,
-    `lg:${fontWeights.semibold}`
+    fontSizes.base,
+    fontWeights.normal,
+    `sm:${fontSizes.base}`,
+    `md:${fontSizes.lg}`,
+    `lg:${fontSizes.lg}`,
+    `md:${fontWeights.medium}`,
+    `lg:${fontWeights.medium}`
   ),
 
   Label: clsx(

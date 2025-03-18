@@ -1,16 +1,21 @@
 "use client";
 
-import FilledButton from "@/components/Buttons/FilledButton";
 import IconButton from "@/components/Buttons/IconButton";
+import TextButton from "@/components/Buttons/TextButton";
 import { UserProfileForm } from "@/components/Forms/UserProfileForm";
-import { UserProfileSkeleton } from "@/components/Skeletons/UserProfileSkeleton";
-import { txtColors } from "@/constants/colors";
+import { FormSkeleton } from "@/components/Skeletons/FormSkeleton";
+import PageSkeleton from "@/components/Skeletons/PageSkeleton";
+import { iconColors, txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
 import { deleteUser, getCurrentUser, updateUser } from "@/services/userService";
+import { FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
 import { User } from "@/typings/user";
-import { useRouter } from "next/router";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
+import useAuthStore from "store/authStore";
 
 export default function UserProfile() {
   const router = useRouter();
@@ -44,8 +49,7 @@ export default function UserProfile() {
       setUser(updatedUser);
       toast.success("✅ Perfil atualizado com sucesso!");
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Falha ao atualizar perfil";
+      const errorMessage = error instanceof Error ? error.message : "Falha ao atualizar perfil";
       toast.error(`❌ ${errorMessage}`);
       return Promise.reject(errorMessage);
     } finally {
@@ -57,6 +61,7 @@ export default function UserProfile() {
     try {
       if (!user) return;
       await deleteUser(user.id);
+      useAuthStore.getState().logout();
       router.push("/");
     } catch {
       toast.error("Falha ao excluir conta");
@@ -64,63 +69,55 @@ export default function UserProfile() {
     }
   };
 
-  if (loading || fetchError) return <UserProfileSkeleton />;
-  if (!user)
-    return <div className="text-center py-20">Usuário não encontrado</div>;
+  if (loading || fetchError) return <PageSkeleton />;
+  if (!user) return <div className="text-center py-20">Usuário não encontrado</div>;
 
   return (
-    <div className="min-h-[85vh] bg-gray-300">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {isSubmitting ? (
-          <UserProfileSkeleton />
-        ) : (
-          <div className="bg-white rounded-2xl shadow-xl p-8 relative">
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      {isSubmitting ? (
+        <FormSkeleton />
+      ) : (
+        <div className="bg-white rounded-2xl shadow-xl p-8 relative overflow-hidden">
+          <div className="flex items-center justify-between mb-8">
+            <h1 className={clsx(Typography.Headline)}>Meu Perfil</h1>
             <IconButton
-              onClick={() => setShowDeleteDialog(true)}
-              ariaLabel="Excluir conta"
-              className="absolute top-6 right-6 text-red-600 hover:text-red-700"
+              onClick={() => {
+                console.log("IconButton clicked");
+                setShowDeleteDialog(true);
+              }}
               Icon={FaTrash}
-            />
-
-            <h1 className="text-4xl font-bold text-gray-900 mb-8">
-              Meu Perfil
-            </h1>
-
-            <UserProfileForm
-              initialData={user}
-              onSubmit={handleUpdateProfile}
-              isSubmitting={isSubmitting}
+              color={iconColors.red}
+              hoverAnimation={FilledButtonHovers.opacity}
             />
           </div>
-        )}
 
-        <dialog
-          open={showDeleteDialog}
-          onClose={() => setShowDeleteDialog(false)}
-          className="bg-white rounded-lg p-6 max-w-md mx-auto z-50"
-        >
-          <h2 className="text-xl font-semibold mb-4">Confirmar Exclusão</h2>
-          <p className="mb-6 text-lg text-gray-600">
-            Tem certeza que deseja excluir sua conta permanentemente?
-          </p>
-          <div className="flex justify-end gap-4">
-            <FilledButton
-              text="Cancelar"
-              onClick={() => setShowDeleteDialog(false)}
-              type="button"
-              color="bg-white"
-              fontColor={txtColors.gray800}
-            />
-            <FilledButton
-              text="Confirmar"
-              onClick={handleDelete}
-              type="button"
-              color="bg-red-600"
-              fontColor={txtColors.white}
-            />
-          </div>
-        </dialog>
-      </div>
+          <UserProfileForm initialData={user} onSubmit={handleUpdateProfile} isSubmitting={isSubmitting} />
+
+          {showDeleteDialog && (
+            <div
+              className={clsx(
+                "absolute inset-0 flex items-center px-4 justify-center bg-black bg-opacity-50 rounded-2xl transition-opacity duration-300"
+              )}
+            >
+              <div className="bg-white rounded-lg p-6 max-w-md mx-auto">
+                <h2 className={clsx(Typography.Subtitle, "mb-4")}>Confirmar Exclusão</h2>
+                <p className={clsx(Typography.Body, txtColors.gray500, "mb-6")}>
+                  Tem certeza que deseja excluir sua conta permanentemente?
+                </p>
+                <div className="flex justify-end gap-4">
+                  <TextButton text="Cancelar" onClick={() => setShowDeleteDialog(false)} color={txtColors.gray500} />
+                  <TextButton
+                    text="Confirmar"
+                    onClick={handleDelete}
+                    hoverAnimation={TextButtonHovers.bold}
+                    color={txtColors.primary}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
