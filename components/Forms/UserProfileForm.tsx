@@ -3,8 +3,9 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { sanitizeImageUrl } from "tools/helper";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
-import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
-import TextButton from "../Buttons/TextButton";
+import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import IconButton from "../Buttons/IconButton";
+import { FiEdit2 } from "react-icons/fi";
 
 type UserProfileFormProps = {
   initialData: {
@@ -49,74 +50,71 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto space-y-8 px-4 sm:px-0">
       <div className="flex flex-col items-center space-y-4">
-        <div className="relative">
-          <div className="w-48 h-48 rounded-lg shadow-lg overflow-hidden">
-            <Image
-              src={previewImage || sanitizeImageUrl(initialData.image?.url)}
-              alt="Perfil"
-              width={192}
-              height={192}
-              className="object-cover w-full h-full"
+        <div className="relative w-48 h-48">
+          <Image
+            src={previewImage || sanitizeImageUrl(initialData.image?.url)}
+            alt="Perfil"
+            width={192}
+            height={192}
+            className="rounded-full border-4 border-primary object-cover w-full h-full shadow-lg"
+          />
+          <div className="absolute bottom-2 right-2">
+            <IconButton
+              onClick={() => fileInputRef.current && fileInputRef.current.click()}
+              Icon={FiEdit2}
+              className="bg-white rounded-full shadow-md border-2 border-gray-300"
             />
           </div>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+            disabled={isSubmitting}
+            ref={fileInputRef}
+          />
         </div>
-        <TextButton
-          onClick={() => fileInputRef.current && fileInputRef.current.click()}
-          text="Alterar Foto"
-          disabled={isSubmitting}
-          hoverAnimation={TextButtonHovers.scale}
-        />
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="hidden"
-          disabled={isSubmitting}
-          ref={fileInputRef}
-        />
       </div>
 
-      <div className="space-y-8">
-        <div className="space-y-6">
-          <CustomTextInput
-            label="Nome"
-            name="name"
-            value={formValues.name}
-            onChange={(e) => setFormValues((prev) => ({ ...prev, name: e.target.value }))}
-            placeholder="Nome"
-            disabled={isSubmitting}
-          />
+      <div className="space-y-6">
+        <CustomTextInput
+          label="Nome"
+          name="name"
+          value={formValues.name}
+          onChange={(e) => setFormValues((prev) => ({ ...prev, name: e.target.value }))}
+          placeholder="Nome"
+          disabled={isSubmitting}
+        />
 
-          <CustomTextInput
-            name="email"
-            label="E-mail"
-            value={initialData.email}
-            placeholder="E-mail"
-            disabled
-            className="bg-gray-100"
-          />
+        <CustomTextInput
+          name="email"
+          label="E-mail"
+          value={initialData.email}
+          placeholder="E-mail"
+          disabled
+          className="bg-gray-100"
+        />
 
-          <CustomTextInput
-            label="Data de Nascimento"
-            type={InputType.Date}
-            name="birthday"
-            value={formValues.birthday}
-            onChange={(e) => setFormValues((prev) => ({ ...prev, birthday: e.target.value }))}
-            placeholder="Data de Nascimento"
-            disabled={isSubmitting}
-          />
+        <CustomTextInput
+          label="Data de Nascimento"
+          type={InputType.Date}
+          name="birthday"
+          value={formValues.birthday}
+          onChange={(e) => setFormValues((prev) => ({ ...prev, birthday: e.target.value }))}
+          placeholder="Data de Nascimento"
+          disabled={isSubmitting}
+        />
 
-          <CustomTextInput
-            name="phone"
-            label="Telefone"
-            value={formValues.phone}
-            onChange={(e) => setFormValues((prev) => ({ ...prev, phone: e.target.value }))}
-            placeholder="Telefone"
-            disabled={isSubmitting}
-            type={InputType.Tel}
-          />
-        </div>
+        <CustomTextInput
+          name="phone"
+          label="Telefone"
+          value={formValues.phone}
+          onChange={(e) => setFormValues((prev) => ({ ...prev, phone: e.target.value }))}
+          placeholder="Telefone"
+          disabled={isSubmitting}
+          type={InputType.Tel}
+        />
       </div>
 
       <div className="flex justify-end">
@@ -125,6 +123,7 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
           text="Salvar"
           disabled={isSubmitting}
           hoverAnimation={FilledButtonHovers.opacity}
+          className="px-8"
         />
       </div>
     </form>

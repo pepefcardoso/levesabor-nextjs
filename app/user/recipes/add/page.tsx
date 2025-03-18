@@ -1,13 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import { RecipeForm } from "@/components/Forms/RecipeForm";
+import PageSkeleton from "@/components/Skeletons/PageSkeleton";
+import { Typography } from "@/constants/typography";
+import { getRecipeCategories } from "@/services/recipeCategoryService";
+import { getRecipeDiets } from "@/services/recipeDietService";
+import { createRecipe } from "@/services/recipeService";
+import { RecipeCategory, RecipeDiet } from "@/typings/recipe";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { RecipeCategory, RecipeDiet } from "../../../../typings/recipe";
-import { getRecipeCategories } from "../../../../services/recipeCategoryService";
-import { getRecipeDiets } from "../../../../services/recipeDietService";
-import { createRecipe } from "../../../../services/recipeService";
-import { FormSkeleton } from "../../../../components/Skeletons/FormSkeleton";
-import { RecipeForm } from "../../../../components/Forms/RecipeForm";
 
 export default function AddUserRecipePage() {
   const router = useRouter();
@@ -49,23 +52,21 @@ export default function AddUserRecipePage() {
   };
 
   if (isLoadingData) {
-    return <FormSkeleton />;
+    return <PageSkeleton />;
   }
 
   return (
-    <div className="min-h-screen bg-[#d3d3d3] py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">
-            Criar Nova Receita
-          </h1>
-          <RecipeForm
-            categories={categories}
-            diets={diets}
-            isSubmitting={isSubmitting}
-            onSubmit={handleCreateRecipe}
-          />
-        </div>
+    <div className="container mx-auto px-6 py-10 max-w-4xl">
+      <div className="bg-white rounded-lg shadow-lg p-8">
+        <h1 className={clsx(Typography.Title, "mb-12")}>
+          Criar Nova Receita
+        </h1>
+        <RecipeForm
+          categories={categories}
+          diets={diets}
+          isSubmitting={isSubmitting}
+          onSubmit={handleCreateRecipe}
+        />
       </div>
     </div>
   );

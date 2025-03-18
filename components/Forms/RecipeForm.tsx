@@ -1,17 +1,20 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { IngredientForm } from "./IngredientForm";
-import { StepForm } from "./StepForm";
-import { RecipeDifficultyEnum } from "../../typings/enums";
-import { RecipeCategory, RecipeDiet, RecipeIngredient, RecipeStep } from "../../typings/recipe";
+
+import { RecipeDifficultyEnum } from "@/typings/enums";
+import { RecipeCategory, RecipeDiet, RecipeIngredient, RecipeStep } from "@/typings/recipe";
+import { useEffect, useRef, useState } from "react";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import CustomTextAreaInput from "../Inputs/CustomTextAreaInput";
 import CustomInputSelect from "../Inputs/CustomSelectInput";
 import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
-import FilledButton from "../Buttons/FilledButton";
-import { Typography } from "../../constants/typography";
-import { txtColors } from "../../constants/colors";
+import { IngredientForm } from "./IngredientForm";
+import { Typography } from "@/constants/typography";
 import Image from "next/image";
+import { StepForm } from "./StepForm";
+import FilledButton from "../Buttons/FilledButton";
+import clsx from "clsx";
+import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import { txtColors } from "@/constants/colors";
 
 interface FormDataValues {
   title: string;
@@ -23,6 +26,7 @@ interface FormDataValues {
   diets: string[];
   ingredients: RecipeIngredient[];
   steps: RecipeStep[];
+  image_url: string;
 }
 
 interface RecipeFormProps {
@@ -44,10 +48,17 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
     diets: initialData?.diets || [],
     ingredients: initialData?.ingredients || [],
     steps: initialData?.steps || [],
+    image_url: initialData?.image_url || "",
   });
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(formData.image_url || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (formData.image_url) {
+      setPreviewImage(formData.image_url);
+    }
+  }, [formData.image_url]);
 
   const handleDietChange = (selected: (string | number)[]) => {
     setFormData((prev) => ({ ...prev, diets: selected.map(String) }));
@@ -91,14 +102,15 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
     .map((value) => ({ value, label: RecipeDifficultyEnum[value] }));
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="space-y-6">
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
+      <div className="space-y-8">
         <CustomTextInput
           label="Título"
           id="title"
           value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
           required
+          maxLength={100}
           disabled={isSubmitting}
         />
 
@@ -108,7 +120,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           required
           disabled={isSubmitting}
-          rows={4}
+          rows={5}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -119,6 +131,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
             required
             disabled={isSubmitting}
+            min={0}
           />
 
           <CustomTextInput
@@ -128,6 +141,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
             onChange={(e) => setFormData({ ...formData, portion: e.target.value })}
             required
             disabled={isSubmitting}
+            min={0}
           />
         </div>
 
@@ -158,21 +172,21 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
           />
         </div>
 
-        <div>
-          <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
+        <div className="space-y-2">
+          <label className={clsx(Typography.Subtitle)}>
             Dietas
           </label>
           <CustomCheckboxInput
-            options={diets.map((diet) => ({ id: diet.id, label: diet.name }))}
+            options={diets.map((diet) => ({ id: String(diet.id), label: diet.name }))}
             selected={formData.diets}
             onChange={handleDietChange}
-            variant="grid"
             disabled={isSubmitting}
+            placeholder="Selecione as dietas"
           />
         </div>
 
-        <div>
-          <label className={`${Typography.h6} mb-3`} style={{ color: txtColors.gray500 }}>
+        <div className="space-y-2">
+          <label className={clsx(Typography.Subtitle)}>
             Ingredientes
           </label>
           <IngredientForm
@@ -181,52 +195,54 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
           />
         </div>
 
-        <div>
-          <label className={`${Typography.h6} mb-3`} style={{ color: txtColors.gray500 }}>
+        <div className="space-y-2">
+          <label className={clsx(Typography.Subtitle)}>
             Passos
           </label>
           <StepForm onStepsChange={(steps) => setFormData({ ...formData, steps })} initialSteps={formData.steps} />
         </div>
 
-        <div>
-          <label className={`${Typography.h6} mb-4`} style={{ color: txtColors.gray500 }}>
+        <div className="space-y-6">
+          <label className={clsx(Typography.Subtitle)}>
             Imagem da Receita
           </label>
           <div className="flex flex-col items-center gap-6">
-            {previewImage ? (
-              <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                <div className="w-[300px] h-[200px] rounded-md shadow-md overflow-hidden">
+            <div
+              className="cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {previewImage ? (
+                <div className="relative group w-full max-w-[400px] h-[300px] rounded-md shadow-md overflow-hidden">
                   <Image
                     src={previewImage}
                     alt="Preview"
-                    width={300}
-                    height={200}
-                    className="object-cover rounded-md hover:opacity-80 transition-all"
+                    width={400}
+                    height={300}
+                    unoptimized
+                    className="object-cover w-full h-auto transition-opacity duration-300"
                   />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 transition-opacity group-hover:opacity-100">
+                    <p className={clsx(Typography.Body, txtColors.white)}>
+                      Clique para editar
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="w-full max-w-md p-8 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 text-center">
-                <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+
+              ) : (
+                <div className="w-full max-w-[400px] h-[300px] p-8 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 flex flex-col items-center justify-center">
+                  <Image
+                    src="/image-icon.svg"
+                    alt="Upload Icon"
+                    width={48}
+                    height={48}
+                    className="mx-auto"
                   />
-                </svg>
-                <p className="mt-2 text-sm text-gray-600">Arraste ou clique para fazer upload</p>
-              </div>
-            )}
-
-            <FilledButton
-              text={previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isSubmitting}
-              color="bg-white"
-              className="px-6 py-2"
-            />
-
+                  <p className={clsx(Typography.Caption, txtColors.gray500, "mt-4")}>
+                    Arraste ou clique para fazer upload
+                  </p>
+                </div>
+              )}
+            </div>
             <input
               ref={fileInputRef}
               type="file"
@@ -237,15 +253,16 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
             />
           </div>
         </div>
+
       </div>
 
       <div className="flex justify-end pt-8">
         <FilledButton
           text={isSubmitting ? "Salvando..." : "Salvar Receita"}
-          type="submit"
+          type={ButtonTypes.submit}
           disabled={isSubmitting}
-          color="bg-yellow-400"
-          className={`${Typography.button} text-black hover:bg-yellow-500 transition-colors shadow-sm font-medium text-base disabled:bg-gray-300 disabled:cursor-not-allowed`}
+          className="px-8"
+          hoverAnimation={FilledButtonHovers.opacity}
         />
       </div>
     </form>

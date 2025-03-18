@@ -105,13 +105,13 @@ export const Typography = {
   ),
 
   Quote: clsx(
-    fontSizes.lg,
+    fontSizes.sm,
     fontWeights.light,
-    `sm:${fontSizes.xl}`,
-    `md:${fontSizes.xl2}`,
-    `lg:${fontSizes.xl3}`,
+    `sm:${fontSizes.sm}`,
+    `md:${fontSizes.base}`,
+    `lg:${fontSizes.base}`,
     `md:${fontWeights.normal}`,
-    `lg:${fontWeights.medium}`
+    `lg:${fontWeights.normal}`
   ),
 
   // UI & Interactive Elements

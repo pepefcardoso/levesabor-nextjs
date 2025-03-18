@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { getRecipeUnits } from "../../services/recipeUnitService";
-import { RecipeIngredient, RecipeUnit } from "../../typings/recipe";
-import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
-import FilledButton from "../Buttons/FilledButton";
-import CustomInputSelect from "../Inputs/CustomSelectInput";
+import { getRecipeUnits } from "@/services/recipeUnitService";
+import { RecipeIngredient, RecipeUnit } from "@/typings/recipe";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
+import CustomInputSelect from "../Inputs/CustomSelectInput";
+import FilledButton from "../Buttons/FilledButton";
+import { Typography } from "@/constants/typography";
+import { clsx } from "clsx";
+import { txtColors } from "@/constants/colors";
+import { FilledButtonHovers } from "@/typings/buttons";
 
 interface IngredientFormProps {
   onIngredientsChange: (ingredients: RecipeIngredient[]) => void;
@@ -57,9 +61,9 @@ export const IngredientForm = ({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 mb-2">
-        <span>Nome do Ingrediente</span>
-        <span>Quantidade</span>
-        <span>Unidade</span>
+        <span className={clsx(Typography.Quote, txtColors.gray800)}>Nome do Ingrediente</span>
+        <span className={clsx(Typography.Quote, txtColors.gray800)}>Quantidade</span>
+        <span className={clsx(Typography.Quote, txtColors.gray800)}>Unidade</span>
       </div>
 
       {ingredients.map((ingredient, index) => (
@@ -70,7 +74,6 @@ export const IngredientForm = ({
             value={ingredient.name}
             onChange={(e) => handleChange(index, "name", e.target.value)}
             disabled={isLoading}
-            className="w-full"
           />
 
           <CustomTextInput
@@ -81,7 +84,7 @@ export const IngredientForm = ({
               handleChange(index, "quantity", e.target.valueAsNumber)
             }
             disabled={isLoading}
-            className="w-full"
+            min={0}
           />
 
           <CustomInputSelect
@@ -93,18 +96,16 @@ export const IngredientForm = ({
             onChange={(e) => handleChange(index, "unit_id", e.target.value)}
             placeholder="Selecione"
             disabled={isLoading}
-            className="w-full"
           />
         </div>
       ))}
 
       <FilledButton
         text="Adicionar Ingrediente"
-        color="bg-blue-500"
-        fontColor="text-white"
         onClick={addIngredient}
         disabled={isLoading}
-        className="w-full"
+        className="px-8"
+        hoverAnimation={FilledButtonHovers.opacity}
       />
     </div>
   );

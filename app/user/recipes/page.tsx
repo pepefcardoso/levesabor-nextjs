@@ -1,16 +1,20 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+
+import FilledButton from "@/components/Buttons/FilledButton";
+import ContentCard from "@/components/Cards/ContentCard";
+import EmptyList from "@/components/Others/EmptyList";
+import Paginator from "@/components/Others/Paginator";
+import CardSkeleton from "@/components/Skeletons/CardSkeleton";
+import { Typography } from "@/constants/typography";
+import { deleteRecipe, getMyRecipes } from "@/services/recipeService";
+import { FilledButtonHovers } from "@/typings/buttons";
+import { PaginationResponse } from "@/typings/pagination";
+import { Recipe } from "@/typings/recipe";
+import clsx from "clsx";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useAuthStore from "../../../store/authStore";
-import { Recipe } from "../../../typings/recipe";
-import { PaginationResponse } from "../../../typings/pagination";
-import { deleteRecipe, getMyRecipes } from "../../../services/recipeService";
-import routes from "../../../routes/routes";
-import CardSkeleton from "../../../components/Skeletons/CardSkeleton";
-import EmptyList from "../../../components/Others/EmptyList";
-import FilledButton from "../../../components/Buttons/FilledButton";
-import Paginator from "../../../components/Others/Paginator";
-import ListItemContentCard from "../../../components/Cards/ContentCard";
+import routes from "routes/routes";
+import useAuthStore from "store/authStore";
 
 export default function ListUserRecipes() {
   const { user } = useAuthStore();
@@ -55,14 +59,13 @@ export default function ListUserRecipes() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Minhas Receitas</h1>
+    <div className="container mx-auto p-8 max-w-6xl">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
+        <h1 className={clsx(Typography.Headline, "mb-4 md:mb-0")}>Minhas Receitas</h1>
         <FilledButton
           text="Adicionar Nova Receita"
           href={routes.user.recipes.create}
-          color="bg-yellow-500"
-          fontColor="white"
+          hoverAnimation={FilledButtonHovers.opacity}
         />
       </div>
 
@@ -73,12 +76,12 @@ export default function ListUserRecipes() {
           ))}
         </div>
       ) : recipes.length === 0 ? (
-        <EmptyList message="Você ainda não criou nenhuma receita." />
+        <EmptyList title="Você ainda não criou nenhum post." />
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {recipes.map((recipe) => (
-              <ListItemContentCard
+              <ContentCard
                 key={recipe.id}
                 detailRoute={(id) => routes.recipes.details(id)}
                 editRoute={(id) => routes.user.recipes.update(id)}
@@ -92,6 +95,7 @@ export default function ListUserRecipes() {
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={setCurrentPage}
+              className="mt-10"
             />
           )}
         </>
