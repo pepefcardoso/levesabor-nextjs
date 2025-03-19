@@ -1,40 +1,21 @@
-import Link from "next/link";
 import React from "react";
 import routes from "../routes/routes";
+import clsx from "clsx";
+import { Typography } from "@/constants/typography";
+import { FaExclamationTriangle } from "react-icons/fa";
+import { iconColors, txtColors } from "@/constants/colors";
+import FilledButton from "@/components/Buttons/FilledButton";
+import { FilledButtonHovers } from "@/typings/buttons";
 
 export default function NotFound() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        textAlign: "center",
-      }}
-    >
-      <h1 style={{ fontSize: "3rem", marginBottom: "20px" }}>
-        Página não encontrada
-      </h1>
-      <p style={{ fontSize: "1.5rem", marginBottom: "40px" }}>
-        A página que você está procurando não existe.
-      </p>
-      <Link href={routes.home}>
-        <button
-          style={{
-            padding: "15px 30px",
-            fontSize: "1.2rem",
-            backgroundColor: "green",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
-        >
-          Voltar para a página inicial
-        </button>
-      </Link>
+    <div className="flex flex-col items-center justify-center h-screen text-center p-4">
+      <div className="mb-8">
+        <FaExclamationTriangle size={80} color={iconColors.tertiary} />
+      </div>
+      <h1 className={clsx(Typography.Display, "mb-4")}>Página não encontrada</h1>
+      <p className={clsx(Typography.Body, txtColors.gray800, "mb-12")}>A página que você está procurando não existe.</p>
+      <FilledButton text="Voltar para a página inicial" href={routes.home} hoverAnimation={FilledButtonHovers.scale} />
     </div>
   );
 }

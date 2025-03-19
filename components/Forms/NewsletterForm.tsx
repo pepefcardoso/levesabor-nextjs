@@ -8,6 +8,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledIconButton from "../Buttons/FilledIconButton";
+import { ButtonTypes } from "@/typings/buttons";
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState("");
@@ -35,8 +36,8 @@ const NewsletterForm = () => {
 
   return (
     <div className="max-w-md mx-auto px-4 py-8">
-      <h2 className={clsx(Typography.Display, "mb-2")}>Nossa newsletter</h2>
-      <p className={clsx(Typography.Title, txtColors.gray500, "mb-6")}>
+      <h2 className={clsx(Typography.Headline, "mb-2")}>Nossa newsletter</h2>
+      <p className={clsx(Typography.Caption, txtColors.gray500, "mb-4")}>
         Cadastre-se e não perca nenhuma novidade
       </p>
       <form onSubmit={handleSubmit} className="flex items-center gap-2">
@@ -46,11 +47,10 @@ const NewsletterForm = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Seu email"
           required
-          className="flex-1"
         />
         <FilledIconButton
           disabled={submitting}
-          type="submit"
+          type={ButtonTypes.submit}
         />
       </form>
     </div>

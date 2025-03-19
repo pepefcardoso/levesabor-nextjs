@@ -11,7 +11,6 @@ const hoverAnimations = [
   "hover:-translate-y-0.6",
   "hover:shadow-glow",
 ];
-
 const bgColors = [
   "bg-primary",
   "bg-secondary",
@@ -21,7 +20,6 @@ const bgColors = [
   "bg-gray-500",
   "bg-gray-800",
 ];
-
 const txtColors = [
   "text-primary",
   "text-secondary",
@@ -31,9 +29,7 @@ const txtColors = [
   "text-gray-500",
   "text-gray-800",
 ];
-
 const borderColors = ["border-primary", "border-secondary", "border-tertiary"];
-
 const ringColors = ["ring-primary", "ring-secondary", "ring-tertiary"];
 
 const config: Config = {
@@ -50,12 +46,8 @@ const config: Config = {
     ...ringColors,
     ...Object.values(fontSizes),
     ...Object.values(fontWeights),
-    ...Object.values(fontSizes).map((size) => `sm:${size}`),
     ...Object.values(fontSizes).map((size) => `md:${size}`),
-    ...Object.values(fontSizes).map((size) => `lg:${size}`),
-    ...Object.values(fontWeights).map((weight) => `sm:${weight}`),
     ...Object.values(fontWeights).map((weight) => `md:${weight}`),
-    ...Object.values(fontWeights).map((weight) => `lg:${weight}`),
   ],
   theme: {
     extend: {

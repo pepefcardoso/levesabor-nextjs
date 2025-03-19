@@ -11,19 +11,10 @@ import routes from "routes/routes";
 const TermsOfUsePage = () => {
   return (
     <div className="mx-auto px-8 py-12 max-w-4xl flex flex-col">
-      <h1 className={clsx(
-        Typography.Display,
-        txtColors.black,
-        "text-left w-full mb-6 sm:mb-8"
-      )}>
-        Termos de Uso
-      </h1>
+      <h1 className={clsx(Typography.Headline, "text-left w-full mb-6 sm:mb-8")}>Termos de Uso</h1>
 
       <div className="leading-relaxed w-full">
-        <div className={clsx(
-          Typography.Title,
-          txtColors.gray800,
-        )}>
+        <div className={clsx(Typography.Body, txtColors.gray800)}>
           {TERMS_OF_USE_PARAGRAPHS.map((paragraph, index) => (
             <p key={index} className={index > 0 ? "mt-4" : ""}>
               {paragraph}
@@ -34,8 +25,8 @@ const TermsOfUsePage = () => {
           <FilledButton
             text="Converse Conosco"
             href={routes.contact}
-            hoverAnimation={FilledButtonHovers.opacity}>
-          </FilledButton>
+            hoverAnimation={FilledButtonHovers.opacity}
+          ></FilledButton>
         </div>
       </div>
     </div>

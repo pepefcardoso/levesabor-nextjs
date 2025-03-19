@@ -14,7 +14,7 @@ interface CustomChipProps {
 const CustomChip: React.FC<CustomChipProps> = ({
   bgColor = bgColors.tertiary,
   fontColor = txtColors.black,
-  typography = Typography.Body,
+  typography = Typography.Tag,
   text,
   className,
 }) => {

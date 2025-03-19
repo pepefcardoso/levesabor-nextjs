@@ -16,6 +16,7 @@ export const fontSizes = {
 } as const;
 
 export const fontWeights = {
+  thin: "font-thin",
   light: "font-light",
   normal: "font-normal",
   medium: "font-medium",
@@ -28,162 +29,22 @@ export const fontWeights = {
 export type TypographyType = (typeof Typography)[keyof typeof Typography];
 
 export const Typography = {
-  // Headings & Titles
-  //ok
-  Display: clsx(
-    fontSizes.xl4,
-    fontWeights.bold,
-    `sm:${fontSizes.xl5}`,
-    `md:${fontSizes.xl6}`,
-    `lg:${fontSizes.xl7}`,
-    `sm:${fontWeights.extrabold}`,
-    `lg:${fontWeights.black}`
-  ),
+  // Headings
+  Display: clsx(fontSizes.xl4, fontWeights.extrabold, `md:${fontSizes.xl5}`, `md:${fontWeights.black}`),
+  Headline: clsx(fontSizes.xl2, fontWeights.bold, `md:${fontSizes.xl3}`, `md:${fontWeights.extrabold}`),
+  Title: clsx(fontSizes.lg, fontWeights.medium, `md:${fontSizes.xl}`, `md:${fontWeights.bold}`),
+  Subtitle: clsx(fontSizes.base, fontWeights.normal, `md:${fontSizes.lg}`, `md:${fontWeights.medium}`),
 
-  Headline: clsx(
-    fontSizes.xl3,
-    fontWeights.bold,
-    `sm:${fontSizes.xl3}`,
-    `md:${fontSizes.xl4}`,
-    `lg:${fontSizes.xl5}`,
-    `md:${fontWeights.bold}`,
-    `lg:${fontWeights.extrabold}`
-  ),
+  // Body
+  Body: clsx(fontSizes.lg, fontWeights.light, `md:${fontSizes.xl}`, `md:${fontWeights.normal}`),
+  Caption: clsx(fontSizes.base, fontWeights.light, `md:${fontSizes.lg}`, `md:${fontWeights.normal}`),
+  Footnote: clsx(fontSizes.sm, fontWeights.light, `md:${fontSizes.base}`, `md:${fontWeights.normal}`),
+  Quote: clsx(fontSizes.xs, fontWeights.thin, `md:${fontSizes.sm}`, `md:${fontWeights.light}`),
 
-  //ok
-  Title: clsx(
-    fontSizes.xl2,
-    fontWeights.semibold,
-    `sm:${fontSizes.xl2}`,
-    `md:${fontSizes.xl3}`,
-    `lg:${fontSizes.xl4}`,
-    `md:${fontWeights.semibold}`,
-    `lg:${fontWeights.bold}`
-  ),
-
-  //ok
-  Subtitle: clsx(
-    fontSizes.lg,
-    fontWeights.medium,
-    `sm:${fontSizes.lg}`,
-    `md:${fontSizes.xl}`,
-    `lg:${fontSizes.xl}`,
-    `md:${fontWeights.medium}`,
-    `lg:${fontWeights.medium}`
-  ),
-
-  // Body & Paragraphs
-  Body: clsx(
-    fontSizes.lg,
-    fontWeights.normal,
-    `sm:${fontSizes.lg}`,
-    `md:${fontSizes.xl}`,
-    `lg:${fontSizes.xl}`,
-    `md:${fontWeights.normal}`,
-    `lg:${fontWeights.normal}`
-  ),
-
-  //ok
-  Caption: clsx(
-    fontSizes.sm,
-    fontWeights.light,
-    `sm:${fontSizes.base}`,
-    `md:${fontSizes.base}`,
-    `lg:${fontSizes.lg}`,
-    `md:${fontWeights.light}`,
-    `lg:${fontWeights.normal}`
-  ),
-
-  Footnote: clsx(
-    fontSizes.xs,
-    fontWeights.light,
-    `sm:${fontSizes.sm}`,
-    `md:${fontSizes.base}`,
-    `lg:${fontSizes.lg}`,
-    `md:${fontWeights.normal}`,
-    `lg:${fontWeights.medium}`
-  ),
-
-  Quote: clsx(
-    fontSizes.sm,
-    fontWeights.light,
-    `sm:${fontSizes.sm}`,
-    `md:${fontSizes.base}`,
-    `lg:${fontSizes.base}`,
-    `md:${fontWeights.normal}`,
-    `lg:${fontWeights.normal}`
-  ),
-
-  // UI & Interactive Elements
-  //ok
-  Button: clsx(
-    fontSizes.base,
-    fontWeights.normal,
-    `sm:${fontSizes.base}`,
-    `md:${fontSizes.lg}`,
-    `lg:${fontSizes.lg}`,
-    `md:${fontWeights.medium}`,
-    `lg:${fontWeights.medium}`
-  ),
-
-  Label: clsx(
-    fontSizes.sm,
-    fontWeights.medium,
-    `sm:${fontSizes.base}`,
-    `md:${fontSizes.lg}`,
-    `lg:${fontSizes.xl}`,
-    `md:${fontWeights.semibold}`,
-    `lg:${fontWeights.bold}`
-  ),
-
-  Tag: clsx(
-    fontSizes.xs,
-    fontWeights.semibold,
-    `sm:${fontSizes.sm}`,
-    `md:${fontSizes.base}`,
-    `lg:${fontSizes.lg}`,
-    `md:${fontWeights.bold}`,
-    `lg:${fontWeights.extrabold}`
-  ),
-
-  Helper: clsx(
-    fontSizes.sm,
-    fontWeights.light,
-    `sm:${fontSizes.base}`,
-    `md:${fontSizes.lg}`,
-    `lg:${fontSizes.xl}`,
-    `md:${fontWeights.normal}`,
-    `lg:${fontWeights.normal}`
-  ),
-
-  Link: clsx(
-    fontSizes.base,
-    fontWeights.medium,
-    `sm:${fontSizes.lg}`,
-    `md:${fontSizes.xl}`,
-    `lg:${fontSizes.xl2}`,
-    `md:${fontWeights.semibold}`,
-    `lg:${fontWeights.bold}`
-  ),
-
-  // Miscellaneous
-  Overline: clsx(
-    fontSizes.sm,
-    fontWeights.semibold,
-    `sm:${fontSizes.base}`,
-    `md:${fontSizes.lg}`,
-    `lg:${fontSizes.xl}`,
-    `md:${fontWeights.bold}`,
-    `lg:${fontWeights.extrabold}`
-  ),
-
-  Meta: clsx(
-    fontSizes.xs,
-    fontWeights.light,
-    `sm:${fontSizes.sm}`,
-    `md:${fontSizes.base}`,
-    `lg:${fontSizes.lg}`,
-    `md:${fontWeights.normal}`,
-    `lg:${fontWeights.medium}`
-  ),
+  // Interactive Elements
+  Button: clsx(fontSizes.base, fontWeights.normal, `md:${fontSizes.lg}`, `md:${fontWeights.medium}`),
+  Label: clsx(fontSizes.sm, fontWeights.normal, `md:${fontSizes.base}`, `md:${fontWeights.medium}`),
+  Tag: clsx(fontSizes.sm, fontWeights.normal),
+  Helper: clsx(fontSizes.sm, fontWeights.light, `md:${fontSizes.lg}`, `md:${fontWeights.normal}`),
+  Link: clsx(fontSizes.base, fontWeights.medium, `md:${fontSizes.lg}`, `md:${fontWeights.semibold}`),
 };
