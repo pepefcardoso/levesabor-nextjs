@@ -25,16 +25,10 @@ const AboutPage = () => {
           />
         </div>
 
-        <div
-          className={clsx(
-            Typography.Body,
-            txtColors.gray800,
-            "text-left w-full md:w-1/2 flex flex-col justify-between mt-4 md:mt-0"
-          )}
-        >
+        <div className={clsx("text-left w-full md:w-1/2 flex flex-col justify-between mt-4 md:mt-0")}>
           <div>
             {ABOUT_US_PARAGRAPHS.map((paragraph, index) => (
-              <p key={index} className={index > 0 ? "mt-4" : ""}>
+              <p key={index} className={clsx(index > 0 ? "mt-4" : "", Typography.Body, txtColors.gray800)}>
                 {paragraph}
               </p>
             ))}

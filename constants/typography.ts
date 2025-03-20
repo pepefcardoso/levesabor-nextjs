@@ -36,8 +36,8 @@ export const Typography = {
   Subtitle: clsx(fontSizes.base, fontWeights.normal, `md:${fontSizes.lg}`, `md:${fontWeights.medium}`),
 
   // Body
-  Body: clsx(fontSizes.lg, fontWeights.light, `md:${fontSizes.xl}`, `md:${fontWeights.normal}`),
-  Caption: clsx(fontSizes.base, fontWeights.light, `md:${fontSizes.lg}`, `md:${fontWeights.normal}`),
+  Body: clsx(fontSizes.base, fontWeights.normal, `md:${fontSizes.lg}`, `md:${fontWeights.normal}`),
+  Caption: clsx(fontSizes.sm, fontWeights.normal, `md:${fontSizes.base}`, `md:${fontWeights.normal}`),
   Footnote: clsx(fontSizes.sm, fontWeights.light, `md:${fontSizes.base}`, `md:${fontWeights.normal}`),
   Quote: clsx(fontSizes.xs, fontWeights.thin, `md:${fontSizes.sm}`, `md:${fontWeights.light}`),
 

@@ -20,13 +20,13 @@ interface CustomTextInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const CustomTextInput = ({ type = InputType.Text, disabled, label, className, ...props }: CustomTextInputProps) => {
   const baseClasses = clsx(
-    "w-full border border-gray-300 rounded-md",
+    "w-full border border-tertiary rounded-md",
     "px-4 py-3",
     "shadow-md",
     "disabled:opacity-50 disabled:cursor-not-allowed",
     "transition-all duration-200",
     "outline-none",
-    "focus:border-secondary focus:ring-2 focus:ring-secondary",
+    "focus:border-secondary focus:ring-2 focus:ring-tertiary",
     className
   );
 

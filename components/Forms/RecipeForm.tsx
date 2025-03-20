@@ -13,8 +13,10 @@ import Image from "next/image";
 import { StepForm } from "./StepForm";
 import FilledButton from "../Buttons/FilledButton";
 import clsx from "clsx";
-import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
 import { txtColors } from "@/constants/colors";
+import TextButton from "../Buttons/TextButton";
+import { useRouter } from "next/navigation";
 
 interface FormDataValues {
   title: string;
@@ -71,6 +73,8 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
       setPreviewImage(URL.createObjectURL(file));
     }
   };
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -173,9 +177,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
         </div>
 
         <div className="space-y-2">
-          <label className={clsx(Typography.Subtitle)}>
-            Dietas
-          </label>
+          <label className={clsx(Typography.Subtitle)}>Dietas</label>
           <CustomCheckboxInput
             options={diets.map((diet) => ({ id: String(diet.id), label: diet.name }))}
             selected={formData.diets}
@@ -186,9 +188,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
         </div>
 
         <div className="space-y-2">
-          <label className={clsx(Typography.Subtitle)}>
-            Ingredientes
-          </label>
+          <label className={clsx(Typography.Subtitle)}>Ingredientes</label>
           <IngredientForm
             onIngredientsChange={(ingredients) => setFormData({ ...formData, ingredients })}
             initialIngredients={formData.ingredients}
@@ -196,21 +196,14 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
         </div>
 
         <div className="space-y-2">
-          <label className={clsx(Typography.Subtitle)}>
-            Passos
-          </label>
+          <label className={clsx(Typography.Subtitle)}>Passos</label>
           <StepForm onStepsChange={(steps) => setFormData({ ...formData, steps })} initialSteps={formData.steps} />
         </div>
 
         <div className="space-y-6">
-          <label className={clsx(Typography.Subtitle)}>
-            Imagem da Receita
-          </label>
+          <label className={clsx(Typography.Subtitle)}>Imagem da Receita</label>
           <div className="flex flex-col items-center gap-6">
-            <div
-              className="cursor-pointer"
-              onClick={() => fileInputRef.current?.click()}
-            >
+            <div className="cursor-pointer" onClick={() => fileInputRef.current?.click()}>
               {previewImage ? (
                 <div className="relative group w-full max-w-[400px] h-[300px] rounded-md shadow-md overflow-hidden">
                   <Image
@@ -222,21 +215,12 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
                     className="object-cover w-full h-auto transition-opacity duration-300"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 transition-opacity group-hover:opacity-100">
-                    <p className={clsx(Typography.Body, txtColors.white)}>
-                      Clique para editar
-                    </p>
+                    <p className={clsx(Typography.Body, txtColors.white)}>Clique para editar</p>
                   </div>
                 </div>
-
               ) : (
-                <div className="w-full max-w-[400px] h-[300px] p-8 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 flex flex-col items-center justify-center">
-                  <Image
-                    src="/image-icon.svg"
-                    alt="Upload Icon"
-                    width={48}
-                    height={48}
-                    className="mx-auto"
-                  />
+                <div className="w-full max-w-[400px] h-[300px] p-8 border-2 border-dashed border-tertiary rounded-2xl bg-gray-50 flex flex-col items-center justify-center">
+                  <Image src="/image-icon.svg" alt="Upload Icon" width={48} height={48} className="mx-auto" />
                   <p className={clsx(Typography.Caption, txtColors.gray500, "mt-4")}>
                     Arraste ou clique para fazer upload
                   </p>
@@ -253,15 +237,20 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
             />
           </div>
         </div>
-
       </div>
 
-      <div className="flex justify-end pt-8">
+      <div className="flex justify-end items-center gap-8">
+        <TextButton
+          onClick={() => router.back()}
+          text="Voltar"
+          disabled={isSubmitting}
+          hoverAnimation={TextButtonHovers.bold}
+          color={txtColors.gray800}
+        />
         <FilledButton
-          text={isSubmitting ? "Salvando..." : "Salvar Receita"}
+          text={"Salvar"}
           type={ButtonTypes.submit}
           disabled={isSubmitting}
-          className="px-8"
           hoverAnimation={FilledButtonHovers.opacity}
         />
       </div>

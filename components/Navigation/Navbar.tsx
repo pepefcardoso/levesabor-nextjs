@@ -13,7 +13,7 @@ import { bgColors, txtColors } from "@/constants/colors";
 import Image from "next/image";
 import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "@/constants/typography";
-import ReactDOM from "react-dom";
+import clsx from "clsx";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,9 +27,9 @@ const Navbar = () => {
     try {
       await AuthService.logout();
       router.push(routes.auth.login);
-      toast.success('Fez logout com sucesso.');
+      toast.success("Fez logout com sucesso.");
     } catch {
-      toast.error('Falha ao fazer logout. Por favor, tente novamente.');
+      toast.error("Falha ao fazer logout. Por favor, tente novamente.");
     }
   };
 
@@ -53,8 +53,8 @@ const Navbar = () => {
           href={link.href}
           text={link.label}
           color={txtColors.white}
-          hoverAnimation={TextButtonHovers.scale}
-          className={mobile ? "w-full text-left px-4 py-3 hover:bg-green-700" : ""}
+          hoverAnimation={TextButtonHovers.bold}
+          className={mobile ? "text-left px-4 py-2" : ""}
           onClick={mobile ? () => setIsMenuOpen(false) : undefined}
         />
       ))}
@@ -64,23 +64,27 @@ const Navbar = () => {
   const renderUserMenu = (mobile = false) => (
     <>
       {USER_LINKS.map((link) => (
-        <TextButton
-          key={link.key}
-          href={link.href}
-          text={link.label}
-          color={txtColors.white}
-          hoverAnimation={TextButtonHovers.bold}
-          className={mobile ? "w-full text-left px-4 py-3 hover:bg-green-700" : ""}
-          onClick={mobile ? () => setIsMenuOpen(false) : undefined}
-        />
+        <div key={link.key}>
+          <TextButton
+            href={link.href}
+            text={link.label}
+            color={mobile ? txtColors.white : txtColors.black}
+            hoverAnimation={TextButtonHovers.bold}
+            typography={Typography.Body}
+            className={clsx(mobile ? "w-full text-left" : "border-b border-tertiary w-full", "px-2 py-1")}
+            onClick={mobile ? () => setIsMenuOpen(false) : undefined}
+          />
+        </div>
       ))}
-      <TextButton
-        text="Sair"
-        color={txtColors.white}
-        hoverAnimation={TextButtonHovers.bold}
-        className={mobile ? "w-full text-left px-4 py-3 hover:bg-green-700" : ""}
-        onClick={handleLogout}
-      />
+      <div className="">
+        <TextButton
+          text="↪ Sair"
+          color={mobile ? txtColors.white : txtColors.black}
+          hoverAnimation={TextButtonHovers.bold}
+          className={clsx(mobile ? "w-full text-left" : "", "px-2 py-3")}
+          onClick={handleLogout}
+        />
+      </div>
     </>
   );
 
@@ -88,16 +92,18 @@ const Navbar = () => {
     <button
       ref={buttonRef}
       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      className="focus:ring-2 focus:ring-white rounded-full transition-transform hover:scale-105"
+      className="focus:ring-2 focus:ring-tertiary rounded-full transition-transform hover:scale-105"
       aria-label="Abrir menu do usuário"
     >
       {user?.image ? (
-        <div className="relative w-[40px] h-[40px] rounded-full hover:ring-2 ring-white">
+        <div className="relative w-[40px] h-[40px] rounded-full hover:ring-2 ring-tertiary">
           <Image src={user.image.url} alt="User profile" width={40} height={40} className="object-cover rounded-full" />
         </div>
       ) : (
-        <div className="w-10 h-10 rounded-full bg-white flex-center hover:ring-2 ring-white">
-          <span className="text-green-800 font-bold">{user?.name?.charAt(0)}</span>
+        <div className="w-10 h-10 rounded-full bg-white flex-center hover:ring-2 ring-tertiary shadow-sm">
+          <span className={clsx(Typography.Title, "flex items-center justify-center w-full h-full")}>
+            {user?.name ? user.name.charAt(0).toUpperCase() : "A"}
+          </span>
         </div>
       )}
     </button>
@@ -125,131 +131,108 @@ const Navbar = () => {
   return (
     <header className={`${bgColors.primary} shadow-lg z-50 relative`}>
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <TextButton href={routes.home} text="LeveSabor" color={txtColors.white} typography={Typography.Display} />
+        <div className="flex items-center gap-4">
+          <div className="lg:hidden">
+            <button
+              className="p-2 text-white"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+            >
+              <div className="relative w-8 h-8">
+                <div
+                  className={`absolute inset-0 transition-all duration-300 ${
+                    isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+                  }`}
+                >
+                  <Image src="/menu.svg" alt="Menu" width={32} height={32} className="w-full h-full" />
+                </div>
+                <div
+                  className={`absolute inset-0 transition-all duration-300 ${
+                    isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+                  }`}
+                >
+                  <Image src="/close.svg" alt="Fechar" width={32} height={32} className="w-full h-full" />
+                </div>
+              </div>
+            </button>
+          </div>
+          <TextButton
+            href={routes.home}
+            text="LeveSabor"
+            color={txtColors.white}
+            typography={Typography.Headline}
+            className="lg:flex-none"
+          />
+        </div>
 
-        <div className="hidden lg:flex items-center gap-8">{renderLinks(NAV_LINKS)}</div>
+        <div className="hidden lg:flex items-center justify-center flex-grow gap-8">{renderLinks(NAV_LINKS)}</div>
 
         <div className="hidden lg:flex items-center gap-6">
           {user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 relative">
               <TextButton
                 href={routes.user.profile}
                 text={user.name}
                 color={txtColors.white}
-                hoverAnimation={TextButtonHovers.underline}
-                typography={Typography.Quote}
+                typography={Typography.Subtitle}
               />
               <UserAvatar />
+              {isDropdownOpen && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-full right-0 mt-2 bg-white shadow-xl rounded-lg p-2 min-w-[200px] z-[1000] border border-tertiary animate-fade-in"
+                >
+                  {renderUserMenu()}
+                </div>
+              )}
             </div>
           ) : (
             <AuthButtons />
           )}
         </div>
-
-        <button
-          className="lg:hidden p-2 text-white"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          <div className="relative w-8 h-8">
-            <svg
-              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"}`}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M3 12h18M3 6h18M3 18h18" />
-            </svg>
-
-            <svg
-              className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"}`}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </div>
-        </button>
       </nav>
 
       <div
-        className={`lg:hidden fixed inset-y-0 left-0 w-64 ${bgColors.primary} shadow-2xl z-50
-          transform transition-transform duration-300 ease-in-out
-          ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`lg:hidden fixed inset-y-0 left-0 w-64 ${
+          bgColors.primary
+        } shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="flex items-center justify-between px-4 py-4">
-          <TextButton
-            href={routes.home}
-            text="LeveSabor"
-            color={txtColors.white}
-            typography={Typography.Display}
-          />
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="text-white p-2 rounded-lg"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+          <TextButton href={routes.home} text="LeveSabor" color={txtColors.white} typography={Typography.Headline} />
+          <button onClick={() => setIsMenuOpen(false)} className="text-white">
+            <Image src="/close.svg" alt="Fechar" width={24} height={24} />
           </button>
         </div>
 
-        <div className="flex flex-col py-4 overflow-y-auto">
-          <nav className="flex flex-col gap-2">
-            {renderLinks(NAV_LINKS, true)}
+        <div className="flex flex-col h-[calc(100vh-80px)] justify-between">
+          <nav className="flex flex-col gap-2 overflow-y-auto">{renderLinks(NAV_LINKS, true)}</nav>
+
+          <div className="mt-auto py-4">
             {user ? (
-              <>
-                <div className="px-4 py-3 flex items-center gap-3 border-t border-green-700 mt-4">
+              <div className="px-4 py-2 flex flex-col gap-2">
+                <div className="flex items-center gap-3 pb-2">
                   <UserAvatar />
                   <TextButton
                     href={routes.user.profile}
                     text={user.name}
                     color={txtColors.white}
-                    hoverAnimation={TextButtonHovers.underline}
-                    typography={Typography.Quote}
+                    typography={Typography.Subtitle}
                   />
                 </div>
                 {renderUserMenu(true)}
-              </>
+              </div>
             ) : (
-              <div className="px-4 mt-4">
+              <div className="px-4">
                 <AuthButtons mobile={true} />
               </div>
             )}
-          </nav>
+          </div>
         </div>
       </div>
 
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )}
-
-      {isDropdownOpen &&
-        ReactDOM.createPortal(
-          <div
-            ref={dropdownRef}
-            className="absolute bg-white shadow-xl rounded-lg p-2 min-w-[200px] z-[1000] 
-                   border border-gray-100 animate-fade-in"
-            style={{
-              top: (buttonRef.current?.getBoundingClientRect().bottom || 0) + window.scrollY + 8,
-              right: window.innerWidth - (buttonRef.current?.getBoundingClientRect().right || 0),
-            }}
-          >
-            <div className="flex flex-col gap-2">{renderUserMenu()}</div>
-          </div>,
-          document.body
-        )}
+      {isMenuOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setIsMenuOpen(false)} />}
     </header>
   );
 };

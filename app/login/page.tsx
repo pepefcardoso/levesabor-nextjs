@@ -8,7 +8,7 @@ import CustomTextInput, { InputType } from "@/components/Inputs/CustomTextInput"
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { AuthService } from "@/services/authService";
-import { FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 import routes from "routes/routes";
@@ -63,18 +63,17 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-lg p-6 sm:p-8 space-y-8 bg-white rounded-xl shadow-2xl mx-4">
         <div className="text-left space-y-2">
-          <h1 className={clsx(Typography.Display)}>Bem-vindo!</h1>
-          <p className={clsx(Typography.Title, txtColors.gray500)}>
+          <h1 className={clsx(Typography.Headline)}>Bem-vindo!</h1>
+          <p className={clsx(Typography.Subtitle, txtColors.gray800)}>
             Ainda não possui conta?{" "}
             <TextButton
               href={routes.auth.register}
               text="Cadastre-se aqui"
-              typography={Typography.Title}
               hoverAnimation={TextButtonHovers.bold}
             />
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-8">
           <div className="space-y-4">
             <CustomTextInput
               id="email"
@@ -100,7 +99,6 @@ export default function LoginPage() {
               <TextButton
                 href={routes.auth.forgotPassword}
                 text="Esqueceu sua senha?"
-                typography={Typography.Title}
                 color={txtColors.gray800}
                 hoverAnimation={TextButtonHovers.bold}
               />
@@ -110,8 +108,8 @@ export default function LoginPage() {
             text="Entrar"
             disabled={loading}
             hoverAnimation={FilledButtonHovers.opacity}
-            className="w-full mt-8"
-            type="submit"
+            className="w-full"
+            type={ButtonTypes.submit}
           />
         </form>
       </div>

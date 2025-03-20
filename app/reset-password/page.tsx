@@ -60,10 +60,10 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-lg w-full  p-6 sm:p-8 space-y-8 bg-white rounded-xl shadow-2xl mx-4">
         <div className="text-left">
-          <h1 className={clsx(Typography.Display, "mb-4")}>
+          <h1 className={clsx(Typography.Headline, "mb-4")}>
             Nova Senha
           </h1>
-          <p className={clsx(Typography.Title, txtColors.gray800)}>
+          <p className={clsx(Typography.Subtitle, txtColors.gray800)}>
             Digite sua nova senha para {email}
           </p>
         </div>
@@ -99,10 +99,11 @@ export default function ResetPasswordPage() {
             type={ButtonTypes.submit}
             disabled={loading}
             hoverAnimation={FilledButtonHovers.opacity}
+            className="w-full"
           />
         </form>
 
-        <p className={clsx(Typography.Title, txtColors.gray800, "text-center")}>
+        <p className={clsx(Typography.Body, txtColors.gray800, "text-center")}>
           Não solicitou redefinição?{" "}
           <TextButton
             text="Entre em contato"

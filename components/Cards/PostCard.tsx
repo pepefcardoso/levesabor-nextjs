@@ -13,7 +13,7 @@ const PostCard = ({ post }: { post: Post }) => {
   return (
     <Link href={routes.posts.details(post.id)} className="block">
       <div
-        className="border border-gray-300 rounded-lg shadow-md cursor-pointer 
+        className="border border-tertiary rounded-lg shadow-md cursor-pointer 
                    transition-transform duration-300 ease-in-out 
                    hover:scale-105 hover:shadow-lg flex flex-col h-[400px] w-full sm:w-auto bg-white"
       >

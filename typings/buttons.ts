@@ -2,7 +2,7 @@ export type TextButtonHoverType = (typeof TextButtonHovers)[keyof typeof TextBut
 export const TextButtonHovers = {
   underline: "hover:underline",
   scale: "hover:scale-[1.05]",
-  bold: "hover:font-semibold",
+  bold: "hover:font-bold",
   none: "",
 } as const;
 
@@ -11,8 +11,6 @@ export const FilledButtonHovers = {
   opacity: "hover:opacity-75",
   scale: "hover:scale-[1.05]",
   shadow: "hover:shadow-md",
-  lift: "hover:-translate-y-0.6",
-  glow: "hover:shadow-glow",
   none: "",
 } as const;
 
@@ -21,7 +19,6 @@ export const FilledIconButtonHovers = {
   opacity: "hover:opacity-75",
   scale: "hover:scale-[1.05]",
   shadow: "hover:shadow-md",
-  lift: "hover:-translate-y-0.6",
   none: "",
 } as const;
 

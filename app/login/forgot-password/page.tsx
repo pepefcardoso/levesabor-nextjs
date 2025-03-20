@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
     try {
       await AuthService.forgotPassword(email);
       toast.success("Um e-mail foi enviado com instruções para redefinir sua senha!");
-      setTimeout(() => router.push("/login"), 3000);
+      setTimeout(() => router.push("/login"), 1500);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Tente novamente.";
       toast.error(errorMessage);
@@ -39,27 +39,25 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-lg w-full p-8 mx-4 space-y-8 bg-white rounded-lg shadow-lg">
         <div className="text-left">
-          <h1 className={clsx(Typography.Display, "mb-2")}>Redefinir Senha</h1>
-          <p className={clsx(Typography.Title, txtColors.gray500)}>
+          <h1 className={clsx(Typography.Headline, "mb-2")}>Redefinir Senha</h1>
+          <p className={clsx(Typography.Subtitle, txtColors.gray800)}>
             Digite seu endereço de e-mail e enviaremos um link para redefinir sua senha.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="space-y-6">
-            <div>
-              <CustomTextInput
-                type={InputType.Email}
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-                autoComplete="email"
-                placeholder="Digite seu e-mail"
-                label="Email"
-              />
-            </div>
+          <div>
+            <CustomTextInput
+              type={InputType.Email}
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={loading}
+              autoComplete="email"
+              placeholder="Digite seu e-mail"
+              label="Email"
+            />
           </div>
 
           <div className="flex justify-center">
@@ -73,16 +71,10 @@ export default function ForgotPasswordPage() {
           </div>
         </form>
 
-        <div className="text-lg text-left">
-          <p className={clsx(Typography.Title, txtColors.gray500)}>
+        <div className="text-left">
+          <p className={clsx(Typography.Subtitle, txtColors.gray800)}>
             Lembrou sua senha?{" "}
-            <TextButton
-              href={routes.auth.login}
-              text="Faça login aqui"
-              color={txtColors.black}
-              typography={clsx(Typography.Title)}
-              hoverAnimation={TextButtonHovers.bold}
-            />
+            <TextButton href={routes.auth.login} text="Faça login aqui" hoverAnimation={TextButtonHovers.bold} />
           </p>
         </div>
       </div>

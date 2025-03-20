@@ -2,16 +2,19 @@
 
 import AuthorInfo from "@/components/Others/AuthorInfo";
 import CustomChip from "@/components/Others/CustomChip";
+import EmptyList from "@/components/Others/EmptyList";
 import PageSkeleton from "@/components/Skeletons/PageSkeleton";
 import { bgColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { getRecipe } from "@/services/recipeService";
+import { RecipeDifficultyEnum } from "@/typings/enums";
 import { Recipe } from "@/typings/recipe";
 import { clsx } from "clsx";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 import { formatDate, sanitizeImageUrl } from "tools/helper";
 
 const RecipeDetails = () => {
@@ -37,7 +40,8 @@ const RecipeDetails = () => {
   }, [id]);
 
   if (!isLoaded) return <PageSkeleton />;
-  if (!recipe) return <div className="text-center py-20">Receita não encontrada.</div>;
+  if (!recipe)
+    return <EmptyList title="Receita não encontrada" description="Tente outra busca" Icon={FaExclamationTriangle} />;
 
   return (
     <div className="container mx-auto px-6 py-8 max-w-4xl">
@@ -45,7 +49,7 @@ const RecipeDetails = () => {
         <CustomChip bgColor={bgColors.secondary} text={recipe.category?.name || ""} />
       </div>
 
-      <h1 className={clsx(Typography.Display, "mb-6 text-left")}>{recipe.title}</h1>
+      <h1 className={clsx(Typography.Headline, "mb-6 text-left")}>{recipe.title}</h1>
 
       <div className="mb-8">
         <AuthorInfo
@@ -66,35 +70,40 @@ const RecipeDetails = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-6 mb-6 justify-center text-center">
-        <CustomChip className="px-6 py-2" typography={Typography.Footnote} text={`Tempo: ${recipe.time} min`} />
-        <CustomChip className="px-6 py-2" typography={Typography.Footnote} text={`Dificuldade: ${recipe.difficulty}`} />
-        <CustomChip className="px-6 py-2" typography={Typography.Footnote} text={`Rende ${recipe.portion} porções`} />
+        <CustomChip className="w-1/3" typography={Typography.Subtitle} text={`Tempo: ${recipe.time} min`} />
+        <CustomChip className="w-1/3" typography={Typography.Subtitle} text={`Dificuldade: ${RecipeDifficultyEnum[recipe.difficulty]}`} />
+        <CustomChip className="w-1/3" typography={Typography.Subtitle} text={`Rende ${recipe.portion} porções`} />
       </div>
 
+      <p className={clsx(Typography.Body, "text-left mb-8")}>{recipe.description}</p>
 
-      <p className={clsx(Typography.Title, "text-left mb-8")}>{recipe.description}</p>
-
-      <h2 className={clsx(Typography.Headline, "mb-4")}>Ingredientes</h2>
-      <ul className={clsx(Typography.Title, "list-disc list-inside mb-8 space-y-2")}>
+      <h2 className={clsx(Typography.Title, "mb-4")}>Ingredientes</h2>
+      <ul className={clsx("list-disc list-inside mb-8 space-y-2")}>
         {recipe.ingredients?.map((ingredient, index) => (
-          <li key={index} className={clsx(Typography.Title)}>
+          <li key={index} className={clsx(Typography.Body)}>
             {ingredient.quantity} {ingredient.unit?.name} de {ingredient.name}
           </li>
         ))}
       </ul>
-      <h2 className={clsx(Typography.Headline, "mb-4")}>Modo de Preparo</h2>
+      <h2 className={clsx(Typography.Title, "mb-4")}>Modo de Preparo</h2>
       <div className="space-y-6 mb-8">
         {recipe.steps?.map((step, index) => (
           <div key={index} className="flex items-start gap-4">
-            <div className={clsx(Typography.Headline, bgColors.tertiary, "flex items-center justify-center w-8 h-8 min-w-8 min-h-8 flex-shrink-0 rounded-lg shadow-md")}>
+            <div
+              className={clsx(
+                Typography.Title,
+                bgColors.tertiary,
+                "flex items-center justify-center w-8 h-8 min-w-8 min-h-8 flex-shrink-0 rounded-lg shadow-md"
+              )}
+            >
               {index + 1}
             </div>
-            <p className={clsx(Typography.Title)}>{step.description}</p>
+            <p className={clsx(Typography.Body)}>{step.description}</p>
           </div>
         ))}
       </div>
 
-      <h2 className={clsx(Typography.Headline, "mb-4")}>Dietas</h2>
+      <h2 className={clsx(Typography.Title, "mb-4")}>Dietas</h2>
       <div className="flex flex-wrap gap-3 mb-8 text-left">
         {recipe.diets?.map((diet) => (
           <CustomChip key={diet.id} text={diet.name} />

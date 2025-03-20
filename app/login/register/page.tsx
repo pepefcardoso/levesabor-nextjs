@@ -66,13 +66,12 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-lg p-6 sm:p-8 space-y-6 bg-white rounded-xl shadow-2xl">
         <div className="text-left space-y-2">
-          <h1 className={clsx(Typography.Display)}>Crie sua conta</h1>
-          <p className={clsx(Typography.Title, txtColors.gray500)}>
+          <h1 className={clsx(Typography.Headline)}>Crie sua conta</h1>
+          <p className={clsx(Typography.Subtitle, txtColors.gray800)}>
             Já possui conta?{" "}
             <TextButton
               href={routes.auth.login}
               text="Faça seu login"
-              typography={Typography.Title}
               hoverAnimation={TextButtonHovers.bold}
             />
           </p>

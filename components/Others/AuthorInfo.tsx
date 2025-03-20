@@ -32,7 +32,7 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({ authorName, authorImage, postDa
                 ) : (
                     <span
                         className={clsx(
-                            Typography.Headline,
+                            Typography.Title,
                             "flex items-center justify-center w-full h-full"
                         )}
                     >
@@ -42,8 +42,8 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({ authorName, authorImage, postDa
             </div>
 
             <div className="flex flex-col">
-                <span className={clsx(Typography.Caption)}>{"Por " + authorName}</span>
-                <span className={clsx(Typography.Body, txtColors.gray800)}>
+                <span className={clsx(Typography.Subtitle)}>{"Por " + authorName}</span>
+                <span className={clsx(Typography.Caption, txtColors.gray800)}>
                     {postDate}
                 </span>
             </div>

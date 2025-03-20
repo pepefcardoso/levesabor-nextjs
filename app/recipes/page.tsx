@@ -19,6 +19,7 @@ import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "@/typings/rec
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export default function RecipesHome() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -31,11 +32,7 @@ export default function RecipesHome() {
   const [tempSearch, setTempSearch] = useState("");
   const [filters, setFilters] = useState<RecipeFilters>({});
 
-  const fetchRecipes = async (
-    page: number,
-    search: string,
-    filters: RecipeFilters
-  ) => {
+  const fetchRecipes = async (page: number, search: string, filters: RecipeFilters) => {
     try {
       const response: PaginationResponse<Recipe> = await getRecipes({
         filters: { ...filters, title: search },
@@ -123,31 +120,23 @@ export default function RecipesHome() {
   }));
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl w-full">
+    <div className="container mx-auto px-4 py-8 max-w-7xl w-full space-y-8">
       <div className="px-4">
-        <h1 className={clsx(Typography.Display, "mb-8 text-left")}>
-          Pesquisar Receitas
-        </h1>
+        <h1 className={clsx(Typography.Headline, "mb-4 sm:mb-6 text-left")}>Pesquisar Receitas</h1>
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
           <CustomTextInput
             placeholder="Pesquisar receitas..."
             value={tempSearch}
             onChange={(e) => setTempSearch(e.target.value)}
           />
-          <FilledButton
-            text="Pesquisar"
-            type={ButtonTypes.submit}
-            hoverAnimation={FilledButtonHovers.opacity}
-          />
+          <FilledButton text="Pesquisar" type={ButtonTypes.submit} hoverAnimation={FilledButtonHovers.opacity} />
         </form>
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full sm:w-1/5 mr-4">
-            <div className="flex flex-row sm:flex-col gap-4">
+            <div className="flex flex-row md:flex-col gap-4">
               <div className="w-1/2 sm:w-full">
                 <div className="mb-6">
-                  <label className={clsx(Typography.Title, "block mb-2")}>
-                    Categorias
-                  </label>
+                  <label className={clsx(Typography.Subtitle, "block mb-2")}>Categorias</label>
                   <CustomInputSelect
                     name="category_id"
                     value={filters.category_id || ""}
@@ -159,9 +148,7 @@ export default function RecipesHome() {
               </div>
               <div className="w-1/2 sm:w-full">
                 <div className="mb-6">
-                  <label className={clsx(Typography.Title, "block mb-2")}>
-                    Dietas
-                  </label>
+                  <label className={clsx(Typography.Subtitle, "block mb-2")}>Dietas</label>
                   <CustomCheckboxInput
                     options={dietOptions}
                     selected={filters.diets || []}
@@ -174,17 +161,19 @@ export default function RecipesHome() {
           </div>
           <div className="w-full md:w-4/5 flex flex-col">
             <div className="flex-grow">
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 h-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
                 {!isLoaded ? (
-                  Array.from({ length: 10 }).map((_, index) => (
-                    <CardSkeleton key={`skeleton-${index}`} />
-                  ))
+                  Array.from({ length: 10 }).map((_, index) => <CardSkeleton key={`skeleton-${index}`} />)
                 ) : recipes.length > 0 ? (
-                  recipes.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipe={recipe} />
-                  ))
+                  recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)
                 ) : (
-                  <EmptyList title="Nenhuma receita encontrada." description="Tente outra busca" />
+                  <div className="col-span-full flex justify-center">
+                    <EmptyList
+                      title="Nenhuma receita foi encontrada"
+                      description="Tente outra busca"
+                      Icon={FaExclamationTriangle}
+                    />
+                  </div>
                 )}
               </div>
             </div>
@@ -192,7 +181,7 @@ export default function RecipesHome() {
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}
-              className="mt-10"
+              className="mt-12"
             />
           </div>
         </div>

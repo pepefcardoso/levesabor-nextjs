@@ -2,6 +2,7 @@
 
 import AuthorInfo from "@/components/Others/AuthorInfo";
 import CustomChip from "@/components/Others/CustomChip";
+import EmptyList from "@/components/Others/EmptyList";
 import PageSkeleton from "@/components/Skeletons/PageSkeleton";
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
@@ -12,6 +13,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 import { formatDate, sanitizeImageUrl } from "tools/helper";
 
 const PostDetails = () => {
@@ -41,7 +43,7 @@ const PostDetails = () => {
   }
 
   if (!post) {
-    return <div className="text-center py-20">Post não encontrado.</div>;
+    return <EmptyList title="Post não encontrado" description="Tente buscar outro post" Icon={FaExclamationTriangle} />;
   }
 
   return (
@@ -52,8 +54,8 @@ const PostDetails = () => {
         </div>
       )}
 
-      <h1 className={clsx(Typography.Display, "mb-2 leading-snug")}>{post.title}</h1>
-      <p className={clsx(Typography.Title, txtColors.gray800, "mb-6")}>{post.summary}</p>
+      <h1 className={clsx(Typography.Headline, "mb-2 leading-snug")}>{post.title}</h1>
+      <p className={clsx(Typography.Subtitle, txtColors.gray800, "mb-6")}>{post.summary}</p>
 
       <div className="relative w-full h-[400px] rounded-md shadow-md overflow-hidden">
         <Image
@@ -65,7 +67,7 @@ const PostDetails = () => {
         />
       </div>
 
-      <div className={clsx(Typography.Title, "leading-relaxed space-y-4 my-6")}>
+      <div className={clsx(Typography.Body, "leading-relaxed space-y-4 my-6")}>
         {post.content.split("\n").map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
@@ -73,22 +75,18 @@ const PostDetails = () => {
       {post.topics && post.topics.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
           {post.topics.map((topic) => (
-            <CustomChip
-              key={topic.id}
-              text={"#" + topic.name.toLowerCase()}
-            />
+            <CustomChip key={topic.id} text={"#" + topic.name.toLowerCase()} />
           ))}
         </div>
       )}
 
       <div className="mt-10">
         <AuthorInfo
-        authorName={post.user?.name || "Autor"}
-        authorImage={sanitizeImageUrl(post.user?.image?.url)}
-        postDate={post.created_at ? `Postado em ${formatDate(post.created_at)}` : "Data indisponível"}
-
-      ></AuthorInfo></div>
-
+          authorName={post.user?.name || "Autor"}
+          authorImage={sanitizeImageUrl(post.user?.image?.url)}
+          postDate={post.created_at ? `Postado em ${formatDate(post.created_at)}` : "Data indisponível"}
+        ></AuthorInfo>
+      </div>
     </div>
   );
 };

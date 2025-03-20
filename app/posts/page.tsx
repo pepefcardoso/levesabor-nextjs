@@ -15,6 +15,7 @@ import { Post, PostCategory, PostFilters } from "@/typings/post";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export default function PostsHome() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -26,11 +27,7 @@ export default function PostsHome() {
   const [tempSearch, setTempSearch] = useState("");
   const [filters, setFilters] = useState<PostFilters>({});
 
-  const fetchPosts = async (
-    page: number,
-    search: string,
-    filters: PostFilters
-  ) => {
+  const fetchPosts = async (page: number, search: string, filters: PostFilters) => {
     try {
       const response: PaginationResponse<Post> = await getPosts({
         filters: { ...filters, search },
@@ -39,22 +36,19 @@ export default function PostsHome() {
       setPosts(response.data);
       setTotalPages(response.last_page);
     } catch (err) {
-      toast.error("Falha ao carregar os posts. Por favor, atualize a página.");
+      toast.error("Falha ao carregar os posts. Por favor, atualize a página.", { id: "fetch-error" });
       throw err;
     }
   };
 
   const fetchCategories = async () => {
     try {
-      const response: PaginationResponse<PostCategory> =
-        await getPostCategories({
-          pagination: { page: 1, per_page: 100 },
-        });
+      const response: PaginationResponse<PostCategory> = await getPostCategories({
+        pagination: { page: 1, per_page: 100 },
+      });
       setCategories(response.data);
     } catch {
-      toast.error(
-        "Falha ao carregar as categorias. Por favor, atualize a página."
-      );
+      toast.error("Falha ao carregar as categorias. Por favor, atualize a página.", { id: "fetch-error" });
     }
   };
 
@@ -92,11 +86,9 @@ export default function PostsHome() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl w-full space-y-8">
+    <div className="container mx-auto px-4 py-8 max-w-7xl w-full space-y-8">
       <div className="px-4">
-        <h1 className={clsx(Typography.Display, "mb-4 sm:mb-6 text-left")}>
-          Pesquise nossos posts
-        </h1>
+        <h1 className={clsx(Typography.Headline, "mb-4 sm:mb-6 text-left")}>Pesquise nossos posts</h1>
         <form onSubmit={handleSubmit} className="mb-6">
           <CustomTextInput
             placeholder="Pesquisar posts..."
@@ -116,15 +108,15 @@ export default function PostsHome() {
             className="min-w-[220px]"
           />
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 h-full">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 h-full">
           {!isLoaded ? (
-            Array.from({ length: 10 }).map((_, index) => (
-              <CardSkeleton key={`skeleton-${index}`} />
-            ))
+            Array.from({ length: 10 }).map((_, index) => <CardSkeleton key={`skeleton-${index}`} />)
           ) : posts.length > 0 ? (
             posts.map((post) => <PostCard key={post.id} post={post} />)
           ) : (
-            <EmptyList title="Nenhum post foi encontrado" description="Tente outra busca"></EmptyList>
+            <div className="col-span-full flex justify-center">
+              <EmptyList title="Nenhum post foi encontrado" description="Tente outra busca" Icon={FaExclamationTriangle}/>
+            </div>
           )}
         </div>
 
@@ -132,7 +124,7 @@ export default function PostsHome() {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
-          className="mt-10"
+          className="mt-12"
         />
       </div>
       <NewsletterForm />

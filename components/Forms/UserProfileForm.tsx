@@ -3,9 +3,12 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { sanitizeImageUrl } from "tools/helper";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
-import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
 import IconButton from "../Buttons/IconButton";
 import { FiEdit2 } from "react-icons/fi";
+import TextButton from "../Buttons/TextButton";
+import routes from "routes/routes";
+import { txtColors } from "@/constants/colors";
 
 type UserProfileFormProps = {
   initialData: {
@@ -62,7 +65,7 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
             <IconButton
               onClick={() => fileInputRef.current && fileInputRef.current.click()}
               Icon={FiEdit2}
-              className="bg-white rounded-full shadow-md border-2 border-gray-300"
+              className="bg-white rounded-full shadow-md border-2 border-tertiary"
             />
           </div>
           <input
@@ -117,7 +120,14 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
         />
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end items-center gap-8">
+        <TextButton
+          href={routes.home}
+          text="Voltar"
+          disabled={isSubmitting}
+          hoverAnimation={TextButtonHovers.bold}
+          color={txtColors.gray800}
+        />
         <FilledButton
           type={ButtonTypes.submit}
           text="Salvar"

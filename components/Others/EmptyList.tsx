@@ -1,23 +1,24 @@
-import { txtColors } from '@/constants/colors';
-import { Typography } from '@/constants/typography';
-import clsx from 'clsx';
-import React from 'react';
-import { FaBoxOpen } from 'react-icons/fa';
+import { txtColors } from "@/constants/colors";
+import { Typography } from "@/constants/typography";
+import clsx from "clsx";
+import React from "react";
+import { IconType } from "react-icons";
+import { FaBoxOpen } from "react-icons/fa";
 
 interface EmptyListProps {
   title?: string;
   description?: string;
-  icon?: React.ReactNode;
+  Icon?: IconType;
 }
 
 const EmptyList: React.FC<EmptyListProps> = ({
   title = "Nenhum item foi encontrado",
   description = "No momento não há itens disponíveis",
-  icon = <FaBoxOpen size={80} className="mx-auto text-gray-500" />
+  Icon = FaBoxOpen,
 }) => {
   return (
-    <div className="flex flex-col items-center text-center p-6">
-      <div className="mb-4">{icon}</div>
+    <div className="max-w-md w-full flex flex-col items-center text-center px-8 py-16 mx-auto">
+      <Icon className="mb-4 text-gray-500" size={80} />
       <h1 className={clsx(Typography.Title)}>{title}</h1>
       <p className={clsx(Typography.Subtitle, txtColors.gray800)}>{description}</p>
     </div>

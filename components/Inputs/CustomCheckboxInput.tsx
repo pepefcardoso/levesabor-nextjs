@@ -58,7 +58,7 @@ const CustomCheckboxInput: React.FC<CustomCheckboxInputProps> = ({
             <div
                 className={clsx(
                     "disabled:opacity-50 disabled:cursor-not-allowed",
-                    "border-gray-300 border",
+                    "border-tertiary border",
                     "flex justify-between items-center",
                     "transition-all duration-150 ease-in-out",
                     "bg-white rounded-md p-2 cursor-pointer ",
