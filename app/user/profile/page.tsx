@@ -3,6 +3,7 @@
 import IconButton from "@/components/Buttons/IconButton";
 import TextButton from "@/components/Buttons/TextButton";
 import { UserProfileForm } from "@/components/Forms/UserProfileForm";
+import EmptyList from "@/components/Others/EmptyList";
 import { FormSkeleton } from "@/components/Skeletons/FormSkeleton";
 import PageSkeleton from "@/components/Skeletons/PageSkeleton";
 import { iconColors, txtColors } from "@/constants/colors";
@@ -14,7 +15,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaTrash } from "react-icons/fa";
+import { FaExclamationTriangle, FaTrash } from "react-icons/fa";
 import useAuthStore from "store/authStore";
 
 export default function UserProfile() {
@@ -47,10 +48,10 @@ export default function UserProfile() {
       if (!user) return;
       const updatedUser = await updateUser(user.id, formData);
       setUser(updatedUser);
-      toast.success("✅ Perfil atualizado com sucesso!");
+      toast.success("Perfil atualizado com sucesso!");
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Falha ao atualizar perfil";
-      toast.error(`❌ ${errorMessage}`);
+      toast.error(errorMessage);
       return Promise.reject(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -69,8 +70,18 @@ export default function UserProfile() {
     }
   };
 
-  if (loading || fetchError) return <PageSkeleton />;
-  if (!user) return <div className="text-center py-20">Usuário não encontrado</div>;
+  if (loading) return <PageSkeleton />;
+  if (!user || fetchError) {
+    return (
+      <div className="min-h-screen mx-auto flex items-center justify-center">
+        <EmptyList
+          title="Por favor, tente novamente"
+          description="Ocorreu um erro ao carregar o perfil do usuário"
+          Icon={FaExclamationTriangle}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">

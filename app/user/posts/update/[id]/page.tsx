@@ -2,6 +2,7 @@
 
 import { PostForm } from "@/components/Forms/PostForm";
 import PageSkeleton from "@/components/Skeletons/PageSkeleton";
+import EmptyList from "@/components/Others/EmptyList";
 import { Typography } from "@/constants/typography";
 import { getPostCategories } from "@/services/postCategoryService";
 import { getPost, updatePost } from "@/services/postService";
@@ -11,6 +12,7 @@ import clsx from "clsx";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export default function UpdatePostPage() {
   const router = useRouter();
@@ -29,14 +31,18 @@ export default function UpdatePostPage() {
     topics: [] as string[],
     image_url: "",
   });
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!postId) {
         toast.error("Invalid post ID");
+        setHasError(true);
+        setIsLoadingData(false);
         return;
       }
       setIsLoadingData(true);
+      setHasError(false);
       try {
         const [categoriesRes, topicsRes, postRes] = await Promise.all([
           getPostCategories({ pagination: { page: 1, per_page: 50 } }),
@@ -57,6 +63,7 @@ export default function UpdatePostPage() {
         });
       } catch {
         toast.error("Falha ao carregar dados do post");
+        setHasError(true);
       } finally {
         setIsLoadingData(false);
       }
@@ -80,6 +87,18 @@ export default function UpdatePostPage() {
 
   if (isLoadingData) {
     return <PageSkeleton />;
+  }
+
+  if (hasError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <EmptyList
+          title="Falha ao carregar dados"
+          description="Ocorreu um erro ao carregar os dados do post. Tente novamente."
+          Icon={FaExclamationTriangle}
+        />
+      </div>
+    );
   }
 
   return (

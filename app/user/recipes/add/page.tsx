@@ -2,6 +2,7 @@
 
 import { RecipeForm } from "@/components/Forms/RecipeForm";
 import PageSkeleton from "@/components/Skeletons/PageSkeleton";
+import EmptyList from "@/components/Others/EmptyList";
 import { Typography } from "@/constants/typography";
 import { getRecipeCategories } from "@/services/recipeCategoryService";
 import { getRecipeDiets } from "@/services/recipeDietService";
@@ -11,6 +12,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export default function AddUserRecipePage() {
   const router = useRouter();
@@ -18,10 +20,12 @@ export default function AddUserRecipePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState<RecipeCategory[]>([]);
   const [diets, setDiets] = useState<RecipeDiet[]>([]);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingData(true);
+      setHasError(false);
       try {
         const [categoriesRes, dietsRes] = await Promise.all([
           getRecipeCategories({ pagination: { page: 1, per_page: 50 } }),
@@ -31,6 +35,7 @@ export default function AddUserRecipePage() {
         setDiets(dietsRes.data);
       } catch {
         toast.error("Erro ao carregar categorias ou dietas. Tente novamente.");
+        setHasError(true);
       } finally {
         setIsLoadingData(false);
       }
@@ -55,18 +60,23 @@ export default function AddUserRecipePage() {
     return <PageSkeleton />;
   }
 
+  if (hasError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <EmptyList
+          title="Falha ao carregar dados"
+          description="Ocorreu um erro ao carregar categorias ou dietas. Tente novamente."
+          Icon={FaExclamationTriangle}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-6 py-10 max-w-4xl">
       <div className="bg-white rounded-lg shadow-lg p-8">
-        <h1 className={clsx(Typography.Title, "mb-12")}>
-          Criar Nova Receita
-        </h1>
-        <RecipeForm
-          categories={categories}
-          diets={diets}
-          isSubmitting={isSubmitting}
-          onSubmit={handleCreateRecipe}
-        />
+        <h1 className={clsx(Typography.Title, "mb-12")}>Criar Nova Receita</h1>
+        <RecipeForm categories={categories} diets={diets} isSubmitting={isSubmitting} onSubmit={handleCreateRecipe} />
       </div>
     </div>
   );

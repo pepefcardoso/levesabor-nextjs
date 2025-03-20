@@ -95,7 +95,6 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
     });
     formData.steps.forEach((step, index) => {
       data.append(`steps[${index}][description]`, step.description);
-      data.append(`steps[${index}][order]`, String(index + 1));
     });
     if (selectedImage) data.append("image", selectedImage);
     await onSubmit(data);
@@ -239,7 +238,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
         </div>
       </div>
 
-      <div className="flex justify-end items-center gap-8">
+      <div className="flex justify-end items-center gap-8 mt-6">
         <TextButton
           onClick={() => router.back()}
           text="Voltar"

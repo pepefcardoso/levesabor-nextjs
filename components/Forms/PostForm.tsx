@@ -177,7 +177,7 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
       </div>
 
       <div className="flex justify-end items-center gap-8">
-      <TextButton
+        <TextButton
           onClick={() => router.back()}
           text="Voltar"
           disabled={isSubmitting}

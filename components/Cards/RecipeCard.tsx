@@ -36,12 +36,8 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
         <div className="flex-grow basis-3/5 p-4 flex flex-col justify-between">
           <div>
-            <h2 className={clsx(Typography.Title, "mb-1 line-clamp-2")}>
-              {recipe.title}
-            </h2>
-            <p className={clsx(Typography.Caption, txtColors.gray800, "line-clamp-3")}>
-              {recipe.description}
-            </p>
+            <h2 className={clsx(Typography.Title, "mb-1 line-clamp-2")}>{recipe.title}</h2>
+            <p className={clsx(Typography.Caption, txtColors.gray800, "line-clamp-3")}>{recipe.description}</p>
           </div>
 
           {Array.isArray(recipe.diets) && recipe.diets.length > 0 && (

@@ -13,6 +13,7 @@ import { Post } from "@/typings/post";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaExclamationTriangle } from "react-icons/fa";
 import routes from "routes/routes";
 import useAuthStore from "store/authStore";
 
@@ -22,9 +23,11 @@ export default function UserPosts() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [hasError, setHasError] = useState(false);
 
   const fetchUserPosts = useCallback(async () => {
     setIsLoaded(false);
+    setHasError(false);
     try {
       if (!user) throw new Error("User not authenticated");
 
@@ -36,8 +39,9 @@ export default function UserPosts() {
       setTotalPages(response.last_page);
       setIsLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página");
-      setIsLoaded(false);
+      toast.error("Por favor, tente novamente", { id: "error-message" });
+      setHasError(true);
+      setIsLoaded(true);
     }
   }, [user, currentPage]);
 
@@ -55,9 +59,21 @@ export default function UserPosts() {
         fetchUserPosts();
       }
     } catch {
-      toast.error("Por favor, recarregue a página");
+      toast.error("Por favor, tente novamente", { id: "error-message" });
     }
   };
+
+  if (hasError) {
+    return (
+      <div className="min-h-screen mx-auto flex items-center justify-center">
+        <EmptyList
+          title="Por favor, tente novamente"
+          description="Ocorreu um erro ao carregar seus posts"
+          Icon={FaExclamationTriangle}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-8 max-w-6xl">

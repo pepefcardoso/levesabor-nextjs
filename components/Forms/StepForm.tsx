@@ -6,8 +6,8 @@ import { Typography } from "@/constants/typography";
 import { iconColors, txtColors } from "@/constants/colors";
 import clsx from "clsx";
 import { FilledButtonHovers } from "@/typings/buttons";
-import IconButton from "../Buttons/IconButton"; // Make sure the path is correct
-import { FiTrash } from "react-icons/fi"; // Trash icon for delete
+import IconButton from "../Buttons/IconButton";
+import { FiTrash } from "react-icons/fi";
 
 interface StepFormProps {
   onStepsChange: (steps: RecipeStep[]) => void;

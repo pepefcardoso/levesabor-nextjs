@@ -92,7 +92,8 @@ export default function Home() {
                 <Image
                   src="/placeholder.jpg"
                   alt="Healthy ingredients arrangement"
-                  fill
+                  width={600}
+                  height={400}
                   className="object-cover rounded-lg shadow-md"
                   priority
                 />
