@@ -72,6 +72,8 @@ const ContactUs = () => {
               placeholder="Seu nome"
               value={formData.name}
               onChange={handleChange}
+              disabled={submitting}
+              autoComplete="name"
               required
             />
             <CustomTextInput
@@ -80,6 +82,8 @@ const ContactUs = () => {
               placeholder="Seu telefone"
               value={formData.phone}
               onChange={handleChange}
+              disabled={submitting}
+              autoComplete="tel"
               required
             />
             <CustomTextInput
@@ -88,6 +92,8 @@ const ContactUs = () => {
               placeholder="Seu e-mail"
               value={formData.email}
               onChange={handleChange}
+              disabled={submitting}
+              autoComplete="email"
               required
             />
             <CustomTextAreaInput
@@ -95,6 +101,7 @@ const ContactUs = () => {
               placeholder="Como podemos ajudar?"
               value={formData.message}
               onChange={handleChange}
+              disabled={submitting}
               required
             />
 

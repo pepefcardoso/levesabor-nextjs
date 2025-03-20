@@ -41,7 +41,7 @@ export default function RecipesHome() {
       setRecipes(response.data);
       setTotalPages(response.last_page);
     } catch (err) {
-      toast.error("Falha ao carregar receitas. Por favor, atualize a página.");
+      toast.error("Por favor, atualize a página.", { id: "error-message" });
       throw err;
     }
   };
@@ -53,7 +53,7 @@ export default function RecipesHome() {
       });
       setCategories(response.data);
     } catch {
-      toast.error("Falha ao carregar categorias. Por favor, atualize a página.");
+      toast.error("Por favor, atualize a página.", { id: "error-message" });
     }
   };
 
@@ -64,7 +64,7 @@ export default function RecipesHome() {
       });
       setDiets(response.data);
     } catch {
-      toast.error("Falha ao carregar dietas. Por favor, atualize a página.");
+      toast.error("Por favor, atualize a página.", { id: "error-message" });
     }
   };
 

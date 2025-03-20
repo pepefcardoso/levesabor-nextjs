@@ -71,6 +71,7 @@ const Advertisement = () => {
               placeholder="Seu nome"
               value={formData.name}
               onChange={handleChange}
+              disabled={submitting}
               required
             />
 
@@ -80,6 +81,7 @@ const Advertisement = () => {
               placeholder="Seu telefone"
               value={formData.phone}
               onChange={handleChange}
+              disabled={submitting}
               required
             />
 
@@ -89,6 +91,7 @@ const Advertisement = () => {
               placeholder="Seu email"
               value={formData.email}
               onChange={handleChange}
+              disabled={submitting}
               required
             />
 

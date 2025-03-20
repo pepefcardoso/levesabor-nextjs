@@ -107,7 +107,7 @@ export default function ResetPasswordPage() {
           Não solicitou redefinição?{" "}
           <TextButton
             text="Entre em contato"
-            href={routes.auth.login}
+            href={routes.contact}
             hoverAnimation={TextButtonHovers.bold}
           />
         </p>

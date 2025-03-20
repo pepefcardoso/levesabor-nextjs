@@ -33,6 +33,8 @@ const RecipeDetails = () => {
         } catch (err) {
           const message = err instanceof Error ? err.message : "Falha ao carregar receita";
           toast.error(message);
+          setRecipe(null);
+          setIsLoaded(true);
         }
       };
       fetchRecipe();
@@ -41,7 +43,11 @@ const RecipeDetails = () => {
 
   if (!isLoaded) return <PageSkeleton />;
   if (!recipe)
-    return <EmptyList title="Receita não encontrada" description="Tente outra busca" Icon={FaExclamationTriangle} />;
+    return (
+      <div className="min-h-screen mx-auto flex items-center justify-center">
+        <EmptyList title="Receita não encontrada" description="Tente outra busca" Icon={FaExclamationTriangle} />
+      </div>
+    );
 
   return (
     <div className="container mx-auto px-6 py-8 max-w-4xl">

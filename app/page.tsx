@@ -34,7 +34,7 @@ export default function Home() {
       setRecipes(response.data);
       setRecipesLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página", { id: "fetchError" });
+      toast.error("Por favor, recarregue a página", { id: "error-message" });
       setRecipesLoaded(false);
     }
   }, []);
@@ -48,7 +48,7 @@ export default function Home() {
       setPosts(response.data);
       setPostsLoaded(true);
     } catch {
-      toast.error("Por favor, recarregue a página", { id: "fetchError" });
+      toast.error("Por favor, recarregue a página", { id: "error-message" });
       setPostsLoaded(false);
     }
   }, []);

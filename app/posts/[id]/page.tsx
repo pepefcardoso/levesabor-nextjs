@@ -30,8 +30,10 @@ const PostDetails = () => {
           setPost(data);
           setIsLoaded(true);
         } catch (err) {
-          const message = err instanceof Error ? err.message : "Falha ao carregar post";
+          const message = err instanceof Error ? err.message : "Falha ao carregar receita";
           toast.error(message);
+          setPost(null);
+          setIsLoaded(true);
         }
       };
       fetchPost();
@@ -41,10 +43,12 @@ const PostDetails = () => {
   if (!isLoaded) {
     return <PageSkeleton />;
   }
-
-  if (!post) {
-    return <EmptyList title="Post não encontrado" description="Tente buscar outro post" Icon={FaExclamationTriangle} />;
-  }
+  if (!post)
+    return (
+      <div className="min-h-screen mx-auto flex items-center justify-center">
+        <EmptyList title="Receita não encontrada" description="Tente outra busca" Icon={FaExclamationTriangle} />
+      </div>
+    );
 
   return (
     <div className="container mx-auto px-6 max-w-4xl py-6">

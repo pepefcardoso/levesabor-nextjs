@@ -36,7 +36,7 @@ export default function PostsHome() {
       setPosts(response.data);
       setTotalPages(response.last_page);
     } catch (err) {
-      toast.error("Falha ao carregar os posts. Por favor, atualize a página.", { id: "fetch-error" });
+      toast.error("Por favor, atualize a página.", { id: "error-message" });
       throw err;
     }
   };
@@ -48,7 +48,7 @@ export default function PostsHome() {
       });
       setCategories(response.data);
     } catch {
-      toast.error("Falha ao carregar as categorias. Por favor, atualize a página.", { id: "fetch-error" });
+      toast.error("Por favor, atualize a página.", { id: "error-message" });
     }
   };
 
