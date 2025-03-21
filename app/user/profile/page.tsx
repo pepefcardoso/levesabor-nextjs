@@ -9,7 +9,7 @@ import PageSkeleton from "@/components/Skeletons/PageSkeleton";
 import { iconColors, txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { deleteUser, getCurrentUser, updateUser } from "@/services/userService";
-import { FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import { User } from "@/typings/user";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
@@ -98,7 +98,7 @@ export default function UserProfile() {
               }}
               Icon={FaTrash}
               color={iconColors.red}
-              hoverAnimation={FilledButtonHovers.opacity}
+              hoverAnimation={ButtonHovers.opacity}
             />
           </div>
 
@@ -120,7 +120,7 @@ export default function UserProfile() {
                   <TextButton
                     text="Confirmar"
                     onClick={handleDelete}
-                    hoverAnimation={TextButtonHovers.bold}
+                    hoverAnimation={ButtonHovers.bold}
                     color={txtColors.primary}
                   />
                 </div>

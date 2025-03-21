@@ -3,7 +3,7 @@
 import { FormEvent } from "react";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
-import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 
 interface RegisterUserFormProps {
   formData: {
@@ -57,7 +57,7 @@ const RegisterUserForm = ({ formData, loading, handleInputChange, handleSubmit }
         type={ButtonTypes.submit}
         text="Cadastrar"
         disabled={loading}
-        hoverAnimation={FilledButtonHovers.opacity}
+        hoverAnimation={ButtonHovers.opacity}
         className="w-full"
       />
     </form>

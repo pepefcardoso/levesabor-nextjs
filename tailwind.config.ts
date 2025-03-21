@@ -3,7 +3,6 @@ import { fontSizes, fontWeights } from "./constants/typography";
 
 const hoverAnimations = [
   "hover:underline",
-  "hover:scale-105",
   "hover:font-bold",
   "hover:opacity-75",
   "hover:scale-[1.05]",

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { Typography, TypographyType } from "../../constants/typography";
 import { txtColors, TxtColorType } from "../../constants/colors";
-import { ButtonType, ButtonTypes, TextButtonHovers, TextButtonHoverType } from "../../typings/buttons";
+import { ButtonHovers, ButtonHoverType, ButtonType, ButtonTypes} from "../../typings/buttons";
 
 interface TextButtonProps {
     text: string;
@@ -14,7 +14,7 @@ interface TextButtonProps {
     type?: ButtonType;
     color?: TxtColorType;
     typography?: TypographyType;
-    hoverAnimation?: TextButtonHoverType;
+    hoverAnimation?: ButtonHoverType;
     className?: string;
 }
 
@@ -26,7 +26,7 @@ const TextButton: FC<TextButtonProps> = ({
     type = ButtonTypes.button,
     color = txtColors.black,
     typography = Typography.Button,
-    hoverAnimation = TextButtonHovers.none,
+    hoverAnimation = ButtonHovers.none,
     className: className = "",
 }) => {
 

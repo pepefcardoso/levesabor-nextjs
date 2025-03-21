@@ -13,7 +13,7 @@ import { Typography } from "@/constants/typography";
 import { getRecipeCategories } from "@/services/recipeCategoryService";
 import { getRecipeDiets } from "@/services/recipeDietService";
 import { getRecipes } from "@/services/recipeService";
-import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import { PaginationResponse } from "@/typings/pagination";
 import { Recipe, RecipeCategory, RecipeDiet, RecipeFilters } from "@/typings/recipe";
 import clsx from "clsx";
@@ -129,7 +129,7 @@ export default function RecipesHome() {
             value={tempSearch}
             onChange={(e) => setTempSearch(e.target.value)}
           />
-          <FilledButton text="Pesquisar" type={ButtonTypes.submit} hoverAnimation={FilledButtonHovers.opacity} />
+          <FilledButton text="Pesquisar" type={ButtonTypes.submit} hoverAnimation={ButtonHovers.opacity} />
         </form>
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full sm:w-1/5 mr-4">

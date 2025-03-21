@@ -8,7 +8,7 @@ import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "@/constants/typography";
 import { clsx } from "clsx";
 import { txtColors } from "@/constants/colors";
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 
 interface IngredientFormProps {
   onIngredientsChange: (ingredients: RecipeIngredient[]) => void;
@@ -105,7 +105,7 @@ export const IngredientForm = ({
         onClick={addIngredient}
         disabled={isLoading}
         className="px-8"
-        hoverAnimation={FilledButtonHovers.opacity}
+        hoverAnimation={ButtonHovers.opacity}
       />
     </div>
   );

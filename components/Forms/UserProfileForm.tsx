@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { sanitizeImageUrl } from "tools/helper";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
-import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import IconButton from "../Buttons/IconButton";
 import { FiEdit2 } from "react-icons/fi";
 import TextButton from "../Buttons/TextButton";
@@ -125,14 +125,14 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
           href={routes.home}
           text="Voltar"
           disabled={isSubmitting}
-          hoverAnimation={TextButtonHovers.bold}
+          hoverAnimation={ButtonHovers.bold}
           color={txtColors.gray800}
         />
         <FilledButton
           type={ButtonTypes.submit}
           text="Salvar"
           disabled={isSubmitting}
-          hoverAnimation={FilledButtonHovers.opacity}
+          hoverAnimation={ButtonHovers.opacity}
           className="px-8"
         />
       </div>

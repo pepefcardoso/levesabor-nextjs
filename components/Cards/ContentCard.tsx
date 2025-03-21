@@ -6,7 +6,7 @@ import Link from "next/link";
 import IconButton from "../Buttons/IconButton";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { iconColors, txtColors } from "@/constants/colors";
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { Typography } from "@/constants/typography";
 
@@ -55,14 +55,14 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
             href={editRoute(item.id)}
             Icon={FaEdit}
             color={iconColors.green}
-            hoverAnimation={FilledButtonHovers.opacity}
+            hoverAnimation={ButtonHovers.opacity}
           />
         </Link>
         <IconButton
           onClick={() => handleDelete(item.id)}
           Icon={FaTrash}
           color={iconColors.red}
-          hoverAnimation={FilledButtonHovers.opacity}
+          hoverAnimation={ButtonHovers.opacity}
         />
       </div>
     </div>

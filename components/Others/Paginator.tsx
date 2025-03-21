@@ -1,6 +1,6 @@
 "use client";
 
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import FilledButton from "../Buttons/FilledButton";
 import { bgColors } from "@/constants/colors";
 
@@ -41,7 +41,7 @@ const Paginator: React.FC<PaginatorProps> = ({
                 text="Anterior"
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                hoverAnimation={FilledButtonHovers.opacity}
+                hoverAnimation={ButtonHovers.opacity}
             />
 
             {pages.map((page) => (
@@ -51,7 +51,7 @@ const Paginator: React.FC<PaginatorProps> = ({
                     onClick={() => onPageChange(page)}
                     color={currentPage === page ? bgColors.gray500 : bgColors.tertiary}
                     disabled={currentPage === page}
-                    hoverAnimation={FilledButtonHovers.opacity}
+                    hoverAnimation={ButtonHovers.opacity}
                 />
             ))}
 
@@ -59,7 +59,7 @@ const Paginator: React.FC<PaginatorProps> = ({
                 text="Próximo"
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                hoverAnimation={FilledButtonHovers.opacity}
+                hoverAnimation={ButtonHovers.opacity}
             />
         </div>
     );

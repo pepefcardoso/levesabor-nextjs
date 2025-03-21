@@ -9,7 +9,7 @@ import CustomTextInput, { InputType } from "@/components/Inputs/CustomTextInput"
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { AuthService } from "@/services/authService";
-import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import routes from "routes/routes";
 
@@ -91,14 +91,14 @@ function ResetPasswordPage() {
             text={"Redefinir Senha"}
             type={ButtonTypes.submit}
             disabled={loading}
-            hoverAnimation={FilledButtonHovers.opacity}
+            hoverAnimation={ButtonHovers.opacity}
             className="w-full"
           />
         </form>
 
         <p className={clsx(Typography.Body, txtColors.gray800, "text-center")}>
           Não solicitou redefinição?{" "}
-          <TextButton text="Entre em contato" href={routes.contact} hoverAnimation={TextButtonHovers.bold} />
+          <TextButton text="Entre em contato" href={routes.contact} hoverAnimation={ButtonHovers.bold} />
         </p>
       </div>
     </div>

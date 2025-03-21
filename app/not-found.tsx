@@ -5,7 +5,7 @@ import { Typography } from "@/constants/typography";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { iconColors, txtColors } from "@/constants/colors";
 import FilledButton from "@/components/Buttons/FilledButton";
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 
 export default function NotFound() {
   return (
@@ -15,7 +15,7 @@ export default function NotFound() {
       </div>
       <h1 className={clsx(Typography.Display, "mb-4")}>Página não encontrada</h1>
       <p className={clsx(Typography.Body, txtColors.gray800, "mb-12")}>A página que você está procurando não existe.</p>
-      <FilledButton text="Voltar para a página inicial" href={routes.home} hoverAnimation={FilledButtonHovers.scale} />
+      <FilledButton text="Voltar para a página inicial" href={routes.home} hoverAnimation={ButtonHovers.scale} />
     </div>
   );
 }

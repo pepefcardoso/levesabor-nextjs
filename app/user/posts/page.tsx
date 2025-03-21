@@ -7,7 +7,7 @@ import Paginator from "@/components/Others/Paginator";
 import CardSkeleton from "@/components/Skeletons/CardSkeleton";
 import { Typography } from "@/constants/typography";
 import { deletePost, getMyPosts } from "@/services/postService";
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import { PaginationResponse } from "@/typings/pagination";
 import { Post } from "@/typings/post";
 import clsx from "clsx";
@@ -82,7 +82,7 @@ export default function UserPosts() {
         <FilledButton
           text="Adicionar Novo Post"
           href={routes.user.posts.create}
-          hoverAnimation={FilledButtonHovers.opacity}
+          hoverAnimation={ButtonHovers.opacity}
         />
       </div>
 

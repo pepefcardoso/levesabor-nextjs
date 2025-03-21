@@ -8,7 +8,7 @@ import CustomTextInput, { InputType } from "@/components/Inputs/CustomTextInput"
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { AuthService } from "@/services/authService";
-import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 import routes from "routes/routes";
@@ -69,7 +69,7 @@ export default function LoginPage() {
             <TextButton
               href={routes.auth.register}
               text="Cadastre-se aqui"
-              hoverAnimation={TextButtonHovers.bold}
+              hoverAnimation={ButtonHovers.bold}
             />
           </p>
         </div>
@@ -100,14 +100,14 @@ export default function LoginPage() {
                 href={routes.auth.forgotPassword}
                 text="Esqueceu sua senha?"
                 color={txtColors.gray800}
-                hoverAnimation={TextButtonHovers.bold}
+                hoverAnimation={ButtonHovers.bold}
               />
             </div>
           </div>
           <FilledButton
             text="Entrar"
             disabled={loading}
-            hoverAnimation={FilledButtonHovers.opacity}
+            hoverAnimation={ButtonHovers.opacity}
             className="w-full"
             type={ButtonTypes.submit}
           />

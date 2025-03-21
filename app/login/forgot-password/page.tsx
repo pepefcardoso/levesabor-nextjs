@@ -6,7 +6,7 @@ import CustomTextInput, { InputType } from "@/components/Inputs/CustomTextInput"
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { AuthService } from "@/services/authService";
-import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
               text="Enviar link de redefinição"
               disabled={loading}
               className="w-full"
-              hoverAnimation={FilledButtonHovers.opacity}
+              hoverAnimation={ButtonHovers.opacity}
             />
           </div>
         </form>
@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
         <div className="text-left">
           <p className={clsx(Typography.Subtitle, txtColors.gray800)}>
             Lembrou sua senha?{" "}
-            <TextButton href={routes.auth.login} text="Faça login aqui" hoverAnimation={TextButtonHovers.bold} />
+            <TextButton href={routes.auth.login} text="Faça login aqui" hoverAnimation={ButtonHovers.bold} />
           </p>
         </div>
       </div>

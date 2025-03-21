@@ -5,7 +5,7 @@ import RegisterUserForm from "@/components/Forms/RegisterUserForm";
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { createUser } from "@/services/userService";
-import { TextButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -72,7 +72,7 @@ export default function RegisterPage() {
             <TextButton
               href={routes.auth.login}
               text="Faça seu login"
-              hoverAnimation={TextButtonHovers.bold}
+              hoverAnimation={ButtonHovers.bold}
             />
           </p>
         </div>

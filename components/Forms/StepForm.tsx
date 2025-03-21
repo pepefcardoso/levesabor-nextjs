@@ -5,7 +5,7 @@ import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "@/constants/typography";
 import { iconColors, txtColors } from "@/constants/colors";
 import clsx from "clsx";
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import IconButton from "../Buttons/IconButton";
 import { FiTrash } from "react-icons/fi";
 
@@ -59,7 +59,7 @@ export const StepForm = ({
               onClick={() => handleDelete(index)}
               Icon={FiTrash}
               color={iconColors.red}
-              hoverAnimation={FilledButtonHovers.opacity}
+              hoverAnimation={ButtonHovers.opacity}
               size={20}
             />
           </div>
@@ -74,7 +74,7 @@ export const StepForm = ({
         text="Adicionar Passo"
         onClick={addStep}
         className="px-8"
-        hoverAnimation={FilledButtonHovers.opacity}
+        hoverAnimation={ButtonHovers.opacity}
       />
     </div>
   );

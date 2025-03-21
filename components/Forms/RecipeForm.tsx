@@ -13,7 +13,7 @@ import Image from "next/image";
 import { StepForm } from "./StepForm";
 import FilledButton from "../Buttons/FilledButton";
 import clsx from "clsx";
-import { ButtonTypes, FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import { txtColors } from "@/constants/colors";
 import TextButton from "../Buttons/TextButton";
 import { useRouter } from "next/navigation";
@@ -243,14 +243,14 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
           onClick={() => router.back()}
           text="Voltar"
           disabled={isSubmitting}
-          hoverAnimation={TextButtonHovers.bold}
+          hoverAnimation={ButtonHovers.bold}
           color={txtColors.gray800}
         />
         <FilledButton
           text={"Salvar"}
           type={ButtonTypes.submit}
           disabled={isSubmitting}
-          hoverAnimation={FilledButtonHovers.opacity}
+          hoverAnimation={ButtonHovers.opacity}
         />
       </div>
     </form>

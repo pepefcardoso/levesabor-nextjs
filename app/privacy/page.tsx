@@ -4,7 +4,7 @@ import FilledButton from "@/components/Buttons/FilledButton";
 import { txtColors } from "@/constants/colors";
 import { PRIVACY_PARAGRAPHS } from "@/constants/index";
 import { Typography } from "@/constants/typography";
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import routes from "routes/routes";
 
@@ -25,7 +25,7 @@ const PrivacyPolicyPage = () => {
           <FilledButton
             text="Converse Conosco"
             href={routes.contact}
-            hoverAnimation={FilledButtonHovers.opacity}
+            hoverAnimation={ButtonHovers.opacity}
           ></FilledButton>
         </div>
       </div>

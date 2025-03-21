@@ -14,7 +14,7 @@ import { PaginationResponse } from "@/typings/pagination";
 import { getRecipes } from "@/services/recipeService";
 import { getPosts } from "@/services/postService";
 import { txtColors } from "@/constants/colors";
-import { TextButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { Typography } from "@/constants/typography";
 import Image from "next/image";
@@ -81,7 +81,7 @@ export default function Home() {
                     href={routes.recipes.index}
                     text="Comece Sua Jornada Culinária"
                     color={txtColors.primary}
-                    hoverAnimation={TextButtonHovers.scale}
+                    hoverAnimation={ButtonHovers.scale}
                   />
                 </div>
               </div>
@@ -110,7 +110,7 @@ export default function Home() {
             href={routes.recipes.index}
             text="Ver Todas"
             color={txtColors.gray800}
-            hoverAnimation={TextButtonHovers.underline}
+            hoverAnimation={ButtonHovers.underline}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
@@ -129,7 +129,7 @@ export default function Home() {
             href={routes.posts.index}
             text="Ver Todos"
             color={txtColors.gray800}
-            hoverAnimation={TextButtonHovers.underline}
+            hoverAnimation={ButtonHovers.underline}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">

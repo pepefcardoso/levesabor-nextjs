@@ -7,7 +7,7 @@ import Paginator from "@/components/Others/Paginator";
 import CardSkeleton from "@/components/Skeletons/CardSkeleton";
 import { Typography } from "@/constants/typography";
 import { deleteRecipe, getMyRecipes } from "@/services/recipeService";
-import { FilledButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import { PaginationResponse } from "@/typings/pagination";
 import { Recipe } from "@/typings/recipe";
 import clsx from "clsx";
@@ -81,7 +81,7 @@ export default function ListUserRecipes() {
         <FilledButton
           text="Adicionar Nova Receita"
           href={routes.user.recipes.create}
-          hoverAnimation={FilledButtonHovers.opacity}
+          hoverAnimation={ButtonHovers.opacity}
         />
       </div>
 

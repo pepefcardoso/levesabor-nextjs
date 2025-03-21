@@ -3,7 +3,7 @@ import { FOOTER_LINKS } from "../../constants";
 import routes from "../../routes/routes";
 import TextButton from "../Buttons/TextButton";
 import { bgColors, txtColors } from "../../constants/colors";
-import { TextButtonHovers } from "../../typings/buttons";
+import { ButtonHovers } from "../../typings/buttons";
 import { Typography } from "../../constants/typography";
 import clsx from "clsx";
 
@@ -25,7 +25,7 @@ const Footer = () => {
                   href={link.href}
                   text={link.label}
                   color={txtColors.white}
-                  hoverAnimation={TextButtonHovers.bold}
+                  hoverAnimation={ButtonHovers.bold}
                 />
               </li>
             ))}
@@ -38,7 +38,7 @@ const Footer = () => {
                   href={link.href}
                   text={link.label}
                   color={txtColors.white}
-                  hoverAnimation={TextButtonHovers.bold}
+                  hoverAnimation={ButtonHovers.bold}
                 />
               </li>
             ))}
@@ -53,7 +53,7 @@ const Footer = () => {
               text="Agência PPD"
               color={txtColors.gray800}
               typography={Typography.Body}
-              hoverAnimation={TextButtonHovers.underline}
+              hoverAnimation={ButtonHovers.underline}
             />
           </p>
         </div>

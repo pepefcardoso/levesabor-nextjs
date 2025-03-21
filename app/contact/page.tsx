@@ -8,7 +8,7 @@ import { txtColors } from "@/constants/colors";
 import { CONTACT_ITEMS } from "@/constants/index";
 import { Typography } from "@/constants/typography";
 import { CustomerContact, registerContact } from "@/services/contactService";
-import { ButtonTypes, FilledButtonHovers } from "@/typings/buttons";
+import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -109,7 +109,7 @@ const ContactUs = () => {
               text="Enviar mensagem"
               type={ButtonTypes.submit}
               disabled={submitting}
-              hoverAnimation={FilledButtonHovers.opacity}
+              hoverAnimation={ButtonHovers.opacity}
             />
           </form>
         </div>

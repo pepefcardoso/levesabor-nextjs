@@ -6,7 +6,7 @@ import { FiArrowRight } from "react-icons/fi";
 import clsx from "clsx";
 import Link from "next/link";
 import { bgColors, BgColorType, iconColors, IconColorType } from "@/constants/colors";
-import { ButtonType, ButtonTypes, FilledIconButtonHovers, FilledIconButtonHoverType } from "@/typings/buttons";
+import { ButtonHovers, ButtonHoverType, ButtonType, ButtonTypes} from "@/typings/buttons";
 
 interface FilledIconButtonProps {
     onClick?: () => void;
@@ -14,7 +14,7 @@ interface FilledIconButtonProps {
     Icon?: IconType;
     bgColor?: BgColorType;
     iconColor?: IconColorType;
-    hoverAnimation?: FilledIconButtonHoverType;
+    hoverAnimation?: ButtonHoverType;
     disabled?: boolean;
     size?: number;
     type?: ButtonType;
@@ -27,7 +27,7 @@ const FilledIconButton: FC<FilledIconButtonProps> = ({
     Icon = FiArrowRight,
     bgColor = bgColors.tertiary,
     iconColor = iconColors.white,
-    hoverAnimation = FilledIconButtonHovers.opacity,
+    hoverAnimation = ButtonHovers.opacity,
     disabled = false,
     size = 30,
     type = ButtonTypes.button,

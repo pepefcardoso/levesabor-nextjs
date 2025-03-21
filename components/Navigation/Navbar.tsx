@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import routes from "routes/routes";
 import useAuthStore from "store/authStore";
 import TextButton from "../Buttons/TextButton";
-import { FilledButtonHovers, TextButtonHovers } from "@/typings/buttons";
+import { ButtonHovers } from "@/typings/buttons";
 import { bgColors, txtColors } from "@/constants/colors";
 import Image from "next/image";
 import FilledButton from "../Buttons/FilledButton";
@@ -53,7 +53,7 @@ const Navbar = () => {
           href={link.href}
           text={link.label}
           color={txtColors.white}
-          hoverAnimation={TextButtonHovers.bold}
+          hoverAnimation={ButtonHovers.bold}
           className={mobile ? "text-left px-4 py-2" : ""}
           onClick={mobile ? () => setIsMenuOpen(false) : undefined}
         />
@@ -69,7 +69,7 @@ const Navbar = () => {
             href={link.href}
             text={link.label}
             color={mobile ? txtColors.white : txtColors.black}
-            hoverAnimation={TextButtonHovers.bold}
+            hoverAnimation={ButtonHovers.bold}
             typography={Typography.Body}
             className={clsx(mobile ? "w-full text-left" : "border-b border-tertiary w-full", "px-2 py-1")}
             onClick={mobile ? () => setIsMenuOpen(false) : undefined}
@@ -80,7 +80,7 @@ const Navbar = () => {
         <TextButton
           text="↪ Sair"
           color={mobile ? txtColors.white : txtColors.black}
-          hoverAnimation={TextButtonHovers.bold}
+          hoverAnimation={ButtonHovers.bold}
           className={clsx(mobile ? "w-full text-left" : "", "px-2 py-3")}
           onClick={handleLogout}
         />
@@ -115,14 +115,14 @@ const Navbar = () => {
         href={routes.auth.login}
         text="Entrar"
         color={txtColors.white}
-        hoverAnimation={TextButtonHovers.scale}
+        hoverAnimation={ButtonHovers.scale}
         className={mobile ? "w-full text-center" : ""}
       />
       <FilledButton
         href={routes.auth.register}
         text="Cadastrar"
         color={bgColors.secondary}
-        hoverAnimation={FilledButtonHovers.opacity}
+        hoverAnimation={ButtonHovers.opacity}
         className={mobile ? "w-full text-center" : ""}
       />
     </div>

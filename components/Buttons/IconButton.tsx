@@ -2,10 +2,10 @@
 
 import { iconColors, IconColorType } from "@/constants/colors";
 import {
+    ButtonHovers,
+    ButtonHoverType,
     ButtonType,
-    ButtonTypes,
-    FilledIconButtonHovers,
-    FilledIconButtonHoverType
+    ButtonTypes
 } from "@/typings/buttons";
 import clsx from "clsx";
 import Link from "next/link";
@@ -18,7 +18,7 @@ interface IconButtonProps {
     href?: string;
     Icon?: IconType;
     color?: IconColorType;
-    hoverAnimation?: FilledIconButtonHoverType;
+    hoverAnimation?: ButtonHoverType;
     disabled?: boolean;
     size?: number;
     type?: ButtonType;
@@ -30,7 +30,7 @@ const IconButton: FC<IconButtonProps> = ({
     href,
     Icon = FiArrowRight,
     color = iconColors.black,
-    hoverAnimation = FilledIconButtonHovers.opacity,
+    hoverAnimation = ButtonHovers.opacity,
     disabled = false,
     size = 20,
     type = ButtonTypes.button,
