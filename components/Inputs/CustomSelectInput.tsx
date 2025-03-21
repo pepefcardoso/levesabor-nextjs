@@ -66,10 +66,10 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
       )}
       <div
         className={clsx(
-          "border border-tertiary rounded-md p-2 cursor-pointer flex justify-between items-center",
+          "border border-gray-400 rounded-md p-2 cursor-pointer flex justify-between items-center",
           "transition-all duration-150 ease-in-out",
           "bg-white",
-          disabled || isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-yellow-400",
+          disabled || isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-tertiary",
           className
         )}
         onClick={() => {

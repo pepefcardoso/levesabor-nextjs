@@ -49,7 +49,7 @@ export const StepForm = ({
       {steps.map((step, index) => (
         <div
           key={index}
-          className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm space-y-2"
+          className="p-4 bg-white border border-gray-400 rounded-lg shadow-sm space-y-2"
         >
           <div className="flex items-center justify-between">
             <span className={clsx(Typography.Caption, txtColors.gray800, "block")}>

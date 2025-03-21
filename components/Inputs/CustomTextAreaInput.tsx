@@ -17,14 +17,14 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
 }) => {
   const baseClasses = clsx(
     "w-full",
-    "border border-tertiary rounded-md",
+    "border border-gray-400 rounded-md",
     "px-4 py-3",
     "shadow-md",
     "outline-none",
     "disabled:opacity-50 disabled:cursor-not-allowed",
     "transition-all",
     "resize-y",
-    "focus:border-secondary focus:ring-2 focus:ring-tertiary"
+    "focus:border-tertiary focus:ring-2 focus:ring-tertiary"
   );
 
   return (

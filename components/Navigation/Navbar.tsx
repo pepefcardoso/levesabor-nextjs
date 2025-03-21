@@ -71,7 +71,7 @@ const Navbar = () => {
             color={mobile ? txtColors.white : txtColors.black}
             hoverAnimation={ButtonHovers.bold}
             typography={Typography.Body}
-            className={clsx(mobile ? "w-full text-left" : "border-b border-tertiary w-full", "px-2 py-1")}
+            className={clsx(mobile ? "w-full text-left" : "border-b border-gray-400 w-full", "px-2 py-1")}
             onClick={mobile ? () => setIsMenuOpen(false) : undefined}
           />
         </div>
@@ -92,11 +92,11 @@ const Navbar = () => {
     <button
       ref={buttonRef}
       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      className="focus:ring-2 focus:ring-tertiary rounded-full transition-transform hover:scale-105"
+      className="focus:ring-2 focus:ring-white rounded-full transition-transform hover:scale-105"
       aria-label="Abrir menu do usuário"
     >
       {user?.image ? (
-        <div className="relative w-[40px] h-[40px] rounded-full hover:ring-2 ring-tertiary">
+        <div className="relative w-[40px] h-[40px] rounded-full hover:ring-2 ring-white">
           <Image src={user.image.url} alt="User profile" width={40} height={40} className="object-cover rounded-full" />
         </div>
       ) : (
@@ -180,7 +180,7 @@ const Navbar = () => {
               {isDropdownOpen && (
                 <div
                   ref={dropdownRef}
-                  className="absolute top-full right-0 mt-2 bg-white shadow-xl rounded-lg p-2 min-w-[200px] z-[1000] border border-tertiary animate-fade-in"
+                  className="absolute top-full right-0 mt-2 bg-white shadow-xl rounded-lg p-2 min-w-[200px] z-[1000] border border-gray-400 animate-fade-in"
                 >
                   {renderUserMenu()}
                 </div>

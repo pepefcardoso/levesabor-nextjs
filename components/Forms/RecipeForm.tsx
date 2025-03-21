@@ -218,7 +218,7 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
                   </div>
                 </div>
               ) : (
-                <div className="w-full max-w-[400px] h-[300px] p-8 border-2 border-dashed border-tertiary rounded-2xl bg-gray-50 flex flex-col items-center justify-center">
+                <div className="w-full max-w-[400px] h-[300px] p-8 border-2 border-dashed border-gray-400 rounded-2xl bg-gray-50 flex flex-col items-center justify-center">
                   <Image src="/image-icon.svg" alt="Upload Icon" width={48} height={48} className="mx-auto" />
                   <p className={clsx(Typography.Caption, txtColors.gray500, "mt-4")}>
                     Arraste ou clique para fazer upload
