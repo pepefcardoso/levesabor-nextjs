@@ -8,8 +8,8 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import routes from "../../../routes/routes";
 import { userService } from "@/services/index";
+import routes from "../../../../routes/routes";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({

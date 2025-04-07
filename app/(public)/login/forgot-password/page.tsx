@@ -10,7 +10,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import routes from "../../../routes/routes";
+import routes from "../../../../routes/routes";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

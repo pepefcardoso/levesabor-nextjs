@@ -23,7 +23,9 @@
       "@/components/*": ["./components/*"],
       "@/typings/*": ["./typings/*"],
       "@/constants/*": ["./constants/*"],
-      "@/services/*": ["./services/*"]
+      "@/services/*": ["./services/*"],
+      "@/store/*": ["./store/*"],
+      "@/routes/*": ["./routes/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-sitemap.config.js"],

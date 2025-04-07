@@ -10,7 +10,7 @@ import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { AuthService } from "@/services/authService";
 import clsx from "clsx";
-import routes from "../../routes/routes";
+import routes from "../../../routes/routes";
 
 function ResetPasswordPage() {
   const [password, setPassword] = useState("");

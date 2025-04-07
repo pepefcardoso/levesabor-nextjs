@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import FilledButton from "@/components/Buttons/FilledButton";
 import TextButton from "@/components/Buttons/TextButton";
@@ -10,15 +10,15 @@ import { Typography } from "@/constants/typography";
 import { AuthService } from "@/services/authService";
 import clsx from "clsx";
 import toast from "react-hot-toast";
-import useAuthStore from "../../store/authStore";
-import routes from "../../routes/routes";
+import useAuthStore from "@/store/authStore";
+import routes from "@/routes/routes";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const token = useAuthStore((state) => state.token);
+  const { setAuthenticated } = useAuthStore();
 
   interface ErrorResponse {
     response?: {
@@ -37,18 +37,16 @@ export default function LoginPage() {
     return "Falha no login. Verifique suas credenciais.";
   };
 
-  useEffect(() => {
-    if (token) router.push("/");
-  }, [token, router]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
+
     setLoading(true);
     try {
       const success = await AuthService.login(email, password);
       if (success) {
-        router.push("/");
+        setAuthenticated(true);
+        router.replace("/");
       }
     } catch (err: unknown) {
       const errorMessage = extractErrorMessage(err);

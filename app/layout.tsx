@@ -53,8 +53,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen")}>
-        <Navbar />
+      <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen")}>          <Navbar />
         <main className="flex-1">
           <Toaster position="bottom-left" />
           <div className="container mx-auto h-full">
