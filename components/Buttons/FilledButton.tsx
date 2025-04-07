@@ -5,17 +5,15 @@ import { FC } from "react";
 import clsx from "clsx";
 import { bgColors, BgColorType, txtColors, TxtColorType } from "@/constants/colors";
 import { Typography, TypographyType } from "@/constants/typography";
-import { ButtonHovers, ButtonHoverType, ButtonType, ButtonTypes } from "@/typings/buttons";
 
 interface FilledButtonProps {
   text: string;
   color?: BgColorType;
   fontColor?: TxtColorType;
   typography?: TypographyType;
-  hoverAnimation?: ButtonHoverType;
   href?: string;
   onClick?: () => void;
-  type?: ButtonType;
+  type?: "button" | "submit" | "reset";
   disabled?: boolean;
   className?: string;
 }
@@ -25,10 +23,9 @@ const FilledButton: FC<FilledButtonProps> = ({
   color = bgColors.tertiary,
   fontColor = txtColors.black,
   typography = Typography.Button,
-  hoverAnimation = ButtonHovers.none,
   href,
   onClick,
-  type = ButtonTypes.button,
+  type = "button",
   disabled = false,
   className,
 }) => {
@@ -41,7 +38,7 @@ const FilledButton: FC<FilledButtonProps> = ({
     disabled
       ? "cursor-not-allowed opacity-50"
       : clsx(
-        hoverAnimation,
+        "hover:shadow-md hover:opacity-95",
         "active:scale-[0.98]",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       ),

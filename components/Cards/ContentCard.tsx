@@ -6,7 +6,6 @@ import Link from "next/link";
 import IconButton from "../Buttons/IconButton";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { iconColors, txtColors } from "@/constants/colors";
-import { ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { Typography } from "@/constants/typography";
 
@@ -46,7 +45,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
 
         <div className="px-4 py-2">
           <h2 className={clsx(Typography.Subtitle, "mb-1 line-clamp-2")}>{item.title}</h2>
-          <p className={clsx(Typography.Caption, txtColors.gray800, "line-clamp-2")}>{"#" + item.id}</p>
+          <p className={clsx(Typography.Caption, txtColors.gray700, "line-clamp-2")}>{"#" + item.id}</p>
         </div>
       </Link>
       <div className="flex justify-end gap-3 p-3">
@@ -55,14 +54,12 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
             href={editRoute(item.id)}
             Icon={FaEdit}
             color={iconColors.green}
-            hoverAnimation={ButtonHovers.opacity}
           />
         </Link>
         <IconButton
           onClick={() => handleDelete(item.id)}
           Icon={FaTrash}
           color={iconColors.red}
-          hoverAnimation={ButtonHovers.opacity}
         />
       </div>
     </div>

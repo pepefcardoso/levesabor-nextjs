@@ -5,7 +5,6 @@ import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "@/constants/typography";
 import { iconColors, txtColors } from "@/constants/colors";
 import clsx from "clsx";
-import { ButtonHovers } from "@/typings/buttons";
 import IconButton from "../Buttons/IconButton";
 import { FiTrash } from "react-icons/fi";
 
@@ -52,14 +51,13 @@ export const StepForm = ({
           className="p-4 bg-white border border-gray-400 rounded-lg shadow-sm space-y-2"
         >
           <div className="flex items-center justify-between">
-            <span className={clsx(Typography.Caption, txtColors.gray800, "block")}>
+            <span className={clsx(Typography.Caption, txtColors.gray700, "block")}>
               Passo {step.order}
             </span>
             <IconButton
               onClick={() => handleDelete(index)}
               Icon={FiTrash}
               color={iconColors.red}
-              hoverAnimation={ButtonHovers.opacity}
               size={20}
             />
           </div>
@@ -74,7 +72,6 @@ export const StepForm = ({
         text="Adicionar Passo"
         onClick={addStep}
         className="px-8"
-        hoverAnimation={ButtonHovers.opacity}
       />
     </div>
   );

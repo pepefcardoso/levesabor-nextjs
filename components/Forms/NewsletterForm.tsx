@@ -7,8 +7,8 @@ import clsx from "clsx";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
-import FilledIconButton from "../Buttons/FilledIconButton";
-import { ButtonTypes } from "@/typings/buttons";
+import IconButton from "../Buttons/IconButton";
+import { FaArrowRight } from "react-icons/fa";
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState("");
@@ -48,9 +48,11 @@ const NewsletterForm = () => {
           placeholder="Seu email"
           required
         />
-        <FilledIconButton
+        <IconButton
           disabled={submitting}
-          type={ButtonTypes.submit}
+          type="submit"
+          Icon={FaArrowRight}
+          className="bg-tertiary rounded-lg shadow-md"
         />
       </form>
     </div>

@@ -1,6 +1,6 @@
+import { userService } from ".";
 import useAuthStore from "../store/authStore";
 import apiClient from "./apiClient";
-import { getCurrentUser } from "./userService";
 
 export const AuthService = {
   async login(email: string, password: string): Promise<boolean> {
@@ -15,7 +15,7 @@ export const AuthService = {
       localStorage.setItem("authToken", token);
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const user = await getCurrentUser();
+      const user = await userService.getCurrent();
       useAuthStore.getState().login(token, user);
       return true;
     } catch (error: unknown) {

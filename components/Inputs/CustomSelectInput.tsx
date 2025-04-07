@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from "react";
-import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
+import { txtColors } from "@/constants/colors";
 import clsx from "clsx";
 
 interface Option {
@@ -28,7 +30,6 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
   placeholder = "Selecione uma opção",
   disabled = false,
   isLoading = false,
-  name,
   className = "",
   label,
 }) => {
@@ -57,28 +58,37 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
     setIsDropdownOpen(false);
   };
 
+  const triggerClasses = clsx(
+    "w-full",
+    "border border-gray-400 rounded-md",
+    "px-4 py-3",
+    "flex justify-between items-center",
+    "bg-white shadow-md",
+    "transition-all duration-150 ease-in-out",
+    "outline-none",
+    "focus:border-tertiary focus:ring-2 focus:ring-tertiary",
+    {
+      "opacity-50 cursor-not-allowed": disabled || isLoading,
+      "hover:border-tertiary cursor-pointer": !disabled && !isLoading
+    },
+    className
+  );
+
+  const optionClasses = clsx(
+    "p-2 cursor-pointer hover:bg-yellow-50",
+    "transition-all duration-150 ease-in-out",
+    Typography.Caption
+  );
+
   return (
-    <div className="space-y-2 relative" ref={containerRef}>
-      {label && (
-        <label htmlFor={name} className={clsx(Typography.Subtitle)}>
-          {label}
-        </label>
-      )}
+    <div className="space-y-2 w-full relative" ref={containerRef}>
+      {label && <label className={clsx(Typography.Subtitle, "block")}>{label}</label>}
+
       <div
-        className={clsx(
-          "border border-gray-400 rounded-md p-2 cursor-pointer flex justify-between items-center",
-          "transition-all duration-150 ease-in-out",
-          "bg-white",
-          disabled || isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-tertiary",
-          className
-        )}
-        onClick={() => {
-          if (!disabled && !isLoading) {
-            setIsDropdownOpen(!isDropdownOpen);
-          }
-        }}
+        className={triggerClasses}
+        onClick={() => !disabled && !isLoading && setIsDropdownOpen(!isDropdownOpen)}
       >
-        <span className={clsx(Typography.Helper, txtColors.gray800)}>{displayValue}</span>
+        <span className={clsx(Typography.Helper, txtColors.gray700)}>{displayValue}</span>
         <svg
           className="w-4 h-4 text-gray-800"
           fill="none"
@@ -91,19 +101,16 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
             strokeLinejoin="round"
             strokeWidth={2}
             d={isDropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
-          ></path>
+          />
         </svg>
       </div>
+
       {isDropdownOpen && (
         <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
           {options.map((option) => (
             <div
               key={option.value}
-              className={clsx(
-                "p-2 cursor-pointer hover:bg-yellow-50 transition-all duration-150 ease-in-out",
-                Typography.Caption,
-                option.value === value ? "bg-yellow-50" : ""
-              )}
+              className={clsx(optionClasses, { "bg-yellow-50": option.value === value })}
               onClick={() => handleSelect(option.value)}
             >
               {option.label}

@@ -1,4 +1,3 @@
-import { getRecipeUnits } from "@/services/recipeUnitService";
 import { RecipeIngredient, RecipeUnit } from "@/typings/recipe";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -8,7 +7,7 @@ import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "@/constants/typography";
 import { clsx } from "clsx";
 import { txtColors } from "@/constants/colors";
-import { ButtonHovers } from "@/typings/buttons";
+import { recipeUnitService } from "@/services/index";
 
 interface IngredientFormProps {
   onIngredientsChange: (ingredients: RecipeIngredient[]) => void;
@@ -27,8 +26,8 @@ export const IngredientForm = ({
   useEffect(() => {
     const fetchUnits = async () => {
       try {
-        const response = await getRecipeUnits({
-          pagination: { page: 1, per_page: 50 },
+        const response = await recipeUnitService.getAll({
+          page: 1, per_page: 50,
         });
         setUnits(response.data);
       } catch {
@@ -61,9 +60,9 @@ export const IngredientForm = ({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 mb-2">
-        <span className={clsx(Typography.Quote, txtColors.gray800)}>Nome do Ingrediente</span>
-        <span className={clsx(Typography.Quote, txtColors.gray800)}>Quantidade</span>
-        <span className={clsx(Typography.Quote, txtColors.gray800)}>Unidade</span>
+        <span className={clsx(Typography.Quote, txtColors.gray700)}>Nome do Ingrediente</span>
+        <span className={clsx(Typography.Quote, txtColors.gray700)}>Quantidade</span>
+        <span className={clsx(Typography.Quote, txtColors.gray700)}>Unidade</span>
       </div>
 
       {ingredients.map((ingredient, index) => (
@@ -105,7 +104,6 @@ export const IngredientForm = ({
         onClick={addIngredient}
         disabled={isLoading}
         className="px-8"
-        hoverAnimation={ButtonHovers.opacity}
       />
     </div>
   );

@@ -5,15 +5,14 @@ import { AuthService } from "@/services/authService";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import routes from "routes/routes";
-import useAuthStore from "store/authStore";
 import TextButton from "../Buttons/TextButton";
-import { ButtonHovers } from "@/typings/buttons";
 import { bgColors, txtColors } from "@/constants/colors";
 import Image from "next/image";
 import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "@/constants/typography";
 import clsx from "clsx";
+import useAuthStore from "../../store/authStore";
+import routes from "../../routes/routes";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,8 +51,7 @@ const Navbar = () => {
           key={link.key}
           href={link.href}
           text={link.label}
-          color={txtColors.white}
-          hoverAnimation={ButtonHovers.bold}
+          fontColor={txtColors.white}
           className={mobile ? "text-left px-4 py-2" : ""}
           onClick={mobile ? () => setIsMenuOpen(false) : undefined}
         />
@@ -68,8 +66,7 @@ const Navbar = () => {
           <TextButton
             href={link.href}
             text={link.label}
-            color={mobile ? txtColors.white : txtColors.black}
-            hoverAnimation={ButtonHovers.bold}
+            fontColor={mobile ? txtColors.white : txtColors.black}
             typography={Typography.Body}
             className={clsx(mobile ? "w-full text-left" : "border-b border-gray-400 w-full", "px-2 py-1")}
             onClick={mobile ? () => setIsMenuOpen(false) : undefined}
@@ -79,8 +76,7 @@ const Navbar = () => {
       <div className="">
         <TextButton
           text="↪ Sair"
-          color={mobile ? txtColors.white : txtColors.black}
-          hoverAnimation={ButtonHovers.bold}
+          fontColor={mobile ? txtColors.white : txtColors.black}
           className={clsx(mobile ? "w-full text-left" : "", "px-2 py-3")}
           onClick={handleLogout}
         />
@@ -114,15 +110,13 @@ const Navbar = () => {
       <TextButton
         href={routes.auth.login}
         text="Entrar"
-        color={txtColors.white}
-        hoverAnimation={ButtonHovers.scale}
+        fontColor={txtColors.white}
         className={mobile ? "w-full text-center" : ""}
       />
       <FilledButton
         href={routes.auth.register}
         text="Cadastrar"
         color={bgColors.secondary}
-        hoverAnimation={ButtonHovers.opacity}
         className={mobile ? "w-full text-center" : ""}
       />
     </div>
@@ -140,16 +134,14 @@ const Navbar = () => {
             >
               <div className="relative w-8 h-8">
                 <div
-                  className={`absolute inset-0 transition-all duration-300 ${
-                    isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
-                  }`}
+                  className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+                    }`}
                 >
                   <Image src="/menu.svg" alt="Menu" width={32} height={32} className="w-full h-full" />
                 </div>
                 <div
-                  className={`absolute inset-0 transition-all duration-300 ${
-                    isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
-                  }`}
+                  className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+                    }`}
                 >
                   <Image src="/close.svg" alt="Fechar" width={32} height={32} className="w-full h-full" />
                 </div>
@@ -159,7 +151,7 @@ const Navbar = () => {
           <TextButton
             href={routes.home}
             text="LeveSabor"
-            color={txtColors.white}
+            fontColor={txtColors.white}
             typography={Typography.Headline}
             className="lg:flex-none"
           />
@@ -173,7 +165,7 @@ const Navbar = () => {
               <TextButton
                 href={routes.user.profile}
                 text={user.name}
-                color={txtColors.white}
+                fontColor={txtColors.white}
                 typography={Typography.Subtitle}
               />
               <UserAvatar />
@@ -193,14 +185,12 @@ const Navbar = () => {
       </nav>
 
       <div
-        className={`lg:hidden fixed inset-y-0 left-0 w-64 ${
-          bgColors.primary
-        } shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`lg:hidden fixed inset-y-0 left-0 w-64 ${bgColors.primary
+          } shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex items-center justify-between px-4 py-4">
-          <TextButton href={routes.home} text="LeveSabor" color={txtColors.white} typography={Typography.Headline} />
+          <TextButton href={routes.home} text="LeveSabor" fontColor={txtColors.white} typography={Typography.Headline} />
           <button onClick={() => setIsMenuOpen(false)} className="text-white">
             <Image src="/close.svg" alt="Fechar" width={24} height={24} />
           </button>
@@ -217,7 +207,7 @@ const Navbar = () => {
                   <TextButton
                     href={routes.user.profile}
                     text={user.name}
-                    color={txtColors.white}
+                    fontColor={txtColors.white}
                     typography={Typography.Subtitle}
                   />
                 </div>

@@ -20,7 +20,7 @@ const EmptyList: React.FC<EmptyListProps> = ({
     <div className="max-w-md w-full flex flex-col items-center text-center px-8 py-16 mx-auto">
       <Icon className="mb-4 text-gray-500" size={80} />
       <h1 className={clsx(Typography.Title)}>{title}</h1>
-      <p className={clsx(Typography.Subtitle, txtColors.gray800)}>{description}</p>
+      <p className={clsx(Typography.Subtitle, txtColors.gray700)}>{description}</p>
     </div>
   );
 };

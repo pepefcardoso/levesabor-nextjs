@@ -1,12 +1,6 @@
 "use client";
 
 import { iconColors, IconColorType } from "@/constants/colors";
-import {
-    ButtonHovers,
-    ButtonHoverType,
-    ButtonType,
-    ButtonTypes
-} from "@/typings/buttons";
 import clsx from "clsx";
 import Link from "next/link";
 import { FC } from "react";
@@ -14,43 +8,40 @@ import { IconType } from "react-icons";
 import { FiArrowRight } from "react-icons/fi";
 
 interface IconButtonProps {
-    onClick?: () => void;
-    href?: string;
     Icon?: IconType;
     color?: IconColorType;
-    hoverAnimation?: ButtonHoverType;
+    onClick?: () => void;
+    href?: string;
     disabled?: boolean;
     size?: number;
-    type?: ButtonType;
+    type?: "button" | "submit" | "reset";
     className?: string;
 }
 
 const IconButton: FC<IconButtonProps> = ({
-    onClick,
-    href,
     Icon = FiArrowRight,
     color = iconColors.black,
-    hoverAnimation = ButtonHovers.opacity,
+    onClick,
+    href,
     disabled = false,
     size = 20,
-    type = ButtonTypes.button,
+    type = "button",
     className = "",
 }) => {
     const baseClasses = clsx(
-        "inline-flex items-center justify-center p-2 rounded-full",
-        "hover:bg-gray-200",
-        "transition ease-in-out duration-150",
-        hoverAnimation,
-        disabled && "opacity-50 cursor-not-allowed",
+        "inline-flex items-center justify-center p-3 transform",
+        "transition-[transform,shadow,opacity] transition-transform duration-200",
+        disabled
+            ? "cursor-not-allowed opacity-50"
+            : "rounded-lg hover:hover:bg-gray-100",
         className
     );
 
-    if (href) {
+
+    if (href && !disabled) {
         return (
-            <Link href={href} passHref legacyBehavior>
-                <a className={baseClasses} onClick={onClick}>
-                    <Icon size={size} color={color} />
-                </a>
+            <Link href={href} onClick={onClick} className={baseClasses} aria-disabled={disabled} role="button">
+                <Icon size={size} color={color} />
             </Link>
         );
     }

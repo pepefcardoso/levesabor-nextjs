@@ -17,23 +17,19 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
 }) => {
   const baseClasses = clsx(
     "w-full",
-    "border border-gray-400 rounded-md",
+    "border border-gray-400 rounded-md bg-white",
     "px-4 py-3",
     "shadow-md",
-    "outline-none",
     "disabled:opacity-50 disabled:cursor-not-allowed",
-    "transition-all",
+    "transition-all duration-200",
+    "outline-none",
     "resize-y",
     "focus:border-tertiary focus:ring-2 focus:ring-tertiary"
   );
 
   return (
-    <div className="space-y-2">
-      {label && (
-        <label htmlFor={props.id} className={clsx(Typography.Subtitle)}>
-          {label}
-        </label>
-      )}
+    <div className="space-y-2 w-full">
+      {label && <label className={clsx(Typography.Subtitle, "block")}>{label}</label>}
       <textarea {...props} rows={rows} disabled={disabled} className={clsx(baseClasses, className)} />
     </div>
   );

@@ -10,7 +10,6 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
-  display: "swap",
   variable: "--font-inter",
 });
 
@@ -54,7 +53,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen font-sans")}>
+      <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen")}>
         <Navbar />
         <main className="flex-1">
           <Toaster position="bottom-left" />

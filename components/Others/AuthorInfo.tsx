@@ -43,7 +43,7 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({ authorName, authorImage, postDa
 
             <div className="flex flex-col">
                 <span className={clsx(Typography.Subtitle)}>{"Por " + authorName}</span>
-                <span className={clsx(Typography.Caption, txtColors.gray800)}>
+                <span className={clsx(Typography.Caption, txtColors.gray700)}>
                     {postDate}
                 </span>
             </div>

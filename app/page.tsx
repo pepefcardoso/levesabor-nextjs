@@ -11,13 +11,11 @@ import NewsletterForm from "@/components/Forms/NewsletterForm";
 import { Recipe } from "@/typings/recipe";
 import { Post } from "@/typings/post";
 import { PaginationResponse } from "@/typings/pagination";
-import { getRecipes } from "@/services/recipeService";
-import { getPosts } from "@/services/postService";
 import { txtColors } from "@/constants/colors";
-import { ButtonHovers } from "@/typings/buttons";
 import clsx from "clsx";
 import { Typography } from "@/constants/typography";
 import Image from "next/image";
+import { postService, recipeService } from "../services";
 
 export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -27,9 +25,8 @@ export default function Home() {
 
   const fetchRecipes = useCallback(async () => {
     try {
-      const response: PaginationResponse<Recipe> = await getRecipes({
-        filters: undefined,
-        pagination: { page: 1, per_page: 4 },
+      const response: PaginationResponse<Recipe> = await recipeService.getAll({
+        page: 1, per_page: 4,
       });
       setRecipes(response.data);
       setRecipesLoaded(true);
@@ -41,9 +38,8 @@ export default function Home() {
 
   const fetchPosts = useCallback(async () => {
     try {
-      const response: PaginationResponse<Post> = await getPosts({
-        filters: undefined,
-        pagination: { page: 1, per_page: 4 },
+      const response: PaginationResponse<Post> = await postService.getAll({
+        page: 1, per_page: 4,
       });
       setPosts(response.data);
       setPostsLoaded(true);
@@ -80,8 +76,7 @@ export default function Home() {
                   <TextButton
                     href={routes.recipes.index}
                     text="Comece Sua Jornada Culinária"
-                    color={txtColors.primary}
-                    hoverAnimation={ButtonHovers.scale}
+                    fontColor={txtColors.black}
                   />
                 </div>
               </div>
@@ -95,6 +90,7 @@ export default function Home() {
                   width={600}
                   height={400}
                   className="object-cover rounded-lg shadow-md"
+                  fill
                   priority
                 />
               </div>
@@ -109,15 +105,14 @@ export default function Home() {
           <TextButton
             href={routes.recipes.index}
             text="Ver Todas"
-            color={txtColors.gray800}
-            hoverAnimation={ButtonHovers.underline}
+            fontColor={txtColors.gray700}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
           {!recipesLoaded
             ? Array(4)
-                .fill(null)
-                .map((_, index) => <CardSkeleton key={index} />)
+              .fill(null)
+              .map((_, index) => <CardSkeleton key={index} />)
             : recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)}
         </div>
       </section>
@@ -128,15 +123,14 @@ export default function Home() {
           <TextButton
             href={routes.posts.index}
             text="Ver Todos"
-            color={txtColors.gray800}
-            hoverAnimation={ButtonHovers.underline}
+            fontColor={txtColors.gray700}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
           {!postsLoaded
             ? Array(4)
-                .fill(null)
-                .map((_, index) => <CardSkeleton key={index} />)
+              .fill(null)
+              .map((_, index) => <CardSkeleton key={index} />)
             : posts.map((post) => <PostCard key={post.id} post={post} />)}
         </div>
       </section>

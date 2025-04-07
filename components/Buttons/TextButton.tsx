@@ -2,68 +2,57 @@
 
 import Link from "next/link";
 import { FC } from "react";
-import { Typography, TypographyType } from "../../constants/typography";
-import { txtColors, TxtColorType } from "../../constants/colors";
-import { ButtonHovers, ButtonHoverType, ButtonType, ButtonTypes} from "../../typings/buttons";
+import clsx from "clsx";
+import { txtColors, TxtColorType } from "@/constants/colors";
+import { Typography, TypographyType } from "@/constants/typography";
 
 interface TextButtonProps {
-    text: string;
-    href?: string;
-    onClick?: () => void;
-    disabled?: boolean;
-    type?: ButtonType;
-    color?: TxtColorType;
-    typography?: TypographyType;
-    hoverAnimation?: ButtonHoverType;
-    className?: string;
+  text: string;
+  fontColor?: TxtColorType;
+  typography?: TypographyType;
+  href?: string;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  className?: string;
 }
 
 const TextButton: FC<TextButtonProps> = ({
-    text,
-    href,
-    onClick,
-    disabled = false,
-    type = ButtonTypes.button,
-    color = txtColors.black,
-    typography = Typography.Button,
-    hoverAnimation = ButtonHovers.none,
-    className: className = "",
+  text,
+  fontColor = txtColors.gray700,
+  typography = Typography.Button,
+  href,
+  onClick,
+  type = "button",
+  disabled = false,
+  className,
 }) => {
+  const baseClasses = clsx(
+    "rounded-lg px-4 py-2 flex items-center justify-center transform",
+    "transition-[transform,shadow,opacity] transition-transform duration-200",
+    typography,
+    fontColor,
+    disabled
+      ? "cursor-not-allowed opacity-50"
+      : "hover:hover:bg-gray-100",
+    className
+  );
 
-    const baseClasses = `
-    inline-block
-    ${typography}
-    ${color}
-    transform
-    transition-transform duration-200
-    ${hoverAnimation}
-    ${disabled ? "cursor-not-allowed opacity-50" : ""}
-    ${className}
-  `;
+  const content = <span>{text}</span>;
 
-    if (href && !disabled) {
-        return (
-            <Link
-                href={href}
-                onClick={onClick}
-                className={baseClasses.trim()}
-                aria-disabled={disabled}
-            >
-                {text}
-            </Link>
-        );
-    }
-
+  if (href && !disabled) {
     return (
-        <button
-            type={type}
-            onClick={onClick}
-            className={baseClasses.trim()}
-            disabled={disabled}
-        >
-            {text}
-        </button>
+      <Link href={href} onClick={onClick} className={baseClasses} aria-disabled={disabled} role="button">
+        {content}
+      </Link>
     );
+  }
+
+  return (
+    <button onClick={onClick} className={baseClasses} disabled={disabled} type={type} aria-disabled={disabled}>
+      {content}
+    </button>
+  );
 };
 
 export default TextButton;

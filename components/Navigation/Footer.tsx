@@ -3,7 +3,6 @@ import { FOOTER_LINKS } from "../../constants";
 import routes from "../../routes/routes";
 import TextButton from "../Buttons/TextButton";
 import { bgColors, txtColors } from "../../constants/colors";
-import { ButtonHovers } from "../../typings/buttons";
 import { Typography } from "../../constants/typography";
 import clsx from "clsx";
 
@@ -13,7 +12,7 @@ const Footer = () => {
       <div className="flex flex-col w-full">
         <div className="flex flex-col lg:flex-row items-center justify-between max-container padding-container relative z-30 py-4">
           <div className="lg:flex-1 lg:text-start flex items-center">
-            <TextButton href={routes.home} text="LeveSabor" color={txtColors.white} typography={Typography.Headline} />
+            <TextButton href={routes.home} text="LeveSabor" fontColor={txtColors.white} typography={Typography.Headline} />
           </div>
 
           <div className="lg:hidden mb-5" />
@@ -24,8 +23,7 @@ const Footer = () => {
                 <TextButton
                   href={link.href}
                   text={link.label}
-                  color={txtColors.white}
-                  hoverAnimation={ButtonHovers.bold}
+                  fontColor={txtColors.white}
                 />
               </li>
             ))}
@@ -37,8 +35,7 @@ const Footer = () => {
                 <TextButton
                   href={link.href}
                   text={link.label}
-                  color={txtColors.white}
-                  hoverAnimation={ButtonHovers.bold}
+                  fontColor={txtColors.white}
                 />
               </li>
             ))}
@@ -51,9 +48,8 @@ const Footer = () => {
             <TextButton
               href="https://instagram.com/pepefcardoso"
               text="Agência PPD"
-              color={txtColors.gray800}
+              fontColor={txtColors.gray700}
               typography={Typography.Body}
-              hoverAnimation={ButtonHovers.underline}
             />
           </p>
         </div>

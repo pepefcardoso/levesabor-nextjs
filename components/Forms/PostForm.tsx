@@ -10,7 +10,6 @@ import { Typography } from "@/constants/typography";
 import CustomCheckboxInput from "../Inputs/CustomCheckboxInput";
 import Image from "next/image";
 import FilledButton from "../Buttons/FilledButton";
-import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 import TextButton from "../Buttons/TextButton";
 import { txtColors } from "@/constants/colors";
 import { useRouter } from "next/navigation";
@@ -162,7 +161,6 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
             text={previewImage ? "Alterar Imagem" : "Selecionar Arquivo"}
             onClick={() => fileInputRef.current?.click()}
             disabled={isSubmitting}
-            hoverAnimation={ButtonHovers.opacity}
           />
 
           <input
@@ -181,14 +179,12 @@ export const PostForm: React.FC<PostFormProps> = ({ initialData, categories, top
           onClick={() => router.back()}
           text="Voltar"
           disabled={isSubmitting}
-          hoverAnimation={ButtonHovers.bold}
-          color={txtColors.gray800}
+          fontColor={txtColors.gray700}
         />
         <FilledButton
           text={"Salvar"}
-          type={ButtonTypes.submit}
+          type="submit"
           disabled={isSubmitting}
-          hoverAnimation={ButtonHovers.opacity}
         />
       </div>
     </form>

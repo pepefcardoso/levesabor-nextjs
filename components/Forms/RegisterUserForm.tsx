@@ -3,7 +3,6 @@
 import { FormEvent } from "react";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import FilledButton from "../Buttons/FilledButton";
-import { ButtonTypes, ButtonHovers } from "@/typings/buttons";
 
 interface RegisterUserFormProps {
   formData: {
@@ -54,10 +53,9 @@ const RegisterUserForm = ({ formData, loading, handleInputChange, handleSubmit }
       </div>
 
       <FilledButton
-        type={ButtonTypes.submit}
+        type="submit"
         text="Cadastrar"
         disabled={loading}
-        hoverAnimation={ButtonHovers.opacity}
         className="w-full"
       />
     </form>
