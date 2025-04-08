@@ -12,12 +12,12 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaExclamationTriangle } from "react-icons/fa";
-import useAuthStore from "../../../../store/authStore";
-import routes from "../../../../routes/routes";
+import routes from "@/routes/routes";
 import { recipeService } from "@/services/index";
+import useUserStore from "@/store/userStore";
 
 export default function ListUserRecipes() {
-  const { user } = useAuthStore();
+  const { user } = useUserStore();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);

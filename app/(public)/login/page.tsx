@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import FilledButton from "@/components/Buttons/FilledButton";
 import TextButton from "@/components/Buttons/TextButton";
 import CustomTextInput, { InputType } from "@/components/Inputs/CustomTextInput";
@@ -10,15 +10,13 @@ import { Typography } from "@/constants/typography";
 import { AuthService } from "@/services/authService";
 import clsx from "clsx";
 import toast from "react-hot-toast";
-import useAuthStore from "@/store/authStore";
 import routes from "@/routes/routes";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const { setAuthenticated } = useAuthStore();
+  // const router = useRouter();
 
   interface ErrorResponse {
     response?: {
@@ -43,11 +41,10 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const success = await AuthService.login(email, password);
-      if (success) {
-        setAuthenticated(true);
-        router.replace("/");
-      }
+      await AuthService.login(email, password);
+      // if (success) {
+      //   router.replace("/");
+      // }
     } catch (err: unknown) {
       const errorMessage = extractErrorMessage(err);
       toast.error(errorMessage);

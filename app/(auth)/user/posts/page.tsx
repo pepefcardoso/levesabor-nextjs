@@ -12,12 +12,12 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaExclamationTriangle } from "react-icons/fa";
-import useAuthStore from "../../../../store/authStore";
 import routes from "../../../../routes/routes";
 import { postService } from "@/services/index";
+import useUserStore from "@/store/userStore";
 
 export default function UserPosts() {
-  const { user } = useAuthStore();
+  const { user } = useUserStore();
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);

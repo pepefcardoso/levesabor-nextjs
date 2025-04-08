@@ -1,3 +1,5 @@
+import useUserStore from "@/store/userStore";
+import { userService } from ".";
 import useAuthStore from "../store/authStore";
 import apiClient from "./apiClient";
 
@@ -16,6 +18,8 @@ export const AuthService = {
       }
 
       useAuthStore.getState().setAuthenticated(true);
+      await this.getCurrentUser();
+
       return true;
     } catch (error: unknown) {
       let errorMessage = "Please check your credentials and try again.";
@@ -33,6 +37,10 @@ export const AuthService = {
       if (!response.ok) {
         throw new Error("Falha ao comunicar com o servidor");
       }
+
+      useAuthStore.getState().logout();
+      useUserStore.getState().clearUser();
+
       return true;
     } catch (error) {
       console.error("Erro durante logout:", error);
@@ -60,6 +68,17 @@ export const AuthService = {
       return true;
     } catch {
       throw new Error("Falha ao redefinir a senha. Por favor, tente novamente.");
+    }
+  },
+
+  async getCurrentUser(): Promise<void> {
+    try {
+      const currentUser = await userService.getCurrent();
+
+      useUserStore.getState().setUser(currentUser);
+    } catch (error) {
+      console.error("Erro ao buscar usuário atual:", error);
+      throw new Error("Não foi possível buscar o usuário atual.");
     }
   },
 };

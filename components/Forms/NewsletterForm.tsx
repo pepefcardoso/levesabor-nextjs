@@ -2,13 +2,13 @@
 
 import { txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
-import { createNewsletterCustomer } from "@/services/NewsletterCustomerService";
 import clsx from "clsx";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import CustomTextInput, { InputType } from "../Inputs/CustomTextInput";
 import IconButton from "../Buttons/IconButton";
 import { FaArrowRight } from "react-icons/fa";
+import { newsletterService } from "@/services/index";
 
 const NewsletterForm = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const NewsletterForm = () => {
     try {
       const formData = new FormData();
       formData.append("email", email);
-      await createNewsletterCustomer(formData);
+      await newsletterService.createNewsletterCustomer(formData);
       setEmail("");
       toast.success("Cadastro realizado com sucesso!");
     } catch (error) {

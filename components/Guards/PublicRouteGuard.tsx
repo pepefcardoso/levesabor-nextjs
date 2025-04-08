@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/authStore";
-import PageSkeleton from "@/components/Skeletons/PageSkeleton"; // Opcional: caso queira mostrar um loading
+import PageSkeleton from "@/components/Skeletons/PageSkeleton";
 
 export default function PublicRoute({ children }: { children: React.ReactNode }) {
     const router = useRouter();

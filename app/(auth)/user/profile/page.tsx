@@ -10,15 +10,13 @@ import { iconColors, txtColors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { User } from "@/typings/user";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaExclamationTriangle, FaTrash } from "react-icons/fa";
-import useAuthStore from "../../../../store/authStore";
 import { userService } from "@/services/index";
+import { AuthService } from "@/services/authService";
 
 export default function UserProfile() {
-  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
@@ -61,8 +59,7 @@ export default function UserProfile() {
     try {
       if (!user) return;
       await userService.delete(user.id);
-      useAuthStore.getState().logout();
-      router.push("/");
+      AuthService.logout();
     } catch {
       toast.error("Falha ao excluir conta");
       setShowDeleteDialog(false);

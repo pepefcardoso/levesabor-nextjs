@@ -11,13 +11,13 @@ import Image from "next/image";
 import FilledButton from "../Buttons/FilledButton";
 import { Typography } from "@/constants/typography";
 import clsx from "clsx";
-import useAuthStore from "../../store/authStore";
 import routes from "../../routes/routes";
+import useUserStore from "@/store/userStore";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { user } = useAuthStore();
+  const { user } = useUserStore();
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
