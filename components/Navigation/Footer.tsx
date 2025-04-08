@@ -5,6 +5,7 @@ import TextButton from "../Buttons/TextButton";
 import { bgColors, txtColors } from "../../constants/colors";
 import { Typography } from "../../constants/typography";
 import clsx from "clsx";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -12,7 +13,10 @@ const Footer = () => {
       <div className="flex flex-col w-full">
         <div className="flex flex-col lg:flex-row items-center justify-between max-container padding-container relative z-30 py-4">
           <div className="lg:flex-1 lg:text-start flex items-center">
-            <TextButton href={routes.home} text="LeveSabor" fontColor={txtColors.white} typography={Typography.Headline} />
+            <Link
+              href={routes.home}
+              className={clsx(Typography.Headline, txtColors.white, "lg:flex-none")}
+            >LeveSabor</Link>
           </div>
 
           <div className="lg:hidden mb-5" />

@@ -52,19 +52,19 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto space-y-8 px-4 sm:px-0">
       <div className="flex flex-col items-center space-y-4">
-        <div className="relative w-48 h-48">
+        <div className="relative w-64 h-64">
           <Image
             src={previewImage || sanitizeImageUrl(initialData.image?.url)}
             alt="Perfil"
-            width={192}
-            height={192}
+            fill
             className="rounded-full border-4 border-primary object-cover w-full h-full shadow-lg"
           />
-          <div className="absolute bottom-2 right-2">
+          <div className="absolute bottom-2 right-4">
             <IconButton
               onClick={() => fileInputRef.current && fileInputRef.current.click()}
               Icon={FiEdit2}
-              className="bg-white rounded-full shadow-md border-2 border-tertiary"
+              radius="full"
+              className="bg-white shadow-md border-2 border-gray-300"
             />
           </div>
           <input

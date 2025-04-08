@@ -34,7 +34,7 @@ const TextButton: FC<TextButtonProps> = ({
     fontColor,
     disabled
       ? "cursor-not-allowed opacity-50"
-      : "hover:hover:bg-gray-100",
+      : "hover:hover:bg-gray-100 cursor-pointer",
     className
   );
 

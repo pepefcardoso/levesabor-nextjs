@@ -101,9 +101,9 @@ export default function UserProfile() {
 
           {showDeleteDialog && (
             <div
-              className={clsx(
-                "absolute inset-0 flex items-center px-4 justify-center bg-black bg-opacity-50 rounded-2xl transition-opacity duration-300"
-              )}
+            className={clsx(
+              "absolute inset-0 flex items-center px-4 justify-center bg-black/30 backdrop-blur-md rounded-2xl transition-opacity duration-300"
+            )}
             >
               <div className="bg-white rounded-lg p-6 max-w-md mx-auto">
                 <h2 className={clsx(Typography.Subtitle, "mb-4")}>Confirmar Exclusão</h2>

@@ -14,6 +14,7 @@ interface IconButtonProps {
     href?: string;
     disabled?: boolean;
     size?: number;
+    radius?: "full" | "lg" | "xl";
     type?: "button" | "submit" | "reset";
     className?: string;
 }
@@ -25,16 +26,19 @@ const IconButton: FC<IconButtonProps> = ({
     href,
     disabled = false,
     size = 20,
+    radius = "lg",
     type = "button",
     className = "",
 }) => {
+    const radiusClass = radius === "full" ? "rounded-full" :
+        radius === "xl" ? "rounded-xl" :
+            "rounded-lg";
     const baseClasses = clsx(
+        className,
         "inline-flex items-center justify-center p-3 transform",
         "transition-[transform,shadow,opacity] transition-transform duration-200",
-        disabled
-            ? "cursor-not-allowed opacity-50"
-            : "rounded-lg hover:hover:bg-gray-100",
-        className
+        disabled ? "cursor-not-allowed opacity-50" : radiusClass,
+        !disabled && "hover:bg-gray-100 cursor-pointer",
     );
 
 

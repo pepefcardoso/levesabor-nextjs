@@ -40,7 +40,8 @@ const FilledButton: FC<FilledButtonProps> = ({
       : clsx(
         "hover:shadow-md hover:opacity-95",
         "active:scale-[0.98]",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        "cursor-pointer",
       ),
     className
   );

@@ -77,6 +77,7 @@ export default function Home() {
                     href={routes.recipes.index}
                     text="Comece Sua Jornada Culinária"
                     fontColor={txtColors.black}
+                    className="max-w-[300px]"
                   />
                 </div>
               </div>
@@ -87,8 +88,6 @@ export default function Home() {
                 <Image
                   src="/placeholder.jpg"
                   alt="Healthy ingredients arrangement"
-                  width={600}
-                  height={400}
                   className="object-cover rounded-lg shadow-md"
                   fill
                   priority

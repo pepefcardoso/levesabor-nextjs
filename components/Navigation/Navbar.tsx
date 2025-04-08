@@ -13,6 +13,7 @@ import { Typography } from "@/constants/typography";
 import clsx from "clsx";
 import routes from "../../routes/routes";
 import useUserStore from "@/store/userStore";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -88,7 +89,7 @@ const Navbar = () => {
     <button
       ref={buttonRef}
       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      className="focus:ring-2 focus:ring-white rounded-full transition-transform hover:scale-105"
+      className="focus:ring-2 focus:ring-white rounded-full transition-transform hover:scale-105 cursor-pointer"
       aria-label="Abrir menu do usuário"
     >
       {user?.image ? (
@@ -128,7 +129,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <div className="lg:hidden">
             <button
-              className="p-2 text-white"
+              className="p-2 text-white cursor-pointer"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             >
@@ -148,13 +149,10 @@ const Navbar = () => {
               </div>
             </button>
           </div>
-          <TextButton
+          <Link
             href={routes.home}
-            text="LeveSabor"
-            fontColor={txtColors.white}
-            typography={Typography.Headline}
-            className="lg:flex-none"
-          />
+            className={clsx(Typography.Headline, txtColors.white, "lg:flex-none")}
+          >LeveSabor</Link>
         </div>
 
         <div className="hidden lg:flex items-center justify-center flex-grow gap-8">{renderLinks(NAV_LINKS)}</div>
@@ -190,8 +188,11 @@ const Navbar = () => {
           }`}
       >
         <div className="flex items-center justify-between px-4 py-4">
-          <TextButton href={routes.home} text="LeveSabor" fontColor={txtColors.white} typography={Typography.Headline} />
-          <button onClick={() => setIsMenuOpen(false)} className="text-white">
+          <Link
+            href={routes.home}
+            className={clsx(Typography.Headline, txtColors.white, "lg:flex-none")}
+          >LeveSabor</Link>
+          <button onClick={() => setIsMenuOpen(false)} className="text-white cursor pointer">
             <Image src="/close.svg" alt="Fechar" width={24} height={24} />
           </button>
         </div>
