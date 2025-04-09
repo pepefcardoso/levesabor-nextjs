@@ -116,7 +116,7 @@ export default function RecipesHome() {
   }));
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl w-full space-y-8">
+    <div className="mx-auto px-4 py-8 max-w-7xl w-full space-y-8">
       <div className="px-4">
         <h1 className={clsx(Typography.Headline, "mb-4 sm:mb-6 text-left")}>Pesquisar Receitas</h1>
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">

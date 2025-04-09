@@ -74,7 +74,7 @@ export default function ListUserRecipes() {
   }
 
   return (
-    <div className="container mx-auto p-8 max-w-6xl">
+    <div className="mx-auto p-8 max-w-6xl">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
         <h1 className={clsx(Typography.Headline, "mb-4 md:mb-0")}>Minhas Receitas</h1>
         <FilledButton

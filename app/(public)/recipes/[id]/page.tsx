@@ -50,7 +50,7 @@ const RecipeDetails = () => {
     );
 
   return (
-    <div className="container mx-auto px-6 py-8 max-w-5xl">
+    <div className="mx-auto px-6 py-8 max-w-5xl">
       <div className="mb-4">
         <CustomChip bgColor={bgColors.secondary} text={recipe.category?.name || ""} />
       </div>

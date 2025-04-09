@@ -61,7 +61,9 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
           />
           <div className="absolute bottom-2 right-4">
             <IconButton
-              onClick={() => fileInputRef.current && fileInputRef.current.click()}
+              onClick={() => {
+                fileInputRef.current?.click();
+              }}
               Icon={FiEdit2}
               radius="full"
               className="bg-white shadow-md border-2 border-gray-300"

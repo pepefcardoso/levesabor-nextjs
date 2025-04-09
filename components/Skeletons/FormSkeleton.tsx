@@ -1,5 +1,5 @@
 export const FormSkeleton = () => (
-  <div className="container mx-auto px-4 py-8 max-w-4xl animate-pulse">
+  <div className="mx-auto px-4 py-8 max-w-4xl animate-pulse">
     <div className="h-10 bg-gray-300 rounded w-1/3 mb-8"></div>
     <div className="space-y-8">
       {[...Array(9)].map((_, i) => (

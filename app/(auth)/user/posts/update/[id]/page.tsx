@@ -53,9 +53,9 @@ export default function UpdatePostPage() {
 
         setInitialData({
           title: postRes.title,
-          summary: postRes.summary,
-          content: postRes.content,
-          category_id: postRes.category_id,
+          summary: postRes.summary ?? "",
+          content: postRes.content ?? "",
+          category_id: postRes.category_id ?? "",
           topics: postRes.topics ? postRes.topics.map((t: PostTopic) => String(t.id)) : [],
           image_url: postRes.image?.url ?? "",
         });
@@ -100,7 +100,7 @@ export default function UpdatePostPage() {
   }
 
   return (
-    <div className="container mx-auto px-6 py-10 max-w-4xl">
+    <div className="mx-auto px-6 py-10 max-w-4xl">
       <div className="bg-white rounded-lg shadow-lg p-8">
         <h1 className={clsx(Typography.Title, "mb-12")}>Editar Post #{postId}</h1>
         <PostForm

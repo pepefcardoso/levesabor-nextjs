@@ -85,7 +85,7 @@ export default function PostsHome() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl w-full space-y-8">
+    <div className="mx-auto px-4 py-8 max-w-7xl w-full space-y-8">
       <div className="px-4">
         <h1 className={clsx(Typography.Headline, "mb-4 sm:mb-6 text-left")}>Pesquise nossos posts</h1>
         <form onSubmit={handleSubmit} className="mb-6">

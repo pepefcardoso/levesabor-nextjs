@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <footer className={clsx("flexCenter mb-2", bgColors.primary)}>
       <div className="flex flex-col w-full">
-        <div className="flex flex-col lg:flex-row items-center justify-between max-container padding-container relative z-30 py-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between relative z-30 py-4">
           <div className="lg:flex-1 lg:text-start flex items-center">
             <Link
               href={routes.home}

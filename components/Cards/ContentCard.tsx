@@ -53,7 +53,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
           <IconButton
             href={editRoute(item.id)}
             Icon={FaEdit}
-            color={iconColors.green}
+            color={iconColors.black}
           />
         </Link>
         <IconButton

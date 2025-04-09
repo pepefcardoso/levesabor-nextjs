@@ -38,8 +38,8 @@ export interface RecipeIngredient {
   quantity: number;
   name: string;
   unit_id?: string;
-  unit: RecipeUnit;
-  recipe_id: string;
+  unit?: RecipeUnit;
+  recipe_id?: string;
 }
 
 export interface RecipeStep {
