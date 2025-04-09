@@ -10,7 +10,7 @@ import { FiArrowRight } from "react-icons/fi";
 interface IconButtonProps {
     Icon?: IconType;
     color?: IconColorType;
-    onClick?: () => void;
+    onClick?: (e?: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void | Promise<void>;
     href?: string;
     disabled?: boolean;
     size?: number;

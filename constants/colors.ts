@@ -26,6 +26,8 @@ export const iconColors = {
   tertiary: "#889E73",
   white: "#FFFFFF",
   black: "#000000",
-  red: "#FF2C2C",
-  green: "#008000",
+  red: "#EF4444",
+  gray: "#6B7280",
+  grayLight: "#9CA3AF",
 } as const;
+

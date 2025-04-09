@@ -56,7 +56,7 @@ export default function RootLayout({
       <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen")}>          <Navbar />
         <main className="flex-1">
           <Toaster position="bottom-left" />
-          <div className="container mx-auto h-full">
+          <div className="mx-auto h-full min-w-screen">
             <TransitionWrapper>{children}</TransitionWrapper>
           </div>
         </main>

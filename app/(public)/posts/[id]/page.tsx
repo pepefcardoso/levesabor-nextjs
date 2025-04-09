@@ -51,7 +51,7 @@ const PostDetails = () => {
     );
 
   return (
-    <div className="container mx-auto px-6 max-w-5 xl py-6">
+    <div className="w-full mx-auto px-6 max-w-5xl py-6">
       {post.category?.name && (
         <div className="mb-4">
           <CustomChip text={post.category?.name} />

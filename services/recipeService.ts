@@ -8,7 +8,10 @@ export class RecipeService extends StandardService<Recipe> {
     super("/recipes");
   }
 
-  async getCurrentUserRecipes(pagination: PaginationParams, filters?: RecipeFilters): Promise<PaginationResponse<Recipe>> {
+  async getCurrentUserRecipes(
+    pagination: PaginationParams,
+    filters?: RecipeFilters
+  ): Promise<PaginationResponse<Recipe>> {
     try {
       const response = await apiClient.get<PaginationResponse<Recipe>>("/recipes/my", {
         params: {
@@ -19,7 +22,42 @@ export class RecipeService extends StandardService<Recipe> {
       });
       return response.data;
     } catch (error) {
-      throw new Error("Falha ao buscar minhas receitas" + error);
+      throw new Error("Falha ao buscar receitas" + error);
+    }
+  }
+
+  async getCurrentUserFavoriteRecipes(
+    pagination: PaginationParams,
+    filters?: RecipeFilters
+  ): Promise<PaginationResponse<Recipe>> {
+    try {
+      const response = await apiClient.get<PaginationResponse<Recipe>>("/recipes/favorites", {
+        params: {
+          ...filters,
+          page: pagination.page,
+          per_page: pagination.per_page,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error("Falha ao buscar receitas" + error);
+    }
+  }
+
+  async toggleFavoriteRecipe(recipeId: string): Promise<boolean> {
+    try {
+      const response = await apiClient.post("/users/favorite-recipe", {
+        recipe_id: recipeId,
+      });
+
+      if (response.status !== 200) {
+        throw new Error("Erro ao alternar favorito");
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Erro ao alternar favorito:", error);
+      return false;
     }
   }
 }

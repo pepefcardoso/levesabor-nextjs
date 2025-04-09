@@ -3,7 +3,7 @@ import { Image } from "./image";
 
 export interface User {
   id: string;
-  name?: string;
+  name: string;
   email?: string;
   birthday?: string;
   phone?: string;

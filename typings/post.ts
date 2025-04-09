@@ -3,18 +3,17 @@ import { User } from "./user";
 
 export interface Post {
   id: string;
-  title?: string;
+  title: string;
   summary?: string;
   content?: string;
   category_id?: string;
   category?: PostCategory;
-  user_id: string;
+  user_id?: string;
   user?: User;
   topics?: PostTopic[];
   image?: Image;
-  comments?: Comment[];
-  isFavorite?: boolean;
-  ratings?: number;
+  is_favorited?: boolean;
+  ratings_avg_rating?: number;
   ratings_count?: number;
   created_at?: string;
   updated_at?: string;

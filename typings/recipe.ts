@@ -3,7 +3,7 @@ import { User } from "./user";
 
 export interface Recipe {
   id: string;
-  title?: string;
+  title: string;
   description?: string;
   time?: number;
   portion?: number;
@@ -16,9 +16,8 @@ export interface Recipe {
   steps?: RecipeStep[];
   diets?: RecipeDiet[];
   image?: Image;
-  comments?: Comment[];
-  isFavorite?: boolean;
-  ratings?: number;
+  is_favorited?: boolean;
+  ratings_avg_rating?: number;
   ratings_count?: number;
   created_at?: string;
   updated_at?: string;
@@ -36,18 +35,18 @@ export interface RecipeDiet {
 
 export interface RecipeIngredient {
   id: string;
-  quantity?: number;
-  name?: string;
+  quantity: number;
+  name: string;
   unit_id?: string;
-  unit?: RecipeUnit;
+  unit: RecipeUnit;
   recipe_id: string;
 }
 
 export interface RecipeStep {
   id: string;
-  order?: number;
-  description?: string;
-  recipe_id?: string;
+  order: number;
+  description: string;
+  recipe_id: string;
 }
 
 export interface RecipeUnit {
