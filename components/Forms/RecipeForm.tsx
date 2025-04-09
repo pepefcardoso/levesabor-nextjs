@@ -88,12 +88,12 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, categories,
       data.append("diets[]", dietId);
     });
     formData.ingredients.forEach((ingredient, index) => {
-      data.append(`ingredients[${index}][name]`, ingredient.name);
+      data.append(`ingredients[${index}][name]`, ingredient.name || "");
       data.append(`ingredients[${index}][quantity]`, String(ingredient.quantity));
-      data.append(`ingredients[${index}][unit_id]`, ingredient.unit_id);
+      data.append(`ingredients[${index}][unit_id]`, ingredient.unit_id || "");
     });
     formData.steps.forEach((step, index) => {
-      data.append(`steps[${index}][description]`, step.description);
+      data.append(`steps[${index}][description]`, step.description || "");
     });
     if (selectedImage) data.append("image", selectedImage);
     await onSubmit(data);

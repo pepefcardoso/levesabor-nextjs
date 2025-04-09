@@ -1,9 +1,11 @@
+import { MorphableTypeEnum } from "./enums";
+
 export interface Image {
   id: string;
-  name: string;
-  path: string;
+  name?: string;
+  path?: string;
   url: string;
-  user_id: string;
-  imageable_id: string;
-  imageable_type: string;
+  user_id?: string;
+  imageable_id?: string;
+  imageable_type?: MorphableTypeEnum;
 }

@@ -64,7 +64,7 @@ const PostDetails = () => {
       <div className="relative w-full h-[400px] rounded-md shadow-md overflow-hidden">
         <Image
           src={sanitizeImageUrl(post.image?.url) || "/placeholder.jpg"}
-          alt={post.title}
+          alt={post.title || "Imagem do post"}
           fill
           className="object-cover rounded-md"
           priority
@@ -72,7 +72,7 @@ const PostDetails = () => {
       </div>
 
       <div className={clsx(Typography.Body, "leading-relaxed space-y-4 my-6")}>
-        {post.content.split("\n").map((paragraph, index) => (
+        {post.content?.split("\n").map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
       </div>

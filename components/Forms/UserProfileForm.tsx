@@ -11,10 +11,10 @@ import routes from "../../routes/routes";
 
 type UserProfileFormProps = {
   initialData: {
-    name: string;
-    birthday: string;
-    phone: string;
-    email: string;
+    name?: string;
+    birthday?: string;
+    phone?: string;
+    email?: string;
     image?: { url: string };
   };
   onSubmit: (formData: FormData) => Promise<void>;
@@ -32,7 +32,7 @@ export const UserProfileForm = ({ initialData, onSubmit, isSubmitting }: UserPro
 
   useEffect(() => {
     setFormValues({
-      name: initialData.name,
+      name: initialData.name || "",
       birthday: initialData.birthday?.split("T")[0] || "",
       phone: initialData.phone || "",
     });

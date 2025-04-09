@@ -22,7 +22,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           <div className="relative w-full h-full rounded-t-lg overflow-hidden">
             <Image
               src={recipe.image?.url ?? "/placeholder.jpg"}
-              alt={recipe.title}
+              alt={recipe.title? recipe.title : "Recipe Image"}
               fill
               className="object-cover rounded-t-lg"
             />

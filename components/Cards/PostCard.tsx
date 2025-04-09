@@ -18,7 +18,7 @@ const PostCard = ({ post }: { post: Post }) => {
                    hover:scale-105 hover:shadow-lg flex flex-col h-[400px] w-full sm:w-auto bg-white"
       >
         <div className="relative rounded-t-lg overflow-hidden flex-[2]">
-          <Image src={post.image?.url ?? "/placeholder.jpg"} alt={post.title} fill className="object-cover" />
+          <Image src={post.image?.url ?? "/placeholder.jpg"} alt={post.title ? post.title : "Post Title"} fill className="object-cover" />
         </div>
         <div className="p-4 flex flex-col items-start space-y-4 flex-[3]">
   {post.category?.name && <CustomChip text={post.category.name} />}

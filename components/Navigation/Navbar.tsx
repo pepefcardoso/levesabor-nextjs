@@ -162,7 +162,7 @@ const Navbar = () => {
             <div className="flex items-center gap-3 relative">
               <TextButton
                 href={routes.user.profile}
-                text={user.name}
+                text={user.name ?? "Usuário"}
                 fontColor={txtColors.white}
                 typography={Typography.Subtitle}
               />
@@ -207,7 +207,7 @@ const Navbar = () => {
                   <UserAvatar />
                   <TextButton
                     href={routes.user.profile}
-                    text={user.name}
+                    text={user.name ?? "Usuário"}
                     fontColor={txtColors.white}
                     typography={Typography.Subtitle}
                   />

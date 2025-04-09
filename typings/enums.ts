@@ -11,4 +11,9 @@ export enum RolesEnum {
     "Difícil" = 4,
     "Muito Difícil" = 5,
   }
+
+  export enum MorphableTypeEnum {
+    RECIPE = "App\\Models\\Recipe",
+    POST = "App\\Models\\Post",
+  }
   

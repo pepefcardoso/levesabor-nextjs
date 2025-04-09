@@ -51,12 +51,12 @@ export default function UpdateUserRecipePage() {
         setDiets(dietsRes.data);
 
         setInitialData({
-          title: recipeRes.title,
-          description: recipeRes.description,
-          time: recipeRes.time.toString(),
-          portion: recipeRes.portion.toString(),
-          difficulty: recipeRes.difficulty,
-          category_id: recipeRes.category_id,
+          title: recipeRes.title || "",
+          description: recipeRes.description || "",
+          time: recipeRes.time?.toString() || "",
+          portion: recipeRes.portion?.toString() || "",
+          difficulty: recipeRes.difficulty ?? RecipeDifficultyEnum.Normal,
+          category_id: recipeRes.category_id || "",
           diets: recipeRes.diets
             ? recipeRes.diets.map((d: RecipeDiet) => String(d.id))
             : [],

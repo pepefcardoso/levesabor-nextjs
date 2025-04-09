@@ -68,7 +68,7 @@ const RecipeDetails = () => {
       <div className="relative w-full h-[340px] mb-6 rounded-lg overflow-hidden">
         <Image
           src={sanitizeImageUrl(recipe.image?.url) || "/placeholder.jpg"}
-          alt={recipe.title}
+          alt={recipe.title || "Imagem da receita"}
           fill
           className="object-cover rounded-lg"
           priority
@@ -77,7 +77,7 @@ const RecipeDetails = () => {
 
       <div className="flex flex-col md:flex-row gap-6 mb-6 justify-center text-center">
         <CustomChip className="w-1/3" typography={Typography.Subtitle} text={`Tempo: ${recipe.time} min`} />
-        <CustomChip className="w-1/3" typography={Typography.Subtitle} text={`Dificuldade: ${RecipeDifficultyEnum[recipe.difficulty]}`} />
+        <CustomChip className="w-1/3" typography={Typography.Subtitle} text={`Dificuldade: ${recipe.difficulty ? RecipeDifficultyEnum[recipe.difficulty] : RecipeDifficultyEnum.Normal}`} />
         <CustomChip className="w-1/3" typography={Typography.Subtitle} text={`Rende ${recipe.portion} porções`} />
       </div>
 

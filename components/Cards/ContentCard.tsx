@@ -12,7 +12,7 @@ import { Typography } from "@/constants/typography";
 interface ContentCardProps {
   item: {
     id: string;
-    title: string;
+    title?: string;
     image?: { url: string };
   };
   detailRoute: (id: string) => string;
@@ -36,7 +36,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, detailRoute, editRoute,
         <div className="relative w-full h-36 rounded-t-lg overflow-hidden">
           <Image
             src={imgError || !item.image?.url ? "/placeholder.jpg" : item.image.url}
-            alt={item.title}
+            alt={item.title || "Image"}
             fill
             className="object-cover rounded-t-lg"
             onError={handleImageError}
