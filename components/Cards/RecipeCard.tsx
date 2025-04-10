@@ -1,85 +1,39 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CustomChip from "../Others/CustomChip";
 import { Typography } from "@/constants/typography";
 import clsx from "clsx";
-import { bgColors, iconColors, txtColors } from "@/constants/colors";
 import routes from "../../routes/routes";
-import { FiStar, FiHeart } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
-import { ImSpinner2 } from "react-icons/im";
 import { Recipe } from "@/typings/recipe";
-import useAuthStore from "@/store/authStore";
-import IconButton from "../Buttons/IconButton";
 import { recipeService } from "@/services/index";
-import toast from "react-hot-toast";
+import useAuthStore from "@/store/authStore";
+import useFavorite from "../../hooks/useFavorite";
+import { bgColors } from "@/constants/colors";
+import RatingDisplay from "../Common/RatingDisplay";
+import FavoriteButton from "../Common/FavoriteButton";
 
-const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
-  const [isFavorite, setIsFavorite] = useState(recipe.is_favorited ?? false);
-  const [isToggling, setIsToggling] = useState(false);
-  const rating = recipe.ratings_avg_rating ?? 0;
+interface RecipeCardProps {
+  recipe: Recipe;
+}
+
+const RecipeCard = ({ recipe }: RecipeCardProps) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  const handleFavoriteClick = async (
-    e?: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-  ): Promise<void> => {
-    e?.preventDefault();
-    e?.stopPropagation();
-
-    if (!isAuthenticated) return;
-
-    setIsToggling(true);
-    const newFavoriteStatus = !isFavorite;
-    setIsFavorite(newFavoriteStatus);
-
-    const success = await recipeService.toggleFavoriteRecipe(recipe.id);
-
-    if (success) {
-      toast.success(
-        newFavoriteStatus
-          ? "Receita adicionada aos favoritos"
-          : "Receita removida dos favoritos"
-      );
-    } else {
-      toast.error("Erro ao atualizar favorito");
-      setIsFavorite(!newFavoriteStatus);
-    }
-
-    setIsToggling(false);
+  const toggleFavorite = async () => {
+    return recipeService.toggleFavoriteRecipe(recipe.id);
   };
 
-  const icon = isAuthenticated
-    ? isFavorite
-      ? FaHeart
-      : FiHeart
-    : FiHeart;
-
-  const iconColor = isAuthenticated
-    ? isFavorite
-      ? iconColors.red
-      : iconColors.gray
-    : iconColors.grayLight;
-
-  const favoriteButton = (
-    <IconButton
-      onClick={handleFavoriteClick}
-      Icon={isToggling ? ImSpinner2 : icon}
-      color={iconColor}
-      size={24}
-      className={isToggling ? "animate-spin" : ""}
-      disabled={isToggling}
-    />
+  const { isFavorite, isToggling, handleFavoriteClick } = useFavorite(
+    toggleFavorite,
+    recipe.is_favorited ?? false
   );
 
   return (
     <Link
       href={routes.recipes.details(recipe.id)}
-      className="rounded-lg shadow-md cursor-pointer 
-                 transition-transform duration-300 ease-in-out 
-                 hover:scale-105 hover:shadow-lg flex flex-col h-[500px] w-full sm:w-auto bg-white"
+      className="rounded-lg shadow-md cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg flex flex-col h-[500px] w-full sm:w-auto bg-white"
     >
       <div className="flex flex-col h-full w-full overflow-hidden">
         <div className="relative basis-2/5">
@@ -98,8 +52,10 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
         <div className="basis-3/5 p-4 flex flex-col justify-between space-y-2">
           <div>
-            <h2 className={clsx(Typography.Title, "mb-1 line-clamp-2")}>{recipe.title}</h2>
-            <p className={clsx(Typography.Caption, txtColors.gray700, "line-clamp-3")}>
+            <h2 className={clsx(Typography.Title, "mb-1 line-clamp-2")}>
+              {recipe.title}
+            </h2>
+            <p className={clsx(Typography.Caption, "line-clamp-3", "text-gray-700")}>
               {recipe.description}
             </p>
           </div>
@@ -113,26 +69,27 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           )}
 
           <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center space-x-1">
-              <FiStar className="w-5 h-5" color={rating > 0 ? "#FBBF24" : "#9CA3AF"} />
-              <span className="text-sm font-medium">
-                {rating > 0 ? rating.toFixed(1) : "-"}
-              </span>
-            </div>
-
+            <RatingDisplay rating={recipe.ratings_avg_rating ?? 0} />
             {!isAuthenticated ? (
               <div
                 title="Você precisa estar autenticado para favoritar"
-                className="inline-block"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                 }}
               >
-                {favoriteButton}
+                <FavoriteButton
+                  isFavorite={isFavorite}
+                  isToggling={isToggling}
+                  onClick={handleFavoriteClick}
+                />
               </div>
             ) : (
-              favoriteButton
+              <FavoriteButton
+                isFavorite={isFavorite}
+                isToggling={isToggling}
+                onClick={handleFavoriteClick}
+              />
             )}
           </div>
         </div>

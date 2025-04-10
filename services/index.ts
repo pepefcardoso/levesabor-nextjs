@@ -7,6 +7,7 @@ import { UserService } from "./userService";
 import { NewsletterCustomerService } from "./NewsletterCustomerService";
 import { ContactService } from "./contactService";
 import { RatingsService } from "./ratingsService";
+import { Comment } from "@/typings/comment";
 
 export const recipeService = new RecipeService();
 export const recipeDietService = new StandardService<RecipeDiet>("/recipe-diets");
