@@ -20,8 +20,9 @@ import RatingForm from "@/components/Common/RatingForm";
 import FavoriteButton from "@/components/Common/FavoriteButton";
 import CommentsList from "@/components/Common/Comments/CommentsList";
 import useAuthStore from "@/store/authStore";
+import { MorphableTypeEnum } from "@/typings/enums";
 
-const PostDetails = () => {
+const Page = () => {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -100,7 +101,9 @@ const PostDetails = () => {
         />
       </div>
 
-      <p className={clsx(Typography.Subtitle, txtColors.gray700, "mb-6")}>{post.summary}</p>
+      <p className={clsx(Typography.Subtitle, txtColors.gray700, "mb-6")}>
+        {post.summary}
+      </p>
 
       <div className="relative w-full h-[400px] rounded-md shadow-md overflow-hidden mb-6">
         <Image
@@ -130,35 +133,45 @@ const PostDetails = () => {
         <AuthorInfo
           authorName={post.user?.name || "Autor"}
           authorImage={sanitizeImageUrl(post.user?.image?.url)}
-          postDate={post.created_at ? `Postado em ${formatDate(post.created_at)}` : "Data indisponível"}
+          postDate={
+            post.created_at
+              ? `Postado em ${formatDate(post.created_at)}`
+              : "Data indisponível"
+          }
         />
       </div>
 
-      <div className="my-6">
-        <h2 className={clsx(Typography.Title, "mb-4")}>Avaliação</h2>
-        <div className="flex items-center space-x-4">
-          <RatingDisplay rating={post.ratings_avg_rating ?? 0} />
-          {isAuthenticated ? (
-            <RatingForm
-              initialRating={post.ratings_avg_rating ?? 0}
-              rateableId={post.id}
-              rateableType="App\\Models\\Post"
-              onRatingUpdated={() => {
-                toast.success("Avaliação atualizada");
-              }}
-            />
-          ) : (
-            <span className="text-gray-500">Faça login para avaliar</span>
-          )}
+      <div className="flex items-center justify-between my-12 rounded-md bg-white p-4 shadow-md">
+        <div className="flex items-center space-x-2">
+          <RatingDisplay rating={post.ratings_avg_rating} />
+          <span className={clsx(Typography.Tag)}>
+            Avaliação dos Clientes
+          </span>
         </div>
+        {isAuthenticated && (
+          <div className="flex items-center space-x-2">
+            <span className={clsx(Typography.Tag)}>
+              Sua Avaliação
+            </span>
+            <RatingForm
+              initialRating={Number(post.ratings_avg_rating ?? 0)}
+              rateableId={post.id}
+              rateableType={MorphableTypeEnum.POST}
+            />
+          </div>
+
+        )}
       </div>
 
-      <CommentsList
-        commentableId={post.id}
-        commentableType="App\\Models\\Post"
-      />
+      <div className="mb-6">
+        <h2 className={clsx(Typography.Headline, "mb-6")}>Comentários</h2>
+        <CommentsList
+          commentableId={post.id}
+          commentableType={MorphableTypeEnum.POST}
+        />
+      </div>
     </div>
   );
 };
 
-export default PostDetails;
+export default Page;

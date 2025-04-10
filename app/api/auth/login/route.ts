@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { email, password } = await request.json();
+  const rawBody = await request.text();
+  const { email, password } = JSON.parse(rawBody);
 
   const laravelResponse = await fetch(process.env.LARAVEL_API_URL + "/login", {
     method: "POST",

@@ -20,6 +20,7 @@ import RatingForm from "@/components/Common/RatingForm";
 import FavoriteButton from "@/components/Common/FavoriteButton";
 import CommentsList from "@/components/Common/Comments/CommentsList";
 import useAuthStore from "@/store/authStore";
+import { MorphableTypeEnum } from "@/typings/enums";
 
 const RecipeDetails = () => {
   const { id } = useParams();
@@ -114,25 +115,6 @@ const RecipeDetails = () => {
         />
       </div>
 
-      <div className="mb-8">
-        <h2 className={clsx(Typography.Title, "mb-4")}>Avaliação</h2>
-        <div className="flex items-center space-x-4">
-          <RatingDisplay rating={recipe.ratings_avg_rating ?? 0} />
-          {isAuthenticated ? (
-            <RatingForm
-              initialRating={recipe.ratings_avg_rating ?? 0}
-              rateableId={recipe.id}
-              rateableType="App\\Models\\Recipe"
-              onRatingUpdated={() => {
-                toast.success("Avaliação atualizada");
-              }}
-            />
-          ) : (
-            <span className="text-gray-500">Faça login para avaliar</span>
-          )}
-        </div>
-      </div>
-
       <p className={clsx(Typography.Body, "text-left mb-8")}>{recipe.description}</p>
 
       <h2 className={clsx(Typography.Title, "mb-4")}>Ingredientes</h2>
@@ -168,10 +150,35 @@ const RecipeDetails = () => {
         ))}
       </div>
 
-      <CommentsList
-        commentableId={recipe.id}
-        commentableType="App\\Models\\Recipe"
-      />
+      <div className="flex items-center justify-between my-12 rounded-md bg-white p-4 shadow-md">
+        <div className="flex items-center space-x-2">
+          <RatingDisplay rating={recipe.ratings_avg_rating} />
+          <span className={clsx(Typography.Tag)}>
+            Avaliação dos Clientes
+          </span>
+        </div>
+        {isAuthenticated && (
+          <div className="flex items-center space-x-2">
+            <span className={clsx(Typography.Tag)}>
+              Sua Avaliação
+            </span>
+            <RatingForm
+              initialRating={Number(recipe.ratings_avg_rating ?? 0)}
+              rateableId={recipe.id}
+              rateableType={MorphableTypeEnum.RECIPE}
+            />
+          </div>
+
+        )}
+      </div>
+
+      <div className="mb-6">
+        <h2 className={clsx(Typography.Headline, "mb-6")}>Comentários</h2>
+        <CommentsList
+          commentableId={recipe.id}
+          commentableType={MorphableTypeEnum.RECIPE}
+        />
+      </div>
     </div>
   );
 };

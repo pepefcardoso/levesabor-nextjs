@@ -69,7 +69,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
           )}
 
           <div className="flex items-center justify-between mt-2">
-            <RatingDisplay rating={recipe.ratings_avg_rating ?? 0} />
+            <RatingDisplay rating={recipe.ratings_avg_rating} />
             {!isAuthenticated ? (
               <div
                 title="Você precisa estar autenticado para favoritar"

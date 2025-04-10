@@ -5,19 +5,19 @@ import { ratingsService } from "@/services/index";
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import useAuthStore from "@/store/authStore";
+import clsx from "clsx";
+import { MorphableTypeEnum } from "@/typings/enums";
 
 interface RatingFormProps {
     initialRating?: number;
     rateableId: string;
-    rateableType: string;
-    onRatingUpdated?: (rating: number) => void;
+    rateableType: MorphableTypeEnum;
 }
 
 const RatingForm = ({
     initialRating = 0,
     rateableId,
     rateableType,
-    onRatingUpdated,
 }: RatingFormProps) => {
     const [rating, setRating] = useState(initialRating);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,7 +46,6 @@ const RatingForm = ({
                 await ratingsService.update(rateableId, data);
             }
             toast.success("Avaliação registrada");
-            if (onRatingUpdated) onRatingUpdated(newRating);
         } catch (err) {
             console.error("Erro ao registrar avaliação", err);
             toast.error("Erro ao registrar avaliação");
@@ -62,15 +61,16 @@ const RatingForm = ({
                     type="button"
                     onClick={() => handleRating(star)}
                     disabled={isSubmitting}
-                    className={`focus:outline-none ${star <= rating ? "text-yellow-400" : "text-gray-300"
-                        }`}
+                    className={clsx(
+                        "focus:outline-none",
+                        "hover:text-yellow-400 hover:cursor-pointer",
+                        "transition-colors duration-200",
+                        star <= rating ? "text-yellow-400" : "text-gray-300"
+                    )}
                 >
                     <FaStar />
                 </button>
             ))}
-            {isSubmitting && (
-                <span className="text-sm text-gray-500">Salvando...</span>
-            )}
         </div>
     );
 };

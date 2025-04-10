@@ -13,7 +13,7 @@ export interface Post {
   topics?: PostTopic[];
   image?: Image;
   is_favorited?: boolean;
-  ratings_avg_rating?: number;
+  ratings_avg_rating?: string;
   ratings_count?: number;
   created_at?: string;
   updated_at?: string;

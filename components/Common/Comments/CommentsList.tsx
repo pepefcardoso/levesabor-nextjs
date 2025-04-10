@@ -9,6 +9,12 @@ import PageSkeleton from "../../Skeletons/PageSkeleton";
 import toast from "react-hot-toast";
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
+import { PaginationResponse } from "@/typings/pagination";
+import IconButton from "@/components/Buttons/IconButton";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import clsx from "clsx";
+import { Typography } from "@/constants/typography";
+import { txtColors } from "@/constants/colors";
 
 interface CommentsListProps {
   commentableId: string;
@@ -17,16 +23,21 @@ interface CommentsListProps {
 
 const CommentsList = ({ commentableId, commentableType }: CommentsListProps) => {
   const [comments, setComments] = useState<Comment[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  const fetchComments = useCallback(async () => {
+  const fetchComments = useCallback(async (page = 1) => {
     try {
-      const data = await commentsService.getAll(
-        { page: 1, per_page: 50 },
+      const response: PaginationResponse<Comment> = await commentsService.getAll(
+        { page, per_page: 5 },
         { commentable_id: commentableId, commentable_type: commentableType }
       );
-      setComments(data.data as Comment[]);
+
+      setComments(response.data);
+      setCurrentPage(response.current_page);
+      setLastPage(response.last_page);
     } catch (error) {
       console.error("Erro ao carregar comentários:", error);
       toast.error("Falha ao carregar comentários");
@@ -39,31 +50,26 @@ const CommentsList = ({ commentableId, commentableType }: CommentsListProps) => 
     fetchComments();
   }, [fetchComments]);
 
-  const handleCommentAdded = (newComment: Comment) => {
-    setComments((prev) => [newComment, ...prev]);
-  };
-
-  const handleCommentUpdated = (updatedComment: Comment) => {
-    setComments((prev) =>
-      prev.map((c) => (c.id === updatedComment.id ? updatedComment : c))
-    );
-  };
-
-  const handleCommentDeleted = (deletedCommentId: string) => {
-    setComments((prev) => prev.filter((c) => c.id !== deletedCommentId));
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > lastPage) return;
+    setIsLoading(true);
+    fetchComments(newPage);
   };
 
   if (isLoading) return <PageSkeleton />;
 
   return (
-    <div className="mt-8">
+    <div>
       {isAuthenticated && (
+        <div className="mb-6">
         <CommentForm
           commentableId={commentableId}
           commentableType={commentableType}
-          onCommentAdded={handleCommentAdded}
+          onCommentAdded={() => fetchComments(1)}
         />
+        </div>
       )}
+
       {comments.length === 0 ? (
         <EmptyList
           title="Sem comentários"
@@ -75,10 +81,28 @@ const CommentsList = ({ commentableId, commentableType }: CommentsListProps) => 
             <CommentItem
               key={comment.id}
               comment={comment}
-              onCommentUpdated={handleCommentUpdated}
-              onCommentDeleted={handleCommentDeleted}
+              onCommentUpdated={() => fetchComments(1)}
+              onCommentDeleted={() => fetchComments(1)}
             />
           ))}
+        </div>
+      )}
+
+      {lastPage > 1 && (
+        <div className="mt-4 flex justify-between items-center">
+          <IconButton
+            disabled={currentPage <= 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            Icon={FaArrowLeft}
+          />
+          <span className={clsx(Typography.Body, txtColors.gray700)}>
+            Página {currentPage} de {lastPage}
+          </span>
+          <IconButton
+            disabled={currentPage >= lastPage}
+            onClick={() => handlePageChange(currentPage + 1)}
+            Icon={FaArrowRight}
+          />
         </div>
       )}
     </div>

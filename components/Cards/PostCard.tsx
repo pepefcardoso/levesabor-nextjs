@@ -49,7 +49,7 @@ const PostCard = ({ post }: PostCardProps) => {
             {post.summary}
           </p>
           <div className="flex items-center justify-between w-full mt-2">
-            <RatingDisplay rating={post.ratings_avg_rating ?? 0} />
+            <RatingDisplay rating={post.ratings_avg_rating} />
             {!isAuthenticated ? (
               <div
                 title="Você precisa estar autenticado para favoritar"

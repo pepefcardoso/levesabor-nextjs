@@ -13,7 +13,7 @@ export enum RolesEnum {
   }
 
   export enum MorphableTypeEnum {
-    RECIPE = "App\\Models\\Recipe",
-    POST = "App\\Models\\Post",
+    RECIPE = "Recipe",
+    POST = "Post",
   }
   

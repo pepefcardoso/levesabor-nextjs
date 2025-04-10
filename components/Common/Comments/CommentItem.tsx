@@ -7,7 +7,12 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
 import useUserStore from "@/store/userStore";
 import CommentForm from "./CommentForm";
-import { formatDate } from "../../../tools/helper";
+import { formatDate, sanitizeImageUrl } from "../../../tools/helper";
+import IconButton from "@/components/Buttons/IconButton";
+import { iconColors, txtColors } from "@/constants/colors";
+import clsx from "clsx";
+import { Typography } from "@/constants/typography";
+import Image from "next/image";
 
 interface CommentItemProps {
     comment: Comment;
@@ -43,10 +48,20 @@ const CommentItem = ({
     };
 
     return (
-        <div className="p-4 border rounded-lg shadow-sm">
-            <div className="flex justify-between items-center mb-2">
-                <div className="font-bold">{comment.user?.name || "Anônimo"}</div>
-                <div className="text-xs text-gray-500">{formatDate(comment.created_at ?? "")}</div>
+        <div className="p-4 rounded-lg shadow-md bg-white space-y-4">
+            <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-3">
+                    <div className="relative shadow-sm w-8 h-8 rounded-full overflow-hidden">
+                        <Image
+                            src={sanitizeImageUrl(comment.user?.image?.url)}
+                            alt={comment.user?.name || "Usuário"}
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                    <h2 className={clsx(Typography.Subtitle)}>{comment.user?.name || "Usuário"}</h2>
+                </div>
+                <p className={clsx(Typography.Quote, txtColors.gray500)}>{formatDate(comment.updated_at ?? "")}</p>
             </div>
             {isEditing ? (
                 <CommentForm
@@ -59,24 +74,22 @@ const CommentItem = ({
                     commentId={comment.id}
                 />
             ) : (
-                <p className="mb-2">{comment.content}</p>
+                <p className={clsx(Typography.Caption, txtColors.gray700, "mb-2")}>{comment.content}</p>
             )}
             {isOwner && !isEditing && (
-                <div className="flex space-x-2">
-                    <button
+                <div className="flex justify-end space-x-1">
+                    <IconButton
                         onClick={() => setIsEditing(true)}
-                        className="text-blue-500 hover:underline flex items-center space-x-1"
-                    >
-                        <FaEdit />
-                        <span>Editar</span>
-                    </button>
-                    <button
+                        Icon={FaEdit}
+                        color={iconColors.gray}
+                        size={16}
+                    />
+                    <IconButton
                         onClick={handleDelete}
-                        className="text-red-500 hover:underline flex items-center space-x-1"
-                    >
-                        <FaTrash />
-                        <span>Excluir</span>
-                    </button>
+                        Icon={FaTrash}
+                        color={iconColors.red}
+                        size={16}
+                    />
                 </div>
             )}
         </div>

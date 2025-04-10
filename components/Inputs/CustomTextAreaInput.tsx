@@ -23,7 +23,7 @@ const CustomTextAreaInput: React.FC<CustomTextAreaProps> = ({
     "disabled:opacity-50 disabled:cursor-not-allowed",
     "transition-all duration-200",
     "outline-none",
-    "resize-y",
+    "resize-none",
     "focus:border-tertiary focus:ring-2 focus:ring-tertiary"
   );
 

@@ -3,7 +3,11 @@
 import React, { useState } from "react";
 import { commentsService } from "@/services/index";
 import toast from "react-hot-toast";
-import { Comment} from "@/typings/comment";
+import { Comment } from "@/typings/comment";
+import TextButton from "@/components/Buttons/TextButton";
+import FilledButton from "@/components/Buttons/FilledButton";
+import CustomTextAreaInput from "@/components/Inputs/CustomTextAreaInput";
+import { Typography } from "@/constants/typography";
 
 interface CommentFormProps {
   commentableId: string;
@@ -56,32 +60,27 @@ const CommentForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
-      <textarea
-        className="w-full border rounded p-2 focus:outline-none focus:ring"
-        rows={3}
+    <form onSubmit={handleSubmit}>
+      <CustomTextAreaInput
         placeholder="Escreva seu comentário..."
         value={content}
         onChange={(e) => setContent(e.target.value)}
         disabled={isSubmitting}
       />
-      <div className="mt-2 flex items-center space-x-2">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          {isEditing ? "Atualizar" : "Enviar"}
-        </button>
+      <div className="mt-3 flex justify-end space-x-3">
         {isEditing && onCancel && (
-          <button
-            type="button"
+          <TextButton
+            text="Cancelar"
+            typography={Typography.Label}
             onClick={onCancel}
-            className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-          >
-            Cancelar
-          </button>
+          />
         )}
+        <FilledButton
+          type="submit"
+          text="Comentar"
+          typography={Typography.Label}
+          disabled={isSubmitting}
+        />
       </div>
     </form>
   );

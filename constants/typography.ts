@@ -32,7 +32,7 @@ export const Typography = {
   Body: clsx(fontSizes.base, fontWeights.normal, `md:${fontSizes.lg}`),
   Caption: clsx(fontSizes.sm, fontWeights.normal, `md:${fontSizes.base}`),
   Footnote: clsx(fontSizes.base, fontWeights.light, `md:${fontSizes.lg}`),
-  Quote: clsx(fontSizes.sm, fontWeights.light, `md:${fontSizes.base}`),
+  Quote: clsx(fontSizes.sm, fontWeights.light, `md:${fontSizes.sm}`),
 
   // Interactive Elements
   Button: clsx(fontSizes.base, fontWeights.normal, `md:${fontSizes.lg}`),
