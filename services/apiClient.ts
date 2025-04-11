@@ -45,7 +45,6 @@ apiClient.interceptors.response.use(
     if (isUnauthorized && !isLoginRequest && !originalRequest._retry) {
       originalRequest._retry = true;
       AuthService.logout();
-      window.location.href = "/login";
     }
 
     return Promise.reject({

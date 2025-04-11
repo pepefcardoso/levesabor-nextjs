@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Navbar from "../components/Navigation/Navbar";
-import Footer from "../components/Navigation/Footer";
+import Footer from "@/components/Navigation/Footer/Footer";
 import TransitionWrapper from "../components/Others/TransitionWrapper";
 import { bgColors } from "../constants/colors";
 import clsx from "clsx";
 import { Inter } from "next/font/google";
+import NavbarSwitcher from "@/components/Navigation/Navbar/NavbarSwitcher";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,7 +53,8 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen")}>          <Navbar />
+      <body className={clsx(bgColors.background, inter.variable, "flex flex-col min-h-screen")}>
+        <NavbarSwitcher />
         <main className="flex-1">
           <Toaster position="bottom-left" />
           <div className="mx-auto h-full min-w-screen">
