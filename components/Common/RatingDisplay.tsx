@@ -12,7 +12,7 @@ const RatingDisplay = ({ rating }: RatingDisplayProps) => {
   const displayRating = isValidRating ? parsedRating.toFixed(1) : "-";
 
   return (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-2">
       <FiStar className="w-6 h-6" color={iconColor} />
       <span className={Typography.Tag}>{displayRating}</span>
     </div>

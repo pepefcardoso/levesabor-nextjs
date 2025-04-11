@@ -32,6 +32,7 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
   isLoading = false,
   className = "",
   label,
+  name,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ const CustomInputSelect: React.FC<CustomSelectInputProps> = ({
 
   const handleSelect = (optionValue: string | number) => {
     const event = {
-      target: { value: optionValue },
+      target: { value: optionValue, name }
     } as React.ChangeEvent<HTMLSelectElement>;
     onChange(event);
     setIsDropdownOpen(false);

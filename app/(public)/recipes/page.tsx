@@ -89,7 +89,11 @@ export default function RecipesHome() {
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilters((prev) => ({ ...prev, category_id: e.target.value }));
+    const { value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      category_id: value || undefined,
+    }));
     setCurrentPage(1);
   };
 

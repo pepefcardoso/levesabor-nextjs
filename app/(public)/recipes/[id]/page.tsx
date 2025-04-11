@@ -17,7 +17,7 @@ import { formatDate, sanitizeImageUrl } from "../../../../tools/helper";
 import { recipeService } from "@/services/index";
 import RatingDisplay from "@/components/Common/RatingDisplay";
 import RatingForm from "@/components/Common/RatingForm";
-import FavoriteButton from "@/components/Common/FavoriteButton";
+import FavoriteButton from "@/components/Common/RecipeFavoriteButton";
 import CommentsList from "@/components/Common/Comments/CommentsList";
 import useAuthStore from "@/store/authStore";
 import { MorphableTypeEnum } from "@/typings/enums";

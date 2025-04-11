@@ -72,14 +72,6 @@ export default function Home() {
                   a qualquer estilo de vida alimentar. Explore artigos informativos e guias práticos para uma nutrição
                   consciente.
                 </p>
-                <div className="mt-6">
-                  <TextButton
-                    href={routes.recipes.index}
-                    text="Comece Sua Jornada Culinária"
-                    fontColor={txtColors.black}
-                    className="max-w-[300px]"
-                  />
-                </div>
               </div>
             </div>
 

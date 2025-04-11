@@ -98,11 +98,15 @@ export default function PostsHome() {
         <div className="mb-6 flex gap-4">
           <CustomInputSelect
             name="category_id"
-            options={categories.map((category) => ({
-              value: category.id,
-              label: category.name,
-            }))}
-            placeholder="Todas as categorias"
+            options={[
+              { value: "", label: "Todas as categorias" },
+              ...categories.map((category) => ({
+                value: category.id,
+                label: category.name,
+              })),
+            ]}
+            value={filters.category_id || ""}
+            placeholder="Selecione uma categoria"
             onChange={handleFilterChange}
             className="min-w-[220px]"
           />
